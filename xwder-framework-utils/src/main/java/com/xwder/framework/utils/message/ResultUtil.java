@@ -1,6 +1,5 @@
 package com.xwder.framework.utils.message;
 
-import org.springframework.http.HttpStatus;
 
 /**
  * @author xwder
@@ -14,7 +13,7 @@ public class ResultUtil {
      */
     public static Result success(Object data){
         Result result = new Result();
-        result.setCode(HttpStatus.OK.value());
+        result.setCode(200);
         result.setMsg("OK");
         result.setData(data);
         return result;

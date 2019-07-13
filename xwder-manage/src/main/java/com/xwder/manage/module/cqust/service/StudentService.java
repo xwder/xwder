@@ -1,4 +1,4 @@
-package com.xwder.manage.module.ky.service;
+package com.xwder.manage.module.cqust.service;
 
 import com.xwder.framework.utils.page.PageInfo;
 import org.springframework.data.domain.Sort;

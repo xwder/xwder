@@ -1,11 +1,11 @@
-package com.xwder.manage.module.ky.controller;
+package com.xwder.manage.module.cqust.controller;
 
 import com.xwder.framework.domain.cqust.KyStudent;
 import com.xwder.framework.utils.page.PageInfo;
 import com.xwder.manage.framework.web.controller.BaseController;
 import com.xwder.manage.framework.web.page.TableDataInfo;
 import com.xwder.manage.framework.web.page.TableSupport;
-import com.xwder.manage.module.ky.service.StudentService;
+import com.xwder.manage.module.cqust.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;

@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.data.mongo.MongoDataAutoConfiguration;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 
 /**
  * @ClassName: XwderManageApplication
@@ -14,6 +15,7 @@ import org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration;
  * @Version: 1.0
  */
 @SpringBootApplication(exclude = {DataSourceAutoConfiguration.class, MongoAutoConfiguration.class, MongoDataAutoConfiguration.class})
+@EnableFeignClients(basePackages = {"com.xwder.api.cqust"})
 public class XwderManageApplication {
 
     public static void main(String[] args) {
