@@ -1,6 +1,8 @@
 package com.xwder.cqust.service;
 
-import com.xwder.cqust.domain.KyStudent;
+import com.xwder.framework.domain.cqust.KyStudent;
+import com.xwder.framework.utils.page.PageInfo;
+import org.springframework.data.domain.Sort;
 
 import java.util.List;
 
@@ -12,18 +14,13 @@ import java.util.List;
 public interface StudentService {
 
     /**
-     * 查询所有的学生
-     *
-     * @return
-     */
-    List<KyStudent> listKyStudent();
-
-    /**
      * 分页查询
      *
-     * @param pageNo   页码
-     * @param pageSize 页数
+     * @param pageNum   页码
+     * @param pageSize  页数
+     * @param sortField 排序字段
+     * @param order     顺序
      * @return PageResultEntity
      */
-    List<KyStudent> findAll(Integer pageNo, Integer pageSize);
+    PageInfo findAll(Integer pageNum, Integer pageSize, String sortField, Sort.Direction order);
 }

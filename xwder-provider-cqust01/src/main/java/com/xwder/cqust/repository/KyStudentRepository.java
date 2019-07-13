@@ -1,6 +1,6 @@
 package com.xwder.cqust.repository;
 
-import com.xwder.cqust.domain.KyStudent;
+import com.xwder.framework.domain.cqust.KyStudent;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.CrudRepository;

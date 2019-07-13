@@ -1,9 +1,12 @@
 package com.xwder.cqust.service.impl;
 
 import com.google.common.collect.Lists;
-import com.xwder.cqust.domain.KyStudent;
 import com.xwder.cqust.repository.KyStudentRepository;
 import com.xwder.cqust.service.StudentService;
+import com.xwder.framework.common.constan.Constant;
+import com.xwder.framework.domain.cqust.KyStudent;
+import com.xwder.framework.utils.page.PageInfo;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -24,34 +27,31 @@ public class StudentServiceImpl implements StudentService {
     @Autowired
     private KyStudentRepository kyStudentRepository;
 
-
     @Override
-    public List<KyStudent> listKyStudent() {
-        Iterable<KyStudent> iterable = kyStudentRepository.findAll();
-        List<KyStudent> list = Lists.newArrayList(iterable);
-        return list;
-    }
+    public PageInfo findAll(Integer pageNum, Integer pageSize, String sortField, Sort.Direction order) {
 
-    @Override
-    public List<KyStudent> findAll(Integer pageNo, Integer pageSize) {
-
-        if (pageNo == null) {
-            pageNo = 1;
+        if (pageNum == null) {
+            pageNum = Constant.DEFAULT_PAGE_NUM;
         }
         if (pageSize == null) {
-            pageSize = 20;
+            pageSize = Constant.DEFAULT_PAGE_SIZE;
+        }
+        Pageable pageable;
+        if (StringUtils.isNotEmpty(sortField) && StringUtils.isNotEmpty(order.name())) {
+            Sort sort = new Sort(Sort.Direction.ASC, "id");
+            pageable = PageRequest.of(pageNum, pageSize, sort);
+        } else {
+            pageable = PageRequest.of(pageNum, pageSize);
         }
 
-        Sort sort = new Sort(Sort.Direction.ASC, "id");
-        Pageable pageable = PageRequest.of(pageNo, pageSize, sort);
         Page<KyStudent> datas = kyStudentRepository.findAll(pageable);
-        //总条数
-        int total = (int) datas.getTotalElements();
-        //总页数
-        int totalPages = datas.getTotalPages();
-        //数据列表
-        List<KyStudent> list = datas.getContent();
 
-        return list;
+        return PageInfo.builder()
+                .pageNum(pageNum)
+                .pageSize(pageSize)
+                .total((int) datas.getTotalElements())
+                .totalPages(datas.getTotalPages())
+                .data(datas.getContent())
+                .build();
     }
 }

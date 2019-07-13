@@ -1,4 +1,4 @@
-package com.xwder.cqust.domain;
+package com.xwder.framework.domain.cqust;
 
 import lombok.Data;
 
