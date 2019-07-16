@@ -1,23 +1,21 @@
 package com.xwder.manage.module.cqust.service.impl;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.xwder.api.cqust.StudentServiceApi;
 import com.xwder.framework.common.constan.Constant;
 import com.xwder.framework.domain.cqust.KyStudent;
-import com.xwder.framework.utils.bean.MapToBean;
 import com.xwder.framework.utils.message.Result;
-import com.xwder.framework.utils.page.PageInfo;
-import com.xwder.framework.utils.request.HttpClientUtil;
-import com.xwder.manage.common.utils.StringUtils;
+import com.xwder.framework.utils.page.PageData;
 import com.xwder.manage.module.cqust.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @Author: xwder
@@ -36,7 +34,7 @@ public class StudentServiceImpl implements StudentService {
     private StudentServiceApi studentServiceApi;
 
     @Override
-    public PageInfo findAll(Integer pageNum, Integer pageSize, String sortField, Sort.Direction order) {
+    public PageData findAll(Integer pageNum, Integer pageSize, String sortField, Sort.Direction order) {
 
 
         if (pageNum == null) {
@@ -84,7 +82,7 @@ public class StudentServiceImpl implements StudentService {
             KyStudent kyStudent = jsonObject.toJavaObject(KyStudent.class);
             list.add(kyStudent);
         }
-        PageInfo pageInfo = PageInfo.builder().total(total).data(list).build();
+        PageData pageInfo = PageData.builder().total(total).data(list).build();
         return pageInfo;
     }
 }

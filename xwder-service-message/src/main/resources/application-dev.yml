@@ -1,0 +1,86 @@
+# 开发环境配置
+server:
+  # 服务端口
+  port: 6000
+  servlet:
+    # 项目contextPath
+    context-path: /
+  tomcat:
+    # tomcat的URI编码
+    uri-encoding: UTF-8
+    # tomcat最大线程数，默认为200
+    max-threads: 800
+    # Tomcat启动初始化的线程数，默认值25
+    min-spare-threads: 30
+
+spring:
+  devtools:
+    restart:
+      enabled: true
+    cache: false
+
+  # 模板引擎
+  thymeleaf:
+    mode: LEGACYHTML5
+    encoding: utf-8
+    # 禁用缓存
+    cache: false
+
+  jackson:
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss
+
+  application:
+    name: xwder-provider-message
+
+  mail:
+    host: smtp.qq.com
+    username:  service@xwder.com
+    password:  mwpmowanaxkqibef
+
+    default-encoding: utf-8
+    properties:
+      mail:
+        smtp:
+          ssl:
+            enable: true
+
+feign:
+  hystrix:
+    enabled: false
+  client:
+    config:
+      default:  # 服务名，default表示所有服务
+        connectTimeout: 10000
+        readTimeout: 60000
+        loggerLevel: full  # full | basic | none | headers
+        #requestInterceptors: 拦截器
+
+# 邮件发送人
+mail:
+  fromMail:
+    addr: service@xwder.com
+
+
+eureka:
+  client:
+    service-url:
+      # 指定eureka server通信地址，注意/eureka/小尾巴不能少
+      defaultZone: http://xwder-eureka-01:8001/eureka,http://xwder-eureka-02:8002/eureka,http://xwder-eureka-03:8003/eureka
+  instance:
+    # 是否注册IP到eureka server，如不指定或设为false，那就会注册主机名到eureka server
+    prefer-ip-address: true
+
+
+ribbon:
+  ReadTimeout: 60000
+  ConnectTimeout: 60000
+
+
+
+# 日志配置
+logging:
+  level:
+    com.dimple: debug
+    org.springframework: WARN
+    org.spring.springboot.dao: debug

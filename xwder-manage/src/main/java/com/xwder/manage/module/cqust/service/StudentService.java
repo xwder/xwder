@@ -1,6 +1,6 @@
 package com.xwder.manage.module.cqust.service;
 
-import com.xwder.framework.utils.page.PageInfo;
+import com.xwder.framework.utils.page.PageData;
 import org.springframework.data.domain.Sort;
 
 /**
@@ -15,5 +15,5 @@ public interface StudentService {
      *
      * @return
      */
-    public PageInfo findAll(Integer pageNum, Integer pageSize, String sortField, Sort.Direction order);
+    public PageData findAll(Integer pageNum, Integer pageSize, String sortField, Sort.Direction order);
 }

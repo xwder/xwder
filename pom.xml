@@ -11,12 +11,14 @@
         <module>xwder-eureka-server</module>
         <module>xwder-eureka-client01</module>
         <module>xwder-eureka-client02</module>
-        <module>xwder-provider-cqust01</module>
-        <module>xwder-provider-cqust02</module>
         <module>xwder-framework-common</module>
         <module>xwder-framework-utils</module>
         <module>xwder-manage</module>
         <module>xwder-framework-domain</module>
+        <module>xwder-service-api</module>
+        <module>xwder-service-message</module>
+        <module>xwder-provider-book</module>
+        <module>xwder-provider-cqust</module>
     </modules>
     <packaging>pom</packaging>
 
@@ -53,15 +55,15 @@
         </dependencies>
     </dependencyManagement>
 
-    <build>
+<!--    <build>
         <plugins>
-            <!-- 引入 spring-boot插件模块 -->
+            &lt;!&ndash; 引入 spring-boot插件模块 &ndash;&gt;
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
         </plugins>
-    </build>
+    </build>-->
     <repositories>
         <repository>
             <id>spring-milestones</id>

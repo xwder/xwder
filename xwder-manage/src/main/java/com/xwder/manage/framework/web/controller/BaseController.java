@@ -3,17 +3,13 @@ package com.xwder.manage.framework.web.controller;
 
 import com.xwder.manage.common.utils.DateUtils;
 import com.xwder.manage.common.utils.StringUtils;
-import com.xwder.manage.common.utils.sql.SqlUtil;
 import com.xwder.manage.framework.web.domain.AjaxResult;
 import com.xwder.manage.framework.web.page.PageDomain;
-import com.xwder.manage.framework.web.page.TableDataInfo;
-import com.xwder.manage.framework.web.page.TableSupport;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 
 import java.beans.PropertyEditorSupport;
 import java.util.Date;
-import java.util.List;
 
 /**
  * @className: BaseController

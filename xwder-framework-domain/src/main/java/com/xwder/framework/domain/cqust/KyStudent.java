@@ -1,25 +1,8 @@
 package com.xwder.framework.domain.cqust;
 
-import lombok.Data;
-
-import javax.persistence.*;
-import java.io.Serializable;
 import java.util.Date;
 
-/**
- * @Author: xwder
- * @Date: 2019/7/10 21:18
- * @Description:
- */
-@Data
-@Entity
-@Table(name = "ky_student") // 指定关联的数据库的表名
-public class KyStudent implements Serializable {
-
-    private static final long serialVersionUID = 1L;
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class KyStudent {
     private Integer id;
 
     private String studentNo;
@@ -30,9 +13,6 @@ public class KyStudent implements Serializable {
 
     private String sex;
 
-    /**
-     * 政治面貌
-     */
     private String massIdentity;
 
     private String identityNo;
@@ -47,11 +27,129 @@ public class KyStudent implements Serializable {
 
     private String grade;
 
-    /**
-     * 学制 四年
-     */
-    private String educationSystem;
+    private String educationalSystem;
 
     private String status;
 
+    private String educationSystem;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getStudentNo() {
+        return studentNo;
+    }
+
+    public void setStudentNo(String studentNo) {
+        this.studentNo = studentNo == null ? null : studentNo.trim();
+    }
+
+    public String getStudentName() {
+        return studentName;
+    }
+
+    public void setStudentName(String studentName) {
+        this.studentName = studentName == null ? null : studentName.trim();
+    }
+
+    public String getNationId() {
+        return nationId;
+    }
+
+    public void setNationId(String nationId) {
+        this.nationId = nationId == null ? null : nationId.trim();
+    }
+
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex == null ? null : sex.trim();
+    }
+
+    public String getMassIdentity() {
+        return massIdentity;
+    }
+
+    public void setMassIdentity(String massIdentity) {
+        this.massIdentity = massIdentity == null ? null : massIdentity.trim();
+    }
+
+    public String getIdentityNo() {
+        return identityNo;
+    }
+
+    public void setIdentityNo(String identityNo) {
+        this.identityNo = identityNo == null ? null : identityNo.trim();
+    }
+
+    public Date getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(Date birthday) {
+        this.birthday = birthday;
+    }
+
+    public String getCollgeNo() {
+        return collgeNo;
+    }
+
+    public void setCollgeNo(String collgeNo) {
+        this.collgeNo = collgeNo == null ? null : collgeNo.trim();
+    }
+
+    public String getMajorNo() {
+        return majorNo;
+    }
+
+    public void setMajorNo(String majorNo) {
+        this.majorNo = majorNo == null ? null : majorNo.trim();
+    }
+
+    public Date getEnrollmentTime() {
+        return enrollmentTime;
+    }
+
+    public void setEnrollmentTime(Date enrollmentTime) {
+        this.enrollmentTime = enrollmentTime;
+    }
+
+    public String getGrade() {
+        return grade;
+    }
+
+    public void setGrade(String grade) {
+        this.grade = grade == null ? null : grade.trim();
+    }
+
+    public String getEducationalSystem() {
+        return educationalSystem;
+    }
+
+    public void setEducationalSystem(String educationalSystem) {
+        this.educationalSystem = educationalSystem == null ? null : educationalSystem.trim();
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status == null ? null : status.trim();
+    }
+
+    public String getEducationSystem() {
+        return educationSystem;
+    }
+
+    public void setEducationSystem(String educationSystem) {
+        this.educationSystem = educationSystem == null ? null : educationSystem.trim();
+    }
 }

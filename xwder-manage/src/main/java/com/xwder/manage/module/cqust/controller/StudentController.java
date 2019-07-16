@@ -1,7 +1,7 @@
 package com.xwder.manage.module.cqust.controller;
 
 import com.xwder.framework.domain.cqust.KyStudent;
-import com.xwder.framework.utils.page.PageInfo;
+import com.xwder.framework.utils.page.PageData;
 import com.xwder.manage.framework.web.controller.BaseController;
 import com.xwder.manage.framework.web.page.TableDataInfo;
 import com.xwder.manage.framework.web.page.TableSupport;
@@ -38,7 +38,7 @@ public class StudentController extends BaseController {
         pageDomain = TableSupport.buildPageRequest();
         Integer pageNum = pageDomain.getPageNum() - 1;
         Integer pageSize = pageDomain.getPageSize();
-        PageInfo page = studentService.findAll(pageNum, pageSize, null, null);
+        PageData page = studentService.findAll(pageNum, pageSize, null, null);
         TableDataInfo rspData = new TableDataInfo();
         if (page == null) {
             rspData.setCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
