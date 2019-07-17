@@ -9,8 +9,6 @@
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>xwder-eureka-server</module>
-        <module>xwder-eureka-client01</module>
-        <module>xwder-eureka-client02</module>
         <module>xwder-framework-common</module>
         <module>xwder-framework-utils</module>
         <module>xwder-manage</module>
@@ -40,6 +38,10 @@
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter</artifactId>
+        </dependency>
     </dependencies>
 
     <!-- 引入 spring-cloud模块 -->
@@ -54,16 +56,6 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
-
-<!--    <build>
-        <plugins>
-            &lt;!&ndash; 引入 spring-boot插件模块 &ndash;&gt;
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-        </plugins>
-    </build>-->
     <repositories>
         <repository>
             <id>spring-milestones</id>
