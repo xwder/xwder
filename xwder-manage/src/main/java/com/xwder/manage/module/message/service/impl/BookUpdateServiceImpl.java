@@ -2,13 +2,10 @@ package com.xwder.manage.module.message.service.impl;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.google.gson.JsonArray;
 import com.xwder.api.message.MessageServiceApi;
-import com.xwder.framework.domain.book.BookInfo;
 import com.xwder.framework.utils.message.Result;
 import com.xwder.framework.utils.message.ResultUtil;
 import com.xwder.framework.utils.request.HttpClientUtil;
-import com.xwder.manage.common.utils.StringUtils;
 import com.xwder.manage.module.message.service.BookUpdateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
