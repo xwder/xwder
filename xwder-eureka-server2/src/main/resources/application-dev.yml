@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: spring-cloud-eureka
+
+  security:
+    user:
+      name: eureka         # 配置登录的账号是 eureka
+      password: 123456     # 配置登录的密码是 123456
+
+server:
+  port: 8002
+
+eureka:
+  instance:
+    # eureka client向eureka server发送心跳的时间间隔，默认30秒，将此值改小可解决eureka注册慢的问题
+    lease-renewal-interval-in-seconds: 5
+    # 续约到期时间（默认90秒）
+    lease-expiration-duration-in-seconds: 5
+  client:
+    service-url:
+      defaultZone: http://eureka:123456@xwder-eureka-01:8001/eureka/

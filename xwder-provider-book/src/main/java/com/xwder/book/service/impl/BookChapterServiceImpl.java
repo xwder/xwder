@@ -1,6 +1,7 @@
 package com.xwder.book.service.impl;
 
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.xwder.book.dao.BookChapterDao;
 import com.xwder.book.service.BookChapterService;
 import com.xwder.framework.common.constan.Constant;
@@ -9,6 +10,7 @@ import com.xwder.framework.utils.page.PageData;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
+import tk.mybatis.mapper.entity.Example;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -27,7 +29,7 @@ public class BookChapterServiceImpl implements BookChapterService {
     private BookChapterDao bookChapterDao;
 
     @Override
-    public PageData findAll(Integer pageNum, Integer pageSize, String sortField, Sort.Direction order) {
+    public PageData findAll(Integer bookId,Integer pageNum, Integer pageSize, String sortField, Sort.Direction order) {
 
         if (pageNum == null) {
             pageNum = Constant.DEFAULT_PAGE_NUM;
@@ -43,8 +45,12 @@ public class BookChapterServiceImpl implements BookChapterService {
             PageHelper.startPage(pageNum, pageSize);
         }
 
-        List<BookChapter> bookChapterList = bookChapterDao.selectAll();
-        com.github.pagehelper.PageInfo<BookChapter> pageInfo = new com.github.pagehelper.PageInfo<BookChapter>(bookChapterList);
+
+        Example example = new Example(BookChapter.class);
+        example.createCriteria().andEqualTo("bookId",bookId);
+        List<BookChapter> bookChapterList = bookChapterDao.selectByExample(example);
+
+        PageInfo<BookChapter> pageInfo = new PageInfo<BookChapter>(bookChapterList);
         long total = pageInfo.getTotal();
         int pages = pageInfo.getPages();
         bookChapterList = pageInfo.getList();

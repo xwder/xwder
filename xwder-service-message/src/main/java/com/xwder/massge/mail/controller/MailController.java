@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.thymeleaf.TemplateEngine;
 
 /**
- * @author zoey
+ * @author xwder
  * @Description:发送邮件的Controller
- * @date:2018年3月16日
+ * @date:2019年7月18日00:06:41
  */
 @RestController
 @RequestMapping("/mail")

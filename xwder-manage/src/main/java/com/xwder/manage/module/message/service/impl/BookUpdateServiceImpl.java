@@ -29,7 +29,7 @@ public class BookUpdateServiceImpl implements BookUpdateService {
     @Override
     public List<Map> getBookUpdateInfo(String author, String bookName) {
 
-        String url = "http://127.0.0.1:8888/book/烽火戏诸侯/剑来";
+        String url = "http://119.29.136.137:8888/book/烽火戏诸侯/剑来";
 
         String json = HttpClientUtil.doGet(url);
 

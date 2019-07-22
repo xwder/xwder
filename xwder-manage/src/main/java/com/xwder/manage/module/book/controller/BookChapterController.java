@@ -14,10 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @Author: xwder
@@ -38,13 +35,13 @@ public class BookChapterController extends BaseController {
         return "book/chapter";
     }
 
-    @GetMapping("/list")
+    @GetMapping("/list/{bookId}")
     @ResponseBody
-    public TableDataInfo list(BookChapter bookChapter) {
+    public TableDataInfo list(@PathVariable Integer bookId) {
         pageDomain = TableSupport.buildPageRequest();
         Integer pageNum = pageDomain.getPageNum() - 1;
         Integer pageSize = pageDomain.getPageSize();
-        PageData page = bookChapterService.findAll(pageNum, pageSize, null, null);
+        PageData page = bookChapterService.findAll(bookId, pageNum, pageSize, null, null);
         TableDataInfo rspData = new TableDataInfo();
         if (page == null) {
             rspData.setCode(HttpStatus.INTERNAL_SERVER_ERROR.value());

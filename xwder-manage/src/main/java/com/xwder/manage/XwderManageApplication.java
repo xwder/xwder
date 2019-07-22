@@ -9,6 +9,8 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 /**
+ * SpringBootApplication 需要把 hystrix 回调的包扫描到
+ *
  * @ClassName: XwderManageApplication
  * @Description:
  * @Author: xwder
@@ -16,7 +18,9 @@ import org.springframework.scheduling.annotation.EnableScheduling;
  * @Version: 1.0
  */
 @EnableScheduling
-@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class,  MongoAutoConfiguration.class})
+@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class, MongoAutoConfiguration.class},
+        scanBasePackages = {"com.xwder.manage", "com.xwder.api"}
+)
 @EnableFeignClients(basePackages = {"com.xwder.api"})
 @EnableDiscoveryClient
 public class XwderManageApplication {

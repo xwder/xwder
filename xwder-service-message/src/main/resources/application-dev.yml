@@ -1,7 +1,7 @@
 # 开发环境配置
 server:
   # 服务端口
-  port: 6000
+  port: 9003
   servlet:
     # 项目contextPath
     context-path: /
@@ -47,7 +47,7 @@ spring:
 
 feign:
   hystrix:
-    enabled: false
+    enabled: true
   client:
     config:
       default:  # 服务名，default表示所有服务
@@ -66,7 +66,7 @@ eureka:
   client:
     service-url:
       # 指定eureka server通信地址，注意/eureka/小尾巴不能少
-      defaultZone: http://xwder-eureka-01:8001/eureka,http://xwder-eureka-02:8002/eureka,http://xwder-eureka-03:8003/eureka
+      defaultZone: http://eureka:123456@xwder-eureka-01:8001/eureka/,http://eureka:123456@xwder-eureka-02:8002/eureka/
   instance:
     # 是否注册IP到eureka server，如不指定或设为false，那就会注册主机名到eureka server
     prefer-ip-address: true
@@ -84,3 +84,11 @@ logging:
     com.dimple: debug
     org.springframework: WARN
     org.spring.springboot.dao: debug
+
+
+sms:
+  url: https://msg.plus.jdcloud.com/api/sms/multiSend
+  account: 13509433172_p
+  password: db9939e06d2980202f134b1894d75fc3
+  sign: 【服务管理系统】
+  extend:

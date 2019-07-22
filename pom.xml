@@ -8,7 +8,6 @@
     <artifactId>xwder-parent</artifactId>
     <version>1.0-SNAPSHOT</version>
     <modules>
-        <module>xwder-eureka-server</module>
         <module>xwder-framework-common</module>
         <module>xwder-framework-utils</module>
         <module>xwder-manage</module>
@@ -17,6 +16,8 @@
         <module>xwder-service-message</module>
         <module>xwder-provider-book</module>
         <module>xwder-provider-cqust</module>
+        <module>xwder-eureka-server1</module>
+        <module>xwder-eureka-server2</module>
     </modules>
     <packaging>pom</packaging>
 

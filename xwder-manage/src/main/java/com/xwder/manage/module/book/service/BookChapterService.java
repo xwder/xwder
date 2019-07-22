@@ -14,6 +14,6 @@ public interface BookChapterService {
      *
      * @return
      */
-    public PageData findAll(Integer pageNum, Integer pageSize, String sortField, Sort.Direction order);
+    public PageData findAll(Integer bookId,Integer pageNum, Integer pageSize, String sortField, Sort.Direction order);
 }
 

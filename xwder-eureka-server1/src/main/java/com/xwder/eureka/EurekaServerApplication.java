@@ -7,10 +7,10 @@ import org.springframework.cloud.netflix.eureka.server.EnableEurekaServer;
 
 /**
  * @Author: xwder
- * @Date: 2019/7/11 21:49
+ * @Date: 2019/7/11 21:55
  * @Description:
  */
-@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
+@SpringBootApplication(exclude = DataSourceAutoConfiguration.class)
 @EnableEurekaServer
 public class EurekaServerApplication {
 

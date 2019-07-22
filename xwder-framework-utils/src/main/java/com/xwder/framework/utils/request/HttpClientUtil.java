@@ -19,6 +19,9 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 
+/**
+ * @author xwder
+ */
 public class HttpClientUtil {
 
 	public static String doGet(String url, Map<String, String> param) {
@@ -93,7 +96,6 @@ public class HttpClientUtil {
 			try {
 				response.close();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}

@@ -14,18 +14,35 @@ import org.springframework.web.bind.annotation.RequestParam;
  * @Date: 2019/7/16 01:13
  * @Description:
  */
-
 @FeignClient(value = "XWDER-PROVIDER-BOOK")
-public interface BookInfoServiceApi {
+public interface
+BookInfoServiceApi {
 
 
+    /**
+     * 分页查询书籍信息
+     * @param page
+     * @param size
+     * @param sortField
+     * @param order
+     * @return
+     */
     @RequestMapping("/book/book/page/{page}/{size}")
     public Result<BookInfo> listBookByPage(@PathVariable Integer page, @PathVariable Integer size,
                                            @RequestParam("sortField") final String sortField,
                                            @RequestParam("order") final Sort.Direction order);
 
-    @RequestMapping("/book/chapter/page/{page}/{size}")
-    public Result<BookChapter> listBookChapterByPage(@PathVariable Integer page, @PathVariable Integer size,
+    /**
+     * 根据书籍信息 查询章节信息
+     * @param bookId
+     * @param page
+     * @param size
+     * @param sortField
+     * @param order
+     * @return
+     */
+    @RequestMapping("/book/chapter/page/{bookId}/{page}/{size}")
+    public Result<BookChapter> listBookChapterByPage(@PathVariable Integer bookId, @PathVariable Integer page, @PathVariable Integer size,
                                                      @RequestParam("sortField") final String sortField,
                                                      @RequestParam("order") final Sort.Direction order);
 }
