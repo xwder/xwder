@@ -20,6 +20,17 @@ public interface BookChapterService {
      * @param order     顺序
      * @return PageResultEntity
      */
-    PageData findAll(Integer bookId,Integer pageNum, Integer pageSize, String sortField, Sort.Direction order);
+    PageData listBookChapter(Integer bookId,Integer pageNum, Integer pageSize, String sortField, Sort.Direction order);
+
+    /**
+     * 根据书籍编号分页查询章节信息
+     * @param bookId   book id
+     * @param pageNum   页码
+     * @param pageSize  页数
+     * @param sortField 排序字段
+     * @param order     顺序
+     * @return
+     */
+    PageData listBookChapterByBookId(Integer bookId,Integer pageNum, Integer pageSize, String sortField, Sort.Direction order);
 
 }

@@ -4,7 +4,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration;
+import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.netflix.hystrix.dashboard.EnableHystrixDashboard;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
@@ -22,7 +24,9 @@ import org.springframework.scheduling.annotation.EnableScheduling;
         scanBasePackages = {"com.xwder.manage", "com.xwder.api"}
 )
 @EnableFeignClients(basePackages = {"com.xwder.api"})
+@EnableCircuitBreaker
 @EnableDiscoveryClient
+@EnableHystrixDashboard
 public class XwderManageApplication {
 
     public static void main(String[] args) {

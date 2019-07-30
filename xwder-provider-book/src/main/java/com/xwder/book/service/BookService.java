@@ -20,5 +20,5 @@ public interface BookService {
      * @param order     顺序
      * @return PageResultEntity
      */
-    PageData findAll(Integer pageNum, Integer pageSize, String sortField, Sort.Direction order);
+    PageData listBookInfo(Integer pageNum, Integer pageSize, String sortField, Sort.Direction order);
 }

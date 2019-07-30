@@ -18,6 +18,8 @@
         <module>xwder-provider-cqust</module>
         <module>xwder-eureka-server1</module>
         <module>xwder-eureka-server2</module>
+        <module>xwder-hystrix-dashboard</module>
+        <module>xwder-hystrix-turbine</module>
     </modules>
     <packaging>pom</packaging>
 

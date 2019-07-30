@@ -9,11 +9,17 @@ import org.springframework.data.domain.Sort;
  * @Description:
  */
 public interface BookChapterService {
+
     /**
-     * 查询所有的章节
+     * 根据书籍id分页查询章节信息
      *
+     * @param bookId
+     * @param pageNum
+     * @param pageSize
+     * @param sortField
+     * @param order
      * @return
      */
-    public PageData findAll(Integer bookId,Integer pageNum, Integer pageSize, String sortField, Sort.Direction order);
+    public PageData listBookChapterByPage(Integer bookId, Integer pageNum, Integer pageSize, String sortField, Sort.Direction order);
 }
 

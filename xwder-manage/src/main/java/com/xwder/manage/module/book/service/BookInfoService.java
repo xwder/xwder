@@ -11,9 +11,12 @@ import org.springframework.data.domain.Sort;
 public interface BookInfoService {
 
     /**
-     * 查询所有的小说
-     *
+     * 分页查询书籍信息
+     * @param pageNum
+     * @param pageSize
+     * @param sortField
+     * @param order
      * @return
      */
-    public PageData findAll(Integer pageNum, Integer pageSize, String sortField, Sort.Direction order);
+    public PageData listBookInfo(Integer pageNum, Integer pageSize, String sortField, Sort.Direction order);
 }

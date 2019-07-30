@@ -1,7 +1,7 @@
 package com.xwder.message.mail;
 
 import com.xwder.massge.MessageApplication;
-import com.xwder.massge.mail.service.MailService;
+import com.xwder.massge.module.mail.service.MailService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,7 +48,7 @@ public class MessageApplicationTests {
         context.setVariable("company", "xwder.com");
         context.setVariable("product","xwder-service-message");
         String emailContent = templateEngine.process("emailTemplate", context);
-        //mailService.sendHtmlMail("xwder@xwder.com","主题：这是模板邮件",emailContent);
+        mailService.sendHtmlMail("xwder@xwder.com","主题：这是模板邮件",emailContent);
     }
 
 }

@@ -15,5 +15,5 @@ public interface StudentService {
      *
      * @return
      */
-    public PageData findAll(Integer pageNum, Integer pageSize, String sortField, Sort.Direction order);
+    public PageData listStudent(Integer pageNum, Integer pageSize, String sortField, Sort.Direction order);
 }

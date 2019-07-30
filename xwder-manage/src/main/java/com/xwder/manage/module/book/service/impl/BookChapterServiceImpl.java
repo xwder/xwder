@@ -28,7 +28,7 @@ public class BookChapterServiceImpl implements BookChapterService {
     private BookInfoServiceApi bookChapterServiceApi;
 
     @Override
-    public PageData findAll(Integer bookId,Integer pageNum, Integer pageSize, String sortField, Sort.Direction order) {
+    public PageData listBookChapterByPage(Integer bookId, Integer pageNum, Integer pageSize, String sortField, Sort.Direction order) {
         if (pageNum == null) {
             pageNum = Constant.DEFAULT_PAGE_NUM;
         }
@@ -36,7 +36,7 @@ public class BookChapterServiceImpl implements BookChapterService {
             pageSize = Constant.DEFAULT_PAGE_SIZE;
         }
 
-        Result<BookChapter> result = bookChapterServiceApi.listBookChapterByPage(bookId,pageNum, pageSize, null, null);
+        Result<BookChapter> result = bookChapterServiceApi.listBookChapterByPage(bookId, pageNum, pageSize, null, null);
 
         LinkedHashMap linkedHashMap = (LinkedHashMap) result.getData();
         int total = (int) linkedHashMap.get("total");

@@ -1,6 +1,7 @@
 package com.xwder.manage.module.book.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.xwder.api.book.BookInfoServiceApi;
 import com.xwder.framework.common.constan.Constant;
 import com.xwder.framework.domain.book.BookInfo;
@@ -28,8 +29,17 @@ public class BookInfoServiceImpl implements BookInfoService {
     @Autowired
     private BookInfoServiceApi bookInfoServiceApi;
 
+    /**
+     * 通用方式使用Hystrix 服务降级
+     *
+     * @param pageNum
+     * @param pageSize
+     * @param sortField
+     * @param order
+     * @return
+     */
     @Override
-    public PageData findAll(Integer pageNum, Integer pageSize, String sortField, Sort.Direction order) {
+    public PageData listBookInfo(Integer pageNum, Integer pageSize, String sortField, Sort.Direction order) {
 
         if (pageNum == null) {
             pageNum = Constant.DEFAULT_PAGE_NUM;

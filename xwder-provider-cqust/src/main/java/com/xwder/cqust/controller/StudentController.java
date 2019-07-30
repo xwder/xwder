@@ -28,7 +28,7 @@ public class StudentController {
     @GetMapping("/page/{page}/{size}")
     @ResponseBody
     public Result<KyStudent> listByPage(@PathVariable Integer page, @PathVariable Integer size, String sortField, Sort.Direction order) {
-        PageData pageInfo = studentService.findAll(page, size, sortField, order);
+        PageData pageInfo = studentService.listStudent(page, size, sortField, order);
         return ResultUtil.success(pageInfo);
     }
 

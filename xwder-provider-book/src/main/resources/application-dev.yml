@@ -54,6 +54,11 @@ spring:
   application:
     name: xwder-provider-book
 
+#开启驼峰命名转换
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+
 eureka:
   client:
     service-url:
@@ -75,11 +80,14 @@ feign:
         loggerLevel: full  # full | basic | none | headers
         #requestInterceptors: 拦截器
 
-
-
-# 日志配置
-logging:
-  level:
-    com.dimple: debug
-    org.springframework: WARN
-    org.spring.springboot.dao: debug
+management:
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        # 暴露.端点
+        include: '*'
+        # 取消暴露metrics端点，如需暴露多个，用,分隔；如需暴露所有端点，用'*'
+        #exclude: '*'

@@ -37,11 +37,11 @@ public class BookChapterController extends BaseController {
 
     @GetMapping("/list/{bookId}")
     @ResponseBody
-    public TableDataInfo list(@PathVariable Integer bookId) {
+    public TableDataInfo listBookChapterByPage(@PathVariable Integer bookId) {
         pageDomain = TableSupport.buildPageRequest();
         Integer pageNum = pageDomain.getPageNum() - 1;
         Integer pageSize = pageDomain.getPageSize();
-        PageData page = bookChapterService.findAll(bookId, pageNum, pageSize, null, null);
+        PageData page = bookChapterService.listBookChapterByPage(bookId, pageNum, pageSize, null, null);
         TableDataInfo rspData = new TableDataInfo();
         if (page == null) {
             rspData.setCode(HttpStatus.INTERNAL_SERVER_ERROR.value());

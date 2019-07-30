@@ -2,6 +2,7 @@ package com.xwder.cqust.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.xwder.cqust.dao.KyStudentDao;
 import com.xwder.cqust.service.KyStudentService;
 import com.xwder.framework.common.constan.Constant;
@@ -26,8 +27,9 @@ public class KyStudentServiceImpl implements KyStudentService {
     @Autowired
     private KyStudentDao kyStudentDao;
 
+    @HystrixCommand(fallbackMethod = "listStudentFallBack")
     @Override
-    public PageData findAll(Integer pageNum, Integer pageSize, String sortField, Sort.Direction order) {
+    public PageData listStudent(Integer pageNum, Integer pageSize, String sortField, Sort.Direction order) {
 
         if (pageNum == null) {
             pageNum = Constant.DEFAULT_PAGE_NUM;
@@ -56,5 +58,14 @@ public class KyStudentServiceImpl implements KyStudentService {
                 .totalPages(pages)
                 .data(studentList)
                 .build();
+    }
+
+
+    /**
+     * 服务不可用 降级回调方法
+     * @return
+     */
+    public PageData listStudentFallBack(Integer pageNum, Integer pageSize, String sortField, Sort.Direction order) {
+        return PageData.builder().total(0).data(null).build();
     }
 }

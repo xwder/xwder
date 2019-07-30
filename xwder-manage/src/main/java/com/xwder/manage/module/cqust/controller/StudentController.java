@@ -38,7 +38,7 @@ public class StudentController extends BaseController {
         pageDomain = TableSupport.buildPageRequest();
         Integer pageNum = pageDomain.getPageNum() - 1;
         Integer pageSize = pageDomain.getPageSize();
-        PageData page = studentService.findAll(pageNum, pageSize, null, null);
+        PageData page = studentService.listStudent(pageNum, pageSize, null, null);
         TableDataInfo rspData = new TableDataInfo();
         if (page == null) {
             rspData.setCode(HttpStatus.INTERNAL_SERVER_ERROR.value());

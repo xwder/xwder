@@ -1,9 +1,6 @@
 package com.xwder.framework.utils.message;
 
-import lombok.Builder;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 /**
  * @ClassName: Result
@@ -15,6 +12,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
+@ToString
 public class Result<T> {
     private Integer code;
     private String msg;

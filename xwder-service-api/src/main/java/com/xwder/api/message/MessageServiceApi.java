@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  * @Description:
  */
 
-@FeignClient(value = "XWDER-PROVIDER-MESSAGE", fallbackFactory = MessageServiceFallbackFactory.class)
+@FeignClient(name  = "XWDER-PROVIDER-MESSAGE", fallbackFactory = MessageServiceFallbackFactory.class)
 public interface MessageServiceApi {
 
     /**

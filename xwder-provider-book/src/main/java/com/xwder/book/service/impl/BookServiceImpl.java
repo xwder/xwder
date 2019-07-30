@@ -1,6 +1,7 @@
 package com.xwder.book.service.impl;
 
 import com.github.pagehelper.PageHelper;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.xwder.book.dao.BookInfoDao;
 import com.xwder.book.service.BookService;
 import com.xwder.framework.common.constan.Constant;
@@ -25,8 +26,9 @@ public class BookServiceImpl implements BookService {
     @Autowired
     private BookInfoDao bookInfoDao;
 
+    @HystrixCommand(fallbackMethod = "listBookInfoFallBack")
     @Override
-    public PageData findAll(Integer pageNum, Integer pageSize, String sortField, Sort.Direction order) {
+    public PageData listBookInfo(Integer pageNum, Integer pageSize, String sortField, Sort.Direction order) {
 
         if (pageNum == null) {
             pageNum = Constant.DEFAULT_PAGE_NUM;
@@ -56,5 +58,14 @@ public class BookServiceImpl implements BookService {
                 .data(bookInfoList)
                 .build();
     }
+    /**
+     * 服务不可用 降级回调方法
+     * @return
+     */
+    public PageData listBookInfoFallBack(Integer pageNum, Integer pageSize, String sortField, Sort.Direction order){
+        PageData pageInfo = PageData.builder().total(0).data(null).build();
+        return pageInfo;
+    }
+
 
 }

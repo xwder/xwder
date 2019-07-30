@@ -1,0 +1,15 @@
+server:
+  port: 8020
+spring:
+  application:
+    name: xwder-hystrix-turbine
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka:123456@xwder-eureka-01:8001/eureka/,http://eureka:123456@xwder-eureka-02:8002/eureka/
+  instance:
+    prefer-ip-address: true
+turbine:
+  # 要监控的微服务列表，多个用,分隔
+  appConfig: xwder-provider-book,xwder-provider-cqust,xwder-provider-message
+  clusterNameExpression: "'default'"

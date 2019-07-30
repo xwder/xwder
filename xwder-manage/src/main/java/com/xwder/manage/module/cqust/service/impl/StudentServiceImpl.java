@@ -1,6 +1,7 @@
 package com.xwder.manage.module.cqust.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.xwder.api.cqust.StudentServiceApi;
 import com.xwder.framework.common.constan.Constant;
 import com.xwder.framework.domain.cqust.KyStudent;
@@ -34,7 +35,7 @@ public class StudentServiceImpl implements StudentService {
     private StudentServiceApi studentServiceApi;
 
     @Override
-    public PageData findAll(Integer pageNum, Integer pageSize, String sortField, Sort.Direction order) {
+    public PageData listStudent(Integer pageNum, Integer pageSize, String sortField, Sort.Direction order) {
 
 
         if (pageNum == null) {
@@ -69,6 +70,11 @@ public class StudentServiceImpl implements StudentService {
 //        }
 
         Result<KyStudent> result = studentServiceApi.listByPage(pageNum, pageSize, null, null);
+
+        if(result.getCode() != 200){
+            PageData pageInfo = PageData.builder().total(0).data(null).build();
+            return pageInfo;
+        }
 
         LinkedHashMap linkedHashMap = (LinkedHashMap) result.getData();
         int total = (int) linkedHashMap.get("total");

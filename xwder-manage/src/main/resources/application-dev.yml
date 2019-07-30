@@ -49,6 +49,8 @@ feign:
         readTimeout: 60000
         loggerLevel: full  # full | basic | none | headers
         #requestInterceptors: 拦截器
+      XWDER-PROVIDER-CQUST:
+        loggerLevel: full
 
 #hystrix.command.default.execution.isolation.thread.timeoutInMilliseconds: 5000
 hystrix:
@@ -63,14 +65,20 @@ hystrix:
 # 日志配置
 logging:
   level:
-    com.dimple: debug
+    com.xwder: debug
     org.springframework: WARN
     org.spring.springboot.dao: debug
+    com.xwder.api.book.BookInfoServiceApi: debug
 
 
 management:
+  endpoint:
+    health:
+      show-details: always
   endpoints:
     web:
       exposure:
-        # 暴露metrics端点，如需暴露多个，用,分隔；如需暴露所有端点，用'*'
-        exclude: '*'
+      # 暴露.端点
+        include: '*'
+      # 取消暴露metrics端点，如需暴露多个，用,分隔；如需暴露所有端点，用'*'
+        #exclude: '*'

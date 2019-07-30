@@ -19,6 +19,6 @@ public interface KyStudentService {
      * @param order     顺序
      * @return PageResultEntity
      */
-    PageData findAll(Integer pageNum, Integer pageSize, String sortField, Sort.Direction order);
+    PageData listStudent(Integer pageNum, Integer pageSize, String sortField, Sort.Direction order);
 
 }

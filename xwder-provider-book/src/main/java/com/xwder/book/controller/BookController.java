@@ -28,7 +28,7 @@ public class BookController {
     @GetMapping("/page/{page}/{size}")
     @ResponseBody
     public Result<BookInfo> listByPage(@PathVariable Integer page, @PathVariable Integer size, String sortField, Sort.Direction order) {
-        PageData pageInfo = bookService.findAll(page, size, sortField, order);
+        PageData pageInfo = bookService.listBookInfo(page, size, sortField, order);
         return ResultUtil.success(pageInfo);
     }
 

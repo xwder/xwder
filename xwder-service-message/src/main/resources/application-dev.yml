@@ -55,6 +55,10 @@ feign:
         readTimeout: 60000
         loggerLevel: full  # full | basic | none | headers
         #requestInterceptors: 拦截器
+#开启驼峰命名转换
+#mybatis:
+#  configuration:
+#    map-underscore-to-camel-case: true
 
 # 邮件发送人
 mail:
@@ -77,6 +81,17 @@ ribbon:
   ConnectTimeout: 60000
 
 
+management:
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        # 暴露.端点
+        include: '*'
+        # 取消暴露metrics端点，如需暴露多个，用,分隔；如需暴露所有端点，用'*'
+        #exclude: '*'
 
 # 日志配置
 logging:
@@ -85,10 +100,16 @@ logging:
     org.springframework: WARN
     org.spring.springboot.dao: debug
 
-
-sms:
+# 京东短信 （需要审核）
+jdcloud-sms:
   url: https://msg.plus.jdcloud.com/api/sms/multiSend
   account: 13509433172_p
   password: db9939e06d2980202f134b1894d75fc3
   sign: 【服务管理系统】
   extend:
+
+# 腾讯云短信 直达
+myqcloud-sms:
+  SecretId: AKID16m8tm1RrlE0s6fe50atymhKe1faomyn6p6a
+  SecretKey: A7kH2xeJEFPK8fmIz8hDx2i3J1qt9fufZ4ebz0
+  url: https://service-g5r3b98v-1251224662.ap-shanghai.apigateway.myqcloud.com/release/sendsms
