@@ -6,16 +6,22 @@ import com.xwder.framework.utils.message.Result;
 import com.xwder.framework.utils.message.ResultUtil;
 import com.xwder.massge.module.sms.config.MyQcloudSMSConfig;
 import com.xwder.massge.module.sms.service.QCloudSMSService;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpStatus;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.util.EntityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import sun.misc.BASE64Encoder;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
-import java.io.BufferedReader;
-import java.io.DataOutputStream;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
@@ -155,6 +161,68 @@ public class QCloudSMSServiceImpl implements QCloudSMSService {
             } catch (Exception e2) {
                 return  ResultUtil.error(e2.getMessage());
             }
+        }
+    }
+
+    public Result sendSMS2(String phone, String content) {
+
+        String source = "market";
+        BufferedReader in = null;
+
+        try {
+            Calendar cd = Calendar.getInstance();
+            SimpleDateFormat sdf = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss 'GMT'", Locale.US);
+            sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
+            String datetime = sdf.format(cd.getTime());
+            // 签名
+            String auth = calcAuthorization(source, myQcloudSMSConfig.getSecretId(), myQcloudSMSConfig.getSecretKey(), datetime);
+
+            // 查询参数
+            Map<String, String> queryParams = new HashMap<String, String>();
+            queryParams.put("content", content);
+            queryParams.put("mobile", phone);
+            // body参数
+            Map<String, String> bodyParams = new HashMap<String, String>();
+
+            // url参数拼接
+            String url = myQcloudSMSConfig.getUrl();
+            if (!queryParams.isEmpty()) {
+                url += "?" + urlEncode(queryParams);
+            }
+
+            CloseableHttpClient httpClient = HttpClients.createDefault();
+            HttpGet httpGet = new HttpGet(url);
+            httpGet.addHeader("Content-Type", "application/x-www-form-urlencoded");
+            httpGet.addHeader("X-Source",source);
+            httpGet.addHeader("X-Date", datetime);
+            httpGet.addHeader("Authorization", auth);
+
+            String result = StringUtils.EMPTY;
+            try {
+                CloseableHttpResponse response = httpClient.execute(httpGet);
+                int status = response.getStatusLine().getStatusCode();
+                if (status == HttpStatus.SC_OK){
+                    HttpEntity responseEntity = response.getEntity();
+                    result = EntityUtils.toString(responseEntity, "UTF-8");
+                }
+            } catch (ClientProtocolException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+
+            JSONObject jsonObject = JSONObject.parseObject(result);
+            Integer resultCode = jsonObject.getInteger("result");
+            if (resultCode == 0) {
+                return ResultUtil.success("发送成功！");
+            } else {
+                return ResultUtil.error(jsonObject.get("errmsg").toString());
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResultUtil.error(e.getMessage());
         }
     }
 
