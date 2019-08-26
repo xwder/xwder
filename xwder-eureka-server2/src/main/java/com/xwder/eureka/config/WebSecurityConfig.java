@@ -15,6 +15,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
   @Override
   protected void configure(HttpSecurity http) throws Exception {
     http.csrf().ignoringAntMatchers("/eureka/**");
+    // 支持httpBasic
+    http.authorizeRequests().anyRequest().authenticated().and().httpBasic();
     super.configure(http);
   }
 }
