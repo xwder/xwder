@@ -35,21 +35,59 @@ eureka:
     service-url:
       # 指定eureka server通信地址，注意/eureka/小尾巴不能少
       defaultZone: http://eureka:123456@xwder-eureka-01:8001/eureka/,http://eureka:123456@xwder-eureka-02:8002/eureka/
+
+    # 清理间隔 实际开发过程中，我们可能会不停地重启服务，由于Eureka有自己的保护机制，故节点下线后，服务信息还会一直存在于Eureka中。
+    # 我们可以通过增加一些配置让移除的速度更快一点，当然只在开发环境下使用，生产环境下不推荐使用
+    # 用于开启健康检查，需要在pom.xml中引入actuator的依赖
+    healthcheck:
+      enabled: true
+
   instance:
     # 是否注册IP到eureka server，如不指定或设为false，那就会注册主机名到eureka server
     prefer-ip-address: true
+    # 定义实例ID格式
+    instance-id: ${spring.application.name}:${spring.cloud.client.ip-address}:${server.port}
+    # Eureka Client发送心跳给server端的频率
+    lease-renewal-interval-in-seconds: 5
+    # 表示Eureka Server至上一次收到client的心跳之后，等待下一次心跳的超时时间，在这个时间内若没收到下一次心跳，则移除该Instance。
+    lease-expiration-duration-in-seconds: 5
+    # eureka.instance.status-page-url=http://localhost:8080
+    status-page-url: http://localhost:8080
+    # 自定义元数据
+    metadata-map:
+      xwder: xwder
 
+
+# 链接超时时间
+#feign.client.config.feignName.connectTimeout=5000
+## 读取超时时间
+#feign.client.config.feignName.readTimeout=5000
+## 日志等级
+#feign.client.config.feignName.loggerLevel=full
+## 重试
+#feign.client.config.feignName.retryer=com.example.SimpleRetryer
+## 拦截器
+#feign.client.config.feignName.requestInterceptors[0]=com.example.FooRequestInterceptor
+#feign.client.config.feignName.requestInterceptors[1]=com.example.BarRequestInterceptor
+## 编码器
+#feign.client.config.feignName.encoder=com.example.SimpleEncoder
+## 解码器
+#feign.client.config.feignName.decoder=com.example.SimpleDecoder
+## 契约
+#feign.client.config.feignName.contract=com.example.SimpleContract
 feign:
   hystrix:
     enabled: true
   client:
     config:
       default:  # 服务名，default表示所有服务
+        # 链接超时时间
         connectTimeout: 10000
+        # 读取超时时间
         readTimeout: 60000
         loggerLevel: full  # full | basic | none | headers
         #requestInterceptors: 拦截器
-      XWDER-PROVIDER-CQUST:
+      XWDER-SERVICE-CQUST:
         loggerLevel: full
 
 #hystrix.command.default.execution.isolation.thread.timeoutInMilliseconds: 5000

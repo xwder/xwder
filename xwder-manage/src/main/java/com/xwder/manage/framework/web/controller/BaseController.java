@@ -2,9 +2,9 @@ package com.xwder.manage.framework.web.controller;
 
 
 import com.xwder.manage.common.utils.DateUtils;
-import com.xwder.manage.common.utils.StringUtils;
-import com.xwder.manage.framework.web.domain.AjaxResult;
-import com.xwder.manage.framework.web.page.PageDomain;
+import com.xwder.framework.utils.string.StringUtils;
+import com.xwder.common.domain.AjaxResult;
+import com.xwder.common.page.PageDomain;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 
@@ -89,9 +89,9 @@ public class BaseController {
     /**
      * 返回错误码消息
      */
-    public AjaxResult error(int code, String message) {
-        return AjaxResult.error(code, message);
-    }
+//    public AjaxResult error(int code, String message) {
+//        return AjaxResult.error(code, message);
+//    }
 
     /**
      * 页面跳转

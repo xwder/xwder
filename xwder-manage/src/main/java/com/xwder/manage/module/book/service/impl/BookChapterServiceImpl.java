@@ -2,7 +2,7 @@ package com.xwder.manage.module.book.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
 import com.xwder.api.book.BookInfoServiceApi;
-import com.xwder.framework.common.constan.Constant;
+import com.xwder.common.constan.Constant;
 import com.xwder.framework.domain.book.BookChapter;
 import com.xwder.framework.utils.message.Result;
 import com.xwder.framework.utils.page.PageData;
@@ -11,10 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @Author: xwder

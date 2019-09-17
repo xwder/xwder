@@ -1,9 +1,8 @@
 package com.xwder.manage.module.cqust.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
-import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.xwder.api.cqust.StudentServiceApi;
-import com.xwder.framework.common.constan.Constant;
+import com.xwder.common.constan.Constant;
 import com.xwder.framework.domain.cqust.KyStudent;
 import com.xwder.framework.utils.message.Result;
 import com.xwder.framework.utils.page.PageData;
@@ -26,7 +25,7 @@ import java.util.Map;
 @Service
 public class StudentServiceImpl implements StudentService {
 
-    private static final String REST_URL_PREFIX = "http://XWDER-PROVIDER-CQUST";
+    private static final String REST_URL_PREFIX = "http://XWDER-SERVICE-CQUST";
 
     @Autowired
     private RestTemplate restTemplate;

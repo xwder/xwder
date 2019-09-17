@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Configuration;
  * @author xwder
  */
 @Configuration
-@RibbonClient(name = "XWDER-PROVIDER-CQUST", configuration = CustomerRule.class)
+@RibbonClient(name = "XWDER-SERVICE-CQUST", configuration = CustomerRule.class)
 public class RibbonConfiguration {
 
 }

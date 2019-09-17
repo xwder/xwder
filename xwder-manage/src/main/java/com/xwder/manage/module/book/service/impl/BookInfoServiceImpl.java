@@ -1,9 +1,8 @@
 package com.xwder.manage.module.book.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
-import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.xwder.api.book.BookInfoServiceApi;
-import com.xwder.framework.common.constan.Constant;
+import com.xwder.common.constan.Constant;
 import com.xwder.framework.domain.book.BookInfo;
 import com.xwder.framework.utils.message.Result;
 import com.xwder.framework.utils.page.PageData;

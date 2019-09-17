@@ -12,14 +12,15 @@
         <module>xwder-framework-utils</module>
         <module>xwder-manage</module>
         <module>xwder-framework-domain</module>
-        <module>xwder-service-api</module>
-        <module>xwder-service-message</module>
-        <module>xwder-provider-book</module>
-        <module>xwder-provider-cqust</module>
         <module>xwder-eureka-server1</module>
         <module>xwder-eureka-server2</module>
+        <module>xwder-service-api</module>
+        <module>xwder-service-message</module>
+        <module>xwder-service-book</module>
+        <module>xwder-service-cqust</module>
         <module>xwder-hystrix-dashboard</module>
         <module>xwder-hystrix-turbine</module>
+        <module>xwder-system</module>
     </modules>
     <packaging>pom</packaging>
 

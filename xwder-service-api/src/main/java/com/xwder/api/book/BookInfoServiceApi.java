@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  * @Date: 2019/7/16 01:13
  * @Description:
  */
-@FeignClient(name  = "XWDER-PROVIDER-BOOK", fallbackFactory = BookInfoServiceFallbackFactory.class, configuration = BookInfoServiceFeignConfig.class)
+@FeignClient(name  = "XWDER-SERVICE-BOOK", fallbackFactory = BookInfoServiceFallbackFactory.class, configuration = BookInfoServiceFeignConfig.class)
 public interface BookInfoServiceApi {
 
 

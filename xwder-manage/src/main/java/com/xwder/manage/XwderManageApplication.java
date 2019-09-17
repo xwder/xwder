@@ -24,6 +24,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
         scanBasePackages = {"com.xwder.manage", "com.xwder.api"}
 )
 @EnableFeignClients(basePackages = {"com.xwder.api"})
+// @EnableHystrix中包含了@EnableCircuitBreaker
 @EnableCircuitBreaker
 @EnableDiscoveryClient
 @EnableHystrixDashboard

@@ -12,9 +12,10 @@ import org.springframework.context.annotation.Bean;
  * 否则，该配置将会被所有Feign Client共享，无法实现细粒度配置！
  * 个人建议：像我一样，不加@Configuration注解
  *
- * @author zhouli
+ * @author xwder
  */
 public class BookInfoServiceFeignConfig {
+
     @Bean
     public Logger.Level logger() {
         return Logger.Level.FULL;

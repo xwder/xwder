@@ -1,15 +1,10 @@
 package com.xwder.manage.module.book.controller;
 
-import com.xwder.framework.domain.book.BookChapter;
-import com.xwder.framework.domain.book.BookInfo;
-import com.xwder.framework.utils.message.Result;
 import com.xwder.framework.utils.page.PageData;
 import com.xwder.manage.framework.web.controller.BaseController;
-import com.xwder.manage.framework.web.page.TableDataInfo;
-import com.xwder.manage.framework.web.page.TableSupport;
+import com.xwder.common.page.TableDataInfo;
+import com.xwder.common.page.TableSupport;
 import com.xwder.manage.module.book.service.BookChapterService;
-import com.xwder.manage.module.book.service.BookInfoService;
-import com.xwder.manage.module.message.service.BookUpdateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;

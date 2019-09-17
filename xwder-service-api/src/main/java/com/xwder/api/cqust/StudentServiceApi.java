@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  * @Date: 2019/7/13 14:36
  * @Description:
  */
-@FeignClient(name  = "XWDER-PROVIDER-CQUST", fallbackFactory = StudentServiceFallbackFactory.class)
+@FeignClient(name  = "XWDER-SERVICE-CQUST", fallbackFactory = StudentServiceFallbackFactory.class)
 public interface StudentServiceApi {
 
     @RequestMapping("/ky/student/page/{page}/{size}")

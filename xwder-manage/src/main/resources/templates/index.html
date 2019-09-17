@@ -99,6 +99,113 @@
                         </li>
                     </ul>
                 </li>
+
+                <li>
+                    <a href="#">
+                        <i class="fa fa-archive"></i>
+                        <span class="nav-label">内容管理</span>
+                        <span class="fa arrow"></span>
+                    </a>
+                    <ul class="nav nav-second-level collapse " aria-expanded="true" style="">
+                        <li>
+                            <a class="menuItem" th:href="@{/file/img}" data-index="1">图片管理</a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="#">
+                        <i class="fa fa-desktop"></i>
+                        <span class="nav-label">实例演示</span>
+                        <span class="fa arrow"></span>
+                    </a>
+                    <ul class="nav nav-second-level collapse " aria-expanded="true" style="">
+                        <li class=""> <a>表单<span class="fa arrow"></span></a>
+                            <ul class="nav nav-third-level collapse" aria-expanded="true" style="">
+                                <li class="selected"><a class="menuItem" href="/demo/form/button" data-index="19">按钮</a></li>
+                                <li><a class="menuItem" th:href="@{/demo/form/grid}" data-index="20">栅格</a></li>
+                                <li><a class="menuItem" th:href="@{/demo/form/select}" data-index="21">下拉框</a></li>
+                                <li><a class="menuItem" th:href="@{/demo/form/basic}" data-index="22">基本表单</a></li>
+                                <li><a class="menuItem" th:href="@{/demo/form/cards}" data-index="23">卡片列表</a></li>
+                                <li><a class="menuItem" th:href="@{/demo/form/jasny}" data-index="24">功能扩展</a></li>
+                                <li><a class="menuItem" th:href="@{/demo/form/sortable}" data-index="25">拖动排序</a></li>
+                                <li><a class="menuItem" th:href="@{/demo/form/tabs_panels}" data-index="26">选项卡 &amp; 面板</a></li>
+                                <li><a class="menuItem" th:href="@{/demo/form/validate}" data-index="27">表单校验</a></li>
+                                <li><a class="menuItem" th:href="@{/demo/form/wizard}" data-index="28">表单向导</a></li>
+                                <li><a class="menuItem" th:href="@{/demo/form/upload}" data-index="29">文件上传</a></li>
+                                <li><a class="menuItem" th:href="@{/demo/form/datetime}" data-index="30">日期和时间</a></li>
+                                <li><a class="menuItem" th:href="@{/demo/form/summernote}" data-index="31">富文本编辑器</a></li>
+                                <li><a class="menuItem" th:href="@{/demo/form/duallistbox}" data-index="32">左右互选组件</a></li>
+                                <li><a class="menuItem" th:href="@{/demo/form/autocomplete}" data-index="33">搜索自动补全</a></li>
+                            </ul>
+                        </li>
+                        <li> <a>表格<span class="fa arrow"></span></a>
+                            <ul class="nav nav-third-level collapse">
+                                <li><a class="menuItem" th:href="@{/demo/table/search}" data-index="34">查询条件</a></li>
+                                <li><a class="menuItem" th:href="@{/demo/table/footer}" data-index="35">数据汇总</a></li>
+                                <li><a class="menuItem" th:href="@{/demo/table/groupHeader}" data-index="36">组合表头</a></li>
+                                <li><a class="menuItem" th:href="@{/demo/table/export}" data-index="37">表格导出</a></li>
+                                <li><a class="menuItem" th:href="@{/demo/table/remember}" data-index="38">翻页记住选择</a></li>
+                                <li><a class="menuItem" th:href="@{/demo/table/pageGo}" data-index="39">跳转至指定页</a></li>
+                                <li><a class="menuItem" th:href="@{/demo/table/params}" data-index="40">自定义查询参数</a></li>
+                                <li><a class="menuItem" th:href="@{/demo/table/multi}" data-index="41">初始多表格</a></li>
+                                <li><a class="menuItem" th:href="@{/demo/table/button}" data-index="42">点击按钮加载表格</a></li>
+                                <li><a class="menuItem" th:href="@{/demo/table/fixedColumns}" data-index="43">表格冻结列</a></li>
+                                <li><a class="menuItem" th:href="@{/demo/table/event}" data-index="44">自定义触发事件</a></li>
+                                <li><a class="menuItem" th:href="@{/demo/table/detail}" data-index="45">表格细节视图</a></li>
+                                <li><a class="menuItem" th:href="@{/demo/table/image}" data-index="46">表格图片预览</a></li>
+                                <li><a class="menuItem" th:href="@{/demo/table/curd}" data-index="47">动态增删改查</a></li>
+                                <li><a class="menuItem" th:href="@{/demo/table/reorder}" data-index="48">表格拖拽操作</a></li>
+                                <li><a class="menuItem" th:href="@{/demo/table/other}" data-index="49">表格其他操作</a></li>
+                            </ul>
+                        </li>
+                        <li> <a>弹框<span class="fa arrow"></span></a>
+                            <ul class="nav nav-third-level collapse">
+                                <li><a class="menuItem" th:href="@{/demo/modal/dialog}" data-index="50">模态窗口</a></li>
+                                <li><a class="menuItem" th:href="@{/demo/modal/layer}" data-index="51">弹层组件</a></li>
+                                <li><a class="menuItem" th:href="@{/demo/modal/table}" data-index="52">弹层表格</a></li>
+                            </ul>
+                        </li>
+                        <li> <a>操作<span class="fa arrow"></span></a>
+                            <ul class="nav nav-third-level collapse">
+                                <li><a class="menuItem" th:href="@{/demo/operate/table}" data-index="53">表格</a></li>
+                                <li><a class="menuItem" th:href="@{/demo/operate/other}" data-index="54">其他</a></li>
+                            </ul>
+                        </li>
+                        <li> <a>报表<span class="fa arrow"></span></a>
+                            <ul class="nav nav-third-level collapse">
+                                <li><a class="menuItem" th:href="@{/demo/report/echarts}" data-index="55">百度ECharts</a></li>
+                                <li><a class="menuItem" th:href="@{/demo/report/peity}" data-index="56">peity</a></li>
+                                <li><a class="menuItem" th:href="@{/demo/report/sparkline}" data-index="57">sparkline</a></li>
+                                <li><a class="menuItem" th:href="@{/demo/report/metrics}" data-index="58">图表组合</a></li>
+                            </ul>
+                        </li>
+                        <li> <a>图标<span class="fa arrow"></span></a>
+                            <ul class="nav nav-third-level collapse">
+                                <li><a class="menuItem" th:href="@{/demo/icon/fontawesome}" data-index="59">Font Awesome</a></li>
+                                <li><a class="menuItem" th:href="@{/demo/icon/glyphicons}" data-index="60">Glyphicons</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-sitemap"></i> <span class="nav-label">四层菜单 </span><span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level collapse">
+                                <li>
+                                    <a href="#" id="damian">三级菜单1<span class="fa arrow"></span></a>
+                                    <ul class="nav nav-third-level collapse">
+                                        <li>
+                                            <a href="#">四级菜单1</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">四级菜单2</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li><a href="#">三级菜单2</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+
             </ul>
         </div>
     </nav>

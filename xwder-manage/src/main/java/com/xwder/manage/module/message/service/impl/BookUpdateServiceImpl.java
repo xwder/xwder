@@ -2,7 +2,7 @@ package com.xwder.manage.module.message.service.impl;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.xwder.api.message.MessageServiceApi;
+import com.xwder.api.message.mail.MessageServiceApi;
 import com.xwder.framework.utils.message.Result;
 import com.xwder.framework.utils.message.ResultUtil;
 import com.xwder.framework.utils.request.HttpClientUtil;

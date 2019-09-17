@@ -31,7 +31,7 @@ public class MessageApplicationTests {
     @Test
     public void sendAttachmentsMail() {
         String filePath="C:\\Users\\xwder\\Desktop\\李润平个人简历.docx";
-        //mailService.sendAttachmentsMail("xwder@xwder.com", "主题：带附件的邮件", "有附件，请查收！", filePath);
+        mailService.sendAttachmentsMail("xwder@xwder.com", "主题：带附件的邮件", "有附件，请查收！", filePath);
     }
 
 
@@ -48,7 +48,7 @@ public class MessageApplicationTests {
         context.setVariable("company", "xwder.com");
         context.setVariable("product","xwder-service-message");
         String emailContent = templateEngine.process("emailTemplate", context);
-        mailService.sendHtmlMail("xwder@xwder.com","主题：这是模板邮件",emailContent);
+        mailService.sendHtmlMail("1123511540@qq.com","主题：这是模板邮件",emailContent);
     }
 
 }

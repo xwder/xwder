@@ -31,8 +31,8 @@ public class JDSmsMessageServiceTest {
     public void sendSmsMessageTest(){
         String phone = "13509433172";
         String content = "您关注的内容已更新";
-        Result result = smsMessageService.sendJDSmsMessage(phone,content);
-        System.out.println(result);
+        //Result result = smsMessageService.sendJDSmsMessage(phone,content);
+        //System.out.println(result);
     }
 
 }

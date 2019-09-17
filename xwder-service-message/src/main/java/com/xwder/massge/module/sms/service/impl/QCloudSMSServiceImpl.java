@@ -84,98 +84,6 @@ public class QCloudSMSServiceImpl implements QCloudSMSService {
             String datetime = sdf.format(cd.getTime());
             // 签名
             String auth = calcAuthorization(source, myQcloudSMSConfig.getSecretId(), myQcloudSMSConfig.getSecretKey(), datetime);
-            // 请求方法
-            String method = "GET";
-            // 请求头
-            Map<String, String> headers = new HashMap<String, String>();
-            headers.put("X-Source", source);
-            headers.put("X-Date", datetime);
-            headers.put("Authorization", auth);
-
-            // 查询参数
-            Map<String, String> queryParams = new HashMap<String, String>();
-            queryParams.put("content", content);
-            queryParams.put("mobile", phone);
-            // body参数
-            Map<String, String> bodyParams = new HashMap<String, String>();
-
-            // url参数拼接
-            String url = myQcloudSMSConfig.getUrl();
-            if (!queryParams.isEmpty()) {
-                url += "?" + urlEncode(queryParams);
-            }
-
-
-            URL realUrl = new URL(url);
-            HttpURLConnection conn = (HttpURLConnection) realUrl.openConnection();
-            conn.setConnectTimeout(5000);
-            conn.setReadTimeout(5000);
-            conn.setRequestMethod(method);
-
-            // request headers
-            for (Map.Entry<String, String> entry : headers.entrySet()) {
-                conn.setRequestProperty(entry.getKey(), entry.getValue());
-            }
-
-            // request body
-            Map<String, Boolean> methods = new HashMap<>();
-            methods.put("POST", true);
-            methods.put("PUT", true);
-            methods.put("PATCH", true);
-            Boolean hasBody = methods.get(method);
-            if (hasBody != null) {
-                conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-                conn.setDoOutput(true);
-                DataOutputStream out = new DataOutputStream(conn.getOutputStream());
-                out.writeBytes(urlEncode(bodyParams));
-                out.flush();
-                out.close();
-            }
-
-            // 定义 BufferedReader输入流来读取URL的响应
-            in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-            String line;
-            String result = "";
-            while ((line = in.readLine()) != null) {
-                result += line;
-            }
-
-            System.out.println(result);
-
-            JSONObject jsonObject = JSONObject.parseObject(result);
-            Integer resultCode = jsonObject.getInteger("result");
-            if (resultCode == 0) {
-                return ResultUtil.success("发送成功！");
-            } else {
-                return ResultUtil.error(jsonObject.get("errmsg").toString());
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResultUtil.error(e.getMessage());
-        } finally {
-            try {
-                if (in != null) {
-                    in.close();
-                }
-            } catch (Exception e2) {
-                return  ResultUtil.error(e2.getMessage());
-            }
-        }
-    }
-
-    public Result sendSMS2(String phone, String content) {
-
-        String source = "market";
-        BufferedReader in = null;
-
-        try {
-            Calendar cd = Calendar.getInstance();
-            SimpleDateFormat sdf = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss 'GMT'", Locale.US);
-            sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
-            String datetime = sdf.format(cd.getTime());
-            // 签名
-            String auth = calcAuthorization(source, myQcloudSMSConfig.getSecretId(), myQcloudSMSConfig.getSecretKey(), datetime);
 
             // 查询参数
             Map<String, String> queryParams = new HashMap<String, String>();
@@ -193,7 +101,7 @@ public class QCloudSMSServiceImpl implements QCloudSMSService {
             CloseableHttpClient httpClient = HttpClients.createDefault();
             HttpGet httpGet = new HttpGet(url);
             httpGet.addHeader("Content-Type", "application/x-www-form-urlencoded");
-            httpGet.addHeader("X-Source",source);
+            httpGet.addHeader("X-Source", source);
             httpGet.addHeader("X-Date", datetime);
             httpGet.addHeader("Authorization", auth);
 
@@ -201,18 +109,16 @@ public class QCloudSMSServiceImpl implements QCloudSMSService {
             try {
                 CloseableHttpResponse response = httpClient.execute(httpGet);
                 int status = response.getStatusLine().getStatusCode();
-                if (status == HttpStatus.SC_OK){
-                    HttpEntity responseEntity = response.getEntity();
-                    result = EntityUtils.toString(responseEntity, "UTF-8");
-                }
+                HttpEntity responseEntity = response.getEntity();
+                result = EntityUtils.toString(responseEntity, "UTF-8");
             } catch (ClientProtocolException e) {
                 e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
             }
 
-
             JSONObject jsonObject = JSONObject.parseObject(result);
+            System.out.println(jsonObject.toJSONString());
             Integer resultCode = jsonObject.getInteger("result");
             if (resultCode == 0) {
                 return ResultUtil.success("发送成功！");

@@ -1,7 +1,7 @@
 package com.xwder.manage.common.utils.sql;
 
 
-import com.xwder.manage.common.utils.StringUtils;
+import com.xwder.framework.utils.string.StringUtils;
 
 /**
  * @className: SqlUtil
