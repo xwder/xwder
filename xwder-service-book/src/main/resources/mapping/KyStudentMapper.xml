@@ -1,0 +1,370 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xwder.framework.domain.book.mapper.KyStudentMapper" >
+  <resultMap id="BaseResultMap" type="com.xwder.framework.domain.book.KyStudent" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="student_no" property="studentNo" jdbcType="VARCHAR" />
+    <result column="student_name" property="studentName" jdbcType="VARCHAR" />
+    <result column="nation_id" property="nationId" jdbcType="VARCHAR" />
+    <result column="sex" property="sex" jdbcType="VARCHAR" />
+    <result column="mass_identity" property="massIdentity" jdbcType="VARCHAR" />
+    <result column="identity_no" property="identityNo" jdbcType="VARCHAR" />
+    <result column="birthday" property="birthday" jdbcType="DATE" />
+    <result column="collge_no" property="collgeNo" jdbcType="VARCHAR" />
+    <result column="major_no" property="majorNo" jdbcType="VARCHAR" />
+    <result column="enrollment_time" property="enrollmentTime" jdbcType="DATE" />
+    <result column="grade" property="grade" jdbcType="VARCHAR" />
+    <result column="educational_system" property="educationalSystem" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="education_system" property="educationSystem" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, student_no, student_name, nation_id, sex, mass_identity, identity_no, birthday, 
+    collge_no, major_no, enrollment_time, grade, educational_system, status, education_system
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.xwder.framework.domain.book.KyStudentExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from ky_student
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from ky_student
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from ky_student
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.xwder.framework.domain.book.KyStudentExample" >
+    delete from ky_student
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.xwder.framework.domain.book.KyStudent" >
+    insert into ky_student (id, student_no, student_name, 
+      nation_id, sex, mass_identity, 
+      identity_no, birthday, collge_no, 
+      major_no, enrollment_time, grade, 
+      educational_system, status, education_system
+      )
+    values (#{id,jdbcType=INTEGER}, #{studentNo,jdbcType=VARCHAR}, #{studentName,jdbcType=VARCHAR}, 
+      #{nationId,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR}, #{massIdentity,jdbcType=VARCHAR}, 
+      #{identityNo,jdbcType=VARCHAR}, #{birthday,jdbcType=DATE}, #{collgeNo,jdbcType=VARCHAR}, 
+      #{majorNo,jdbcType=VARCHAR}, #{enrollmentTime,jdbcType=DATE}, #{grade,jdbcType=VARCHAR}, 
+      #{educationalSystem,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{educationSystem,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.xwder.framework.domain.book.KyStudent" >
+    insert into ky_student
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="studentNo != null" >
+        student_no,
+      </if>
+      <if test="studentName != null" >
+        student_name,
+      </if>
+      <if test="nationId != null" >
+        nation_id,
+      </if>
+      <if test="sex != null" >
+        sex,
+      </if>
+      <if test="massIdentity != null" >
+        mass_identity,
+      </if>
+      <if test="identityNo != null" >
+        identity_no,
+      </if>
+      <if test="birthday != null" >
+        birthday,
+      </if>
+      <if test="collgeNo != null" >
+        collge_no,
+      </if>
+      <if test="majorNo != null" >
+        major_no,
+      </if>
+      <if test="enrollmentTime != null" >
+        enrollment_time,
+      </if>
+      <if test="grade != null" >
+        grade,
+      </if>
+      <if test="educationalSystem != null" >
+        educational_system,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="educationSystem != null" >
+        education_system,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="studentNo != null" >
+        #{studentNo,jdbcType=VARCHAR},
+      </if>
+      <if test="studentName != null" >
+        #{studentName,jdbcType=VARCHAR},
+      </if>
+      <if test="nationId != null" >
+        #{nationId,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="massIdentity != null" >
+        #{massIdentity,jdbcType=VARCHAR},
+      </if>
+      <if test="identityNo != null" >
+        #{identityNo,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null" >
+        #{birthday,jdbcType=DATE},
+      </if>
+      <if test="collgeNo != null" >
+        #{collgeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="majorNo != null" >
+        #{majorNo,jdbcType=VARCHAR},
+      </if>
+      <if test="enrollmentTime != null" >
+        #{enrollmentTime,jdbcType=DATE},
+      </if>
+      <if test="grade != null" >
+        #{grade,jdbcType=VARCHAR},
+      </if>
+      <if test="educationalSystem != null" >
+        #{educationalSystem,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="educationSystem != null" >
+        #{educationSystem,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.xwder.framework.domain.book.KyStudentExample" resultType="java.lang.Integer" >
+    select count(*) from ky_student
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update ky_student
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.studentNo != null" >
+        student_no = #{record.studentNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.studentName != null" >
+        student_name = #{record.studentName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.nationId != null" >
+        nation_id = #{record.nationId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sex != null" >
+        sex = #{record.sex,jdbcType=VARCHAR},
+      </if>
+      <if test="record.massIdentity != null" >
+        mass_identity = #{record.massIdentity,jdbcType=VARCHAR},
+      </if>
+      <if test="record.identityNo != null" >
+        identity_no = #{record.identityNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.birthday != null" >
+        birthday = #{record.birthday,jdbcType=DATE},
+      </if>
+      <if test="record.collgeNo != null" >
+        collge_no = #{record.collgeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.majorNo != null" >
+        major_no = #{record.majorNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.enrollmentTime != null" >
+        enrollment_time = #{record.enrollmentTime,jdbcType=DATE},
+      </if>
+      <if test="record.grade != null" >
+        grade = #{record.grade,jdbcType=VARCHAR},
+      </if>
+      <if test="record.educationalSystem != null" >
+        educational_system = #{record.educationalSystem,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=VARCHAR},
+      </if>
+      <if test="record.educationSystem != null" >
+        education_system = #{record.educationSystem,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update ky_student
+    set id = #{record.id,jdbcType=INTEGER},
+      student_no = #{record.studentNo,jdbcType=VARCHAR},
+      student_name = #{record.studentName,jdbcType=VARCHAR},
+      nation_id = #{record.nationId,jdbcType=VARCHAR},
+      sex = #{record.sex,jdbcType=VARCHAR},
+      mass_identity = #{record.massIdentity,jdbcType=VARCHAR},
+      identity_no = #{record.identityNo,jdbcType=VARCHAR},
+      birthday = #{record.birthday,jdbcType=DATE},
+      collge_no = #{record.collgeNo,jdbcType=VARCHAR},
+      major_no = #{record.majorNo,jdbcType=VARCHAR},
+      enrollment_time = #{record.enrollmentTime,jdbcType=DATE},
+      grade = #{record.grade,jdbcType=VARCHAR},
+      educational_system = #{record.educationalSystem,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=VARCHAR},
+      education_system = #{record.educationSystem,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xwder.framework.domain.book.KyStudent" >
+    update ky_student
+    <set >
+      <if test="studentNo != null" >
+        student_no = #{studentNo,jdbcType=VARCHAR},
+      </if>
+      <if test="studentName != null" >
+        student_name = #{studentName,jdbcType=VARCHAR},
+      </if>
+      <if test="nationId != null" >
+        nation_id = #{nationId,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        sex = #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="massIdentity != null" >
+        mass_identity = #{massIdentity,jdbcType=VARCHAR},
+      </if>
+      <if test="identityNo != null" >
+        identity_no = #{identityNo,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null" >
+        birthday = #{birthday,jdbcType=DATE},
+      </if>
+      <if test="collgeNo != null" >
+        collge_no = #{collgeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="majorNo != null" >
+        major_no = #{majorNo,jdbcType=VARCHAR},
+      </if>
+      <if test="enrollmentTime != null" >
+        enrollment_time = #{enrollmentTime,jdbcType=DATE},
+      </if>
+      <if test="grade != null" >
+        grade = #{grade,jdbcType=VARCHAR},
+      </if>
+      <if test="educationalSystem != null" >
+        educational_system = #{educationalSystem,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="educationSystem != null" >
+        education_system = #{educationSystem,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xwder.framework.domain.book.KyStudent" >
+    update ky_student
+    set student_no = #{studentNo,jdbcType=VARCHAR},
+      student_name = #{studentName,jdbcType=VARCHAR},
+      nation_id = #{nationId,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=VARCHAR},
+      mass_identity = #{massIdentity,jdbcType=VARCHAR},
+      identity_no = #{identityNo,jdbcType=VARCHAR},
+      birthday = #{birthday,jdbcType=DATE},
+      collge_no = #{collgeNo,jdbcType=VARCHAR},
+      major_no = #{majorNo,jdbcType=VARCHAR},
+      enrollment_time = #{enrollmentTime,jdbcType=DATE},
+      grade = #{grade,jdbcType=VARCHAR},
+      educational_system = #{educationalSystem,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR},
+      education_system = #{educationSystem,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

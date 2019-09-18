@@ -21,6 +21,7 @@
         <module>xwder-hystrix-dashboard</module>
         <module>xwder-hystrix-turbine</module>
         <module>xwder-system</module>
+        <module>xwder-zuul-api-gate</module>
     </modules>
     <packaging>pom</packaging>
 

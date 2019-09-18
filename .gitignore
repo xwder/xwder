@@ -1,0 +1,14 @@
+/xwder-service-book/target/
+/xwder-eureka-server1/target/
+/xwder-eureka-server2/target/
+/xwder-framework-common/target/
+/xwder-framework-domain/target/
+/xwder-framework-utils/target/
+/xwder-hystrix-dashboard/target/
+/xwder-hystrix-turbine/target/
+/xwder-manage/target/
+/xwder-service-api/target/
+/xwder-service-book/target/
+/xwder-service-cqust/target/
+/xwder-service-message/target/
+/xwder-system/target/
