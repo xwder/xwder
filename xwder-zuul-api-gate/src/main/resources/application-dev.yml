@@ -62,7 +62,7 @@ zuul:
   #  隐藏所有微服务名称(即使用微服务名称无法访问到服务)
   ignored-services: "*"
   #  服务前缀名，想要访问项目之前要加上此路径
-  prefix: /xwder
+  #prefix: /xwder
   routes:
     # book-service 自定义
     book-service:

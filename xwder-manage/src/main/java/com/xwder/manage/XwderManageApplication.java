@@ -2,6 +2,7 @@ package com.xwder.manage;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.data.mongo.MongoDataAutoConfiguration;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration;
 import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
@@ -20,7 +21,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
  * @Version: 1.0
  */
 @EnableScheduling
-@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class, MongoAutoConfiguration.class},
+@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class, MongoAutoConfiguration.class, MongoDataAutoConfiguration.class},
         scanBasePackages = {"com.xwder.manage", "com.xwder.api"}
 )
 @EnableFeignClients(basePackages = {"com.xwder.api"})

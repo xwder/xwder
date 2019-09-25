@@ -17,7 +17,7 @@ import org.springframework.cloud.netflix.hystrix.dashboard.EnableHystrixDashboar
  */
 @EnableDiscoveryClient
 @EntityScan(basePackages = "com.xwder.framework.domain.book")
-@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class, MongoAutoConfiguration.class})
+@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class, MongoAutoConfiguration.class,MongoDataAutoConfiguration.class})
 @EnableHystrixDashboard
 @EnableCircuitBreaker
 public class MessageApplication {

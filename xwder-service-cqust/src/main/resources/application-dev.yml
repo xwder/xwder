@@ -23,9 +23,9 @@ spring:
     name: xwder-service-cqust
 
   datasource:
-    url: jdbc:mysql://119.29.136.137:3306/xwder-manage?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=UTC
-    username: root
-    password: Ai5v!tg5jUsD
+    url: jdbc:mysql://139.186.29.105:3306/xwder?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=UTC
+    username: xwder
+    password: m2344Cdxqe2.
     driver-class-name: com.mysql.cj.jdbc.Driver
     platform: mysql
     type: com.alibaba.druid.pool.DruidDataSource

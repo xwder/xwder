@@ -22,6 +22,7 @@
         <module>xwder-hystrix-turbine</module>
         <module>xwder-system</module>
         <module>xwder-zuul-api-gate</module>
+        <module>xwder-cloud-gateway</module>
     </modules>
     <packaging>pom</packaging>
 
@@ -29,7 +30,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.1.6.RELEASE</version>
+        <version>2.0.6.RELEASE</version>
         <relativePath/>
         <!-- lookup parent from repository -->
     </parent>

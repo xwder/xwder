@@ -2,6 +2,7 @@ package com.xwder.cqust;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.data.mongo.MongoDataAutoConfiguration;
 import org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration;
 import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
@@ -15,7 +16,7 @@ import tk.mybatis.spring.annotation.MapperScan;
  */
 
 @EnableDiscoveryClient
-@SpringBootApplication(exclude = {MongoAutoConfiguration.class})
+@SpringBootApplication(exclude = {MongoAutoConfiguration.class, MongoDataAutoConfiguration.class})
 @MapperScan({"com.xwder.framework.domain.cqust","com.xwder.cqust.dao"}) // 扫描的mapper  tk.mybatis
 @EnableHystrixDashboard
 @EnableCircuitBreaker
