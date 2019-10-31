@@ -47,5 +47,5 @@ public interface BookUpdateService {
      * @param subject
      * @return
      */
-    public Result sendBookUpdateMessageWithMailAndSMS(String author, String bookName, String to, String subject);
+    Result sendBookUpdateMessageWithMailAndSMS(String author, String bookName, String to, String subject);
 }
