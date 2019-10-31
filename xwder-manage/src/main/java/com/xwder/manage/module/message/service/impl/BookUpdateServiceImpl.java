@@ -6,6 +6,7 @@ import com.xwder.api.message.mail.MessageServiceApi;
 import com.xwder.framework.utils.message.Result;
 import com.xwder.framework.utils.message.ResultUtil;
 import com.xwder.framework.utils.request.HttpClientUtil;
+import com.xwder.manage.common.contant.sms.SMSConstant;
 import com.xwder.manage.module.message.service.BookUpdateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,7 +38,7 @@ public class BookUpdateServiceImpl implements BookUpdateService {
 
         Integer code = (Integer) jsonObject.get("code");
 
-        if (code == 101){
+        if (code == 101) {
             return null;
         }
 
@@ -46,7 +47,7 @@ public class BookUpdateServiceImpl implements BookUpdateService {
 
             List<Map> list = new ArrayList<>();
 
-            if(jsonArray.size() == 0){
+            if (jsonArray.size() == 0) {
                 return null;
             }
 
@@ -89,25 +90,41 @@ public class BookUpdateServiceImpl implements BookUpdateService {
         String content = "您关注的小说已更新，最新章节 " + msg + "";
         Result result = messageServiceApi.sendSimpleMail(to, subject, content);
 
+
         return result;
     }
 
+    @Override
+    public Result sendBookUpdateSMSMessage(String phone, String content) {
+        return messageServiceApi.sendQcloudSMS(phone, content);
+    }
 
     @Override
-    public Result sendBooUpdateMessageWithMailAndBooInfo(String author, String bookName, String to, String subject) {
+    public Result sendBookUpdateMessageWithMailAndSMS(String author, String bookName, String to, String subject) {
 
+        // 获取小说更新信息
         List<Map> list = getBookUpdateInfo(author, bookName);
 
         if (list == null || list.isEmpty()) {
-            return ResultUtil.error(501, "您关注的  "+author+" 的 "+bookName+" 小说没有更新！");
-
+            return ResultUtil.error(501, "您关注的  " + author + " 的 " + bookName + " 小说没有更新！");
         }
+
         Map<String, Object> mailMap = new HashMap<>();
         mailMap.put("to", to);
         mailMap.put("subject", subject);
 
+        // 发送邮件
         Result result = sendBookUpdateMailMessage(list, mailMap);
-
+        // 发送sms
+        String phone1 = "13509433172";
+        String phone2 = "18083024504";
+        String content = String.format(SMSConstant.SMS_TEMPLATE_ONE,bookName);
+        Result smsResult = sendBookUpdateSMSMessage(phone1, content);
+        // 短信1发送失败！
+        if(smsResult.getCode() != 200){
+            // 短信2继续发送
+            sendBookUpdateSMSMessage(phone2, content);
+        }
         return result;
     }
 

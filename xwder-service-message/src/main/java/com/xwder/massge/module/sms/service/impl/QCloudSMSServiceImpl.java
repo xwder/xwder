@@ -42,8 +42,7 @@ public class QCloudSMSServiceImpl implements QCloudSMSService {
     @Autowired
     private MyQcloudSMSConfig myQcloudSMSConfig;
 
-    private String calcAuthorization(String source, String secretId, String secretKey, String datetime)
-            throws NoSuchAlgorithmException, UnsupportedEncodingException, InvalidKeyException {
+    private String calcAuthorization(String source, String secretId, String secretKey, String datetime) throws NoSuchAlgorithmException, UnsupportedEncodingException, InvalidKeyException {
         String signStr = "x-date: " + datetime + "\n" + "x-source: " + source;
         Mac mac = Mac.getInstance("HmacSHA1");
         Key sKey = new SecretKeySpec(secretKey.getBytes("UTF-8"), mac.getAlgorithm());
@@ -70,7 +69,7 @@ public class QCloudSMSServiceImpl implements QCloudSMSService {
     }
 
 
-    @HystrixCommand(fallbackMethod = "sendSMSFallback")
+    //    @HystrixCommand(fallbackMethod = "sendSMSFallback")
     @Override
     public Result sendSMS(String phone, String content) {
 

@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 /**
- *
  * https://blog.csdn.net/neosmith/article/details/82349449
  *
  * @Author: xwder
@@ -15,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  * @Description:
  */
 
-@FeignClient(name  = "XWDER-SERVICE-MESSAGE", fallbackFactory = MessageServiceFallbackFactory.class)
+@FeignClient(name = "XWDER-SERVICE-MESSAGE", fallbackFactory = MessageServiceFallbackFactory.class)
 public interface MessageServiceApi {
 
     /**
@@ -29,4 +28,14 @@ public interface MessageServiceApi {
     @RequestMapping(value = "/mail/sendSimpleMail")
     public Result sendSimpleMail(@RequestParam("to") final String to, @RequestParam("subject") final String subject, @RequestParam("content") final String content);
 
+
+    /**
+     * 发送短信
+     *
+     * @param phone   手机号
+     * @param content 短信内容
+     * @return
+     */
+    @RequestMapping("/sendSmsMessage")
+    public Result sendQcloudSMS(String phone, String content);
 }

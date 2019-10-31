@@ -22,7 +22,7 @@ public class BookUpdateTask {
     @Scheduled(fixedDelay = 1000 * 300)
     public void bookUpdateSendMail() {
         System.out.println(new Date());
-        bookUpdateService.sendBooUpdateMessageWithMailAndBooInfo("烽火戏诸侯", "剑来", "1123511540@qq.com", "小说更新");
+        bookUpdateService.sendBookUpdateMessageWithMailAndSMS("烽火戏诸侯", "剑来", "1123511540@qq.com", "小说更新");
     }
 
 

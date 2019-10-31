@@ -25,7 +25,7 @@ public class BookUpdateController {
     @RequestMapping(value = "/update/sendBookUpdateMail", method = RequestMethod.POST)
     @ResponseBody
     public Result sendBooUpdateMessageWithMailAndBooInfo(String author, String bookName, String to, String subject) {
-        Result result = bookUpdateService.sendBooUpdateMessageWithMailAndBooInfo(author, bookName, to, subject);
+        Result result = bookUpdateService.sendBookUpdateMessageWithMailAndSMS(author, bookName, to, subject);
         return result;
     }
 }

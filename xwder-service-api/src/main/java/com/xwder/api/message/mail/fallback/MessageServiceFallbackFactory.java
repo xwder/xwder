@@ -21,6 +21,12 @@ public class MessageServiceFallbackFactory implements FallbackFactory<MessageSer
                 System.out.println("调用 sendSimpleMail 失败");
                 return null;
             }
+
+            @Override
+            public Result sendQcloudSMS(String phone, String content) {
+                System.out.println("调用 sendQcloudSMS 失败");
+                return null;
+            }
         };
     }
 }

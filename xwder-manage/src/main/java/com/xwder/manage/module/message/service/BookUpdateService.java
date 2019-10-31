@@ -31,7 +31,15 @@ public interface BookUpdateService {
     Result sendBookUpdateMailMessage(List<Map> list, Map mailMap);
 
     /**
-     * 给只用右键发送指定小说更新信息
+     * 发送小说更新sms提醒
+     * @param phone
+     * @param content
+     * @return
+     */
+    Result sendBookUpdateSMSMessage(String phone, String content);
+
+    /**
+     * 给只用邮件发送指定小说更新信息
      *
      * @param author
      * @param bookName
@@ -39,5 +47,5 @@ public interface BookUpdateService {
      * @param subject
      * @return
      */
-    public Result sendBooUpdateMessageWithMailAndBooInfo(String author, String bookName, String to, String subject);
+    public Result sendBookUpdateMessageWithMailAndSMS(String author, String bookName, String to, String subject);
 }
