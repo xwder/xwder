@@ -20,7 +20,6 @@
         <module>xwder-service-cqust</module>
         <module>xwder-hystrix-dashboard</module>
         <module>xwder-hystrix-turbine</module>
-        <module>xwder-system</module>
         <module>xwder-zuul-api-gate</module>
         <module>xwder-cloud-gateway</module>
     </modules>

@@ -36,6 +36,6 @@ public interface MessageServiceApi {
      * @param content 短信内容
      * @return
      */
-    @RequestMapping("/sendSmsMessage")
+    @RequestMapping("/sms/qcloud/sendSmsMessage")
     public Result sendQcloudSMS(@RequestParam("phone") final String phone, @RequestParam("content") final String content);
 }

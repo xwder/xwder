@@ -6,6 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.UnsupportedEncodingException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+
 /**
  * qcloud 发送即时短信
  * @Author: xwder
@@ -27,7 +31,7 @@ public class QcloudSmsMessageController {
      * @return
      */
     @RequestMapping("/sendSmsMessage")
-    public Result sendQcloudSMS(String phone, String content) {
+    public Result sendQcloudSMS(String phone, String content) throws NoSuchAlgorithmException, InvalidKeyException, UnsupportedEncodingException {
         return qCloudSMSService.sendSMS(phone, content);
     }
 

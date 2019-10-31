@@ -9,6 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.io.UnsupportedEncodingException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+
 /**
  * 短信测试类
  *
@@ -28,7 +32,7 @@ public class MyQCloudSMSMessageServiceTest {
      * 发送短信测试
      */
     @Test
-    public void sendSmsMessageTest() {
+    public void sendSmsMessageTest() throws NoSuchAlgorithmException, InvalidKeyException, UnsupportedEncodingException {
 //        String phone = "13509433172";
 //        String phone = "18083024504";
         String phone = "17320447318";
@@ -42,7 +46,7 @@ public class MyQCloudSMSMessageServiceTest {
      * 发送短信测试
      */
     @Test
-    public void sendSmsMessage2Test() {
+    public void sendSmsMessage2Test() throws NoSuchAlgorithmException, InvalidKeyException, UnsupportedEncodingException {
         String phone = "18083024504";
         //String content = "您的手机号：13509433172，验证码：666666，请及时完成验证，如不是本人操作请忽略。【腾讯云市场】";
         String content = "您关注的 剑来小说 已更新，退订请点击blog.xwder.com，链接五分钟内有效。【OneDay】";

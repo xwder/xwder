@@ -118,7 +118,9 @@ public class BookUpdateServiceImpl implements BookUpdateService {
         // 发送sms
         String phone1 = "13509433172";
         String phone2 = "18083024504";
-        String content = String.format(SMSConstant.SMS_TEMPLATE_ONE,bookName);
+        String ChapterName = bookName+ ((String) list.get(0).get("chapterName")).replaceAll(" ", "");
+
+        String content = String.format(SMSConstant.SMS_TEMPLATE_ONE,ChapterName);
         Result smsResult = sendBookUpdateSMSMessage(phone1, content);
         // 短信1发送失败！
         if(smsResult.getCode() != 200){

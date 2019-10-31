@@ -12,3 +12,5 @@
 /xwder-service-cqust/target/
 /xwder-service-message/target/
 /xwder-system/target/
+
+*.class
