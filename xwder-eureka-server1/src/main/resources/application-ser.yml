@@ -5,7 +5,7 @@ spring:
   security:
     user:
       name: eureka         # 配置登录的账号是 eureka
-      password: 123456     # 配置登录的密码是 123456
+      password: eurekawandou     # 配置登录的密码是 eurekawandou
 
 server:
   port: 8001
@@ -28,7 +28,7 @@ eureka:
 
   client:
     service-url:
-      defaultZone: http://${spring.security.user.name}:${spring.security.user.password}@localhost:8002/eureka/
+      defaultZone: http://${spring.security.user.name}:${spring.security.user.password}@localhost:8001/eureka/
 
     # 由于该应用为注册中心, 所以设置为false, 代表不向注册中心注册自己
     register-with-eureka: false
