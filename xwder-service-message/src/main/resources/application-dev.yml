@@ -127,3 +127,7 @@ myqcloud-sms:
   SecretId: AKID16m8tm1RrlE0s6fe50atymhKe1faomyn6p6a
   SecretKey: A7kH2xeJEFPK8fmIz8hDx2i3J1qt9fufZ4ebz0
   url: https://service-g5r3b98v-1251224662.ap-shanghai.apigateway.myqcloud.com/release/sendsms
+
+ftpqq:
+  seckey: SCU66294Te1803dd659b9bb762389d599ce3cc85c5dca7899c59f4
+  url: https://sc.ftqq.com/SCU66294Te1803dd659b9bb762389d599ce3cc85c5dca7899c59f4.send?text=
