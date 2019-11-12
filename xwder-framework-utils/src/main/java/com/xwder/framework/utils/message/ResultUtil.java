@@ -13,7 +13,7 @@ public class ResultUtil {
     public static Result success(Object data) {
         Result result = new Result();
         result.setCode(200);
-        result.setMsg("OK");
+        result.setMsg("");
         result.setData(data);
         return result;
     }
@@ -34,7 +34,7 @@ public class ResultUtil {
      * @return
      */
     public static Result success() {
-        return success(null);
+        return success("");
     }
 
     /**

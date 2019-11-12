@@ -23,20 +23,27 @@ public class MailController {
     private TemplateEngine templateEngine;
 
     /**
+     * 发送简单邮件
+     *
+     * @param to      目标邮箱账号
+     * @param subject 主题
+     * @param content 内容
      * @return
      */
     @RequestMapping("/sendSimpleMail")
     public Result sendSimpleMail(String to, String subject, String content) {
-//		String to = "xwder@xwder.com";
-//		String subject = "test simple mail";
-//		String content = "hello, this is simple mail";
         mailService.sendHtmlMail(to, subject, content);
         return ResultUtil.success();
     }
 
+
     /**
+     * 发送Html格式的邮件(收件人，主题，内容都暂时写死)
+     *
+     * @param to      目标邮箱账号
+     * @param subject 主题
+     * @param content 内容
      * @return
-     * @Description:发送Html格式的邮件(收件人，主题，内容都暂时写死)
      */
     @RequestMapping("/sendHtmlMail")
     public String sendHtmlMail(String to, String subject, String content) {

@@ -116,7 +116,15 @@ management:
   endpoints:
     web:
       exposure:
-      # 暴露.端点
+        # 暴露.端点
         include: '*'
-      # 取消暴露metrics端点，如需暴露多个，用,分隔；如需暴露所有端点，用'*'
+        # 取消暴露metrics端点，如需暴露多个，用,分隔；如需暴露所有端点，用'*'
         #exclude: '*'
+
+# xwpusher
+wxpusher:
+  biz:
+    # 应用token
+    apptoken: AT_aYrQQ57QWGX7CTn90JLVAojAT4wAqIBC
+    # 微信观众应用的UID
+    uid: UID_3izJBf0A7BG2CsQ8bdaBjnm4JKho

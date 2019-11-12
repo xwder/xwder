@@ -1,5 +1,6 @@
 package com.xwder.manage.module.message.controller;
 
+import com.xwder.api.message.mail.MessageServiceApi;
 import com.xwder.framework.utils.message.Result;
 import com.xwder.manage.module.message.service.BookUpdateService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,8 @@ public class BookUpdateController {
 
     @Autowired
     private BookUpdateService bookUpdateService;
-
+    @Autowired
+    private MessageServiceApi messageServiceApi;
 
     @RequestMapping(value = "/update/sendBookUpdateMail", method = RequestMethod.POST)
     @ResponseBody
@@ -28,4 +30,13 @@ public class BookUpdateController {
         Result result = bookUpdateService.sendBookUpdateMessageWithMailAndSMS(author, bookName, to, subject);
         return result;
     }
+
+    @RequestMapping(value = "/sendWxPusherWeChatStrMessage", method = {RequestMethod.POST, RequestMethod.GET})
+    @ResponseBody
+    public Result sendWxPusherWeChatStrMessage(String uid, String msg) {
+
+        Result result = messageServiceApi.sendWxPusherWeChatStrMessage(uid, msg);
+        return result;
+    }
+
 }

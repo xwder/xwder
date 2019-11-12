@@ -7,7 +7,9 @@ import com.xwder.framework.utils.message.Result;
 import com.xwder.framework.utils.message.ResultUtil;
 import com.xwder.framework.utils.request.HttpClientUtil;
 import com.xwder.manage.common.contant.sms.SMSConstant;
+import com.xwder.manage.module.message.config.MessageConfig;
 import com.xwder.manage.module.message.service.BookUpdateService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,11 +23,15 @@ import java.util.Map;
  * @Date: 2019/7/14 23:38
  * @Description:
  */
+@Slf4j
 @Service
 public class BookUpdateServiceImpl implements BookUpdateService {
 
     @Autowired
     private MessageServiceApi messageServiceApi;
+
+    @Autowired
+    private MessageConfig messageConfig;
 
     @Override
     public List<Map> getBookUpdateInfo(String author, String bookName) {
@@ -118,16 +124,24 @@ public class BookUpdateServiceImpl implements BookUpdateService {
         // 发送sms
         String phone1 = "13509433172";
         String phone2 = "18083024504";
-        String ChapterName = bookName+ ((String) list.get(0).get("chapterName")).replaceAll(" ", "");
+        String ChapterName = bookName + ((String) list.get(0).get("chapterName")).replaceAll(" ", "");
 
-        String content = String.format(SMSConstant.SMS_TEMPLATE_ONE,ChapterName);
+        String content = String.format(SMSConstant.SMS_TEMPLATE_ONE, ChapterName);
         Result smsResult = sendBookUpdateSMSMessage(phone1, content);
         // 短信1发送失败！
-        if(smsResult.getCode() != 200){
+        if (smsResult.getCode() != 200) {
             // 短信2继续发送
             sendBookUpdateSMSMessage(phone2, content);
         }
+        // 发送微信消息
+        Result wechatResut = sendWxPusherWeChatStrMessage(messageConfig.getUid(), content);
+        log.info(wechatResut.toString());
         return result;
+    }
+
+    @Override
+    public Result sendWxPusherWeChatStrMessage(String uid, String msg) {
+        return messageServiceApi.sendWxPusherWeChatStrMessage(uid, msg);
     }
 
 }

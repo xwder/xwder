@@ -4,6 +4,7 @@ import com.xwder.api.message.mail.fallback.MessageServiceFallbackFactory;
 import com.xwder.framework.utils.message.Result;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 /**
@@ -38,4 +39,16 @@ public interface MessageServiceApi {
      */
     @RequestMapping("/sms/qcloud/sendSmsMessage")
     public Result sendQcloudSMS(@RequestParam("phone") final String phone, @RequestParam("content") final String content);
+
+    /**
+     * wxpusher 发送字符串消息
+     *
+     * @param uid
+     * @param msg
+     * @return
+     */
+    @RequestMapping(value = "/wechat/wxpusher/sendStrMsg", method = {RequestMethod.POST})
+    public Result sendWxPusherWeChatStrMessage(@RequestParam("uid") String uid, @RequestParam("msg") String msg);
+
+
 }

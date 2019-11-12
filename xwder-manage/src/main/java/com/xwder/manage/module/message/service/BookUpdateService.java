@@ -48,4 +48,13 @@ public interface BookUpdateService {
      * @return
      */
     Result sendBookUpdateMessageWithMailAndSMS(String author, String bookName, String to, String subject);
+
+    /**
+     * wxpusher 发送字符串消息
+     *
+     * @param uid
+     * @param msg
+     * @return
+     */
+    Result sendWxPusherWeChatStrMessage(String uid, String msg);
 }

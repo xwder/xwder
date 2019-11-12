@@ -70,7 +70,13 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>com.zjiecode</groupId>
+            <artifactId>wxpusher-client</artifactId>
+            <version>2.1.0</version>
+        </dependency>
     </dependencies>
+
 
     <build>
         <plugins>

@@ -14,10 +14,22 @@ import org.springframework.stereotype.Component;
 @Component
 public class WeChatMessageConfig {
 
+    /**
+     * Server酱 seckey
+     */
     @Value("${ftqq.seckey}")
-    private String seckey;
+    private String ftqqSeckey;
 
+    /**
+     * Server酱 url
+     */
     @Value("${ftqq.url}")
-    private String url;
+    private String ftqqUrl;
+
+    /**
+     * wxpusher apptoken
+     */
+    @Value("${wxpusher.biz.apptoken}")
+    private String wxPusherAppToken;
 
 }
