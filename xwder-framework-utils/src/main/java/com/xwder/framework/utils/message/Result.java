@@ -13,6 +13,7 @@ import lombok.*;
 @Getter
 @Setter
 @ToString
+@Builder
 public class Result<T> {
     private Integer code;
     private String msg;

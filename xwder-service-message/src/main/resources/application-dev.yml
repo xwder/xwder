@@ -135,3 +135,8 @@ ftqq:
 wxpusher:
   biz:
     apptoken: AT_aYrQQ57QWGX7CTn90JLVAojAT4wAqIBC
+
+alertover:
+  send-source: s-98f1992e-397f-4273-b08f-b1ca77db
+  receive-source: g-1fa686bc-2445-4260-b7ed-552ac38f
+  request-url: https://api.alertover.com/v1/alert
