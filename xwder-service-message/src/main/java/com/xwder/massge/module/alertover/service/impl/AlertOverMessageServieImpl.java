@@ -7,6 +7,7 @@ import com.xwder.framework.utils.message.ResultUtil;
 import com.xwder.framework.utils.request.HttpClientUtil;
 import com.xwder.massge.module.alertover.config.AlertOverConfig;
 import com.xwder.massge.module.alertover.service.inft.AlertOverMessageServie;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +21,7 @@ import java.util.HashMap;
  * @date 2019/11/19
  */
 @Service
+@Slf4j
 public class AlertOverMessageServieImpl implements AlertOverMessageServie {
 
     @Autowired
@@ -27,19 +29,22 @@ public class AlertOverMessageServieImpl implements AlertOverMessageServie {
 
     @Override
     public Result sendStrMessgeWithSource(String sendSource, String receiveSource, String title, String content) {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("source", sendSource);
+        jsonObject.put("receiver", receiveSource);
+        jsonObject.put("title", title);
+        jsonObject.put("content", content);
 
-        HashMap<String, String> paramMap = Maps.newHashMap();
-        paramMap.put("source", sendSource);
-        paramMap.put("receiver", receiveSource);
-        paramMap.put("title", title);
-        paramMap.put("content", content);
-
-        String result = HttpClientUtil.doPost(alertOverConfig.getRequestUrl(), paramMap);
-        JSONObject jsonObject = JSONObject.parseObject(result);
-        int code = Math.toIntExact(jsonObject.getLong("code"));
-        String msg = (String) jsonObject.get("msg");
-
-        return Result.builder().code(code).msg(msg).build();
+        String result = HttpClientUtil.doPostJson(alertOverConfig.getRequestUrl(), jsonObject.toString());
+        JSONObject resultJsonObject = JSONObject.parseObject(result);
+        int code = Math.toIntExact(resultJsonObject.getLong("code"));
+        if(0 == code){
+            log.info("alertover{}",resultJsonObject.toString());
+        }else {
+            log.error("alertover{}",resultJsonObject.toString());
+        }
+        String msg = (String) resultJsonObject.get("msg");
+        return ResultUtil.result(code, msg);
     }
 
     @Override

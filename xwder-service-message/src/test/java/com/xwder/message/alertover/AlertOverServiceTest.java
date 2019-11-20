@@ -29,9 +29,9 @@ public class AlertOverServiceTest {
      * alertover 发送app消息推送
      */
     @Test
-    public void sendFtqqWeChatMessageTest() {
-        String title = "6666";
-        String content = "9999";
+    public void sendAlertOverMessageTest() {
+        String title = "剑来";
+        String content = "剑来";
         Result result = alertOverMessageServie.sendStrMessge(title,content);
     }
 
