@@ -1,3 +1,5 @@
+.idea
+*.iml
 /xwder-service-book/target/
 /xwder-eureka-server1/target/
 /xwder-eureka-server2/target/
@@ -12,5 +14,10 @@
 /xwder-service-cqust/target/
 /xwder-service-message/target/
 /xwder-system/target/
-
+/xwder-admin/xwder-admin-admin/target
+/xwder-admin/xwder-admin-common/target
+/xwder-admin/xwder-admin-framework/target
+/xwder-admin/xwder-admin-generator/target
+/xwder-admin/xwder-admin-quartz/target
+/xwder-admin/xwder-admin-system/target
 *.class
