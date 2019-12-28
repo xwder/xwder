@@ -5,54 +5,72 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.xwder</groupId>
-    <artifactId>xwder-parent</artifactId>
+    <artifactId>xwder-cloud</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <modules>
-        <module>xwder-framework-common</module>
-        <module>xwder-framework-utils</module>
-        <module>xwder-manage</module>
-        <module>xwder-framework-domain</module>
-        <module>xwder-eureka-server1</module>
-        <module>xwder-eureka-server2</module>
-        <module>xwder-service-api</module>
-        <module>xwder-service-message</module>
-        <module>xwder-service-book</module>
-        <module>xwder-service-cqust</module>
-        <module>xwder-hystrix-dashboard</module>
-        <module>xwder-hystrix-turbine</module>
-        <module>xwder-zuul-api-gate</module>
-        <module>xwder-cloud-gateway</module>
-        <module>xwder-admin</module>
-    </modules>
     <packaging>pom</packaging>
 
-    <!-- 指定spring boot版本 -->
+    <modules>
+        <module>xwder-cloud-registry</module>
+        <module>xwder-cloud-common</module>
+        <module>xwder-cloud-mybatisgenerator</module>
+        <module>xwder-bizmodule-model</module>
+        <module>xwder-bizmodule-api</module>
+        <module>xwder-bizmodule-book</module>
+        <module>xwder-bizmodule-gateway</module>
+    </modules>
+
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.0.6.RELEASE</version>
+        <version>2.1.7.RELEASE</version>
         <relativePath/>
-        <!-- lookup parent from repository -->
     </parent>
 
-    <!-- 指定spring cloud版本和jdk版本 -->
     <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <skipTests>true</skipTests>
+        <docker.host>http://192.168.6.132:2375</docker.host>
+        <docker.maven.plugin.version>1.1.0</docker.maven.plugin.version>
         <java.version>1.8</java.version>
-        <spring-cloud.version>Finchley.SR2</spring-cloud.version>
+        <spring-cloud.version>Greenwich.SR2</spring-cloud.version>
+        <pagehelper-starter.version>1.2.10</pagehelper-starter.version>
+        <pagehelper.version>5.1.8</pagehelper.version>
+        <druid.version>1.1.10</druid.version>
+        <hutool.version>4.5.7</hutool.version>
+        <swagger2.version>2.7.0</swagger2.version>
+        <mybatis-generator.version>1.3.7</mybatis-generator.version>
+        <mybatis.version>3.4.6</mybatis.version>
+        <mysql-connector.version>8.0.15</mysql-connector.version>
+        <spring-data-commons.version>2.1.5.RELEASE</spring-data-commons.version>
+        <tk.mybatis.version>2.1.5</tk.mybatis.version>
+        <tk.mybatis.mapper.version>4.0.4</tk.mybatis.mapper.version>
+        <jjwt.version>0.9.0</jjwt.version>
+        <aliyun-oss.version>2.5.0</aliyun-oss.version>
+        <logstash-logback.version>5.3</logstash-logback.version>
+        <admin-starter-server.version>2.1.5</admin-starter-server.version>
+        <xwder-cloud-common.version>1.0-SNAPSHOT</xwder-cloud-common.version>
+        <xwder-cloud-mybatisgenerator.version>1.0-SNAPSHOT</xwder-cloud-mybatisgenerator.version>
+        <xwder-cloud-security.version>1.0-SNAPSHOT</xwder-cloud-security.version>
     </properties>
 
     <dependencies>
         <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 
-    <!-- 引入 spring-cloud模块 -->
     <dependencyManagement>
         <dependencies>
+            <!--Spring Cloud 相关依赖-->
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>
@@ -60,16 +78,119 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            <!--xwder-cloud通用模块-->
+            <dependency>
+                <groupId>com.xwder</groupId>
+                <artifactId>xwder-cloud-common</artifactId>
+                <version>${xwder-cloud-common.version}</version>
+            </dependency>
+            <!--xwder-cloud中mybatisgenerator生成模块-->
+            <dependency>
+                <groupId>com.xwder</groupId>
+                <artifactId>xwder-cloud-mybatisgenerator</artifactId>
+                <version>${xwder-cloud-mybatisgenerator.version}</version>
+            </dependency>
+            <!--xwder-cloud安全模块-->
+            <dependency>
+                <groupId>com.xwder</groupId>
+                <artifactId>xwder-cloud-security</artifactId>
+                <version>${xwder-cloud-security.version}</version>
+            </dependency>
+
+            <!--MyBatis分页插件starter-->
+            <dependency>
+                <groupId>com.github.pagehelper</groupId>
+                <artifactId>pagehelper-spring-boot-starter</artifactId>
+                <version>${pagehelper-starter.version}</version>
+            </dependency>
+            <!--MyBatis分页插件-->
+            <dependency>
+                <groupId>com.github.pagehelper</groupId>
+                <artifactId>pagehelper</artifactId>
+                <version>${pagehelper.version}</version>
+            </dependency>
+            <!--集成druid连接池-->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid-spring-boot-starter</artifactId>
+                <version>${druid.version}</version>
+            </dependency>
+            <!--Hutool Java工具包-->
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-all</artifactId>
+                <version>${hutool.version}</version>
+            </dependency>
+            <!--Swagger-UI API文档生产工具-->
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger2</artifactId>
+                <version>${swagger2.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger-ui</artifactId>
+                <version>${swagger2.version}</version>
+            </dependency>
+            <!-- MyBatis 生成器 -->
+            <dependency>
+                <groupId>org.mybatis.generator</groupId>
+                <artifactId>mybatis-generator-core</artifactId>
+                <version>${mybatis-generator.version}</version>
+            </dependency>
+            <!-- MyBatis-->
+            <!--<dependency>
+                <groupId>org.mybatis</groupId>
+                <artifactId>mybatis</artifactId>
+                <version>${mybatis.version}</version>
+            </dependency>-->
+            <!-- tk.MyBatis-->
+            <dependency>
+                <groupId>tk.mybatis</groupId>
+                <artifactId>mapper-spring-boot-starter</artifactId>
+                <version>${tk.mybatis.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>tk.mybatis</groupId>
+                <artifactId>mapper</artifactId>
+                <version>${tk.mybatis.mapper.version}</version>
+            </dependency>
+            <!--Mysql数据库驱动-->
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>${mysql-connector.version}</version>
+            </dependency>
+            <!--SpringData工具包-->
+            <dependency>
+                <groupId>org.springframework.data</groupId>
+                <artifactId>spring-data-commons</artifactId>
+                <version>${spring-data-commons.version}</version>
+            </dependency>
+            <!--JWT(Json Web Token)登录支持-->
+            <dependency>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt</artifactId>
+                <version>${jjwt.version}</version>
+            </dependency>
+            <!-- 阿里云OSS -->
+            <dependency>
+                <groupId>com.aliyun.oss</groupId>
+                <artifactId>aliyun-sdk-oss</artifactId>
+                <version>${aliyun-oss.version}</version>
+            </dependency>
+            <!--集成logstash-->
+            <dependency>
+                <groupId>net.logstash.logback</groupId>
+                <artifactId>logstash-logback-encoder</artifactId>
+                <version>${logstash-logback.version}</version>
+            </dependency>
+            <!--集成SpringBoot Admin监控-->
+            <dependency>
+                <groupId>de.codecentric</groupId>
+                <artifactId>spring-boot-admin-starter-server</artifactId>
+                <version>${admin-starter-server.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
-    <repositories>
-        <repository>
-            <id>spring-milestones</id>
-            <name>Spring Milestones</name>
-            <url>https://repo.spring.io/milestone</url>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </repository>
-    </repositories>
 </project>
