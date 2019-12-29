@@ -31,16 +31,16 @@
         </jdbcConnection>
 
         <!-- 生成模型的包名和位置-->
-        <javaModelGenerator targetPackage="com.xwder.book.model" targetProject="./src/main/java">
+        <javaModelGenerator targetPackage="com.xwder.modules.book.model" targetProject="./src/main/java">
             <property name="enableSubPackages" value="true"/>
             <property name="trimStrings" value="true"/>
         </javaModelGenerator>
         <!-- 生成映射文件的包名和位置-->
-        <sqlMapGenerator targetPackage="com.xwder.book.mapper" targetProject="./src/main/resources">
+        <sqlMapGenerator targetPackage="com.xwder.modules.book.mapper" targetProject="./src/main/resources">
             <property name="enableSubPackages" value="true"/>
         </sqlMapGenerator>
         <!-- 生成DAO的包名和位置-->
-        <javaClientGenerator type="XMLMAPPER" targetPackage="com.xwder.book.mapperr" targetProject="./src/main/java">
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.xwder.modules.book.mapperr" targetProject="./src/main/java">
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
 
