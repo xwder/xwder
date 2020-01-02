@@ -10,7 +10,8 @@ Configuration:
       - name: log.level.cstc
         value: trace
       - name: log.path
-        value: ./logs/xwder-bizmodule-book
+#        value: ./logs/xwder-bizmodule-book
+        value: /usr/local/xwder/logs/xwder-bizmodule-book
       - name: project.name
         value: xwder-bizmodule-book
       - name: log.pattern

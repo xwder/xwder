@@ -1,121 +1,151 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
-    <th:block th:include="include :: header('书籍列表')"/>
-    <th:block th:include="include :: layout-latest-css"/>
-</head>
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <th:block th:include="include :: header('在线用户列表')"/>
 </head>
 <body class="gray-bg">
-    <div class="container-div">
-        <div class="row">
-            <div class="col-sm-12 search-collapse">
-                <form id="user-form">
-                    <div class="select-list">
-                        <ul>
-                            <li>
-                                作者名：<input type="text" name="author"/>
-                            </li>
-                            <li>
-                                书籍名称：<input type="text" name="bookName"/>
-                            </li>
-                            </li>
-                            <li>
-                                <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
-                                <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
-                            </li>
-                        </ul>
-                    </div>
-                </form>
-            </div>
+<div class="container-div">
+    <div class="row">
+        <div class="col-sm-12 search-collapse">
+            <form id="online-form">
+                <div class="select-list">
+                    <ul>
+                        <li>
+                            登录地址：<input type="text" name="ipaddr"/>
+                        </li>
+                        <li>
+                            登录名称：<input type="text" name="loginName"/>
+                        </li>
+                        <li>
+                            <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i
+                                    class="fa fa-search"></i>&nbsp;搜索</a>
+                            <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i
+                                    class="fa fa-refresh"></i>&nbsp;重置</a>
+                        </li>
+                    </ul>
+                </div>
+            </form>
+        </div>
 
-            <div class="col-sm-12 select-table table-striped">
-                <table id="bootstrap-table"></table>
-            </div>
+        <div class="btn-group-sm" id="toolbar" role="group">
+            <a class="btn btn-danger multiple disabled" onclick="javascript:batchForceLogout()"
+               shiro:hasPermission="monitor:online:batchForceLogout">
+                <i class="fa fa-sign-out"></i> 强退
+            </a>
+        </div>
+
+        <div class="col-sm-12 select-table table-striped">
+            <table id="bootstrap-table"></table>
         </div>
     </div>
-    <th:block th:include="include :: footer"/>
-    <th:block th:include="include :: footer" />
-    <th:block th:include="include :: layout-latest-js" />
-    <script th:inline="javascript">
-        var listChapter = [[${@permission.hasPermi('book:book:chapters')}]];
-        var readBook = [[${@permission.hasPermi('book:book:read')}]];
-        var prefix = ctx + "book/book";
+</div>
+<th:block th:include="include :: footer"/>
+<script th:inline="javascript">
+    var forceFlag = [[${@permission.hasPermi('monitor:online:forceLogout')}]];
+    var prefix = ctx + "book/book";
 
-        $(function() {
-            var options = {
-                uniqueId: "book",
-                url: prefix + "/list",
-                exportUrl: prefix + "/export",
-                sortName: "updateTime",
-                sortOrder: "desc",
-                showExport: true,
-                escape: true,
-                columns: [{
-                    checkbox: true
+    $(function () {
+        var options = {
+            uniqueId: "sessionId",
+            url: prefix + "/list",
+            exportUrl: prefix + "/export",
+            sortName: "lastAccessTime",
+            sortOrder: "desc",
+            showExport: true,
+            escape: true,
+            columns: [{
+                checkbox: true
+            },
+                {
+                    title: "序号",
+                    formatter: function (value, row, index) {
+                        return $.table.serialNumber(index);
+                    }
                 },
-                    {
-                        title: "序号",
-                        formatter: function (value, row, id) {
-                            return $.table.serialNumber(id);
+                {
+                    field: 'sessionId',
+                    title: '会话编号'
+                },
+                {
+                    field: 'loginName',
+                    title: '登录名称',
+                    sortable: true
+                },
+                {
+                    field: 'deptName',
+                    title: '部门名称'
+                },
+                {
+                    field: 'ipaddr',
+                    title: '主机'
+                },
+                {
+                    field: 'loginLocation',
+                    title: '登录地点'
+                },
+                {
+                    field: 'browser',
+                    title: '浏览器'
+                },
+                {
+                    field: 'os',
+                    title: '操作系统'
+                },
+                {
+                    field: 'status',
+                    title: '会话状态',
+                    align: 'center',
+                    formatter: function (value, row, index) {
+                        if (value == 'on_line') {
+                            return '<span class="badge badge-primary">在线</span>';
+                        } else if (value == 'off_line') {
+                            return '<span class="badge badge-danger">离线</span>';
                         }
-                    },
-                    {
-                        field: 'bookName',
-                        title: '书籍名称'
-                    },
-                    {
-                        field: 'author',
-                        title: '作者',
-                    },
-                    {
-                        field: 'category',
-                        title: '类别',
+                    }
+                },
+                {
+                    field: 'startTimestamp',
+                    title: '登录时间',
+                    sortable: true
+                },
+                {
+                    field: 'lastAccessTime',
+                    title: '最后访问时间',
+                    sortable: true
+                },
+                {
+                    title: '操作',
+                    align: 'center',
+                    formatter: function (value, row, index) {
+                        var msg = '<a class="btn btn-danger btn-xs ' + forceFlag + '" href="javascript:void(0)" onclick="forceLogout(\'' + row.sessionId + '\')"><i class="fa fa-sign-out"></i>强退</a> ';
+                        return msg;
+                    }
+                }]
+        };
+        $.table.init(options);
+    });
 
-                    },
-                    {
-                        field: 'updateStatus',
-                        title: '更新状态',
-                        align: 'center',
-                        formatter: function(value, row, index) {
-                            if (value == '连载中') {
-                                return '<span class="badge badge-primary">连载中</span>';
-                            } else if (value == '完结') {
-                                return '<span class="badge badge-danger">连载中</span>';
-                            } else {
-                                return '<span class="badge badge-danger">未知</span>';
-                            }
-                        }
-                    },
-                    {
-                        field: 'wordSize',
-                        title: '总字数',
-                        sortable: true
-                    },
-                    {
-                        field: 'lastUpdateTime',
-                        title: '最后更新时间',
-                        sortable: true
-                    },
-                    {
-                        field: 'latestChapter',
-                        title: '最新章节',
-                    },
-                    {
-                        title: '操作',
-                        align: 'center',
-                        formatter: function(value, row, index) {
-                            var actions = [];
-                            actions.push('<a class="btn btn-success btn-xs ' + listChapter + '" href="javascript:void(0)" onclick=""><i class="fa fa-edit"></i>章节目录</a> ');
-                            actions.push('<a class="btn btn-danger btn-xs ' + readBook + '" href="javascript:void(0)" onclick=""><i class="fa fa-remove"></i>开始阅读</a> ');
-                            return actions.join('');
-                        }
-                    }]
-            };
-            $.table.init(options);
+    // 单条强退
+    function forceLogout(sessionId) {
+        $.modal.confirm("确定要强制选中用户下线吗？", function () {
+            var data = {"sessionId": sessionId};
+            $.operate.post(prefix + "/forceLogout", data);
+        })
+    }
+
+    // 批量强退
+    function batchForceLogout() {
+        var rows = $.table.selectColumns("sessionId");
+        if (rows.length == 0) {
+            $.modal.alertWarning("请选择要强退的用户");
+            return;
+        }
+        $.modal.confirm("确认要强退选中的" + rows.length + "条数据吗?", function () {
+            var url = prefix + "/batchForceLogout";
+            var data = {"ids": rows};
+            $.operate.post(url, data);
         });
-    </script>
+    }
+</script>
 </body>
 </html>

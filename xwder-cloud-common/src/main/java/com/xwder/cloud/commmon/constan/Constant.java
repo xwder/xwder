@@ -17,15 +17,4 @@ public class Constant {
      */
     public static Integer DEFAULT_PAGE_NUM = 1;
 
-
-    /**
-     * 默认分页大小
-     */
-    public static String DEFAULT_PAGE_SIZE_STR = "15";
-
-    /**
-     * 默认分页第1页
-     */
-    public static String DEFAULT_PAGE_NUM_STR = "1";
-
 }

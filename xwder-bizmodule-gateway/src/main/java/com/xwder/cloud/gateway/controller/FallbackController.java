@@ -1,5 +1,6 @@
 package com.xwder.cloud.gateway.controller;
 
+import com.xwder.cloud.commmon.api.CommonResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -13,8 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class FallbackController {
 
     @GetMapping("/fallback")
-    public String fallback() {
-        return "fallback";
+    public CommonResult fallback() {
+        return CommonResult.failed();
     }
 
 }

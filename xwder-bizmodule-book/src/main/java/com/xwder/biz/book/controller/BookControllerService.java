@@ -1,8 +1,10 @@
 package com.xwder.biz.book.controller;
 
+import com.github.pagehelper.PageInfo;
 import com.xwder.biz.api.book.BookInfoServiceApi;
 import com.xwder.biz.book.service.intf.BookService;
 import com.xwder.biz.model.book.BookInfo;
+import com.xwder.cloud.commmon.api.CommonPage;
 import com.xwder.cloud.commmon.api.CommonResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,6 +31,6 @@ public class BookControllerService implements BookInfoServiceApi {
     public CommonResult listBook(@RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
                                  @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize) {
         List<BookInfo> bookInfoList = bookService.listBookInfo(pageNum, pageSize);
-        return CommonResult.success(bookInfoList);
+        return CommonResult.success(CommonPage.restPage(bookInfoList));
     }
 }

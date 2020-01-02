@@ -18,6 +18,7 @@
         <module>xwder-bizmodule-book</module>
         <module>xwder-bizmodule-gateway</module>
         <module>xwder-bizmodule-manage</module>
+        <module>xwder-bizmodule-message</module>
     </modules>
 
     <parent>

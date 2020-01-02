@@ -1,5 +1,6 @@
 package com.xwder.biz.book.service.impl;
 
+import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.google.common.collect.Lists;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
@@ -25,7 +26,7 @@ public class BookServiceImpl implements BookService {
     @HystrixCommand(fallbackMethod = "listBookInfoFallBack")
     @Override
     public List<BookInfo> listBookInfo(Integer pageNum, Integer pageSize) {
-        PageHelper.startPage(pageNum, pageSize);
+        Page<BookInfo> page = PageHelper.startPage(pageNum, pageSize);
         List<BookInfo> bookInfoList = bookInfoDao.selectAll();
         return bookInfoList;
     }

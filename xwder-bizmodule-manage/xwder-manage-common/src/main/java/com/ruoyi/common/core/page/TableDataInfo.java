@@ -1,5 +1,10 @@
 package com.ruoyi.common.core.page;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -8,6 +13,9 @@ import java.util.List;
  * 
  * @author ruoyi
  */
+@Builder
+@AllArgsConstructor
+@Data
 public class TableDataInfo implements Serializable
 {
     private static final long serialVersionUID = 1L;
