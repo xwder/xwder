@@ -27,6 +27,15 @@ public class CommonResult<T> {
     /**
      * 成功返回结果
      *
+     * @return
+     */
+    public static <T> CommonResult<T> success() {
+        return new CommonResult<T>(ResultCode.SUCCESS.getCode(), null, null);
+    }
+
+    /**
+     * 成功返回结果
+     *
      * @param data 获取的数据
      * @param <T>
      * @return
@@ -150,5 +159,18 @@ public class CommonResult<T> {
     public static <T> CommonResult<T> forbidden(T data) {
         return new CommonResult<T>(ResultCode.FORBIDDEN.getCode(), ResultCode.FORBIDDEN.getMessage(), data);
     }
+
+
+    /**
+     * 未授权返回结果
+     *
+     * @param data
+     * @param <T>
+     * @return
+     */
+    public static <T> CommonResult<T> commonResult(long code, String msg, T data) {
+        return new CommonResult<T>(code, msg, data);
+    }
+
 
 }

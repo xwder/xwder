@@ -110,6 +110,8 @@ xwder-cloud-registry/target/maven-status/
 xwder-cloud-registry/target/test-classes/
 xwder-cloud-registry/target/xwder-cloud-registry-1.0-SNAPSHOT.jar
 xwder-cloud-registry/target/xwder-cloud-registry-1.0-SNAPSHOT.jar.original
-/logs/*
-/xwder-cloud-common/target/maven-status/
-/xwder-cloud-common/target/
+logs/*
+xwder-cloud-common/target/maven-status/
+xwder-cloud-common/target/*
+xwder-cloud-common/target/
+xwder-cloud-common/target/
