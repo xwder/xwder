@@ -1,12 +1,8 @@
 package ${packageName}.domain;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
-import com.ruoyi.common.annotation.Excel;
+import com.xwder.manage.common.annotation.Excel;
 #if($table.crud)
-import com.ruoyi.common.core.domain.BaseEntity;
 #elseif($table.tree)
-import com.ruoyi.common.core.domain.TreeEntity;
 #end
 #foreach ($import in $importList)
 import ${import};

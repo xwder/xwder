@@ -27,9 +27,9 @@ spring:
     time-zone: GMT+8
 
   datasource:
-    url: jdbc:mysql://114.67.85.146:3306/spider?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=UTC
-    username: spider
-    password: ENC(zK30mohEDxgkl9V+kCie3cCAUoie9/8n0g2SMhceaAQ=)
+    url: jdbc:mysql://114.67.85.146:3306/xwder?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=UTC
+    username: xwder
+    password: ENC(FHsDQEpkPHG5Ou8eFedR2neYxGIoCIm2m2bSPT/Y+UY=)
     driver-class-name: com.mysql.cj.jdbc.Driver
     platform: mysql
     type: com.alibaba.druid.pool.DruidDataSource
@@ -82,7 +82,7 @@ logging:
 
 jasypt:
   encryptor:
-    password: spider
+    password: xwder
 
 eureka:
   client:
