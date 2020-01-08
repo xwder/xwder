@@ -12,6 +12,6 @@ public interface SmsMessageService {
      * @param content
      * @return
      */
-    boolean sendSMS(String phone, String content) throws NoSuchAlgorithmException, UnsupportedEncodingException, InvalidKeyException;
+    boolean sendSMS(String phone, String content) throws Exception;
 
 }

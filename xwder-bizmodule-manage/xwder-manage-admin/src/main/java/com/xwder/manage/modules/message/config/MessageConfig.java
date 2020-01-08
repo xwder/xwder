@@ -14,7 +14,13 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties(prefix = "messageservice")
 public class MessageConfig {
 
-    public String gatewayUrl;
+    private String gatewayUrl;
 
-    public String qSMSUrl;
+    private String qSMSUrl;
+
+    private String alertoverUrl;
+
+    private String mailUrl;
+
+    private String htmlMailUrl;
 }

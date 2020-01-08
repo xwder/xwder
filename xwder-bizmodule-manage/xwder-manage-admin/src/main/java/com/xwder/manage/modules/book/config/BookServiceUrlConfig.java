@@ -14,11 +14,11 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties(prefix = "bookservice")
 public class BookServiceUrlConfig {
 
-    public String gatewayUrl;
+    private String gatewayUrl;
 
-    public String listBook;
+    private String listBook;
 
-    public String listChapter;
+    private String listChapter;
 
-    public String latestChapters;
+    private String latestChapters;
 }

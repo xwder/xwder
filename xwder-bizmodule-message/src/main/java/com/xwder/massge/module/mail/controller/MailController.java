@@ -3,7 +3,9 @@ package com.xwder.massge.module.mail.controller;
 import com.xwder.cloud.commmon.api.CommonResult;
 import com.xwder.massge.module.mail.service.MailService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.thymeleaf.TemplateEngine;
 
@@ -29,7 +31,7 @@ public class MailController {
      * @param content 内容
      * @return
      */
-    @RequestMapping("/sendSimpleMail")
+    @RequestMapping(value = "/sendSimpleMail",method = RequestMethod.POST, produces = MediaType.TEXT_PLAIN_VALUE + ";charset=utf-8")
     public CommonResult sendSimpleMail(String to, String subject, String content) {
         mailService.sendHtmlMail(to, subject, content);
         return CommonResult.success();

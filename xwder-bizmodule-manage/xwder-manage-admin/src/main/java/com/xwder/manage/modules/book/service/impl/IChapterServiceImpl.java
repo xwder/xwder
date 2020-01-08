@@ -8,6 +8,8 @@ import com.xwder.manage.modules.book.config.BookServiceUrlConfig;
 import com.xwder.manage.modules.book.contant.SMSConstant;
 import com.xwder.manage.modules.book.dto.BookChapterDto;
 import com.xwder.manage.modules.book.service.intf.IChapterService;
+import com.xwder.manage.modules.message.service.intl.AlertOverService;
+import com.xwder.manage.modules.message.service.intl.MailService;
 import com.xwder.manage.modules.message.service.intl.SmsMessageService;
 import com.xwder.manage.utils.HttpClientUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -32,6 +34,12 @@ public class IChapterServiceImpl implements IChapterService {
 
     @Autowired
     private SmsMessageService smsMessageService;
+
+    @Autowired
+    private MailService mailService;
+
+    @Autowired
+    private AlertOverService alertOverService;
 
     @Override
     public List<BookChapterDto> getLatestChapters(String author, String bookName, String bookUrl) {
@@ -65,9 +73,9 @@ public class IChapterServiceImpl implements IChapterService {
             String phone1 = "13509433172";
             String phone2 = "18083024504";
             StringBuffer chapterName = new StringBuffer();
-            for (Object  object : latestChapters) {
+            for (Object object : latestChapters) {
                 JSONObject jsonObject = (JSONObject) object;
-                BookChapterDto latestChapterDto = JSON.toJavaObject(jsonObject,BookChapterDto.class);
+                BookChapterDto latestChapterDto = JSON.toJavaObject(jsonObject, BookChapterDto.class);
                 chapterName.append(latestChapterDto.getChapterName().replace(" ", ""));
             }
             String content = String.format(SMSConstant.SMS_TEMPLATE_ONE, chapterName.toString());
@@ -79,6 +87,16 @@ public class IChapterServiceImpl implements IChapterService {
             } catch (Exception e) {
                 log.error("发送短信失败,[{}]-[{}]-[{}]", phone1, content, e);
             }
+            // 发送邮件
+            mailService.sendSimpleMail("1123511540@qq.com", "更新", content);
+
+            // 发送alertover
+            for (Object object : latestChapters) {
+                JSONObject jsonObject = (JSONObject) object;
+                BookChapterDto latestChapterDto = JSON.toJavaObject(jsonObject, BookChapterDto.class);
+                alertOverService.sendStrMessge(bookName+"-"+latestChapterDto.getChapterName(),latestChapterDto.getChapterContent());
+            }
+
         }
     }
 }

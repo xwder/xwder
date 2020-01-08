@@ -8,9 +8,6 @@ import com.xwder.manage.utils.HttpClientUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.UnsupportedEncodingException;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
 import java.util.Map;
 
 /**
@@ -25,12 +22,12 @@ public class SmsMessageServiceImpl implements SmsMessageService {
     private MessageConfig messageConfig;
 
     @Override
-    public boolean sendSMS(String phone, String content) throws NoSuchAlgorithmException, UnsupportedEncodingException, InvalidKeyException {
-        String url = messageConfig.getGatewayUrl() + messageConfig.qSMSUrl;
+    public boolean sendSMS(String phone, String content) throws Exception {
+        String url = messageConfig.getGatewayUrl() + messageConfig.getQSMSUrl();
         Map paramMap = Maps.newHashMap();
         paramMap.put("phone", phone);
         paramMap.put("content", content);
-        String result = HttpClientUtil.doGet(url, paramMap);
+        String result = HttpClientUtil.doPost(url,paramMap);
         Map map = JSON.parseObject(result, Map.class);
         int code = (int) map.get("code");
         return code == 200;

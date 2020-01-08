@@ -32,7 +32,7 @@ server:
 # 日志配置
 logging:
   level:
-    com.xwder: debug
+    com.xwder.manage: debug
     org.springframework: warn
 
 # 用户配置
@@ -175,3 +175,6 @@ bookservice:
 messageservice:
   gatewayUrl: http://localhost:9003
   qSMSUrl: /sms/qcloud/sendSmsMessage
+  alertoverUrl: /alertover/sendAlertOverNotice
+  mailUrl: /mail/sendSimpleMail
+  htmlMailUrl: /mail/sendHtmlMail
