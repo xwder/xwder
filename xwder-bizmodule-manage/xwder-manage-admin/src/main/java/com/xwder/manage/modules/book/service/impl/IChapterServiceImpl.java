@@ -1,6 +1,7 @@
 package com.xwder.manage.modules.book.service.impl;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.google.common.collect.Lists;
 import com.xwder.manage.common.utils.StringUtils;
 import com.xwder.manage.modules.book.config.BookServiceUrlConfig;
@@ -57,14 +58,16 @@ public class IChapterServiceImpl implements IChapterService {
 
     @Override
     public void bookUpdateNotice(String author, String bookName, String bookUrl) {
-        List<BookChapterDto> latestChapters = getLatestChapters(author, bookName, bookUrl);
+        List latestChapters = getLatestChapters(author, bookName, bookUrl);
         if (CollectionUtils.isNotEmpty(latestChapters)) {
             // 发送消息
             // 发送对象后面可以配置再数据库中
             String phone1 = "13509433172";
             String phone2 = "18083024504";
             StringBuffer chapterName = new StringBuffer();
-            for (BookChapterDto latestChapterDto : latestChapters) {
+            for (Object  object : latestChapters) {
+                JSONObject jsonObject = (JSONObject) object;
+                BookChapterDto latestChapterDto = JSON.toJavaObject(jsonObject,BookChapterDto.class);
                 chapterName.append(latestChapterDto.getChapterName().replace(" ", ""));
             }
             String content = String.format(SMSConstant.SMS_TEMPLATE_ONE, chapterName.toString());
