@@ -29,4 +29,6 @@ public interface BookInfoServiceApi {
     @RequestMapping(value = "/bookinfos", method = RequestMethod.GET)
     CommonResult listBook(@RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
                           @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize);
+
+
 }

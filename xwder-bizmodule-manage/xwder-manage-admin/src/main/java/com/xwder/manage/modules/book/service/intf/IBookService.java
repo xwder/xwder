@@ -1,7 +1,10 @@
-package com.xwder.manage.web.modules.book.service.intf;
+package com.xwder.manage.modules.book.service.intf;
 
 import com.xwder.manage.common.core.page.TableDataInfo;
-import com.xwder.manage.web.modules.book.dto.BookInfoDto;
+import com.xwder.manage.modules.book.dto.BookChapterDto;
+import com.xwder.manage.modules.book.dto.BookInfoDto;
+
+import java.util.List;
 
 /**
  * bookService
@@ -18,4 +21,5 @@ public interface IBookService {
      * @return
      */
     TableDataInfo listBookInfo(int PageNum, int pageSize, BookInfoDto bookInfoDto);
+
 }

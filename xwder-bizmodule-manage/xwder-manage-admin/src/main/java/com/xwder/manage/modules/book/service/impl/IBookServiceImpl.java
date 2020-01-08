@@ -1,11 +1,13 @@
-package com.xwder.manage.web.modules.book.service.impl;
+package com.xwder.manage.modules.book.service.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Lists;
 import com.xwder.manage.common.core.page.TableDataInfo;
-import com.xwder.manage.web.modules.book.config.BookServiceUrlConfig;
-import com.xwder.manage.web.modules.book.dto.BookInfoDto;
-import com.xwder.manage.web.modules.book.service.intf.IBookService;
+import com.xwder.manage.common.utils.StringUtils;
+import com.xwder.manage.modules.book.config.BookServiceUrlConfig;
+import com.xwder.manage.modules.book.dto.BookChapterDto;
+import com.xwder.manage.modules.book.dto.BookInfoDto;
+import com.xwder.manage.modules.book.service.intf.IBookService;
 import com.xwder.manage.utils.HttpClientUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,7 +28,7 @@ public class IBookServiceImpl implements IBookService {
 
     @Override
     public TableDataInfo listBookInfo(int PageNum, int pageSize, BookInfoDto bookInfoDto) {
-        String url = new StringBuilder().append(bookServiceUrlConfig.getServiceBookGatewayUrl())
+        String url = new StringBuilder().append(bookServiceUrlConfig.getGatewayUrl())
                 .append(bookServiceUrlConfig.getListBook())
                 .append("?PageNum=")
                 .append(PageNum)
@@ -40,7 +42,7 @@ public class IBookServiceImpl implements IBookService {
             TableDataInfo tableDataInfo = TableDataInfo.builder()
                     .rows((List<BookInfoDto>) data.get("list"))
                     // TODO bug toString
-                    .total(Long.parseLong(data.get("total").toString()))
+                    .total((Long) data.get("total"))
                     .code(0)
                     .build();
             return tableDataInfo;
@@ -51,4 +53,6 @@ public class IBookServiceImpl implements IBookService {
                 .rows(Lists.newArrayList())
                 .build();
     }
+
 }
+

@@ -1,4 +1,4 @@
-package com.xwder.manage.web.modules.book.dto;
+package com.xwder.manage.modules.book.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

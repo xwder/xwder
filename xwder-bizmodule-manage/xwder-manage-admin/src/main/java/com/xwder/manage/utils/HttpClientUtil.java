@@ -53,7 +53,7 @@ public class HttpClientUtil {
                 resultString = EntityUtils.toString(response.getEntity(), "UTF-8");
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println(e);
         } finally {
             try {
                 if (response != null) {
@@ -61,7 +61,7 @@ public class HttpClientUtil {
                 }
                 httpclient.close();
             } catch (IOException e) {
-                e.printStackTrace();
+                System.out.println(e);
             }
         }
         return resultString;
@@ -93,12 +93,12 @@ public class HttpClientUtil {
             response = httpClient.execute(httpPost);
             resultString = EntityUtils.toString(response.getEntity(), "utf-8");
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println(e);
         } finally {
             try {
                 response.close();
             } catch (IOException e) {
-                e.printStackTrace();
+                System.out.println(e);
             }
         }
 
@@ -129,7 +129,7 @@ public class HttpClientUtil {
             try {
                 response.close();
             } catch (IOException e) {
-                e.printStackTrace();
+                System.out.println(e);
             }
         }
 

@@ -6,10 +6,7 @@ import com.xwder.biz.model.book.BookChapter;
 import com.xwder.cloud.commmon.api.CommonPage;
 import com.xwder.cloud.commmon.api.CommonResult;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -20,7 +17,7 @@ import java.util.List;
  */
 @RequestMapping(value = "/book")
 @RestController
-public class ChapterControllerService implements ChapterServiceApi {
+public class ChapterController implements ChapterServiceApi {
 
     @Autowired
     private ChapterService chapterService;
@@ -33,5 +30,14 @@ public class ChapterControllerService implements ChapterServiceApi {
                                             @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize) {
         List<BookChapter> bookChapterList = chapterService.listChapterByBookId(bookId, withContent, pageNum, pageSize);
         return CommonResult.success(CommonPage.restPage(bookChapterList));
+    }
+
+    @Override
+    @GetMapping(value = "/latestChapters")
+    public CommonResult getLatestChapter(
+            @RequestParam(value = "author") String author,
+            @RequestParam(value = "bookName") String bookName,
+            @RequestParam(value = "bookUrl", required = true) String bookUrl){
+        return chapterService.getLatestChapters(author,bookName,bookUrl);
     }
 }

@@ -21,7 +21,7 @@ public class TableDataInfo implements Serializable
     private static final long serialVersionUID = 1L;
 
     /** 总记录数 */
-    private long total;
+    private Long total;
 
     /** 列表数据 */
     private List<?> rows;
@@ -45,7 +45,7 @@ public class TableDataInfo implements Serializable
      * @param list 列表数据
      * @param total 总记录数
      */
-    public TableDataInfo(List<?> list, int total)
+    public TableDataInfo(List<?> list, Long total)
     {
         this.rows = list;
         this.total = total;

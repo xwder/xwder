@@ -1,6 +1,7 @@
 package com.xwder.biz.book.service.intf;
 
 import com.xwder.biz.model.book.BookChapter;
+import com.xwder.cloud.commmon.api.CommonResult;
 
 import java.util.List;
 
@@ -25,4 +26,13 @@ public interface ChapterService {
     List<BookChapter> listChapterByBookId(Integer bookId, Integer withContent, Integer pageNum, Integer pageSize);
 
 
+    /**
+     * 获取最新章节
+     *
+     * @param author
+     * @param bookName
+     * @param bookUrl
+     * @return
+     */
+    CommonResult getLatestChapters(String author, String bookName, String bookUrl);
 }

@@ -129,3 +129,6 @@ management:
         include: '*'
         # 取消暴露metrics端点，如需暴露多个，用,分隔；如需暴露所有端点，用'*'
         #exclude: '*'
+
+book:
+  latest-chapter-url: https://spider.xwder.com/api/v1/book/book

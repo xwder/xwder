@@ -1,11 +1,11 @@
-package com.xwder.manage.web.modules.book.controller;
+package com.xwder.manage.modules.book.controller;
 
 import com.xwder.manage.common.core.controller.BaseController;
 import com.xwder.manage.common.core.page.PageDomain;
 import com.xwder.manage.common.core.page.TableDataInfo;
 import com.xwder.manage.common.core.page.TableSupport;
-import com.xwder.manage.web.modules.book.dto.BookInfoDto;
-import com.xwder.manage.web.modules.book.service.intf.IBookService;
+import com.xwder.manage.modules.book.dto.BookInfoDto;
+import com.xwder.manage.modules.book.service.intf.IBookService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

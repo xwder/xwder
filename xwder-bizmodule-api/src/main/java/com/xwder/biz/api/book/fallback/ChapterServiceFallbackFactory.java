@@ -23,6 +23,11 @@ public class ChapterServiceFallbackFactory implements FallbackFactory<ChapterSer
             public CommonResult listChapterByBookId(Integer bookId, Integer withContent, Integer pageNum, Integer pageSize) {
                 return CommonResult.failed();
             }
+
+            @Override
+            public CommonResult getLatestChapter(String author, String bookName, String bookUrl) {
+                return CommonResult.failed();
+            }
         };
     }
 }

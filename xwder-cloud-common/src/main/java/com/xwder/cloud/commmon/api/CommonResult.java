@@ -56,6 +56,17 @@ public class CommonResult<T> {
         return new CommonResult<T>(ResultCode.SUCCESS.getCode(), message, data);
     }
 
+    /**
+     * 成功返回结果
+     *
+     * @param code    code
+     * @param message 提示信息
+     * @param <T>
+     * @return
+     */
+    public static <T> CommonResult<T> success(long code, String message) {
+        return new CommonResult<T>(code, message, null);
+    }
 
     /**
      * 失败返回结果

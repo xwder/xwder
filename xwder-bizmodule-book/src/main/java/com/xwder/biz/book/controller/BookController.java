@@ -21,7 +21,7 @@ import java.util.List;
  */
 @RequestMapping(value = "/book")
 @RestController
-public class BookControllerService implements BookInfoServiceApi {
+public class BookController implements BookInfoServiceApi {
 
     @Autowired
     private BookService bookService;
@@ -33,4 +33,6 @@ public class BookControllerService implements BookInfoServiceApi {
         List<BookInfo> bookInfoList = bookService.listBookInfo(pageNum, pageSize);
         return CommonResult.success(CommonPage.restPage(bookInfoList));
     }
+
+
 }
