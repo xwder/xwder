@@ -27,8 +27,8 @@ public class MailServiceImpl implements MailService {
         map.put("to", to);
         map.put("subject", subject);
         map.put("content", content);
-        String url = messageConfig.getGatewayUrl() + messageConfig.getMailUrl() + "?to=" + to + "&subject=" + subject + "&content=" + content;
-        String result = HttpClientUtil.doGet(url);
+        String url = messageConfig.getGatewayUrl() + messageConfig.getMailUrl();
+        String result = HttpClientUtil.doPost(url, map);
         Map resultMap = JSON.parseObject(result, Map.class);
         int code = (int) resultMap.get("code");
         return code == 200;

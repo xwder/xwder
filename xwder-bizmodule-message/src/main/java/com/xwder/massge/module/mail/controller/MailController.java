@@ -31,7 +31,7 @@ public class MailController {
      * @param content 内容
      * @return
      */
-    @RequestMapping(value = "/sendSimpleMail",method = RequestMethod.POST, produces = MediaType.TEXT_PLAIN_VALUE + ";charset=utf-8")
+    @RequestMapping(value = "/sendSimpleMail",method = RequestMethod.POST)
     public CommonResult sendSimpleMail(String to, String subject, String content) {
         mailService.sendHtmlMail(to, subject, content);
         return CommonResult.success();

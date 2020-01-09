@@ -33,7 +33,7 @@ public class QcloudSmsMessageController {
      * @param content 短信内容
      * @return
      */
-    @RequestMapping(value = "/sendSmsMessage", method = RequestMethod.POST, produces = MediaType.TEXT_PLAIN_VALUE + ";charset=utf-8")
+    @RequestMapping(value = "/sendSmsMessage", method = RequestMethod.POST)
     public CommonResult sendQcloudSMS(String phone, String content) throws NoSuchAlgorithmException, InvalidKeyException, UnsupportedEncodingException {
         return qCloudSMSService.sendSMS(phone, content);
     }
