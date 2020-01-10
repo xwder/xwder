@@ -92,14 +92,6 @@ public class ChapterServiceImpl implements ChapterService {
             int i = 0;
             for (; i < size; i++) {
                 JSONObject jsonObject1 = jsonArray.getJSONObject(i);
-//                author = (String) jsonObject1.get("author");
-//                String bookId = (String) jsonObject1.get("bookId");
-//                String chapterContent = (String) jsonObject1.get("chapterContent");
-//                bookName = (String) jsonObject1.get("bookName");
-//                String chapterName = (String) jsonObject1.get("chapterName");
-//                String sourceUrl = (String) jsonObject1.get("sourceUrl");
-//                Date updateTime = (Date) jsonObject1.get("updateTime");
-//                Integer chapterWorkSize = (Integer) jsonObject1.get("chapterWorkSize");
                 Map map = Maps.newHashMap();
                 map.put("author", jsonObject1.get("author"));
                 map.put("bookId", jsonObject1.get("bookId"));

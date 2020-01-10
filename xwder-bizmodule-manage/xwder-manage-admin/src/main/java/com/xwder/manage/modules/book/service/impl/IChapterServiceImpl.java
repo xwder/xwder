@@ -3,10 +3,13 @@ package com.xwder.manage.modules.book.service.impl;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.google.common.collect.Lists;
+import com.xwder.manage.common.core.page.TableDataInfo;
 import com.xwder.manage.common.utils.StringUtils;
+import com.xwder.manage.common.utils.bean.BeanUtils;
 import com.xwder.manage.modules.book.config.BookServiceUrlConfig;
 import com.xwder.manage.modules.book.contant.SMSConstant;
 import com.xwder.manage.modules.book.dto.BookChapterDto;
+import com.xwder.manage.modules.book.dto.BookInfoDto;
 import com.xwder.manage.modules.book.service.intf.IChapterService;
 import com.xwder.manage.modules.message.service.intl.AlertOverService;
 import com.xwder.manage.modules.message.service.intl.MailService;
@@ -78,9 +81,15 @@ public class IChapterServiceImpl implements IChapterService {
                 BookChapterDto latestChapterDto = JSON.toJavaObject(jsonObject, BookChapterDto.class);
                 chapterName.append(latestChapterDto.getChapterName().replace(" ", ""));
             }
+
             String content = String.format(SMSConstant.SMS_TEMPLATE_ONE, chapterName.toString());
+            // 最新章节 sms 字数有点短。。。
+            JSONObject obj = (JSONObject) latestChapters.get(latestChapters.size() - 1);
+            BookChapterDto smsLatestChapterDto = JSON.toJavaObject(obj, BookChapterDto.class);
+            String smsContent = smsLatestChapterDto.getChapterName().replace(" ", "");
+
             try {
-                boolean sendSMSResult = smsMessageService.sendSMS(phone1, content);
+                boolean sendSMSResult = smsMessageService.sendSMS(phone1, smsContent);
                 if (!sendSMSResult) {
                     smsMessageService.sendSMS(phone2, content);
                 }
@@ -94,9 +103,31 @@ public class IChapterServiceImpl implements IChapterService {
             for (Object object : latestChapters) {
                 JSONObject jsonObject = (JSONObject) object;
                 BookChapterDto latestChapterDto = JSON.toJavaObject(jsonObject, BookChapterDto.class);
-                alertOverService.sendStrMessge(bookName+"-"+latestChapterDto.getChapterName(),latestChapterDto.getChapterContent());
+                alertOverService.sendStrMessge(bookName + "-" + latestChapterDto.getChapterName(), latestChapterDto.getChapterContent());
             }
 
         }
+    }
+
+    @Override
+    public TableDataInfo listChapters(int PageNum, int pageSize, BookChapterDto bookChapterDto) throws Exception {
+        String url = bookServiceUrlConfig.getGatewayUrl() + bookServiceUrlConfig.getListChapter();
+        Map paramMap = BeanUtils.beanToMapWithNotNullProperties(bookChapterDto);
+        String result = HttpClientUtil.doGet(url, paramMap);
+        Map map = JSON.parseObject(result, Map.class);
+        if ((int) map.get("code") == 200) {
+            Map data = (Map) map.get("data");
+            TableDataInfo tableDataInfo = TableDataInfo.builder()
+                    .rows((List<BookChapterDto>) data.get("list"))
+                    .total((long) ((int) data.get("total")))
+                    .code(0)
+                    .build();
+            return tableDataInfo;
+        }
+
+        return TableDataInfo.builder()
+                .code(500)
+                .rows(Lists.newArrayList())
+                .build();
     }
 }

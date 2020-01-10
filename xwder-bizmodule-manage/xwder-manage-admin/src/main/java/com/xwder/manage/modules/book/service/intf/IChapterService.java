@@ -1,7 +1,10 @@
 package com.xwder.manage.modules.book.service.intf;
 
+import com.xwder.manage.common.core.page.TableDataInfo;
 import com.xwder.manage.modules.book.dto.BookChapterDto;
+import com.xwder.manage.modules.book.dto.BookInfoDto;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 /**
@@ -30,4 +33,14 @@ public interface IChapterService {
      * @param bookUrl
      */
     void bookUpdateNotice(String author, String bookName, String bookUrl);
+
+    /**
+     * 根据书籍信息查询章节列表
+     *
+     * @param PageNum
+     * @param pageSize
+     * @param bookChapterDto
+     * @return
+     */
+    TableDataInfo listChapters(int PageNum, int pageSize, BookChapterDto bookChapterDto) throws Exception;
 }

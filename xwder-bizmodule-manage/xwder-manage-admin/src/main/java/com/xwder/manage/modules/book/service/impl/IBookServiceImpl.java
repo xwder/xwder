@@ -41,8 +41,7 @@ public class IBookServiceImpl implements IBookService {
             Map data = (Map) map.get("data");
             TableDataInfo tableDataInfo = TableDataInfo.builder()
                     .rows((List<BookInfoDto>) data.get("list"))
-                    // TODO bug toString
-                    .total((Long) data.get("total"))
+                    .total((long) ((int) data.get("total")))
                     .code(0)
                     .build();
             return tableDataInfo;
