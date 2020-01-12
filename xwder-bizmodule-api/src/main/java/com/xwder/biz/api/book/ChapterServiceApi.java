@@ -28,7 +28,7 @@ public interface ChapterServiceApi {
      * @return
      */
     @GetMapping(value = "/chapters")
-    CommonResult listChapterByBookId(@RequestParam(value = "bookId", required = true) Integer bookId,
+    CommonResult listChapterByBookId(@RequestParam(value = "bookId", defaultValue = "1") Integer bookId,
                                      @RequestParam(value = "withContent", defaultValue = "1") Integer withContent,
                                      @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
                                      @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize);

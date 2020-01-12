@@ -12,6 +12,7 @@ import com.xwder.manage.utils.HttpClientUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -35,7 +36,12 @@ public class IBookServiceImpl implements IBookService {
                 .append("&pageSize=")
                 .append(pageSize)
                 .toString();
-        String result = HttpClientUtil.doGet(url);
+        String result = null;
+        try {
+            result = HttpClientUtil.doGet(url);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         Map map = JSON.parseObject(result, Map.class);
         if ((int) map.get("code") == 200) {
             Map data = (Map) map.get("data");

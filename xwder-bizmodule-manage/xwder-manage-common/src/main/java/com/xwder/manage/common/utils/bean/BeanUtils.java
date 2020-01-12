@@ -2,6 +2,7 @@ package com.xwder.manage.common.utils.bean;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.cglib.beans.BeanMap;
 
 import java.lang.reflect.Method;
@@ -136,10 +137,10 @@ public class BeanUtils extends org.springframework.beans.BeanUtils {
         if (bean != null) {
             BeanMap beanMap = BeanMap.create(bean);
             for (Object key : beanMap.keySet()) {
-                if (beanMap.get(key) == null) {
+                if (beanMap.get(key) == null || StringUtils.isEmpty(String.valueOf(beanMap.get(key)))) {
                     continue;
                 }
-                map.put(key + "", beanMap.get(key));
+                map.put(key + "", String.valueOf(beanMap.get(key)));
             }
         }
         return map;

@@ -8,6 +8,7 @@ import com.xwder.manage.utils.HttpClientUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.Map;
 
 /**
@@ -27,7 +28,12 @@ public class AlertOverServiceImpl implements AlertOverService {
         map.put("title", title);
         map.put("content", content);
         String url = messageConfig.getGatewayUrl() + messageConfig.getAlertoverUrl();
-        String result = HttpClientUtil.doPost(url, map);
+        String result = null;
+        try {
+            result = HttpClientUtil.doPost(url, map);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         Map resultMap = JSON.parseObject(result, Map.class);
         int code = (int) resultMap.get("code");
         return code == 200;

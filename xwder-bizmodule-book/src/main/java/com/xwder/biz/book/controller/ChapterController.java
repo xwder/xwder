@@ -24,7 +24,7 @@ public class ChapterController implements ChapterServiceApi {
 
     @RequestMapping(value = "/chapters", method = RequestMethod.GET)
     @Override
-    public CommonResult listChapterByBookId(@RequestParam(value = "bookId", required = true) Integer bookId,
+    public CommonResult listChapterByBookId(@RequestParam(value = "bookId", defaultValue = "1") Integer bookId,
                                             @RequestParam(value = "withContent", defaultValue = "0") Integer withContent,
                                             @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
                                             @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize) {

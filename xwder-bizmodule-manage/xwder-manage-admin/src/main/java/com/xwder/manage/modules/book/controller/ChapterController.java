@@ -5,12 +5,12 @@ import com.xwder.manage.common.core.page.PageDomain;
 import com.xwder.manage.common.core.page.TableDataInfo;
 import com.xwder.manage.common.core.page.TableSupport;
 import com.xwder.manage.modules.book.dto.BookChapterDto;
-import com.xwder.manage.modules.book.dto.BookInfoDto;
 import com.xwder.manage.modules.book.service.intf.IBookService;
 import com.xwder.manage.modules.book.service.intf.IChapterService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -34,7 +34,8 @@ public class ChapterController extends BaseController {
 
     @RequiresPermissions("book:chapter:view")
     @GetMapping(value = "/chapters")
-    public String user() {
+    public String user(String bookId, ModelMap mmap) {
+        mmap.put("bookId", bookId);
         return prefix + "/chapter/chapter";
     }
 

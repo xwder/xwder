@@ -20,6 +20,7 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -55,7 +56,12 @@ public class IChapterServiceImpl implements IChapterService {
                 .append("&bookName=")
                 .append(bookName)
                 .toString();
-        String result = HttpClientUtil.doGet(url);
+        String result = null;
+        try {
+            result = HttpClientUtil.doGet(url);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         if (StringUtils.isEmpty(result)) {
             return Lists.newArrayList();
         }

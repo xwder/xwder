@@ -15,6 +15,9 @@
             <form id="user-form">
                 <div class="select-list">
                     <ul>
+                        <li style="display: none">
+                            bookId<input type="bookId" name="bookId" th:value="${bookId}"/>
+                        </li>
                         <li>
                             作者名：<input type="text" name="author"/>
                         </li>
@@ -22,12 +25,14 @@
                             书籍名称：<input type="text" name="bookName"/>
                         </li>
                         <li>
-                            书籍名称：<input type="text" name="chapterName"/>
+                            章节名称：<input type="text" name="chapterName"/>
                         </li>
-                        </li>
+
                         <li>
-                            <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
-                            <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+                            <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i
+                                    class="fa fa-search"></i>&nbsp;搜索</a>
+                            <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i
+                                    class="fa fa-refresh"></i>&nbsp;重置</a>
                         </li>
                     </ul>
                 </div>
@@ -40,14 +45,13 @@
     </div>
 </div>
 <th:block th:include="include :: footer"/>
-<th:block th:include="include :: footer" />
-<th:block th:include="include :: layout-latest-js" />
 <script th:inline="javascript">
     // 点击阅读
     var listChapter = [[${@permission.hasPermi('book:chapter:read')}]];
+    var readBook = [[${@permission.hasPermi('book:chapter:read')}]];
     var prefix = ctx + "book/chapter";
 
-    $(function() {
+    $(function () {
         var options = {
             uniqueId: "chapters",
             url: prefix + "/list",
@@ -66,6 +70,10 @@
                     }
                 },
                 {
+                    field: 'chapterName',
+                    title: '章节名称',
+                },
+                {
                     field: 'bookName',
                     title: '书籍名称'
                 },
@@ -74,45 +82,34 @@
                     title: '作者',
                 },
                 {
-                    field: 'category',
-                    title: '类别',
-
+                    field: 'chapterWordSize',
+                    title: '字数',
                 },
                 {
-                    field: 'updateStatus',
-                    title: '更新状态',
-                    align: 'center',
-                    formatter: function(value, row, index) {
-                        if (value == '连载中') {
-                            return '<span class="badge badge-primary">连载中</span>';
-                        } else if (value == '完结') {
-                            return '<span class="badge badge-danger">连载中</span>';
-                        } else {
-                            return '<span class="badge badge-danger">未知</span>';
-                        }
+                    field: 'updateTime',
+                    title: '更新时间',
+                },
+                {
+                    field: 'sourceUrl',
+                    title: '来源',
+                    formatter: function (value, row, index) {
+                        return '<a href="' + value + '" target="_blank" >点击跳转</a>';
                     }
                 },
                 {
-                    field: 'wordSize',
-                    title: '总字数',
-                    sortable: true
+                    field: 'volumeName',
+                    title: '卷名',
                 },
-                {
-                    field: 'lastUpdateTime',
-                    title: '最后更新时间',
-                    sortable: true
-                },
-                {
-                    field: 'latestChapter',
-                    title: '最新章节',
-                },
+                // {
+                //     field: 'chapterContent',
+                //     title: '内容',
+                // },
                 {
                     title: '操作',
                     align: 'center',
-                    formatter: function(value, row, index) {
+                    formatter: function (value, row, index) {
                         var actions = [];
-                        actions.push('<a class="btn btn-success btn-xs ' + listChapter + '" href="javascript:void(0)" onclick=""><i class="fa fa-edit"></i>章节目录</a> ');
-                        actions.push('<a class="btn btn-danger btn-xs ' + readBook + '" href="javascript:void(0)" onclick=""><i class="fa fa-remove"></i>开始阅读</a> ');
+                        actions.push('<a class="btn btn-success btn-xs ' + readBook + '" href="javascript:void(0)" onclick=""><i class="glyphicon glyphicon-hand-up"></i>阅读</a> ');
                         return actions.join('');
                     }
                 }]

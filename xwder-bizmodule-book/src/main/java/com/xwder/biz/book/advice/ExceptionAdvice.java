@@ -15,7 +15,6 @@ import javax.servlet.http.HttpServletRequest;
 @RestControllerAdvice
 public class ExceptionAdvice {
 
-
     /**
      * 全局异常处理
      *
@@ -25,7 +24,7 @@ public class ExceptionAdvice {
      */
     @ExceptionHandler(value = Exception.class)
     public CommonResult defaultException(HttpServletRequest request, Exception e) {
-        log.error("", e);
+        log.error("{}", e);
         return CommonResult.failed(e.getMessage());
 
     }
@@ -41,7 +40,7 @@ public class ExceptionAdvice {
     public CommonResult myException(HttpServletRequest request, MyException e) {
         Integer code = e.getCode();
         String message = e.getMessage();
-        log.error("", e);
+        log.error("{}", e);
         return CommonResult.failed(code, message);
 
     }

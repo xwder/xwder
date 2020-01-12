@@ -23,8 +23,10 @@
                         </li>
                         </li>
                         <li>
-                            <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
-                            <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+                            <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i
+                                    class="fa fa-search"></i>&nbsp;搜索</a>
+                            <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i
+                                    class="fa fa-refresh"></i>&nbsp;重置</a>
                         </li>
                     </ul>
                 </div>
@@ -37,14 +39,14 @@
     </div>
 </div>
 <th:block th:include="include :: footer"/>
-<th:block th:include="include :: footer" />
-<th:block th:include="include :: layout-latest-js" />
+<th:block th:include="include :: footer"/>
+<th:block th:include="include :: layout-latest-js"/>
 <script th:inline="javascript">
     var listChapter = [[${@permission.hasPermi('book:book:chapters')}]];
     var readBook = [[${@permission.hasPermi('book:book:read')}]];
     var prefix = ctx + "book/book";
 
-    $(function() {
+    $(function () {
         var options = {
             uniqueId: "book",
             url: prefix + "/list",
@@ -79,7 +81,7 @@
                     field: 'updateStatus',
                     title: '更新状态',
                     align: 'center',
-                    formatter: function(value, row, index) {
+                    formatter: function (value, row, index) {
                         if (value == '连载中') {
                             return '<span class="badge badge-primary">连载中</span>';
                         } else if (value == '完结') {
@@ -106,9 +108,9 @@
                 {
                     title: '操作',
                     align: 'center',
-                    formatter: function(value, row, index) {
+                    formatter: function (value, row, index) {
                         var actions = [];
-                        actions.push('<a class="btn btn-success btn-xs ' + listChapter + '" href="javascript:void(0)" onclick=""><i class="fa fa-edit"></i>章节目录</a> ');
+                        actions.push('<a class="btn btn-success btn-xs ' + listChapter + '" href="javascript:void(0)" onclick="chapterList(\'' + row.id + '\')"><i class="fa fa-edit"></i>章节目录</a> ');
                         actions.push('<a class="btn btn-danger btn-xs ' + readBook + '" href="javascript:void(0)" onclick=""><i class="fa fa-remove"></i>开始阅读</a> ');
                         return actions.join('');
                     }
@@ -116,6 +118,13 @@
         };
         $.table.init(options);
     });
+
+    /*跳转至章节列表*/
+    function chapterList(bookId) {
+        var url = '/book/chapter/chapters?bookId=' + bookId;
+        console.log(url);
+        $.modal.openTab("章节列表", url);
+    }
 </script>
 </body>
 </html>

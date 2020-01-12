@@ -169,7 +169,7 @@ jasypt:
 bookservice:
   gatewayUrl: http://localhost:9001
   listBook: /book/bookinfos
-  listChapter: /chapter/chapters
+  listChapter: /book/chapters
   latestChapters: /book/latestChapters
 
 messageservice:
