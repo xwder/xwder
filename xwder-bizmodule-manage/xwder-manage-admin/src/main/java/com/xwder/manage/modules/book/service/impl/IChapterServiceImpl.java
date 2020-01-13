@@ -3,20 +3,22 @@ package com.xwder.manage.modules.book.service.impl;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.xwder.manage.common.core.page.TableDataInfo;
 import com.xwder.manage.common.utils.StringUtils;
 import com.xwder.manage.common.utils.bean.BeanUtils;
 import com.xwder.manage.modules.book.config.BookServiceUrlConfig;
 import com.xwder.manage.modules.book.contant.SMSConstant;
 import com.xwder.manage.modules.book.dto.BookChapterDto;
-import com.xwder.manage.modules.book.dto.BookInfoDto;
 import com.xwder.manage.modules.book.service.intf.IChapterService;
 import com.xwder.manage.modules.message.service.intl.AlertOverService;
 import com.xwder.manage.modules.message.service.intl.MailService;
 import com.xwder.manage.modules.message.service.intl.SmsMessageService;
+import com.xwder.manage.modules.mq.config.RabbitConfig;
 import com.xwder.manage.utils.HttpClientUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -44,6 +46,9 @@ public class IChapterServiceImpl implements IChapterService {
 
     @Autowired
     private AlertOverService alertOverService;
+
+    @Autowired
+    RabbitTemplate rabbitTemplate;
 
     @Override
     public List<BookChapterDto> getLatestChapters(String author, String bookName, String bookUrl) {
@@ -95,21 +100,36 @@ public class IChapterServiceImpl implements IChapterService {
             String smsContent = smsLatestChapterDto.getChapterName().replace(" ", "");
 
             try {
-                boolean sendSMSResult = smsMessageService.sendSMS(phone1, smsContent);
-                if (!sendSMSResult) {
-                    smsMessageService.sendSMS(phone2, content);
-                }
+
+                Map<String,String> smsMap = Maps.newHashMap();
+                smsMap.put("phone",phone1);
+                smsMap.put("content",smsContent);
+                rabbitTemplate.convertAndSend(RabbitConfig.XWDER_EXCHANGE_BOOK, RabbitConfig.XWDER_SMS_QUEUE_BOOK_UPDATE, smsMap);
+
+//                boolean sendSMSResult = smsMessageService.sendSMS(phone1, smsContent);
+//                if (!sendSMSResult) {
+//                    smsMessageService.sendSMS(phone2, content);
+//                }
             } catch (Exception e) {
                 log.error("发送短信失败,[{}]-[{}]-[{}]", phone1, content, e);
             }
             // 发送邮件
-            mailService.sendSimpleMail("1123511540@qq.com", "更新", content);
+            //mailService.sendSimpleMail("1123511540@qq.com", "", content);
+            Map mailMap = Maps.newHashMap();
+            mailMap.put("to","1123511540@qq.com");
+            mailMap.put("subject","小说更新");
+            mailMap.put("content",content);
+            rabbitTemplate.convertAndSend(RabbitConfig.XWDER_EXCHANGE_BOOK, RabbitConfig.XWDER_EMAIL_QUEUE_BOOK_UPDATE, mailMap);
 
             // 发送alertover
             for (Object object : latestChapters) {
                 JSONObject jsonObject = (JSONObject) object;
                 BookChapterDto latestChapterDto = JSON.toJavaObject(jsonObject, BookChapterDto.class);
-                alertOverService.sendStrMessge(bookName + "-" + latestChapterDto.getChapterName(), latestChapterDto.getChapterContent());
+                Map map = Maps.newHashMap();
+                map.put("title",bookName + "-" + latestChapterDto.getChapterName());
+                map.put("content",latestChapterDto.getChapterContent());
+                rabbitTemplate.convertAndSend(RabbitConfig.XWDER_EXCHANGE_BOOK, RabbitConfig.XWDER_ALERTOVER_QUEUE_BOOK_UPDATE, mailMap);
+                //alertOverService.sendStrMessge(bookName + "-" + latestChapterDto.getChapterName(), latestChapterDto.getChapterContent());
             }
 
         }
