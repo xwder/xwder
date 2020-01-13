@@ -101,9 +101,9 @@ public class IChapterServiceImpl implements IChapterService {
 
             try {
 
-                Map<String,String> smsMap = Maps.newHashMap();
-                smsMap.put("phone",phone1);
-                smsMap.put("content",smsContent);
+                Map<String, String> smsMap = Maps.newHashMap();
+                smsMap.put("phone", phone1);
+                smsMap.put("content", smsContent);
                 rabbitTemplate.convertAndSend(RabbitConfig.XWDER_EXCHANGE_BOOK, RabbitConfig.XWDER_SMS_QUEUE_BOOK_UPDATE, smsMap);
 
 //                boolean sendSMSResult = smsMessageService.sendSMS(phone1, smsContent);
@@ -116,9 +116,9 @@ public class IChapterServiceImpl implements IChapterService {
             // 发送邮件
             //mailService.sendSimpleMail("1123511540@qq.com", "", content);
             Map mailMap = Maps.newHashMap();
-            mailMap.put("to","1123511540@qq.com");
-            mailMap.put("subject","小说更新");
-            mailMap.put("content",content);
+            mailMap.put("to", "1123511540@qq.com");
+            mailMap.put("subject", "小说更新");
+            mailMap.put("content", content);
             rabbitTemplate.convertAndSend(RabbitConfig.XWDER_EXCHANGE_BOOK, RabbitConfig.XWDER_EMAIL_QUEUE_BOOK_UPDATE, mailMap);
 
             // 发送alertover
@@ -126,8 +126,8 @@ public class IChapterServiceImpl implements IChapterService {
                 JSONObject jsonObject = (JSONObject) object;
                 BookChapterDto latestChapterDto = JSON.toJavaObject(jsonObject, BookChapterDto.class);
                 Map map = Maps.newHashMap();
-                map.put("title",bookName + "-" + latestChapterDto.getChapterName());
-                map.put("content",latestChapterDto.getChapterContent());
+                map.put("title", bookName + "-" + latestChapterDto.getChapterName());
+                map.put("content", latestChapterDto.getChapterContent());
                 rabbitTemplate.convertAndSend(RabbitConfig.XWDER_EXCHANGE_BOOK, RabbitConfig.XWDER_ALERTOVER_QUEUE_BOOK_UPDATE, mailMap);
                 //alertOverService.sendStrMessge(bookName + "-" + latestChapterDto.getChapterName(), latestChapterDto.getChapterContent());
             }
@@ -136,9 +136,11 @@ public class IChapterServiceImpl implements IChapterService {
     }
 
     @Override
-    public TableDataInfo listChapters(int PageNum, int pageSize, BookChapterDto bookChapterDto) throws Exception {
+    public TableDataInfo listChapters(int pageNum, int pageSize, BookChapterDto bookChapterDto) throws Exception {
         String url = bookServiceUrlConfig.getGatewayUrl() + bookServiceUrlConfig.getListChapter();
         Map paramMap = BeanUtils.beanToMapWithNotNullProperties(bookChapterDto);
+        paramMap.put("pageNum", String.valueOf(pageNum));
+        paramMap.put("pageSize", String.valueOf(pageSize));
         String result = HttpClientUtil.doGet(url, paramMap);
         Map map = JSON.parseObject(result, Map.class);
         if ((int) map.get("code") == 200) {

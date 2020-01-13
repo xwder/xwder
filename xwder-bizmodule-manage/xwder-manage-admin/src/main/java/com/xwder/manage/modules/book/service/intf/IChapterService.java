@@ -37,10 +37,10 @@ public interface IChapterService {
     /**
      * 根据书籍信息查询章节列表
      *
-     * @param PageNum
+     * @param pageNum
      * @param pageSize
      * @param bookChapterDto
      * @return
      */
-    TableDataInfo listChapters(int PageNum, int pageSize, BookChapterDto bookChapterDto) throws Exception;
+    TableDataInfo listChapters(int pageNum, int pageSize, BookChapterDto bookChapterDto) throws Exception;
 }
