@@ -6,7 +6,7 @@ spring:
         druid:
             # 主库数据源
             master:
-                url: jdbc:mysql://114.67.85.146:3306/xwder?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=UTC
+                url: jdbc:mysql://114.67.85.146:3306/xwder?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai
 #                url: jdbc:mysql://127.0.0.1:3306/xwder?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=UTC
                 username: xwder
                 password: ENC(FHsDQEpkPHG5Ou8eFedR2neYxGIoCIm2m2bSPT/Y+UY=)
