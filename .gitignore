@@ -115,3 +115,8 @@ xwder-cloud-common/target/maven-status/
 xwder-cloud-common/target/*
 xwder-cloud-common/target/
 xwder-cloud-common/target/
+/xwder-bizmodule-manage/xwder-manage-generator/target/classes/
+/xwder-cloud-mybatisgenerator/target/classes/
+/xwder-bizmodule-message/target/classes/
+/xwder-bizmodule-gateway/target/classes/
+/xwder-bizmodule-book/target/classes/
