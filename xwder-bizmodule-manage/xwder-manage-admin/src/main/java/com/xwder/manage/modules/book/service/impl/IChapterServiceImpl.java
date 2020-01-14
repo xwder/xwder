@@ -93,23 +93,22 @@ public class IChapterServiceImpl implements IChapterService {
                 chapterName.append(latestChapterDto.getChapterName().replace(" ", ""));
             }
 
-            String content = String.format(SMSConstant.SMS_TEMPLATE_ONE, chapterName.toString());
+            String content = String.format(SMSConstant.SMS_TEMPLATE_ONE, bookName + chapterName.toString());
             // 最新章节 sms 字数有点短。。。
             JSONObject obj = (JSONObject) latestChapters.get(latestChapters.size() - 1);
             BookChapterDto smsLatestChapterDto = JSON.toJavaObject(obj, BookChapterDto.class);
-            String smsContent = smsLatestChapterDto.getChapterName().replace(" ", "");
+            String smsContent = String.format(SMSConstant.SMS_TEMPLATE_ONE, bookName + smsLatestChapterDto.getChapterName().replace(" ", ""));
 
             try {
-
                 Map<String, String> smsMap = Maps.newHashMap();
                 smsMap.put("phone", phone1);
                 smsMap.put("content", smsContent);
                 rabbitTemplate.convertAndSend(RabbitConfig.XWDER_EXCHANGE_BOOK, RabbitConfig.XWDER_SMS_QUEUE_BOOK_UPDATE, smsMap);
 
-//                boolean sendSMSResult = smsMessageService.sendSMS(phone1, smsContent);
-//                if (!sendSMSResult) {
-//                    smsMessageService.sendSMS(phone2, content);
-//                }
+                // boolean sendSMSResult = smsMessageService.sendSMS(phone1, smsContent);
+                // if (!sendSMSResult) {
+                //     smsMessageService.sendSMS(phone2, content);
+                // }
             } catch (Exception e) {
                 log.error("发送短信失败,[{}]-[{}]-[{}]", phone1, content, e);
             }
