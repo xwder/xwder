@@ -193,3 +193,4 @@ messageservice:
   alertoverUrl: /alertover/sendAlertOverNotice
   mailUrl: /mail/sendSimpleMail
   htmlMailUrl: /mail/sendHtmlMail
+  wxPusher: /wechat/wxpusher/sendStrMsg

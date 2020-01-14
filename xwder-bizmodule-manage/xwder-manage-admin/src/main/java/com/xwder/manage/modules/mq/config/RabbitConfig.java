@@ -79,17 +79,17 @@ public class RabbitConfig {
 
     @Bean
     Binding bindingXwderBookEmailExchangeMessage() {
-        return BindingBuilder.bind(smsBookUpdateQueue()).to(xwderBookExchange()).with(XWDER_EMAIL_QUEUE_BOOK_UPDATE);
+        return BindingBuilder.bind(emailBookUpdateQueue()).to(xwderBookExchange()).with(XWDER_EMAIL_QUEUE_BOOK_UPDATE);
     }
 
     @Bean
     Binding bindingXwderBookAlertOverExchangeMessage() {
-        return BindingBuilder.bind(smsBookUpdateQueue()).to(xwderBookExchange()).with(XWDER_ALERTOVER_QUEUE_BOOK_UPDATE);
+        return BindingBuilder.bind(alertOverBookUpdateQueue()).to(xwderBookExchange()).with(XWDER_ALERTOVER_QUEUE_BOOK_UPDATE);
     }
 
     @Bean
     Binding bindingXwderBookWeChatExchangeMessage() {
-        return BindingBuilder.bind(smsBookUpdateQueue()).to(xwderBookExchange()).with(XWDER_WECHAT_QUEUE_BOOK_UPDATE);
+        return BindingBuilder.bind(weChatBookUpdateQueue()).to(xwderBookExchange()).with(XWDER_WECHAT_QUEUE_BOOK_UPDATE);
     }
 
 }

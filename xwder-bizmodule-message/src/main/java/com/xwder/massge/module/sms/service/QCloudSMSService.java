@@ -19,6 +19,6 @@ public interface QCloudSMSService {
      * @param content
      * @return
      */
-    CommonResult sendSMS(String phone, String content) throws NoSuchAlgorithmException, UnsupportedEncodingException, InvalidKeyException;
+    CommonResult sendSMS(String phone, String content);
 
 }

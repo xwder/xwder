@@ -1,4 +1,4 @@
-package com.xwder.massge.module.mq;
+package com.xwder.massge.module.mq.config;
 
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
@@ -15,6 +15,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class RabbitConfig {
+
 
     /**
      * 书籍模块交换机
@@ -41,12 +42,24 @@ public class RabbitConfig {
      */
     public final static String XWDER_WECHAT_QUEUE_BOOK_UPDATE = "xwder.queue.wechat.chapterUpdate";
 
-
-
-
     @Bean
     public Queue smsBookUpdateQueue() {
         return new Queue(RabbitConfig.XWDER_SMS_QUEUE_BOOK_UPDATE);
+    }
+
+    @Bean
+    public Queue emailBookUpdateQueue() {
+        return new Queue(RabbitConfig.XWDER_EMAIL_QUEUE_BOOK_UPDATE);
+    }
+
+    @Bean
+    public Queue alertOverBookUpdateQueue() {
+        return new Queue(RabbitConfig.XWDER_ALERTOVER_QUEUE_BOOK_UPDATE);
+    }
+
+    @Bean
+    public Queue weChatBookUpdateQueue() {
+        return new Queue(RabbitConfig.XWDER_WECHAT_QUEUE_BOOK_UPDATE);
     }
 
     @Bean
@@ -55,7 +68,7 @@ public class RabbitConfig {
     }
 
     /**
-     * 将 smsBookUpdateQueue 和 topicExchange 绑定,而且绑定的键值为 sms.bookUpdate
+     * 将 Queue 和 topicExchange 绑定,而且绑定的键值为 sms.bookUpdate
      * 这样只要是消息携带的路由键是 sms.bookUpdate ,才会分发到该队列
      *
      * @return
@@ -67,16 +80,16 @@ public class RabbitConfig {
 
     @Bean
     Binding bindingXwderBookEmailExchangeMessage() {
-        return BindingBuilder.bind(smsBookUpdateQueue()).to(xwderBookExchange()).with(XWDER_EMAIL_QUEUE_BOOK_UPDATE);
+        return BindingBuilder.bind(emailBookUpdateQueue()).to(xwderBookExchange()).with(XWDER_EMAIL_QUEUE_BOOK_UPDATE);
     }
 
     @Bean
     Binding bindingXwderBookAlertOverExchangeMessage() {
-        return BindingBuilder.bind(smsBookUpdateQueue()).to(xwderBookExchange()).with(XWDER_ALERTOVER_QUEUE_BOOK_UPDATE);
+        return BindingBuilder.bind(alertOverBookUpdateQueue()).to(xwderBookExchange()).with(XWDER_ALERTOVER_QUEUE_BOOK_UPDATE);
     }
 
     @Bean
     Binding bindingXwderBookWeChatExchangeMessage() {
-        return BindingBuilder.bind(smsBookUpdateQueue()).to(xwderBookExchange()).with(XWDER_WECHAT_QUEUE_BOOK_UPDATE);
+        return BindingBuilder.bind(weChatBookUpdateQueue()).to(xwderBookExchange()).with(XWDER_WECHAT_QUEUE_BOOK_UPDATE);
     }
 }

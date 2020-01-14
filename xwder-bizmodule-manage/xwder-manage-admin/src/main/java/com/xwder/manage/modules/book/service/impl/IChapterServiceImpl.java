@@ -104,16 +104,10 @@ public class IChapterServiceImpl implements IChapterService {
                 smsMap.put("phone", phone1);
                 smsMap.put("content", smsContent);
                 rabbitTemplate.convertAndSend(RabbitConfig.XWDER_EXCHANGE_BOOK, RabbitConfig.XWDER_SMS_QUEUE_BOOK_UPDATE, smsMap);
-
-                // boolean sendSMSResult = smsMessageService.sendSMS(phone1, smsContent);
-                // if (!sendSMSResult) {
-                //     smsMessageService.sendSMS(phone2, content);
-                // }
             } catch (Exception e) {
                 log.error("发送短信失败,[{}]-[{}]-[{}]", phone1, content, e);
             }
             // 发送邮件
-            //mailService.sendSimpleMail("1123511540@qq.com", "", content);
             Map mailMap = Maps.newHashMap();
             mailMap.put("to", "1123511540@qq.com");
             mailMap.put("subject", "小说更新");
@@ -128,8 +122,14 @@ public class IChapterServiceImpl implements IChapterService {
                 map.put("title", bookName + "-" + latestChapterDto.getChapterName());
                 map.put("content", latestChapterDto.getChapterContent());
                 rabbitTemplate.convertAndSend(RabbitConfig.XWDER_EXCHANGE_BOOK, RabbitConfig.XWDER_ALERTOVER_QUEUE_BOOK_UPDATE, mailMap);
-                //alertOverService.sendStrMessge(bookName + "-" + latestChapterDto.getChapterName(), latestChapterDto.getChapterContent());
             }
+
+            // 发送WeChat通知
+            String uid = "";
+            Map weChatMap = Maps.newHashMap();
+            weChatMap.put("uid", uid);
+            weChatMap.put("msg", content);
+            rabbitTemplate.convertAndSend(RabbitConfig.XWDER_EXCHANGE_BOOK, RabbitConfig.XWDER_WECHAT_QUEUE_BOOK_UPDATE, weChatMap);
 
         }
     }

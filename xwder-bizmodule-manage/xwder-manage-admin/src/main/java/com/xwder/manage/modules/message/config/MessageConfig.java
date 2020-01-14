@@ -23,4 +23,6 @@ public class MessageConfig {
     private String mailUrl;
 
     private String htmlMailUrl;
+
+    private String wxPusher;
 }
