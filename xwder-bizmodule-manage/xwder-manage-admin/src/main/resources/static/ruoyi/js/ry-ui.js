@@ -43,7 +43,7 @@ var table = {
         		    sortName: "",
         		    sortOrder: "asc",
         		    pagination: true,
-        		    pageSize: 10,
+        		    pageSize: 20,
         		    pageList: [20, 30, 50],
         		    toolbar: "toolbar",
         		    striped: false,
