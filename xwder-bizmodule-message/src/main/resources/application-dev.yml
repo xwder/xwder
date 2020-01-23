@@ -36,13 +36,29 @@ spring:
 
   mail:
     host: smtp.qq.com
-    username: admin@xwder.com
-    password: pexeokjrufteibei
+    username: 1123511540@qq.com
+    password: ynxbfdffxfyffegd
     default-encoding: utf-8
     properties:
       mail:
         debug:
           true
+
+#  mail:
+#    host: smtp.gmail.com
+#    username: xwdercom@gmail.com
+#    password: wandou926368dou
+#    protocol: smtp
+#    from: xwdercom@gmail.com
+#    default-encoding: utf-8
+#    properties.mail.smtp.auth: true
+#    properties.mail.smtp.port: 465
+#    properties.mail.display.sendmail: Javen
+#    properties.mail.display.sendname: Spring Boot Guide Email
+#    properties.mail.smtp.starttls.enable: true
+#    properties.mail.smtp.starttls.required: true
+#    properties.mail.smtp.ssl.enable: true
+#    propertie.mail.debug: true
 
 
   rabbitmq:
