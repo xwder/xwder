@@ -13,7 +13,7 @@
                     <ul>
                         <li>
                             <p>类别：</p>
-                            <select name="albumType" th:with="type=${@dict.getType('')}">
+                            <select name="albumType" th:with="type=${@dict.getType('album_type')}">
                                 <option value="">所有</option>
                                 <option th:each="dict : ${type}" th:text="${dict.dictLabel}"
                                         th:value="${dict.dictValue}"></option>
@@ -155,7 +155,7 @@
         var num = 0;
         img.src = image_list[num];
         $('#modalStyle').height(img.height);
-        $('#modalStyle').width(img.width + 50);
+        $('#modalStyle').width(img.width + 58);
         $('#showImg').attr("src", image_list[num]);
         //表格中的序号
         $('#showImg').attr("num", id);
