@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xwder.manage.modules.pic.lolmz.mapper.LolmzPicMapper">
+    
+    <resultMap type="LolmzPic" id="LolmzPicResult">
+        <result property="id"    column="id"    />
+        <result property="pid"    column="pid"    />
+        <result property="uid"    column="uid"    />
+        <result property="logoImgUrl"    column="logo_img_url"    />
+        <result property="username"    column="username"    />
+        <result property="gameArea"    column="game_area"    />
+        <result property="gameUsername"    column="game_username"    />
+        <result property="zanNum"    column="zan_num"    />
+        <result property="picNum"    column="pic_num"    />
+        <result property="sourceImageUrl"    column="source_image_url"    />
+        <result property="downImageUrl"    column="down_image_url"    />
+        <result property="imageDesc"    column="image_desc"    />
+        <result property="imageTime"    column="image_time"    />
+    </resultMap>
+
+    <sql id="selectLolmzPicVo">
+        select id, pid, uid, logo_img_url, username, game_area, game_username, zan_num, pic_num, source_image_url, down_image_url, image_desc, image_time from lolmz_pic
+    </sql>
+
+    <select id="selectLolmzPicList" parameterType="LolmzPic" resultMap="LolmzPicResult">
+        <include refid="selectLolmzPicVo"/>
+        <where>  
+            <if test="pid != null "> and pid = #{pid}</if>
+            <if test="uid != null  and uid != ''"> and uid = #{uid}</if>
+            <if test="logoImgUrl != null  and logoImgUrl != ''"> and logo_img_url = #{logoImgUrl}</if>
+            <if test="username != null  and username != ''"> and username like concat('%', #{username}, '%')</if>
+            <if test="gameArea != null  and gameArea != ''"> and game_area = #{gameArea}</if>
+            <if test="gameUsername != null  and gameUsername != ''"> and game_username like concat('%', #{gameUsername}, '%')</if>
+            <if test="zanNum != null "> and zan_num = #{zanNum}</if>
+            <if test="picNum != null "> and pic_num = #{picNum}</if>
+            <if test="sourceImageUrl != null  and sourceImageUrl != ''"> and source_image_url = #{sourceImageUrl}</if>
+            <if test="downImageUrl != null  and downImageUrl != ''"> and down_image_url = #{downImageUrl}</if>
+            <if test="imageDesc != null  and imageDesc != ''"> and image_desc = #{imageDesc}</if>
+            <if test="imageTime != null  and imageTime != ''"> and image_time = #{imageTime}</if>
+        </where>
+    </select>
+    
+    <select id="selectLolmzPicById" parameterType="Long" resultMap="LolmzPicResult">
+        <include refid="selectLolmzPicVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertLolmzPic" parameterType="LolmzPic" useGeneratedKeys="true" keyProperty="id">
+        insert into lolmz_pic
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pid != null ">pid,</if>
+            <if test="uid != null  and uid != ''">uid,</if>
+            <if test="logoImgUrl != null  and logoImgUrl != ''">logo_img_url,</if>
+            <if test="username != null  and username != ''">username,</if>
+            <if test="gameArea != null  and gameArea != ''">game_area,</if>
+            <if test="gameUsername != null  and gameUsername != ''">game_username,</if>
+            <if test="zanNum != null ">zan_num,</if>
+            <if test="picNum != null ">pic_num,</if>
+            <if test="sourceImageUrl != null  and sourceImageUrl != ''">source_image_url,</if>
+            <if test="downImageUrl != null  and downImageUrl != ''">down_image_url,</if>
+            <if test="imageDesc != null  and imageDesc != ''">image_desc,</if>
+            <if test="imageTime != null  and imageTime != ''">image_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="pid != null ">#{pid},</if>
+            <if test="uid != null  and uid != ''">#{uid},</if>
+            <if test="logoImgUrl != null  and logoImgUrl != ''">#{logoImgUrl},</if>
+            <if test="username != null  and username != ''">#{username},</if>
+            <if test="gameArea != null  and gameArea != ''">#{gameArea},</if>
+            <if test="gameUsername != null  and gameUsername != ''">#{gameUsername},</if>
+            <if test="zanNum != null ">#{zanNum},</if>
+            <if test="picNum != null ">#{picNum},</if>
+            <if test="sourceImageUrl != null  and sourceImageUrl != ''">#{sourceImageUrl},</if>
+            <if test="downImageUrl != null  and downImageUrl != ''">#{downImageUrl},</if>
+            <if test="imageDesc != null  and imageDesc != ''">#{imageDesc},</if>
+            <if test="imageTime != null  and imageTime != ''">#{imageTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateLolmzPic" parameterType="LolmzPic">
+        update lolmz_pic
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="pid != null ">pid = #{pid},</if>
+            <if test="uid != null  and uid != ''">uid = #{uid},</if>
+            <if test="logoImgUrl != null  and logoImgUrl != ''">logo_img_url = #{logoImgUrl},</if>
+            <if test="username != null  and username != ''">username = #{username},</if>
+            <if test="gameArea != null  and gameArea != ''">game_area = #{gameArea},</if>
+            <if test="gameUsername != null  and gameUsername != ''">game_username = #{gameUsername},</if>
+            <if test="zanNum != null ">zan_num = #{zanNum},</if>
+            <if test="picNum != null ">pic_num = #{picNum},</if>
+            <if test="sourceImageUrl != null  and sourceImageUrl != ''">source_image_url = #{sourceImageUrl},</if>
+            <if test="downImageUrl != null  and downImageUrl != ''">down_image_url = #{downImageUrl},</if>
+            <if test="imageDesc != null  and imageDesc != ''">image_desc = #{imageDesc},</if>
+            <if test="imageTime != null  and imageTime != ''">image_time = #{imageTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteLolmzPicById" parameterType="Long">
+        delete from lolmz_pic where id = #{id}
+    </delete>
+
+    <delete id="deleteLolmzPicByIds" parameterType="String">
+        delete from lolmz_pic where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

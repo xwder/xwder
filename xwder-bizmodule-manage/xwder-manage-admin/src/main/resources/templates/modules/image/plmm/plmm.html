@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
-    <th:block th:include="include :: header('妹子图图列表')"/>
+    <th:block th:include="include :: header('美女图片列表')"/>
+    <meta name="referrer" content="never">
 </head>
-
 <body class="gray-bg">
 <div class="container-div">
     <div class="row">
@@ -13,7 +13,7 @@
                     <ul>
                         <li>
                             <p>类别：</p>
-                            <select name="albumType" th:with="type=${@dict.getType('album_type')}">
+                            <select name="albumType" th:with="type=${@dict.getType('album_type_plmm')}">
                                 <option value="">所有</option>
                                 <option th:each="dict : ${type}" th:text="${dict.dictLabel}"
                                         th:value="${dict.dictValue}"></option>
@@ -56,7 +56,7 @@
                 <div class="modal-content">
                     <div class="modal-body">
                         <div>
-                                <img src="" id="showImg" num="" cd="" sx="" onclick="showImageOnclick(1)">
+                            <img src="" id="showImg" num="" cd="" sx="" onclick="showImageOnclick(1)">
                         </div>
                         <div style="text-align: center; margin-top: 30px">
                             <button type="button" class="btn btn-success" onclick="showImageOnclick(0)">上一张</button>
@@ -71,11 +71,10 @@
 </div>
 <th:block th:include="include :: footer"/>
 <script th:inline="javascript">
-    var editFlag = [[${@permission.hasPermi('yt:yt:edit')}]];
-    var removeFlag = [[${@permission.hasPermi('yt:yt:remove')}]];
+    var editFlag = [[${@permission.hasPermi('plmm:plmm:edit')}]];
+    var removeFlag = [[${@permission.hasPermi('plmm:plmm:remove')}]];
     var showAlbum = [[${@permission.hasPermi('yt:yt:show')}]];
-    var prefix = ctx + "yt/yt";
-
+    var prefix = ctx + "plmm/plmm";
 
     $(function () {
         var options = {
@@ -84,14 +83,14 @@
             updateUrl: prefix + "/edit/{id}",
             removeUrl: prefix + "/remove",
             exportUrl: prefix + "/export",
-            modalName: "妹子图图",
+            modalName: "美女图片",
             columns: [{
                 checkbox: true
             },
                 {
                     field: 'id',
                     title: 'ID',
-                    visible: false
+                    visible: true
                 },
                 {
                     field: 'albumType',
@@ -102,14 +101,22 @@
                     title: '描述'
                 },
                 {
-                    field: 'views',
-                    title: '浏览量'
-                },
-                {
                     field: 'albumImageUrl',
                     title: '封面',
                     formatter: function (value, row, index) {
                         return $.table.imageView(value);
+                    }
+                },
+                {
+                    field: 'tags',
+                    title: '标签',
+                    formatter: function (value, row, index) {
+                        tag_list = JSON.parse(value);
+                        var str = '';
+                        for (var i = 0; i < tag_list.length; i++) {
+                            str = str + '<span class="badge badge-primary">' + tag_list[i] + '</span>&nbsp;&nbsp;&nbsp;';
+                        }
+                        return str;
                     }
                 },
                 {
@@ -131,6 +138,7 @@
         $.table.init(options);
     });
 
+
     /*跳转至章节列表*/
     function showAlbumInfo(id) {
         var allTableData = $('#bootstrap-table').bootstrapTable('getData');
@@ -147,8 +155,17 @@
         var img = new Image();
         var num = 0;
         img.src = image_list[num];
+        img.onload = function () {
+            $('#modalStyle').height(img.height);
+            $('#modalStyle').width(img.width + 58);
+        }
+
         $('#modalStyle').height(img.height);
-        $('#modalStyle').width(img.width + 58);
+        // $('#modalStyle').width(img.width + 58);
+        var new_width = img.width + 58
+        console.log("new_width ",new_width);
+        console.log("img_width ",img.width);
+        $('#modalDialog').width(new_width);
         $('#showImg').attr("src", image_list[num]);
         //表格中的序号
         $('#showImg').attr("num", id);
@@ -167,15 +184,15 @@
         //表格中的序号
         var num = $('#showImg').attr("num")
         var album = undefined;
-        if(showSx == 1){
+        if (showSx == 1) {
             var newSx = parseInt(sx) + 1;
             if (newSx > cd - 1) {
                 newSx = 0;
             }
-        }else {
+        } else {
             var newSx = parseInt(sx) - 1;
             if (newSx < 0) {
-                newSx = cd-1;
+                newSx = cd - 1;
             }
         }
         for (j = 0, len = allTableData.length; j < len; j++) {
@@ -185,6 +202,14 @@
                 break;
             }
         }
+
+        var img = new Image();
+        img.src = image_list[newSx];
+        img.onload = function () {
+            $('#modalStyle').height(img.height);
+            $('#modalStyle').width(img.width + 58);
+        }
+
         image_list = JSON.parse(album.sourceImageUrls);
         $('#showImg').attr("src", image_list[newSx]);
         $('#showImg').attr("sx", newSx);
