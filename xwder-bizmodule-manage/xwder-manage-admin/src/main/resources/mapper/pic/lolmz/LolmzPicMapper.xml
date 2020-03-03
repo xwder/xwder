@@ -40,6 +40,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="imageDesc != null  and imageDesc != ''"> and image_desc = #{imageDesc}</if>
             <if test="imageTime != null  and imageTime != ''"> and image_time = #{imageTime}</if>
         </where>
+        order by  image_time  desc
     </select>
     
     <select id="selectLolmzPicById" parameterType="Long" resultMap="LolmzPicResult">

@@ -63,6 +63,33 @@ public class HttpClientUtil {
     }
 
     /**
+     * @param url
+     * @param paramMap
+     * @param overTime 超时时间 秒
+     * @return
+     * @throws ClientProtocolException
+     * @throws IOException
+     */
+    public static String doPostWithOverTime(String url, Map<String, String> paramMap, int overTime) throws ClientProtocolException, IOException {
+        HttpClient httpClient = HttpClients.createDefault();
+        HttpPost httpPost = new HttpPost(url);
+        //设置请求和传输超时时间
+        RequestConfig requestConfig = RequestConfig.custom().setSocketTimeout(overTime * 1000).setConnectTimeout(overTime * 1000).build();
+        httpPost.setConfig(requestConfig);
+        List<NameValuePair> formparams = setHttpParams(paramMap);
+        UrlEncodedFormEntity param = new UrlEncodedFormEntity(formparams, "UTF-8");
+        httpPost.setEntity(param);
+        HttpResponse response = httpClient.execute(httpPost);
+        logger.info("************{}", response);
+        String httpEntityContent = getHttpEntityContent(response);
+        logger.info("************{}", httpEntityContent);
+        httpPost.abort();
+        logger.info("************{}", httpEntityContent);
+        return httpEntityContent;
+    }
+
+
+    /**
      * 封装HTTP POST方法
      *
      * @param
