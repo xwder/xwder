@@ -8,6 +8,6 @@ import com.xwder.biz.myMapper.MyMapper;
  * @author xwder
  * @date 2019/12/25
  */
-public interface BookInfoDao extends MyMapper<BookInfo> {
+public interface BookInfoCustomerMapper extends MyMapper<BookInfo> {
 
 }

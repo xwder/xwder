@@ -7,10 +7,11 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.xwder.biz.book.config.BookSpiderUrlConfig;
-import com.xwder.biz.book.dao.BookChapterDao;
+import com.xwder.biz.book.dao.BookChapterCustomerMapper;
 import com.xwder.biz.book.service.intf.ChapterService;
 import com.xwder.biz.model.book.BookChapter;
 import com.xwder.biz.model.book.mapper.BookChapterMapper;
+import com.xwder.biz.model.book.mapper.BookInfoMapper;
 import com.xwder.cloud.commmon.api.CommonResult;
 import com.xwder.cloud.commmon.api.ResultCode;
 import com.xwder.cloud.commmon.utils.HttpClientUtil;
@@ -32,7 +33,7 @@ import java.util.*;
 public class ChapterServiceImpl implements ChapterService {
 
     @Autowired
-    private BookChapterDao bookChapterDao;
+    private BookChapterCustomerMapper bookChapterCustomerMapper;
 
     @Autowired
     private BookChapterMapper bookChapterMapper;
@@ -46,11 +47,11 @@ public class ChapterServiceImpl implements ChapterService {
         BookChapter bookChapter = BookChapter.builder().bookId(bookId).build();
         if (withContent > 0) {
             PageHelper.startPage(pageNum, pageSize);
-            List<BookChapter> chapterList = bookChapterDao.listBookChapterByBookId(bookChapter);
+            List<BookChapter> chapterList = bookChapterCustomerMapper.listBookChapterByBookId(bookChapter);
             return chapterList;
         }
         PageHelper.startPage(pageNum, pageSize);
-        return bookChapterDao.listBookChapterByBookIdNoContent(bookChapter);
+        return bookChapterCustomerMapper.listBookChapterByBookIdNoContent(bookChapter);
     }
 
     /**

@@ -5,13 +5,14 @@ import com.xwder.biz.myMapper.MyMapper;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Author: xwder
  * @Date: 2019/7/15 23:51
  * @Description:
  */
-public interface BookChapterDao extends MyMapper<BookChapter> {
+public interface BookChapterCustomerMapper extends MyMapper<BookChapter> {
 
     /**
      * 分页查询章节信息根据bookId,不包含章节内容
@@ -32,4 +33,10 @@ public interface BookChapterDao extends MyMapper<BookChapter> {
     List<BookChapter> listBookChapterByBookId(BookChapter bookChapter);
 
 
+    /**
+     * 查询章节信息
+     * @param map
+     * @return
+     */
+    List<BookChapter> listBookChapter(Map map);
 }

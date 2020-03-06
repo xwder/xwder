@@ -4,7 +4,7 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.google.common.collect.Lists;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
-import com.xwder.biz.book.dao.BookInfoDao;
+import com.xwder.biz.book.dao.BookInfoCustomerMapper;
 import com.xwder.biz.book.service.intf.BookService;
 import com.xwder.biz.model.book.BookInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,13 +21,13 @@ import java.util.List;
 public class BookServiceImpl implements BookService {
 
     @Autowired
-    private BookInfoDao bookInfoDao;
+    private BookInfoCustomerMapper bookInfMapper;
 
     @HystrixCommand(fallbackMethod = "listBookInfoFallBack")
     @Override
     public List<BookInfo> listBookInfo(Integer pageNum, Integer pageSize) {
         Page<BookInfo> page = PageHelper.startPage(pageNum, pageSize);
-        List<BookInfo> bookInfoList = bookInfoDao.selectAll();
+        List<BookInfo> bookInfoList = bookInfMapper.selectAll();
         return bookInfoList;
     }
 
