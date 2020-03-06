@@ -35,7 +35,7 @@
         <if test="withContent != null and withContent == 1">
             <include refid="selectBookChapterVo"/>
         </if>
-        <if test="withContent != null and withContent == 0">
+        <if test="withContent == null or withContent == 0">
             <include refid="selectBookChapterVoNoContent"/>
         </if>
 
