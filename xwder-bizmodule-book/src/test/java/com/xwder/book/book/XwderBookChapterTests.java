@@ -4,7 +4,11 @@ import com.github.pagehelper.PageHelper;
 import com.google.common.collect.Maps;
 import com.xwder.biz.book.XwderBookApplication;
 import com.xwder.biz.book.dao.BookChapterCustomerMapper;
+import com.xwder.biz.book.dao.BookInfoCustomerMapper;
 import com.xwder.biz.model.book.BookChapter;
+import com.xwder.biz.model.book.BookInfo;
+import com.xwder.biz.model.book.BookInfoExample;
+import com.xwder.biz.model.book.mapper.BookInfoMapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +24,12 @@ public class XwderBookChapterTests {
 
     @Autowired
     private BookChapterCustomerMapper bookChapterCustomerMapper;
+
+    @Autowired
+    private BookInfoCustomerMapper bookInfoCustomerMapper;
+
+    @Autowired
+    private BookInfoMapper bookInfoMapper;
 
     @Test
     public void contextLoads() {
@@ -43,6 +53,10 @@ public class XwderBookChapterTests {
         PageHelper.startPage(1, 10);
         List<BookChapter> bookChapters = bookChapterCustomerMapper.listBookChapter(map);
         System.out.println(bookChapters);
+
+        BookInfoExample bookInfoExample = new BookInfoExample();
+        List<BookInfo> bookInfos = bookInfoCustomerMapper.selectAll();
+        System.out.println(bookInfos);
     }
 
 }

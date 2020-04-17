@@ -15,9 +15,9 @@ spring:
     name: xwder-cloud-gateway
 
   redis:
-    host: 139.186.29.105
+    host: 114.67.85.146
     port: 6379
-    password: RO3c2fmKoLL
+    password: 9t6U3OBxxd
 
   cloud:
     gateway:

@@ -13,10 +13,10 @@
         <module>xwder-cloud-registry</module>
         <module>xwder-cloud-common</module>
         <module>xwder-cloud-mybatisgenerator</module>
+        <module>xwder-cloud-gateway</module>
         <module>xwder-bizmodule-model</module>
         <module>xwder-bizmodule-api</module>
         <module>xwder-bizmodule-book</module>
-        <module>xwder-bizmodule-gateway</module>
         <module>xwder-bizmodule-manage</module>
         <module>xwder-bizmodule-message</module>
     </modules>
@@ -52,6 +52,7 @@
         <xwder-cloud-common.version>1.0-SNAPSHOT</xwder-cloud-common.version>
         <xwder-cloud-mybatisgenerator.version>1.0-SNAPSHOT</xwder-cloud-mybatisgenerator.version>
         <xwder-cloud-security.version>1.0-SNAPSHOT</xwder-cloud-security.version>
+        <xwder-bizmodule-api.version>1.0-SNAPSHOT</xwder-bizmodule-api.version>
     </properties>
 
     <dependencies>
@@ -85,6 +86,12 @@
                 <groupId>com.xwder</groupId>
                 <artifactId>xwder-cloud-common</artifactId>
                 <version>${xwder-cloud-common.version}</version>
+            </dependency>
+            <!--xwder-bizmodule-api通用模块-->
+            <dependency>
+                <groupId>com.xwder</groupId>
+                <artifactId>xwder-bizmodule-api</artifactId>
+                <version>${xwder-bizmodule-api.version}</version>
             </dependency>
             <!--xwder-cloud中mybatisgenerator生成模块-->
             <dependency>
