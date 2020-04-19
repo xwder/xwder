@@ -31,7 +31,7 @@ public class IBookServiceImpl implements IBookService {
     public TableDataInfo listBookInfo(int PageNum, int pageSize, BookInfoDto bookInfoDto) {
         String url = bookServiceUrlConfig.getGatewayUrl() +
                 bookServiceUrlConfig.getListBook() +
-                "?PageNum=" +
+                "?pageNum=" +
                 PageNum +
                 "&pageSize=" +
                 pageSize;
