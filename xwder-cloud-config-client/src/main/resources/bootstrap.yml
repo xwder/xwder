@@ -1,28 +1,17 @@
-# 开发环境配置
-server:
-  # 服务端口
-  port: 8050
-  servlet:
-    # 项目contextPath
-    context-path: /
-
 spring:
-  devtools:
-    restart:
-      enabled: true
-
   application:
-    name: xwder-cloud-config
-
+    name: xwder-cloud-config-client
   cloud:
     config:
-      server:
-        git:
-          uri: https://git.xwder.com/xwder/xwder-config
-          username: xwder
-          password: wandou
-          default-label: master
-          search-paths: xwder-cloud-gateway
+      #指定仓库分支
+      label: 1.x
+      #指定版本 本例中建立了dev 和 ser
+      profile: dev
+      discovery:
+        enabled: true
+        # 指定配置中心服务端的 server-id
+        service-id: xwder-cloud-config-server
+
 
 eureka:
   client:
@@ -46,15 +35,3 @@ eureka:
     # 表示Eureka Server至上一次收到client的心跳之后，等待下一次心跳的超时时间，在这个时间内若没收到下一次心跳，则移除该Instance。
     lease-expiration-duration-in-seconds: 5
 
-
-management:
-  endpoint:
-    health:
-      show-details: always
-  endpoints:
-    web:
-      exposure:
-        # 暴露.端点
-        include: '*'
-        # 取消暴露metrics端点，如需暴露多个，用,分隔；如需暴露所有端点，用'*'
-        #exclude: '*'

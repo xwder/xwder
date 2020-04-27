@@ -9,10 +9,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @Description:
  */
 @SpringBootApplication
-public class XwderGagewayApplication {
+public class XwderGatewayApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(XwderGagewayApplication.class);
+        SpringApplication.run(XwderGatewayApplication.class);
     }
 
 }

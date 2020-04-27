@@ -1,6 +1,28 @@
+# 开发环境配置
+server:
+  # 服务端口
+  port: 8050
+  servlet:
+    # 项目contextPath
+    context-path: /
+
 spring:
-  profiles:
-    active: ser
+  devtools:
+    restart:
+      enabled: true
+
+  application:
+    name: xwder-cloud-config-server
+
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://git.xwder.com/xwder/xwder
+          username: xwder
+          password: wandou
+          default-label: 1.x
+          search-paths: config
 
 eureka:
   client:

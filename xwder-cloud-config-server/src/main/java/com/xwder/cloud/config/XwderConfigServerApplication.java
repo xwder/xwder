@@ -6,6 +6,8 @@ import org.springframework.cloud.config.server.EnableConfigServer;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 
 /**
+ * ConfigServer
+ *
  * @Author: xwder
  * @Date: 2019/12/27
  * @Description:
@@ -13,10 +15,10 @@ import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 @SpringBootApplication
 @EnableConfigServer
 @EnableEurekaClient
-public class XwderConfigApplication {
+public class XwderConfigServerApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(XwderConfigApplication.class);
+        SpringApplication.run(XwderConfigServerApplication.class);
     }
 
 }

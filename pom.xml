@@ -19,7 +19,8 @@
         <module>xwder-bizmodule-book</module>
         <module>xwder-bizmodule-manage</module>
         <module>xwder-bizmodule-message</module>
-        <module>xwder-cloud-config</module>
+        <module>xwder-cloud-config-server</module>
+        <module>xwder-cloud-config-client</module>
     </modules>
 
     <parent>
