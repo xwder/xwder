@@ -1,0 +1,110 @@
+# 开发环境配置
+server:
+  # 服务端口
+  port: 8060
+  servlet:
+    # 项目contextPath
+    context-path: /
+
+spring:
+  devtools:
+    restart:
+      enabled: true
+
+  application:
+    name: xwder-cloud-config-client
+
+  redis:
+    host: 139.186.29.105
+    port: 6379
+    password: RO3c2fmKoLL
+
+  cloud:
+    gateway:
+      # 跨域设置
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: "*"
+            exposedHeaders:
+              - content-type
+            allowedHeaders:
+              - content-type
+            allowCredentials: true
+            allowedMethods:
+              - GET
+              - OPTIONS
+              - PUT
+              - DELETE
+              - POST
+
+      # Zuul默认会为所有服务都进行转发操作，我们只需要在访问路径上指定要访问的服务即可，
+      # 通过这种方式就不用为每个服务都去配置转发规则，当新加了服务的时候，不用去配置路由规则和重启网关
+      discovery:
+        locator:
+          enabled: true
+          # 这个大写的名称还是有很大的影响，如果我们从Zuul升级到Spring Cloud Gateway的话意味着请求地址有改变，
+          # 或者重新配置每个服务的路由地址，通过源码笔者发现可以做到兼容处理
+          # 开启小写服务名称后大写的服务名称就不能使用，两者只能选其一
+          lowerCaseServiceId: true
+
+      routes:
+        #         自定义路由断言工厂
+        #        - id: customer_route
+        #          uri: http://xwder.com
+        #          predicates:
+        #          - name: CheckAuth
+        #            args:
+        #              name: xwder
+#        - id: host_route
+#          uri: http://xwder.com
+#          predicates:
+#            - Path=/blog/detail/{segment}
+#          # 自定义过滤器工厂  Key、Value这种形式的，那么可以不用自己定义配置类，直接继承AbstractNameValueGatewayFilterFactory类即可
+#          filters:
+#            # 自定义过滤器工厂 继承 AbstractNameValueGatewayFilterFactory
+#            - CheckAuth=xwder,男
+#            # 自定义过滤器工厂 继承 AbstractGatewayFilterFactory
+#            - name: CheckAuth2
+#              args:
+#                name: Joe
+        # 限流
+        - id: xwder-biz-book
+          uri: lb://xwder-biz-book
+          predicates:
+            - Path=/book/**
+
+eureka:
+  client:
+    service-url:
+      # 指定eureka server通信地址，注意/eureka/小尾巴不能少
+      defaultZone: https://eureka:11NcXZgZLD@registry.xwder.com/eureka/
+
+    # 清理间隔 实际开发过程中，我们可能会不停地重启服务，由于Eureka有自己的保护机制，故节点下线后，服务信息还会一直存在于Eureka中。
+    # 我们可以通过增加一些配置让移除的速度更快一点，当然只在开发环境下使用，生产环境下不推荐使用
+    # 用于开启健康检查，需要在pom.xml中引入actuator的依赖
+    healthcheck:
+      enabled: true
+
+  instance:
+    # 是否注册IP到eureka server，如不指定或设为false，那就会注册主机名到eureka server
+    prefer-ip-address: true
+    # 定义实例ID格式
+    instance-id: ${spring.application.name}:${spring.cloud.client.ip-address}:${server.port}
+    # Eureka Client发送心跳给server端的频率
+    lease-renewal-interval-in-seconds: 5
+    # 表示Eureka Server至上一次收到client的心跳之后，等待下一次心跳的超时时间，在这个时间内若没收到下一次心跳，则移除该Instance。
+    lease-expiration-duration-in-seconds: 5
+
+
+management:
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        # 暴露.端点
+        include: '*'
+        # 取消暴露metrics端点，如需暴露多个，用,分隔；如需暴露所有端点，用'*'
+        #exclude: '*'
