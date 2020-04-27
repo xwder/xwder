@@ -22,7 +22,10 @@ spring:
           username: xwder
           password: wandou
           default-label: 1.x
-          search-paths: config
+          # 路径搜索参考：
+          # https://blog.csdn.net/w_ya24k/article/details/79565269
+          # https://blog.csdn.net/chengqiuming/article/details/80871798
+          search-paths: config/xwder*
 
 eureka:
   client:
