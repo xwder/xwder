@@ -106,4 +106,4 @@ management:
 
 #测试client配置文件获取成功
 xwder:
-  username: dev-new-new-new
+  username: dev-new
