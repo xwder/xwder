@@ -12,6 +12,19 @@ spring:
         # 指定配置中心服务端的 server-id
         service-id: xwder-cloud-config-server
 
+  rabbitmq:
+    host: 114.67.85.146
+    port: 5672
+    username: admin
+    password: q77ZA9NxKQHIDV7c
+    #虚拟host 可以不设置,使用server默认host
+    virtual-host: xwder
+    #消息确认配置项
+
+    #确认消息已发送到交换机(Exchange)
+    #publisher-confirms: true
+    #确认消息已发送到队列(Queue)
+    #publisher-returns: true
 
 eureka:
   client:
@@ -35,3 +48,14 @@ eureka:
     # 表示Eureka Server至上一次收到client的心跳之后，等待下一次心跳的超时时间，在这个时间内若没收到下一次心跳，则移除该Instance。
     lease-expiration-duration-in-seconds: 5
 
+management:
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        # 暴露.端点
+        include: '*'
+        # 取消暴露metrics端点，如需暴露多个，用,分隔；如需暴露所有端点，用'*'
+        #exclude: '*'

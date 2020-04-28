@@ -36,6 +36,10 @@
             <groupId>com.xwder</groupId>
             <artifactId>xwder-cloud-common</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.xwder</groupId>
+            <artifactId>xwder-cloud-common</artifactId>
+        </dependency>
     </dependencies>
 
     <build>

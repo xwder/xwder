@@ -25,7 +25,22 @@ spring:
           # 路径搜索参考：
           # https://blog.csdn.net/w_ya24k/article/details/79565269
           # https://blog.csdn.net/chengqiuming/article/details/80871798
-          search-paths: config/xwder*
+          basedir: D:\\xwder-cloud-config
+
+  rabbitmq:
+    host: 114.67.85.146
+    port: 5672
+    username: admin
+    password: q77ZA9NxKQHIDV7c
+    #虚拟host 可以不设置,使用server默认host
+    virtual-host: xwder
+    #消息确认配置项
+
+    #确认消息已发送到交换机(Exchange)
+    #publisher-confirms: true
+    #确认消息已发送到队列(Queue)
+    #publisher-returns: true
+
 
 eureka:
   client:
