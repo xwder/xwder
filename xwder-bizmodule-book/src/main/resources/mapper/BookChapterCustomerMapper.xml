@@ -5,29 +5,31 @@
 <mapper namespace="com.xwder.biz.book.dao.BookChapterCustomerMapper">
 
     <resultMap type="com.xwder.biz.model.book.BookChapter" id="BookChapterResult">
-        <result property="id"    column="id"    />
-        <result property="bookName"    column="book_name"    />
-        <result property="bookId"    column="book_id"    />
-        <result property="author"    column="author"    />
-        <result property="chapterWordSize"    column="chapter_word_size"    />
-        <result property="updateTime"    column="update_time"    />
-        <result property="sourceUrl"    column="source_url"    />
-        <result property="chapterNo"    column="chapter_no"    />
-        <result property="chapterSequence"    column="chapter_sequence"    />
-        <result property="chapterArticle"    column="chapter_article"    />
-        <result property="chapterName"    column="chapter_name"    />
-        <result property="chapterContent"    column="chapter_content"    />
-        <result property="volumeName"    column="volume_name"    />
-        <result property="gmtCreate"    column="gmt_create"    />
-        <result property="gmtModified"    column="gmt_modified"    />
+        <result property="id" column="id"/>
+        <result property="bookName" column="book_name"/>
+        <result property="bookId" column="book_id"/>
+        <result property="author" column="author"/>
+        <result property="chapterWordSize" column="chapter_word_size"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="sourceUrl" column="source_url"/>
+        <result property="chapterNo" column="chapter_no"/>
+        <result property="chapterSequence" column="chapter_sequence"/>
+        <result property="chapterArticle" column="chapter_article"/>
+        <result property="chapterName" column="chapter_name"/>
+        <result property="chapterContent" column="chapter_content"/>
+        <result property="volumeName" column="volume_name"/>
+        <result property="gmtCreate" column="gmt_create"/>
+        <result property="gmtModified" column="gmt_modified"/>
     </resultMap>
 
     <sql id="selectBookChapterVo">
-        select id, book_name, book_id, author, chapter_word_size, update_time, source_url, chapter_no, chapter_sequence, chapter_article, chapter_name, chapter_content, volume_name, gmt_create, gmt_modified from book_chapter
+        select id, book_name, book_id, author, chapter_word_size, update_time, source_url, chapter_no, chapter_sequence,
+        chapter_article, chapter_name, chapter_content, volume_name, gmt_create, gmt_modified from book_chapter
     </sql>
 
     <sql id="selectBookChapterVoNoContent">
-        select id, book_name, book_id, author, chapter_word_size, update_time, source_url, chapter_no, chapter_sequence, chapter_article, chapter_name, volume_name, gmt_create, gmt_modified from book_chapter
+        select id, book_name, book_id, author, chapter_word_size, update_time, source_url, chapter_no, chapter_sequence,
+        chapter_article, chapter_name, volume_name, gmt_create, gmt_modified from book_chapter
     </sql>
 
     <select id="listBookChapter" parameterType="map" resultMap="BookChapterResult">
@@ -40,15 +42,39 @@
         </if>
 
         <where>
-            <if test="bookName != null  and bookName != ''"> and book_name like concat('%', #{bookName}, '%')</if>
-            <if test="bookId != null "> and book_id = #{bookId}</if>
-            <if test="author != null  and author != ''"> and author like concat('%', #{author}, '%')</if>
-            <if test="sourceUrl != null  and sourceUrl != ''"> and source_url = #{sourceUrl}</if>
-            <if test="chapterNo != null "> and chapter_no = #{chapterNo}</if>
-            <if test="chapterSequence != null  and chapterSequence != ''"> and chapter_sequence = #{chapterSequence}</if>
-            <if test="chapterArticle != null  and chapterArticle != ''"> and chapter_article = #{chapterArticle}</if>
-            <if test="chapterName != null  and chapterName != ''"> and chapter_name like concat('%', #{chapterName}, '%')</if>
-            <if test="volumeName != null  and volumeName != ''"> and volume_name like concat('%', #{volumeName}, '%')</if>
+
+            <if test="bookName != null  and bookName != ''">and book_name like concat('%', #{bookName}, '%')</if>
+            <if test="bookId != null ">and book_id = #{bookId}</if>
+            <if test="author != null  and author != ''">and author like concat('%', #{author}, '%')</if>
+            <if test="sourceUrl != null  and sourceUrl != ''">and source_url = #{sourceUrl}</if>
+            <if test="chapterNo != null ">and chapter_no = #{chapterNo}</if>
+            <if test="chapterSequence != null  and chapterSequence != ''">and chapter_sequence = #{chapterSequence}</if>
+            <if test="chapterArticle != null  and chapterArticle != ''">and chapter_article = #{chapterArticle}</if>
+            <if test="chapterName != null  and chapterName != ''">and chapter_name like concat('%', #{chapterName},
+                '%')
+            </if>
+            <if test="volumeName != null  and volumeName != ''">and volume_name like concat('%', #{volumeName}, '%')
+            </if>
+        </where>
+
+        <if test="order != null and order == 1">
+            order by id desc
+        </if>
+        <if test="order != null and order == 0">
+            order by id asc
+        </if>
+    </select>
+
+
+    <select id="listBookChapterNoContent" parameterType="map" resultMap="BookChapterResult">
+        <include refid="selectBookChapterVo"/>
+
+        <where>
+            chapter_content is null
+            <if test="bookName != null  and bookName != ''">and book_name like concat('%', #{bookName}, '%')</if>
+            <if test="bookId != null ">and book_id = #{bookId}</if>
+            <if test="author != null  and author != ''">and author like concat('%', #{author}, '%')</if>
+            <if test="sourceUrl != null  and sourceUrl != ''">and source_url = #{sourceUrl}</if>
         </where>
 
         <if test="order != null and order == 1">

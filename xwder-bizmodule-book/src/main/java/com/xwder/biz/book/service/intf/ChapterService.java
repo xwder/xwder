@@ -35,4 +35,18 @@ public interface ChapterService {
      * @return
      */
     CommonResult getLatestChapters(String author, String bookName, String bookUrl);
+
+    /**
+     * 获取没有爬取内容的章节信息
+     *
+     * @param bookChapter
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
+    List<BookChapter> listNoContentChapter(BookChapter bookChapter, Integer pageNum, Integer pageSize);
+
+    void spiderChapterInfo(BookChapter bookChapter);
+
+    void spiderChapterInfoConcurrent();
 }

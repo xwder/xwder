@@ -39,4 +39,11 @@ public interface BookChapterCustomerMapper extends MyMapper<BookChapter> {
      * @return
      */
     List<BookChapter> listBookChapter(Map map);
+
+    /**
+     * 查询章节信息
+     * @param map
+     * @return
+     */
+    List<BookChapter> listBookChapterNoContent(Map map);
 }

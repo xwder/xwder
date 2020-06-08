@@ -14,7 +14,7 @@ import java.util.TimeZone;
  * @version 1.0
  * @date 2019/12/26
  */
-@MapperScan({"com.xwder.biz.model.book","com.xwder.biz.book.dao"})
+@MapperScan({"com.xwder.biz.model.book.mapper","com.xwder.biz.book.dao"})
 @EnableDiscoveryClient
 @SpringBootApplication
 @EnableHystrixDashboard
