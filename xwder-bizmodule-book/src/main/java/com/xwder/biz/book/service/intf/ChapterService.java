@@ -37,7 +37,7 @@ public interface ChapterService {
     CommonResult getLatestChapters(String author, String bookName, String bookUrl);
 
     /**
-     * 获取没有爬取内容的章节信息
+     * 获取没有爬取内容的章节列表
      *
      * @param bookChapter
      * @param pageNum
@@ -46,7 +46,16 @@ public interface ChapterService {
      */
     List<BookChapter> listNoContentChapter(BookChapter bookChapter, Integer pageNum, Integer pageSize);
 
-    void spiderChapterInfo(BookChapter bookChapter);
+    /**
+     * 获取章节的详细信息
+     *
+     * @param bookChapter
+     * @return
+     */
+    BookChapter spiderChapterInfo(BookChapter bookChapter);
 
+    /**
+     * 多线程爬取章节详细信息
+     */
     void spiderChapterInfoConcurrent();
 }

@@ -11,7 +11,6 @@ import com.xwder.biz.book.dao.BookChapterCustomerMapper;
 import com.xwder.biz.book.service.intf.ChapterService;
 import com.xwder.biz.model.book.BookChapter;
 import com.xwder.biz.model.book.mapper.BookChapterMapper;
-import com.xwder.biz.model.book.mapper.BookInfoMapper;
 import com.xwder.cloud.commmon.api.CommonResult;
 import com.xwder.cloud.commmon.api.ResultCode;
 import com.xwder.cloud.commmon.utils.HttpClientUtil;
@@ -53,7 +52,7 @@ public class ChapterServiceImpl implements ChapterService {
      * 任务执行线程池
      */
     protected ExecutorService executorService =
-            new ThreadPoolExecutor(5,
+            new ThreadPoolExecutor(8,
                     10, 20L,
                     TimeUnit.SECONDS,
                     new LinkedBlockingQueue<>(2000));
@@ -138,33 +137,7 @@ public class ChapterServiceImpl implements ChapterService {
     }
 
     @Override
-    public void spiderChapterInfoConcurrent() {
-        BookChapter queryBookChapter = new BookChapter();
-        List<BookChapter> bookChapters = listNoContentChapter(queryBookChapter, 1, 100);
-        List<CompletableFuture> futureList = new ArrayList<>();
-        for (BookChapter bookChapter : bookChapters) {
-            //此处采用多线程打包
-            futureList.add(CompletableFuture.runAsync(() -> {
-                try {
-                    // 爬取内容保存数据
-                    spiderChapterInfo(bookChapter);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    System.out.println(e);
-                }
-            }, executorService));
-        }
-        // 等待所有包都打完
-        if (futureList.isEmpty()) {
-            return;
-        }
-        CompletableFuture
-                .allOf(futureList.toArray(new CompletableFuture[futureList.size()]))
-                .join();
-    }
-
-    @Override
-    public void spiderChapterInfo(BookChapter bookChapter) {
+    public BookChapter spiderChapterInfo(BookChapter bookChapter) {
         Map<String, String> header = new HashMap<String, String>();
         header.put("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9");
         header.put("Accept-Language", "zh-cn,zh;q=0.5");
@@ -180,7 +153,7 @@ public class ChapterServiceImpl implements ChapterService {
                     .headers(header)
                     .get();
         } catch (IOException e) {
-            return;
+            return null;
         }
         Element content = document.getElementById("content");
         Document.OutputSettings outputSettings = new Document.OutputSettings().prettyPrint(false);
@@ -195,6 +168,8 @@ public class ChapterServiceImpl implements ChapterService {
 
         int chapterSize = strContentTxt.length();
         String strContent = content.html();
+        strContent = strContent.replaceAll("请记住本书首发域名：www.shuquge.com。书趣阁_笔趣阁手机版阅读网址：m.shuquge.com", "")
+                .replaceAll(bookChapter.getSourceUrl(), "");
 
         BookChapter updateBookChapter = new BookChapter();
         updateBookChapter.setId(bookChapter.getId());
@@ -204,7 +179,44 @@ public class ChapterServiceImpl implements ChapterService {
         updateBookChapter.setUpdateTime(currentDate);
         updateBookChapter.setGmtModified(currentDate);
 
-        bookChapterMapper.updateByPrimaryKey(updateBookChapter);
-        log.info("[{}] -- [{}] -- [{}] 保存成功", bookChapter.getId(), bookChapter.getBookName(), chapterSize);
+        bookChapterMapper.updateByPrimaryKeySelective(updateBookChapter);
+        log.info("[{}] - [{}] - [{}] - [{}] - [{}] 保存成功", bookChapter.getId(), bookChapter.getBookName(),
+                bookChapter.getBookId(), bookChapter.getChapterName(), chapterSize);
+        return updateBookChapter;
     }
+
+    /**
+     * 合并写法
+     */
+    @Override
+    public void spiderChapterInfoConcurrent() {
+        log.info("获取章节详情开始");
+        while (true) {
+            long start = System.currentTimeMillis();
+            List<BookChapter> bookChapters = listNoContentChapter(new BookChapter(), 1, 1000);
+            if (bookChapters.size() == 0) {
+                break;
+            }
+            CompletableFuture<Void> all = null;
+            for (BookChapter bookChapter : bookChapters) {
+                // 定义任务
+                CompletableFuture<BookChapter> cf = CompletableFuture.supplyAsync(() -> {
+                    try {
+                        // 爬取内容保存数据
+                        spiderChapterInfo(bookChapter);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        log.error("获取章节详情失败，章节id[{}],sourceUrl [{}],错误信息[{}]", bookChapter.getId(), bookChapter.getSourceUrl(), e);
+                    }
+                    return bookChapter;
+                }, executorService);
+
+                all = CompletableFuture.allOf(cf);
+            }
+            // 开始等待所有任务执行完成
+            all.join();
+            log.info("获取1000条数据详细信息耗时 [{}]", (System.currentTimeMillis() - start));
+        }
+    }
+
 }

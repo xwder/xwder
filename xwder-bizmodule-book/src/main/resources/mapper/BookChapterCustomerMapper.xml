@@ -70,7 +70,7 @@
         <include refid="selectBookChapterVo"/>
 
         <where>
-            chapter_content is null
+            id  &lt;  1000000  and book_id <![CDATA[ <= ]]> 600  and chapter_content is null
             <if test="bookName != null  and bookName != ''">and book_name like concat('%', #{bookName}, '%')</if>
             <if test="bookId != null ">and book_id = #{bookId}</if>
             <if test="author != null  and author != ''">and author like concat('%', #{author}, '%')</if>

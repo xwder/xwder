@@ -27,9 +27,12 @@ spring:
     time-zone: Asia/Shanghai
 
   datasource:
-    url: jdbc:mysql://114.67.85.146:3306/xwder?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai
-    username: xwder
-    password: ENC(FHsDQEpkPHG5Ou8eFedR2neYxGIoCIm2m2bSPT/Y+UY=)
+#    url: jdbc:mysql://114.67.85.146:3306/xwder?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai
+#    username: xwder
+#    password: ENC(FHsDQEpkPHG5Ou8eFedR2neYxGIoCIm2m2bSPT/Y+UY=)
+    url: jdbc:mysql://192.168.30.25:3306/xwder?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai
+    username: root
+    password: ENC(Z+wToNutiivpWkpHlL0zPw==)
     driver-class-name: com.mysql.cj.jdbc.Driver
     platform: mysql
     type: com.alibaba.druid.pool.DruidDataSource
@@ -74,7 +77,8 @@ logging:
         biz:
           model:
             book:
-              mapper: debug
+              # 控制台sql是否显示 debug 显示sql,info 不显示
+              mapper: info
           book:
             dao: debug
 
