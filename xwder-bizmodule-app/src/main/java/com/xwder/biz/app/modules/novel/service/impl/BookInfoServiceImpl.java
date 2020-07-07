@@ -13,6 +13,7 @@ import com.xwder.biz.app.modules.novel.repository.BookInfoRepository;
 import com.xwder.biz.app.modules.novel.service.intf.BookInfoService;
 import com.xwder.biz.app.utils.DateUtil;
 import com.xwder.cloud.commmon.api.CommonResult;
+import com.xwder.cloud.commmon.api.ResultCode;
 import org.apache.commons.lang.StringEscapeUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -27,6 +28,7 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * bookservice service
@@ -55,10 +57,34 @@ public class BookInfoServiceImpl implements BookInfoService {
     public CommonResult downBookByBookName(String bookName) {
         List<BookInfo> bookInfoList = bookInfoRepository.findAllByBookName(bookName);
         if (CollectionUtil.isEmpty(bookInfoList)) {
-            logger.info("[{}] 为查询到该书籍", serviceName);
-            return CommonResult.success(bookName + " 书籍没有收录章节信息");
+            logger.info("[{}] 未查询到该书籍", serviceName);
+            return CommonResult.failed(ResultCode.VALIDATE_FAILED.getCode(),bookName + "  未查询到该书籍");
         }
         return downBook(bookInfoList.get(0));
+    }
+
+    /**
+     * 根据id获取书籍信息
+     *
+     * @param id
+     * @return
+     */
+    @Override
+    public BookInfo getBookInfoById(Integer id) {
+        Optional<BookInfo> optional = bookInfoRepository.findById(id);
+        return optional.get();
+    }
+
+    /**
+     * 根据书名获取书籍
+     *
+     * @param bookName
+     * @return
+     */
+    @Override
+    public List<BookInfo> listBookInfoByBookName(String bookName) {
+        List<BookInfo> bookInfoList = bookInfoRepository.findAllByBookName(bookName);
+        return bookInfoList;
     }
 
     /**
