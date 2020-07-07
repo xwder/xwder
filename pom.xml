@@ -21,6 +21,7 @@
         <module>xwder-bizmodule-message</module>
         <module>xwder-cloud-config-server</module>
         <module>xwder-cloud-config-client</module>
+        <module>xwder-bizmodule-app</module>
     </modules>
 
     <parent>
