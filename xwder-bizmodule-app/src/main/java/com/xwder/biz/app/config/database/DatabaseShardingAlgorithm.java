@@ -1,7 +1,7 @@
 package com.xwder.biz.app.config.database;
 
 import com.google.common.collect.Range;
-import com.xwder.biz.app.attribute.DataBaseConstant;
+import com.xwder.biz.app.common.DataBaseConstant;
 import io.shardingjdbc.core.api.algorithm.sharding.PreciseShardingValue;
 import io.shardingjdbc.core.api.algorithm.sharding.RangeShardingValue;
 import io.shardingjdbc.core.api.algorithm.sharding.standard.PreciseShardingAlgorithm;

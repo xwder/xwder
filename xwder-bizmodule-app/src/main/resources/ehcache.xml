@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="http://ehcache.org/ehcache.xsd"
+         maxBytesLocalHeap="1024M" maxEntriesLocalHeap="500000"
+         updateCheck="false" monitoring="autodetect"
+         dynamicConfig="true">
+
+    <!--支持内存和磁盘两种存储-->
+    <!--path表示路径-->
+    <diskStore path="java.io.tmpdir"/>
+
+
+    <!-- defaultCache：ehcache的默认缓存策略 -->
+    <!--
+        maxElementsInMemory：最大的缓存对象数量
+        eternal：是否持久化
+        timeToIdleSeconds：对象空闲时间，超过该时间没被访问则删除
+        timeToLiveSeconds：对象存活时间。
+        maxElementsOnDisk：磁盘上缓存的元素的最大数量
+        diskExpiryThreadIntervalSeconds：对象检测线程运行时间间隔。
+        memoryStoreEvictionPolicy：内存中数据超过内存限制，则向磁盘缓存。默认：LRU（最近最少使用），FIFO（先进先出），LFU（最少使用）
+     -->
+    <defaultCache
+            eternal="false"
+            overflowToDisk="true"
+            timeToIdleSeconds="7200"
+            timeToLiveSeconds="1000">
+    </defaultCache>
+
+    <!-- 百度 ocr access_token,缓存12h-->
+    <cache name="BAIDU_CACHE_NAME"
+           overflowToDisk="false"
+           timeToLiveSeconds="1800">
+        <searchable keys="true" values="false"/>
+    </cache>
+
+    <!-- 腾讯cos临时凭据,缓存 25分钟-->
+    <cache name="TENCENT_CACHE_NAME"
+           overflowToDisk="false"
+           timeToLiveSeconds="1500">
+        <searchable keys="true" values="false"/>
+    </cache>
+
+</ehcache>

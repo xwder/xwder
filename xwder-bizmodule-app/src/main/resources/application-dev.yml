@@ -13,6 +13,9 @@ server:
     # Tomcat启动初始化的线程数，默认值25
     min-spare-threads: 30
 
+project:
+  name: xwder-app
+
 spring:
   devtools:
     restart:
@@ -31,10 +34,14 @@ spring:
         dialect: org.hibernate.dialect.MySQL5InnoDBDialect
     show-sql: true
 
+  cache:
+    ehcache:
+      config: classpath:ehcache.xml
+
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/xwder?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai
-    username: root
-    password: root
+    url: jdbc:mysql://114.67.85.146:3306/xwder?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai
+    username: xwder
+    password: nKZ45sT7GofGezFi
     driver-class-name: com.mysql.cj.jdbc.Driver
     platform: mysql
     type: com.alibaba.druid.pool.DruidDataSource
@@ -62,18 +69,26 @@ spring:
     connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
     # 合并多个DruidDataSource的监控数据
 
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 200MB
+      max-request-size: 200MB
+
   logging:
     config: classpath:log4j2.yml
 
 novel:
   book:
-    dir: I:\\novel
+    dir: E:\\novel
 lottery:
   save:
     dir: E:\\lottery
 video:
   upload:
-    tempdir: E:\\videoUploadTempDir
+    saveDir: E:\\videoUploadSaveDir
+
+  videoSplitTime: 5
 baidu:
   cor:
     key: 7M62UKysmTRUEZCDiosiz378

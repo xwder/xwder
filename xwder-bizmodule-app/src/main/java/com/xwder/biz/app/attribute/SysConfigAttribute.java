@@ -13,14 +13,20 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class SysConfigAttribute {
 
+    @Value("${project.name}")
+    private String projectName;
+
     @Value("${novel.book.dir}")
     private String novelBookDir;
 
     @Value("${lottery.save.dir}")
     private String lotterySaveDir;
 
-    @Value("${video.upload.tempdir}")
-    private String videoUploadTempDir;
+    @Value("${video.upload.saveDir}")
+    private String videoUploadSaveDir;
+
+    @Value("${video.videoSplitTime}")
+    private Integer videoSplitTime;
 
     @Value("${baidu.cor.key}")
     private String baiduCorKey;
