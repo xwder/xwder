@@ -14,16 +14,16 @@
         <module>xwder-cloud-common</module>
         <module>xwder-cloud-mybatisgenerator</module>
         <module>xwder-cloud-gateway</module>
-        <module>xwder-bizmodule-model</module>
-        <module>xwder-bizmodule-api</module>
-        <module>xwder-bizmodule-book</module>
-        <module>xwder-bizmodule-manage</module>
-        <module>xwder-bizmodule-message</module>
         <module>xwder-cloud-config-server</module>
         <module>xwder-cloud-config-client</module>
-        <module>xwder-bizmodule-app</module>
-    </modules>
 
+        <module>xwder-biz-model</module>
+        <module>xwder-biz-api</module>
+        <module>xwder-biz-book</module>
+        <module>xwder-biz-manage</module>
+        <module>xwder-biz-message</module>
+        <module>xwder-biz-app</module>
+    </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>

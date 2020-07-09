@@ -8,4 +8,4 @@ if [  -n  "$pid"  ];  then
     kill  -9  $pid;
 fi
 
-nohup java -jar xwder-bizmodule-book-1.0-SNAPSHOT.jar &
+nohup java -jar xwder-biz-book-1.0-SNAPSHOT.jar &
