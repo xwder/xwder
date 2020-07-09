@@ -1,0 +1,144 @@
+# 开发环境配置
+server:
+  # 服务端口
+  port: 8080
+  servlet:
+    # 项目contextPath
+    context-path: /
+  tomcat:
+    # tomcat的URI编码
+    uri-encoding: UTF-8
+    # tomcat最大线程数，默认为200
+    max-threads: 800
+    # Tomcat启动初始化的线程数，默认值25
+    min-spare-threads: 30
+
+system:
+  chineseName: xwder
+  name: xwder-app
+  mailVerifyUrl: http://web.ngrok.xwder.com/user/mail/verifyMail
+
+spring:
+  devtools:
+    restart:
+      enabled: true
+
+  application:
+    name: xwder-biz-book
+
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+    show-sql: true
+
+  cache:
+    ehcache:
+      config: classpath:ehcache.xml
+
+  datasource:
+    url: jdbc:mysql://114.67.85.146:3306/xwder?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai
+    username: xwder
+    password: nKZ45sT7GofGezFi
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    platform: mysql
+    type: com.alibaba.druid.pool.DruidDataSource
+    # 下面为连接池的补充设置，应用到上面所有数据源中
+    # 初始化大小，最小，最大
+    initialSize: 1
+    minIdle: 3
+    maxActive: 20
+    # 配置获取连接等待超时的时间
+    maxWait: 60000
+    # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+    timeBetweenEvictionRunsMillis: 60000
+    # 配置一个连接在池中最小生存的时间，单位是毫秒
+    minEvictableIdleTimeMillis: 30000
+    validationQuery: select 'x'
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    # 打开PSCache，并且指定每个连接上PSCache的大小
+    poolPreparedStatements: true
+    maxPoolPreparedStatementPerConnectionSize: 20
+    # 配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
+    filters: stat,wall,log4j
+    # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
+    connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+    # 合并多个DruidDataSource的监控数据
+
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 200MB
+      max-request-size: 200MB
+
+  logging:
+    config: classpath:log4j2.yml
+
+  rabbitmq:
+    host: 114.67.85.146
+    port: 5672
+    username: admin
+    password: q77ZA9NxKQHIDV7c
+    #虚拟host 可以不设置,使用server默认host
+    virtual-host: xwder
+    #消息确认配置项
+
+    #确认消息已发送到交换机(Exchange)
+    #publisher-confirms: true
+    #确认消息已发送到队列(Queue)
+    #publisher-returns: true
+
+# rabbitmq mq配置信息
+xwder:
+  exchange:
+    # 书籍模块交换机
+    book: xwder.exchange.book
+  queue:
+    sms:
+      # 书籍模块短信消息队列
+      chapterUpdate: xwder.queue.sms.chapterUpdate
+    email:
+      # 书籍模块邮件消息队列
+      chapterUpdate: xwder.queue.email.chapterUpdate
+    alertover:
+      # 书籍模块alertover消息队列
+      chapterUpdate: xwder.queue.alertover.chapterUpdate
+    wechat:
+      # 书籍模块微信通知消息队列
+      chapterUpdate: xwder.queue.wechat.chapterUpdate
+
+novel:
+  book:
+    # 书籍章节本地存放目录
+    dir: E:\\novel
+lottery:
+  save:
+    # 上传的lottery本地存放目录
+    dir: E:\\lottery
+
+video:
+  upload:
+    # 上传的video保存目录
+    saveDir: E:\\videoUploadSaveDir
+  # video切割文件时间长度
+  videoSplitTime: 5
+
+baidu:
+  ocr:
+    key: 7M62UKysmTRUEZCDiosiz378
+    secret: 8pQZfUBY80ApokLsUnZ11eICv0DmuQX3
+tencent:
+  auth:
+    secretId: AKIDLUSAl6fONBk5A7TCi07wWrzsUPyInSFn
+    secretKey: QYXKvLey66wY1RbsUs20sSlnv72fvuc1
+  cos:
+    bucketName: cdn-1256177279
+    region: ap-chongqing
+  cdn:
+    prefixurl: https://cdn.xwder.com
