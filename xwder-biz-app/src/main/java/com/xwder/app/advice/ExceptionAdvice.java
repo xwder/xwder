@@ -42,7 +42,17 @@ public class ExceptionAdvice {
         String message = e.getMessage();
         log.error("{}", e);
         return CommonResult.failed(code, message);
+    }
 
+    /**
+     * 自定义业务异常
+     * @param bizException
+     * @return
+     */
+    @ExceptionHandler(BizException.class)
+    public CommonResult handleCustomException(BizException bizException) {
+        log.info("{}", bizException.getMessage());
+        return CommonResult.failed(bizException.getCode(), bizException.getMessage());
     }
 
 }

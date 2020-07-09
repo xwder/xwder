@@ -58,6 +58,9 @@ spring:
     #确认消息已发送到队列(Queue)
     #publisher-returns: true
 
+  logging:
+    config: classpath:log4j2.yml
+
 feign:
   hystrix:
     enabled: true

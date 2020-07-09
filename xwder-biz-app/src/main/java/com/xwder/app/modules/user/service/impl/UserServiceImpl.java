@@ -24,6 +24,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.logging.Logger;
 
 /**
  * 用户访问实现类
@@ -61,8 +62,10 @@ public class UserServiceImpl implements UserService {
     public User getUserByUserUserId(String userId) {
         List<User> userList = userRepositry.findAllByUserId(userId);
         if (CollectionUtil.isNotEmpty(userList)) {
+            log.info("查询用户id[{}]已存在",userId);
             return userList.get(0);
         }
+        log.info("查询用户id[{}]不存在",userId);
         return null;
     }
 
@@ -89,6 +92,7 @@ public class UserServiceImpl implements UserService {
             // 用户状态
             user.setStatus(UserStatusEnum.UN_VERIFY.getCode());
             user = userRepositry.save(user);
+            log.info("保存新注册用户[{}]成功",user.getUserId());
             user.setSalt(null);
             user.setPassword(null);
             // 发送激活账户邮件
@@ -96,13 +100,14 @@ public class UserServiceImpl implements UserService {
         } else {
             String userId = user.getUserId();
             List<User> userList = userRepositry.findAllByUserId(userId);
-            if(userList==null && userList.size()!=1){
+            if (userList == null && userList.size() != 1) {
                 log.error("该用户不存在");
                 return null;
             }
             User source = userList.get(0);
-            UpdateUtil.copyNullProperties(source, user);
+            UpdateUtil.copyNullProperties(user, source);
             userRepositry.save(source);
+            log.info("更新用户[{}]信息成功",source.getUserId());
             user = source;
         }
 
@@ -119,13 +124,16 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public User userLogin(User user) {
-        User sourceUser = getUserByUserUserId(user.getUserId());
+        String userId = user.getUserId();
+        User sourceUser = getUserByUserUserId(userId);
         String loginPassWord = Md5Crypt.apr1Crypt(user.getPassword().getBytes(), sourceUser.getSalt());
         if (StringUtils.endsWithIgnoreCase(sourceUser.getPassword(), loginPassWord)) {
             sourceUser.setPassword(null);
             sourceUser.setSalt(null);
+            log.info("用户[{}]登录成功",userId);
             return sourceUser;
         }
+        log.info("用户[{}]登录失败",userId);
         return null;
     }
 
@@ -137,25 +145,26 @@ public class UserServiceImpl implements UserService {
 
         // 凭借激活url参数
         String key = RandomStringUtils.randomAlphanumeric(32);
-        String verifyUrl = sysConfigAttribute.getMailVerifyUrl()+"?verifyKey="+key;
+        String verifyUrl = sysConfigAttribute.getMailVerifyUrl() + "?verifyKey=" + key;
         String htmlContent = "<p>欢迎注册</p><h1>%s</h1>邮件激活链接半个小时内有效<p><a href=\"%s\">激活请点击</a></p>";
         String content = String.format(htmlContent, sysConfigAttribute.getChineseName(), verifyUrl);
-        String subject="邮箱验证";
+        String subject = "邮箱验证";
 
         Map mailMap = Maps.newHashMap();
-        mailMap.put("mailType",MailTypeConstant.HTMLMAIL);
+        mailMap.put("mailType", MailTypeConstant.HTMLMAIL);
         mailMap.put("to", user.getEmail());
         mailMap.put("subject", subject);
         mailMap.put("content", content);
         rabbitTemplate.convertAndSend(rabbitConfig.getXwderExchageBook(), rabbitConfig.getXwderQueueEmailChapterUpdate(), mailMap);
-
+        log.info("用户[{}]发送邮箱验证成功",user.getUserId());
         // ehcache缓存 key 和 用户userId
-        ehCacheService.putCache(key,user ,1800);
+        ehCacheService.putCache(key, user, 1800);
     }
 
 
     /**
      * 邮箱验证操作
+     *
      * @param verifyKey
      * @return
      */
@@ -167,6 +176,9 @@ public class UserServiceImpl implements UserService {
         }
         user.setStatus(UserStatusEnum.EMAIL_VERIFY.getCode());
         saveOrUpdateUser(user);
+        log.info("验证用户[{}]邮箱成功",user.getUserId());
+        // 清除缓存
+        ehCacheService.removeCache(verifyKey);
         return user;
     }
 }

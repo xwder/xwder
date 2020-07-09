@@ -12,6 +12,7 @@ import java.net.URL;
 
 /**
  * ehcache service
+ *
  * @author wande
  * @version 1.0
  * @date 2020/07/08
@@ -33,10 +34,11 @@ public class EhCacheService {
 
     /**
      * 获取缓存管理器
+     *
      * @return
      */
     @Bean
-    public CacheManager getCacheManager(){
+    public CacheManager getCacheManager() {
         url = getClass().getResource(path);
         cacheManager = CacheManager.create(url);
         // 将CacheManager注册为bean，供缓存工具类使用
@@ -45,31 +47,33 @@ public class EhCacheService {
 
     /**
      * 添加缓存 默认项目名作为cacheName
+     *
      * @param key
      * @param value
      * @param timeToLiveSeconds 缓存生存时间（秒）
      */
-    public void putCache(String key,Object value,int timeToLiveSeconds){
+    public void putCache(String key, Object value, int timeToLiveSeconds) {
         Cache cache = getCacheByCacheName(sysConfigAttribute.getSystemName());
         Element element = new Element(
                 key, value,
-                0,// timeToIdleSeconds=0
+                0,
                 timeToLiveSeconds);
         cache.put(element);
     }
 
     /**
      * 添加缓存
-     * @param cacheName 缓存名称
+     *
+     * @param cacheName         缓存名称
      * @param key
      * @param value
      * @param timeToLiveSeconds 缓存生存时间（秒）
      */
-    public void putCache(String cacheName,String key,Object value,int timeToLiveSeconds){
+    public void putCache(String cacheName, String key, Object value, int timeToLiveSeconds) {
         Cache cache = getCacheByCacheName(cacheName);
         Element element = new Element(
                 key, value,
-                0,// timeToIdleSeconds=0
+                0,
                 timeToLiveSeconds);
         cache.put(element);
     }
@@ -77,20 +81,22 @@ public class EhCacheService {
     /**
      * 添加缓存 默认项目名作为cacheName
      * 使用默认生存时间
+     *
      * @param key
      * @param value
      */
-    public void setCache(String key,Object value){
+    public void setCache(String key, Object value) {
         Cache cache = getCacheByCacheName(sysConfigAttribute.getSystemName());
         Element element = new Element(
                 key, value,
-                0,// timeToIdleSeconds
+                0,
                 DEFAULT_LIVE_SECOND);
         cache.put(element);
     }
 
     /**
      * 添加缓存 默认项目名作为cacheName
+     *
      * @param key
      * @param value
      * @param timeToIdleSeconds 对象空闲时间，指对象在多长时间没有被访问就会失效。
@@ -98,7 +104,7 @@ public class EhCacheService {
      * @param timeToLiveSeconds 缓存生存时间（秒）
      *                          只对eternal为false的有效
      */
-    public void setCache(String key,Object value,int timeToIdleSeconds, int timeToLiveSeconds){
+    public void setCache(String key, Object value, int timeToIdleSeconds, int timeToLiveSeconds) {
         Cache cache = getCacheByCacheName(sysConfigAttribute.getSystemName());
         Element element = new Element(
                 key, value,
@@ -109,6 +115,7 @@ public class EhCacheService {
 
     /**
      * 添加缓存
+     *
      * @param cacheName
      * @param key
      * @param value
@@ -117,7 +124,7 @@ public class EhCacheService {
      * @param timeToLiveSeconds 缓存生存时间（秒）
      *                          只对eternal为false的有效
      */
-    public void setCache(String cacheName,String key,Object value,int timeToIdleSeconds, int timeToLiveSeconds){
+    public void setCache(String cacheName, String key, Object value, int timeToIdleSeconds, int timeToLiveSeconds) {
         Cache cache = getCacheByCacheName(cacheName);
         Element element = new Element(
                 key, value,
@@ -128,13 +135,14 @@ public class EhCacheService {
 
     /**
      * 获取缓存 默认项目名作为cacheName
+     *
      * @param key
      * @return
      */
-    public Object getCache(String key){
+    public Object getCache(String key) {
         Cache cache = getCacheByCacheName(sysConfigAttribute.getSystemName());
         Element element = cache.get(key);
-        if(element == null){
+        if (element == null) {
             return null;
         }
         return element.getObjectValue();
@@ -143,28 +151,50 @@ public class EhCacheService {
 
     /**
      * 获取缓存
+     *
      * @param cacheName
      * @param key
      * @return
      */
-    public Object getCache(String cacheName,String key){
+    public Object getCache(String cacheName, String key) {
         Cache cache = getCacheByCacheName(cacheName);
         Element element = cache.get(key);
-        if(element == null){
+        if (element == null) {
             return null;
         }
         return element.getObjectValue();
     }
 
     /**
+     * 移除缓存
+     *
+     * @param key
+     */
+    public void removeCache(String key) {
+        Cache cache = getCacheByCacheName(sysConfigAttribute.getSystemName());
+        cache.remove(key);
+    }
+
+    /**
+     * 移除缓存
+     * @param cacheName
+     * @param key
+     */
+    public void removeCache(String cacheName, String key) {
+        Cache cache = getCacheByCacheName(cacheName);
+        cache.remove(key);
+    }
+
+    /**
      * 获取cache 没有的话 添加
+     *
      * @param cacheName
      * @return
      */
-    private Cache getCacheByCacheName(String cacheName){
+    private Cache getCacheByCacheName(String cacheName) {
         Cache cache = cacheManager.getCache(cacheName);
         if (cache == null) {
-            synchronized(EhCacheService.class) {
+            synchronized (EhCacheService.class) {
                 cache = cacheManager.getCache(cacheName);
                 if (cache == null) {
                     cacheManager.addCache(cacheName);
@@ -175,4 +205,6 @@ public class EhCacheService {
         }
         return cache;
     }
+
+
 }

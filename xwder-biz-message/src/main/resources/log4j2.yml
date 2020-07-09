@@ -10,9 +10,9 @@ Configuration:
       - name: log.level.cstc
         value: trace
       - name: log.path
-        value: /usr/local/xwder/logs/xwder-bizmodule-message
+        value: /usr/local/xwder/logs/xwder-biz-message
       - name: project.name
-        value: xwder-bizmodule-message
+        value: xwder-biz-message
       - name: log.pattern
         value: "%d{yyyy-MM-dd HH:mm:ss.SSS} -%5p ${PID:-} [%15.15t] %-30.30C{1.} : %m%n"
 
@@ -26,6 +26,7 @@ Configuration:
         onMismatch: DENY
       PatternLayout:
         pattern: ${log.pattern}
+
     RollingFile: # 输出到文件，超过15MB归档
       - name: ROLLING_FILE
         ignoreExceptions: false
@@ -51,10 +52,10 @@ Configuration:
       AppenderRef:
         - ref: CONSOLE
         - ref: ROLLING_FILE
-    Logger: # 为com.csnt包配置特殊的Log级别，方便调试
-      - name: com.xxx
+    Logger: # 为com.xwder包配置特殊的Log级别，方便调试
+      - name: com.xwder
         additivity: false
-        level: ${sys:log.level.cstc}
+        level: ${sys:log.level.xwder}
         AppenderRef:
           - ref: CONSOLE
           - ref: ROLLING_FILE

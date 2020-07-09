@@ -7,7 +7,7 @@ Configuration:
       #生产：-Dlog.level.console=warn -Dlog.level.csnt=info
       - name: log.level.console
         value: trace
-      - name: log.level.cstc
+      - name: log.level.xwder
         value: trace
       - name: log.path
 #        value: ./logs/xwder-biz-book
@@ -52,10 +52,10 @@ Configuration:
       AppenderRef:
         - ref: CONSOLE
         - ref: ROLLING_FILE
-    Logger: # 为com.csnt包配置特殊的Log级别，方便调试
-      - name: com.xxx
+    Logger: # 为com.xwder包配置特殊的Log级别，方便调试
+      - name: com.xwder
         additivity: false
-        level: ${sys:log.level.cstc}
+        level: ${sys:log.level.xwder}
         AppenderRef:
           - ref: CONSOLE
           - ref: ROLLING_FILE

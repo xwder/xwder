@@ -37,7 +37,7 @@
         </dependency>
         <dependency>
             <groupId>com.xwder</groupId>
-            <artifactId>xwder-bizmodule-model</artifactId>
+            <artifactId>xwder-biz-model</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
         <dependency>
