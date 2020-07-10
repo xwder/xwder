@@ -7,7 +7,7 @@ Configuration:
       #生产：-Dlog.level.console=warn -Dlog.level.csnt=info
       - name: log.level.console
         value: trace
-      - name: log.level.cstc
+      - name: log.level.xwder
         value: trace
       - name: log.path
         value: /usr/local/xwder/logs/xwder-biz-message

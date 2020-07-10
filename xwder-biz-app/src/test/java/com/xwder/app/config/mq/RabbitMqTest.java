@@ -1,7 +1,6 @@
 package com.xwder.app.config.mq;
 
 import com.google.common.collect.Maps;
-import com.xwder.app.config.mq.RabbitConfig;
 import com.xwder.app.XwderApplication;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -40,7 +39,7 @@ public class RabbitMqTest {
         Map map = Maps.newHashMap();
         map.put("title", "test rabbitmq");
         map.put("content", "test rabbitmq");
-        rabbitTemplate.convertAndSend(rabbitConfig.getXwderExchageBook(), rabbitConfig.getXwderQueueAlertOverChapterUpdate(), mailMap);
+        rabbitTemplate.convertAndSend(rabbitConfig.getXwderExchageEmail(), rabbitConfig.getXwderQueueAlertOver(), mailMap);
     }
 
 }

@@ -14,9 +14,17 @@ server:
     min-spare-threads: 30
 
 system:
+  # 系统名称
   chineseName: xwder
+  # 名称
   name: xwder-app
+  # 邮箱验证回调地址
   mailVerifyUrl: http://web.ngrok.xwder.com/user/mail/verifyMail
+  # 用户注册是否微信通知管理员
+  newUserReigsterWeChatNoticeAdmin: true
+  # 管理员微信通知 wxPusher UID
+  adminWxPusherUid: UID_3izJBf0A7BG2CsQ8bdaBjnm4JKho
+
 
 spring:
   devtools:
@@ -95,23 +103,39 @@ spring:
     #publisher-returns: true
 
 # rabbitmq mq配置信息
-xwder:
+mq:
   exchange:
-    # 书籍模块交换机
-    book: xwder.exchange.book
+    sms: xwder.exchange.sms
+    email: xwder.exchange.email
+    wechat: xwder.exchange.wechat
+    alertover: xwder.exchange.alertover
+
   queue:
+    # 书籍模块短信消息队列
+    sms: xwder.queue.sms
+    # 邮箱验证消息队列
+    email: xwder.queue.email
+    # 书籍模块alertover消息队列
+    alertover: xwder.queue.alertover
+    # 书籍模块微信通知消息队列
+    wechat: xwder.queue.wechat
+
+  routingkey:
     sms:
       # 书籍模块短信消息队列
-      chapterUpdate: xwder.queue.sms.chapterUpdate
+      chapterUpdate: xwder-sms-chapterUpdate
     email:
       # 书籍模块邮件消息队列
-      chapterUpdate: xwder.queue.email.chapterUpdate
+      chapterUpdate: xwder-email-chapterUpdate
+      # 邮箱验证消息队列
+      verifyEmail: xwder-email-verifyEmail
     alertover:
       # 书籍模块alertover消息队列
-      chapterUpdate: xwder.queue.alertover.chapterUpdate
+      chapterUpdate: xwder-alertover-chapterUpdate
     wechat:
       # 书籍模块微信通知消息队列
-      chapterUpdate: xwder.queue.wechat.chapterUpdate
+      chapterUpdate: xwder-wechat-chapterUpdate
+
 
 novel:
   book:

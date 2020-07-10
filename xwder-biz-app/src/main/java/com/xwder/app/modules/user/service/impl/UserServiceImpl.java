@@ -6,6 +6,7 @@ import com.google.common.collect.Maps;
 import com.xwder.app.attribute.SysConfigAttribute;
 import com.xwder.app.common.UserStatusEnum;
 import com.xwder.app.config.cache.EhCacheService;
+import com.xwder.app.config.mq.MQProducerMessage;
 import com.xwder.app.config.mq.RabbitConfig;
 import com.xwder.app.modules.user.entity.User;
 import com.xwder.app.modules.user.repositry.UserRepositry;
@@ -21,10 +22,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
-import java.util.logging.Logger;
 
 /**
  * 用户访问实现类
@@ -38,7 +38,10 @@ import java.util.logging.Logger;
 public class UserServiceImpl implements UserService {
 
     @Autowired
-    RabbitTemplate rabbitTemplate;
+    private RabbitTemplate rabbitTemplate;
+
+    @Autowired
+    private MQProducerMessage mqProducerMessage;
 
     @Autowired
     private RabbitConfig rabbitConfig;
@@ -62,10 +65,10 @@ public class UserServiceImpl implements UserService {
     public User getUserByUserUserId(String userId) {
         List<User> userList = userRepositry.findAllByUserId(userId);
         if (CollectionUtil.isNotEmpty(userList)) {
-            log.info("查询用户id[{}]已存在",userId);
+            log.info("查询用户id[{}]已存在", userId);
             return userList.get(0);
         }
-        log.info("查询用户id[{}]不存在",userId);
+        log.info("查询用户id[{}]不存在", userId);
         return null;
     }
 
@@ -92,7 +95,7 @@ public class UserServiceImpl implements UserService {
             // 用户状态
             user.setStatus(UserStatusEnum.UN_VERIFY.getCode());
             user = userRepositry.save(user);
-            log.info("保存新注册用户[{}]成功",user.getUserId());
+            log.info("保存新注册用户[{}]成功", user.getUserId());
             user.setSalt(null);
             user.setPassword(null);
             // 发送激活账户邮件
@@ -107,7 +110,7 @@ public class UserServiceImpl implements UserService {
             User source = userList.get(0);
             UpdateUtil.copyNullProperties(user, source);
             userRepositry.save(source);
-            log.info("更新用户[{}]信息成功",source.getUserId());
+            log.info("更新用户[{}]信息成功", source.getUserId());
             user = source;
         }
 
@@ -130,10 +133,10 @@ public class UserServiceImpl implements UserService {
         if (StringUtils.endsWithIgnoreCase(sourceUser.getPassword(), loginPassWord)) {
             sourceUser.setPassword(null);
             sourceUser.setSalt(null);
-            log.info("用户[{}]登录成功",userId);
+            log.info("用户[{}]登录成功", userId);
             return sourceUser;
         }
-        log.info("用户[{}]登录失败",userId);
+        log.info("用户[{}]登录失败", userId);
         return null;
     }
 
@@ -146,7 +149,7 @@ public class UserServiceImpl implements UserService {
         // 凭借激活url参数
         String key = RandomStringUtils.randomAlphanumeric(32);
         String verifyUrl = sysConfigAttribute.getMailVerifyUrl() + "?verifyKey=" + key;
-        String htmlContent = "<p>欢迎注册</p><h1>%s</h1>邮件激活链接半个小时内有效<p><a href=\"%s\">激活请点击</a></p>";
+        String htmlContent = "<p>欢迎注册 </p><h1>%s</h1> 邮件激活链接半个小时内有效<p><a href=\"%s\">激活请点击</a></p>";
         String content = String.format(htmlContent, sysConfigAttribute.getChineseName(), verifyUrl);
         String subject = "邮箱验证";
 
@@ -155,10 +158,25 @@ public class UserServiceImpl implements UserService {
         mailMap.put("to", user.getEmail());
         mailMap.put("subject", subject);
         mailMap.put("content", content);
-        rabbitTemplate.convertAndSend(rabbitConfig.getXwderExchageBook(), rabbitConfig.getXwderQueueEmailChapterUpdate(), mailMap);
-        log.info("用户[{}]发送邮箱验证成功",user.getUserId());
+        String jsonContent = JSONUtil.toJsonStr(mailMap);
+        mqProducerMessage.sendMsg(jsonContent, rabbitConfig.getXwderExchageEmail(), rabbitConfig.getXwderEmailVerifyEmailRoutingkey());
+        log.info("用户[{}]发送邮箱验证成功", user.getUserId());
+
         // ehcache缓存 key 和 用户userId
         ehCacheService.putCache(key, user, 1800);
+
+        // 发送消息给管理员由用户注册了
+        if (sysConfigAttribute.getNewUserReigsterWeChatNoticeAdmin()) {
+            String wxPusherContent = String.format("新用户注册                                        " +
+                            "\n用户名:%s\n邮箱:%s\n电话:%s",
+                    user.getUserId(), user.getEmail(), user.getPhone());
+            HashMap<String, Object> pusherMap = Maps.newHashMap();
+            pusherMap.put("uid", sysConfigAttribute.getAdminWxPusherUid());
+            pusherMap.put("msg", wxPusherContent);
+            jsonContent = JSONUtil.toJsonStr(pusherMap);
+            mqProducerMessage.sendMsg(jsonContent, rabbitConfig.getXwderExchageWeChat(), rabbitConfig.getXwderWeChatChapterUpdateRoutingkey());
+            log.info("新用户[{}]注册，给管理员发送微信通知成功,通知消息内容:{}", user.getUserId(), wxPusherContent);
+        }
     }
 
 
@@ -176,7 +194,7 @@ public class UserServiceImpl implements UserService {
         }
         user.setStatus(UserStatusEnum.EMAIL_VERIFY.getCode());
         saveOrUpdateUser(user);
-        log.info("验证用户[{}]邮箱成功",user.getUserId());
+        log.info("验证用户[{}]邮箱成功", user.getUserId());
         // 清除缓存
         ehCacheService.removeCache(verifyKey);
         return user;

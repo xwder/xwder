@@ -49,7 +49,7 @@ public class WxPusherWeChatMessageServiceTest {
      */
     @Test
     public void sendWxPusherChatMarkDownMessageTest() {
-        String content = "### xwder";
+        String content = "新用户注册";
         String uid = "UID_3izJBf0A7BG2CsQ8bdaBjnm4JKho";
         CommonResult result = wxPusherWeChatMessageService.sendMarkDownMessage(uid,content);
     }

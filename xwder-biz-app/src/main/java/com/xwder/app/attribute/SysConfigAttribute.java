@@ -22,6 +22,12 @@ public class SysConfigAttribute {
     @Value("${system.mailVerifyUrl}")
     private String mailVerifyUrl;
 
+    @Value("${system.newUserReigsterWeChatNoticeAdmin}")
+    private Boolean newUserReigsterWeChatNoticeAdmin;
+
+    @Value("${system.adminWxPusherUid}")
+    private String adminWxPusherUid;
+
     @Value("${novel.book.dir}")
     private String novelBookDir;
 

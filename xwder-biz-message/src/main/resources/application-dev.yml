@@ -158,3 +158,39 @@ alertover:
   send-source: s-98f1992e-397f-4273-b08f-b1ca77db
   receive-source: g-1fa686bc-2445-4260-b7ed-552ac38f
   request-url: https://api.alertover.com/v1/alert
+
+
+# rabbitmq mq配置信息
+mq:
+  exchange:
+    sms: xwder.exchange.sms
+    email: xwder.exchange.email
+    wechat: xwder.exchange.wechat
+    alertover: xwder.exchange.alertover
+
+  queue:
+    # 书籍模块短信消息队列
+    sms: xwder.queue.sms
+    # 邮箱验证消息队列
+    email: xwder.queue.email
+    # 书籍模块alertover消息队列
+    alertover: xwder.queue.alertover
+    # 书籍模块微信通知消息队列
+    wechat: xwder.queue.wechat
+
+  routingkey:
+    sms:
+      # 书籍模块短信消息队列
+      chapterUpdate: xwder-sms-chapterUpdate
+    email:
+      # 书籍模块邮件消息队列
+      chapterUpdate: xwder-email-chapterUpdate
+      # 邮箱验证消息队列
+      verifyEmail: xwder-email-verifyEmail
+    alertover:
+      # 书籍模块alertover消息队列
+      chapterUpdate: xwder-alertover-chapterUpdate
+    wechat:
+      # 书籍模块微信通知消息队列
+      chapterUpdate: xwder-wechat-chapterUpdate
+
