@@ -1,6 +1,12 @@
 package com.xwder.app.advice;
 
+import com.baomidou.kaptcha.exception.KaptchaException;
+import com.baomidou.kaptcha.exception.KaptchaIncorrectException;
+import com.baomidou.kaptcha.exception.KaptchaNotFoundException;
+import com.baomidou.kaptcha.exception.KaptchaTimeoutException;
 import com.xwder.cloud.commmon.api.CommonResult;
+import com.xwder.cloud.commmon.api.IErrorCode;
+import com.xwder.cloud.commmon.api.ResultCode;
 import com.xwder.cloud.commmon.exception.MyException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -46,6 +52,7 @@ public class ExceptionAdvice {
 
     /**
      * 自定义业务异常
+     *
      * @param bizException
      * @return
      */
@@ -53,6 +60,27 @@ public class ExceptionAdvice {
     public CommonResult handleCustomException(BizException bizException) {
         log.info("{}", bizException.getMessage());
         return CommonResult.failed(bizException.getCode(), bizException.getMessage());
+    }
+
+    /**
+     * 验证码错误
+     *
+     * @param kaptchaException
+     * @return
+     */
+    @ExceptionHandler(value = KaptchaException.class)
+    public CommonResult kaptchaExceptionHandler(KaptchaException kaptchaException) {
+        String errMsg = "";
+        if (kaptchaException instanceof KaptchaIncorrectException) {
+            errMsg = "验证码不正确";
+        } else if (kaptchaException instanceof KaptchaNotFoundException) {
+            errMsg = "验证码未找到";
+        } else if (kaptchaException instanceof KaptchaTimeoutException) {
+            errMsg = "验证码过期";
+        } else {
+            errMsg = "验证码渲染失败";
+        }
+        return CommonResult.failed(ResultCode.PARAM_VALIDATE_FAILD.getCode(), errMsg);
     }
 
 }
