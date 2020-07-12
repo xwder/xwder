@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta http-equiv="Content-Language" content="en"/>
+    <meta name="msapplication-TileColor" content="#2d89ef">
+    <meta name="theme-color" content="#4188c9">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <link rel="icon" href="./favicon.ico" type="image/x-icon"/>
+    <link rel="shortcut icon" type="image/x-icon" href="./favicon.ico"/>
+    <title>注册</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script th:src="@{/login/js/require.min.js}" src="../static/login/js/require.min.js"></script>
+    <script>
+        requirejs.config({
+            baseUrl: '.'
+        });
+    </script>
+    <!-- Dashboard Core -->
+    <link th:href="@{/dist/css/tabler.min.css}" href="../static/dist/css/tabler.min.css" rel="stylesheet"/>
+    <link th:href="@{/login/css/dashboard.css}" href="../static/login/css/dashboard.css" rel="stylesheet"/>
+    <script th:src="@{/login/js/dashboard.js}" src="../static/login/js/dashboard.js"></script>
+
+</head>
+<body class="">
+<div class="page">
+    <div class="page-single">
+        <div class="container">
+            <div class="row">
+                <div class="col col-login mx-auto">
+                    <div class="text-center mb-6">
+                        <img src="https://gss3.bdstatic.com/84oSdTum2Q5BphGlnYG/timg?wapp&quality=80&size=b150_150&subsize=20480&cut_x=0&cut_w=0&cut_y=0&cut_h=0&sec=1369815402&srctrace&di=025a2098797ebd8640060bcc4663cb9e&wh_rate=null&src=http%3A%2F%2Fimgsrc.baidu.com%2Fforum%2Fpic%2Fitem%2F562c11dfa9ec8a13424f9c95fc03918fa0ecc06a.jpg"
+                             class="h-6" alt="">
+                    </div>
+
+                    <form class="card" method="post">
+                        <div class="card-body p-6">
+                            <div class="card-title" style="text-align: center"><h1>用户注册</h1></div>
+                            <div class="form-group">
+                                <label class="form-label required">用户名</label>
+                                <input type="text" id="userId" name="userId" class="form-control"
+                                       placeholder="Enter name">
+                                <div id="userIdInvalid" class="invalid-feedback">Invalid feedback</div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label required">邮箱</label>
+                                <input type="email" id="email" name="email" class="form-control"
+                                       placeholder="Enter email">
+                                <div id="emailInvalid" class="invalid-feedback">Invalid feedback</div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label required">密码</label>
+                                <input type="password" id="password" name="password" class="form-control"
+                                       placeholder="Password">
+                                <div id="passwordInvalid" class="invalid-feedback">Invalid feedback</div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label required">确认密码</label>
+                                <input type="password" id="repassword" name="repassword" class="form-control"
+                                       placeholder="rePassword">
+                                <div id="repasswordInvalid" class="invalid-feedback">Invalid feedback</div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="custom-control custom-checkbox">
+                                    <input type="checkbox" checked ='checked' class="custom-control-input"/>
+                                    <span class="custom-control-label">同意 <a href="#">用户协议</a></span>
+                                </label>
+                            </div>
+                            <div class="card-title" style="text-align: center"><h1>用户注册</h1></div>
+                            <div class="form-footer">
+                                <button type="button" id="registerButten" class="btn btn-primary btn-block">注册</button>
+                            </div>
+                        </div>
+                    </form>
+
+                    <div class="text-center text-muted">
+                        <a th:href="index.html" href="login.html">首页 &nbsp;</a>已有账户? <a th:href="login.html" href="login.html">登录</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $('#registerButten').click(function (e) {
+        console.log("register");
+        var validatorFormResult = validatorForm();
+        if(!validatorFormResult){
+            return;
+        }
+        // 注册
+        var userId = $("#userId").val();
+        var email = $("#email").val();
+        var password = $("#password").val();
+        $.ajax({
+            type: "post",
+            url: "/doRegister",
+            data: {
+                "userId": userId,
+                "email": email,
+                "password": password
+            },
+            success: function (data) {
+                if (data.code == 200) {
+                    console.log("注册成功");
+                    // 跳转成功页面
+                    alert("注册成功");
+                    window.location.replace(getRedirect());
+                } else {
+                    console.log("注册失败 " + data.message);
+                    inValid($("#userId"), $("#userIdInvalid"), '注册失败');
+                    $("#userId").focus();
+                }
+
+            }
+        });
+    });
+
+    $("#userId").blur(function () {
+        console.log("输入用户名,移动鼠标");
+        var userId = $("#userId").val();
+        if (userId.length == 0 || userId.length<6 || userId.length>16) {
+            console.info("请输入6-16位长度用户名");
+            inValid($("#userId"),$("#userIdInvalid"),'请输入6-16位长度用户名');
+            return false;
+        }
+
+        $.ajax({
+            type: "post",
+            url: "/checkUserId",
+            data: {
+                "userId": userId
+            },
+            success: function (data) {
+                if (data.code == 200) {
+                    console.log("checkUserId suceess");
+                    $("#userId").removeClass("is-invalid");
+                    $("#userId").addClass("is-valid mb-2");
+                } else {
+                    console.log("checkUserId fail " + data.message);
+                    inValid($("#userId"),$("#userIdInvalid"),data.message);
+                }
+
+            }
+        });
+    });
+
+    function inValid(inValidEle, inValidMsgEle, inValidMsg) {
+        inValidEle.addClass("is-invalid");
+        inValidMsgEle.text(inValidMsg);
+    }
+
+    $("#email").blur(function () {
+        console.log("输入邮箱,移动鼠标");
+        var email = $("#email").val();
+        if (email.length == 0) {
+            console.info("邮箱未输入");
+            inValid($("#email"),$("#emailInvalid"),'邮箱未输入');
+            return false;
+        }
+        if (!validatorEmail(email)) {
+            console.info("邮箱格式错误");
+            inValid($("#email"),$("#emailInvalid"),'邮箱格式错误');
+            return false;
+        } else {
+            console.info("邮箱格式正确");
+        }
+        // 校验邮箱是否已经注册
+        $.ajax({
+            type: "post",
+            url: "/checkEmail",
+            data: {
+                "email": email
+            },
+            success: function (data) {
+                if (data.code == 200) {
+                    console.log("checkEmail suceess");
+                    $("#email").removeClass("is-invalid");
+                    $("#email").addClass("is-valid mb-2");
+                } else {
+                    console.log("checkUserId fail " + data.message);
+                    inValid($("#email"),$("#emailInvalid"),data.message);
+                }
+
+            }
+        });
+    });
+
+    $("#password").blur(function () {
+        console.log("输入密码,移动鼠标");
+        var password = $("#password").val();
+        if (password.length == 0) {
+            console.info("密码未输入");
+            inValid($("#password"),$("#passwordInvalid"),'密码未输入');
+            return false;
+        }
+        if (!validatorPassword(password)) {
+            console.info("密码格式格式错误");
+            inValid($("#password"),$("#passwordInvalid"),'您的密码 '+password+' 密码中必须包含字母、数字、特殊字符长度8-30');
+            return false;
+        } else {
+            console.info('您的码 '+password+' 密码格式正确');
+            $("#password").removeClass("is-invalid");
+            $("#password").addClass("is-valid mb-2");
+            $("#repassword").focus();
+        }
+    });
+
+    $("#repassword").blur(function () {
+        console.log("输入确认密码,移动鼠标");
+        var repassword = $("#repassword").val();
+        if (repassword.length == 0) {
+            console.info("确认密码未输入");
+            inValid($("#repassword"),$("#repasswordInvalid"),'确认密码未输入');
+            return false;
+        }
+        var password = $("#password").val();
+        console.log(password);
+        console.log(repassword);
+        if (password.localeCompare(repassword) != 0) {
+            console.info("两次输入密码不一致");
+            inValid($("#repassword"),$("#repasswordInvalid"),'两次输入密码不一致 确认密码 '+ repassword);
+            inValid($("#password"),$("#passwordInvalid"),'两次输入密码不一致 确认密码 '+ password);
+            return false;
+        } else {
+            console.info("两次输入密码一致");
+            $("#repassword").removeClass("is-invalid");
+            $("#repassword").addClass("is-valid mb-2");
+
+            $("#password").removeClass("is-invalid");
+            $("#password").addClass("is-valid mb-2");
+        }
+        // 校验邮箱是否已经注册
+    });
+
+    /*
+     * 验证邮箱格式是否正确
+     */
+    function validatorEmail(value) {
+        // 正则验证格式
+        eval("var reg = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;");
+        return RegExp(reg).test(value);
+    }
+
+    function validatorPassword(password){
+        var reg = /^[A-Za-z0-9]{6,20}$/;
+        var regex = new RegExp('(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[^a-zA-Z0-9]).{8,30}');
+        if (!regex.test(password)) {
+            return false;
+        }
+        return  true;
+    }
+
+    /**
+     *
+     */
+    function validatorForm() {
+        var userId = $("#userId").val();
+        if (userId.length == 0 || userId.length<6 || userId.length>16) {
+            console.info("请输入6-16位长度用户名");
+            inValid($("#userId"),$("#userIdInvalid"),'请输入6-16位长度用户名');
+            return false;
+        }
+        var email = $("#email").val();
+        if (email.length == 0) {
+            console.info("邮箱未输入");
+            inValid($("#email"),$("#emailInvalid"),'邮箱未输入');
+            return false;
+        }
+        if (!validatorEmail(email)) {
+            console.info("邮箱格式错误");
+            inValid($("#email"),$("#emailInvalid"),'邮箱格式错误');
+            return false;
+        } else {
+            console.info("邮箱格式正确");
+        }
+
+        var repassword = $("#repassword").val();
+        var password = $("#password").val();
+        if (repassword.length == 0) {
+            console.info("确认密码未输入");
+            inValid($("#repassword"),$("#repasswordInvalid"),'确认密码未输入');
+            return false;
+        }
+        if (password.localeCompare(repassword) != 0) {
+            console.info("两次输入密码不一致");
+            inValid($("#repassword"),$("#repasswordInvalid"),'两次输入密码不一致 确认密码 '+ repassword);
+            return false;
+        } else {
+            console.info("两次输入密码一致");
+        }
+        return true;
+    }
+
+    function getQueryVariable(variable){
+        var query = window.location.search.substring(1);
+        var vars = query.split("&");
+        for (var i=0;i<vars.length;i++) {
+            var pair = vars[i].split("=");
+            if(pair[0] == variable){return pair[1];}
+        }
+        return(false);
+    }
+
+    //判断数据是否为Null或者undefined或者为空字符串
+    function CheckIsNullOrEmpty(value) {
+        //正则表达式用于判斷字符串是否全部由空格或换行符组成
+        var reg = /^\s*$/
+        //返回值为true表示不是空字符串
+        return (value != null && value != undefined && !reg.test(value))
+    }
+
+    function getRedirect() {
+        var redirect = getQueryVariable("redirect");
+        console.log("redirect: " + redirect);
+        console.log("redirect: " + (!redirect));
+        console.log("redirect: " + (! CheckIsNullOrEmpty(redirect)));
+
+        if ((!redirect) || (! CheckIsNullOrEmpty(redirect))) {
+            var ctxPath = /*[[@{/}]]*/'';
+            var domain = window.location.protocol+"//"+window.location.host;
+            return domain+ctxPath+"/login.html";;
+        }
+        return redirect;
+    }
+</script>
+</body>
+</html>

@@ -5,7 +5,6 @@ import com.baomidou.kaptcha.exception.KaptchaIncorrectException;
 import com.baomidou.kaptcha.exception.KaptchaNotFoundException;
 import com.baomidou.kaptcha.exception.KaptchaTimeoutException;
 import com.xwder.cloud.commmon.api.CommonResult;
-import com.xwder.cloud.commmon.api.IErrorCode;
 import com.xwder.cloud.commmon.api.ResultCode;
 import com.xwder.cloud.commmon.exception.MyException;
 import lombok.extern.slf4j.Slf4j;
@@ -80,6 +79,7 @@ public class ExceptionAdvice {
         } else {
             errMsg = "验证码渲染失败";
         }
+        log.info("验证码验证失败-{}", errMsg);
         return CommonResult.failed(ResultCode.PARAM_VALIDATE_FAILD.getCode(), errMsg);
     }
 

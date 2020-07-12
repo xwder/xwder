@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta http-equiv="Content-Language" content="en"/>
+    <meta name="msapplication-TileColor" content="#2d89ef">
+    <meta name="theme-color" content="#4188c9">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <link rel="icon" href="./favicon.ico" type="image/x-icon"/>
+    <link rel="shortcut icon" type="image/x-icon" href="./favicon.ico"/>
+    <title>登录</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script th:src="@{/login/js/require.min.js}" src="../static/login/js/require.min.js"></script>
+    <script>
+        requirejs.config({
+            baseUrl: '.'
+        });
+    </script>
+    <link th:href="@{/dist/css/tabler.min.css}" href="../static/dist/css/tabler.min.css" rel="stylesheet"/>
+    <link th:href="@{/login/css/dashboard.css}" href="../static/login/css/dashboard.css" rel="stylesheet"/>
+    <script th:src="@{/login/js/dashboard.js}" src="../static/login/js/dashboard.js"></script>
+
+</head>
+<body class="">
+<div class="page">
+    <div class="page-single">
+        <div class="container">
+            <div class="row">
+                <div class="col col-login mx-auto">
+                    <div class="text-center mb-6">
+                        <img src="https://gss3.bdstatic.com/84oSdTum2Q5BphGlnYG/timg?wapp&quality=80&size=b150_150&subsize=20480&cut_x=0&cut_w=0&cut_y=0&cut_h=0&sec=1369815402&srctrace&di=025a2098797ebd8640060bcc4663cb9e&wh_rate=null&src=http%3A%2F%2Fimgsrc.baidu.com%2Fforum%2Fpic%2Fitem%2F562c11dfa9ec8a13424f9c95fc03918fa0ecc06a.jpg"
+                             class="h-6" alt="">
+                    </div>
+                    <form class="card" method="post">
+                        <div class="card-body p-6">
+                            <div class="card-title" style="text-align: center"><h1>用户登录</h1></div>
+
+                            <div class="form-group">
+                                <label class="form-label  required">用户名</label>
+                                <input type="text" class="form-control" name="userId" id="userId" aria-describedby=""
+                                       placeholder="Enter UserName">
+                                <div id="userIdInvalid" class="invalid-feedback">Invalid feedback</div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label required">
+                                    密码
+                                    <a href="./forgot-password.html" class="float-right small">忘记密码</a>
+                                </label>
+                                <input type="password" class="form-control" name="password" id="password"
+                                       placeholder="Password">
+                                <div id="passwordInvalid" class="invalid-feedback">Invalid feedback</div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="custom-control custom-checkbox">
+                                    <input type="checkbox" checked ='checked' class="custom-control-input"/>
+                                    <span class="custom-control-label">记住我</span>
+                                </label>
+                            </div>
+                            <div class="form-footer">
+                                <button type="button" id="loginButton" class="btn btn-primary btn-block">登录</button>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="text-center text-muted">
+                        没有账号? <a th:href="register.html" href="./login.html">注册</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script  th:inline="javascript" type="text/javascript">
+    $('#loginButton').click(function (e) {
+        console.log("login.....");
+        var validatorFormResult = validatorForm();
+        if (!validatorFormResult) {
+            return;
+        }
+        // 注册
+        var userId = $("#userId").val();
+        var password = $("#password").val();
+        $.ajax({
+            type: "post",
+            url: "/doLogin",
+            data: {
+                "userId": userId,
+                "password": password
+            },
+            success: function (data) {
+                if (data.code == 200) {
+                    console.log("登录成功");
+                    console.log("redirect");
+                    // 跳转成功页面
+                    window.location.replace(getRedirect());
+                } else {
+                    console.log("登录失败" + data.message);
+                    inValid($("#password"), $("#passwordInvalid"), '登录失败');
+                    $("#password").focus();
+                }
+            }
+        });
+    });
+
+    $("#userId").blur(function () {
+        console.log("输入用户名,移动鼠标");
+        var userId = $("#userId").val();
+        if (userId.length == 0) {
+            console.info("用户名未输入");
+            inValid($("#userId"), $("#userIdInvalid"), '用户名未输入');
+            return false;
+        }
+        $("#userId").removeClass("is-invalid");
+        $("#userId").addClass("is-valid mb-2");
+    });
+
+    $("#password").blur(function () {
+        console.log("输入密码,移动鼠标");
+        var password = $("#password").val();
+        if (password.length == 0) {
+            console.info("密码未输入");
+            inValid($("#password"), $("#passwordInvalid"), '密码未输入');
+            return false;
+        }
+        $("#password").removeClass("is-invalid");
+        $("#password").addClass("is-valid mb-2");
+    });
+
+
+    /**
+     *
+     */
+    function validatorForm() {
+        var userId = $("#userId").val();
+        if (userId.length == 0) {
+            console.info("用户名未输入");
+            inValid($("#userId"), $("#userIdInvalid"), '用户名未输入');
+            return false;
+        }
+        var password = $("#password").val();
+        if (password.length == 0) {
+            console.info("密码未输入");
+            inValid($("#password"), $("#passwordInvalid"), '密码未输入');
+            return false;
+        }
+        return true;
+    }
+
+    function inValid(inValidEle, inValidMsgEle, inValidMsg) {
+        inValidEle.addClass("is-invalid");
+        inValidMsgEle.text(inValidMsg);
+    }
+
+    function getQueryVariable(variable){
+        var query = window.location.search.substring(1);
+        var vars = query.split("&");
+        for (var i=0;i<vars.length;i++) {
+            var pair = vars[i].split("=");
+            if(pair[0] == variable){return pair[1];}
+        }
+        return(false);
+    }
+
+    //判断数据是否为Null或者undefined或者为空字符串
+    function CheckIsNullOrEmpty(value) {
+        //正则表达式用于判斷字符串是否全部由空格或换行符组成
+        var reg = /^\s*$/
+        //返回值为true表示不是空字符串
+        return (value != null && value != undefined && !reg.test(value))
+    }
+
+    function getRedirect() {
+        var redirect = getQueryVariable("redirect");
+        console.log("redirect: " + redirect);
+        console.log("redirect: " + (!redirect));
+        console.log("redirect: " + (! CheckIsNullOrEmpty(redirect)));
+
+        if ((!redirect) || (! CheckIsNullOrEmpty(redirect))) {
+            var ctxPath = /*[[@{/}]]*/'';
+            var domain = window.location.protocol+"//"+window.location.host;
+            return domain+ctxPath+"/index.html";;
+        }
+        return redirect;
+    }
+</script>
+</body>
+</html>

@@ -1,9 +1,9 @@
 package com.xwder.app.modules.cloud.baidu.ocr.auth;
 
-import com.xwder.app.config.cache.EhCacheService;
 import com.xwder.app.attribute.SysConfigAttribute;
-import com.xwder.app.common.CacheConstant;
+import com.xwder.app.common.RedisConstant;
 import com.xwder.app.utils.DateUtil;
+import com.xwder.app.utils.RedisUtil;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,7 +30,7 @@ public class BaiduAuthService {
     private SysConfigAttribute sysConfigAttribute;
 
     @Autowired
-    private EhCacheService cacheService;
+    private RedisUtil redisUtil;
 
     /**
      * 获取权限token
@@ -63,7 +63,7 @@ public class BaiduAuthService {
         logger.info("[{}] 获取API访问token开始,key[{}],securt[{}]", serviceName, ak, sk);
 
         // 取本地缓存
-        String baiduOcrAccessToken = (String) cacheService.getCache(CacheConstant.BAIDU_CACHE_NAME, CacheConstant.BAIDU_ACCESS_TOKEN_OCR);
+        String baiduOcrAccessToken = (String) redisUtil.get(RedisConstant.BAIDU_ACCESS_TOKEN_OCR);
         if (baiduOcrAccessToken != null) {
             logger.info("[{}]从缓存获取API访问token结束,耗时[{}]", serviceName, DateUtil.diffTime(startTime, System.currentTimeMillis()));
             return baiduOcrAccessToken;
@@ -104,7 +104,7 @@ public class BaiduAuthService {
         }
 
         // 设置缓存
-        cacheService.putCache(CacheConstant.BAIDU_CACHE_NAME, CacheConstant.BAIDU_ACCESS_TOKEN_OCR, accessToken, 1500);
+        redisUtil.set(RedisConstant.BAIDU_ACCESS_TOKEN_OCR,accessToken,RedisConstant.BAIDU_ACCESS_TOKEN_OCR_CACHETIME);
         logger.info("[{}]获取API访问token,并设置缓存结束,耗时[{}]", serviceName, DateUtil.diffTime(startTime, System.currentTimeMillis()));
         return accessToken;
     }

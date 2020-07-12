@@ -3,10 +3,11 @@ package com.xwder.app.modules.cloud.tencent.cos.auth;
 import com.github.pagehelper.util.StringUtil;
 import com.google.common.collect.Maps;
 import com.tencent.cloud.CosStsClient;
-import com.xwder.app.config.cache.EhCacheService;
 import com.xwder.app.attribute.SysConfigAttribute;
-import com.xwder.app.common.CacheConstant;
+import com.xwder.app.common.EhCacheConstant;
+import com.xwder.app.common.RedisConstant;
 import com.xwder.app.utils.DateUtil;
+import com.xwder.app.utils.RedisUtil;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,7 +32,7 @@ public class TencentCosAuthService {
     private SysConfigAttribute sysConfigAttribute;
 
     @Autowired
-    private EhCacheService ehCacheService;
+    private RedisUtil redisUtil;
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
     private String serviceName = "腾讯云鉴权服务";
@@ -56,9 +57,9 @@ public class TencentCosAuthService {
 
         HashMap<String, Object> credMap = Maps.newHashMap();
         // 先从缓存里面读取
-        String tmpSecretId = (String) ehCacheService.getCache(CacheConstant.TENCENT_ACHE_NAME, CacheConstant.TENCENT_COS_TMP_SECRET_ID);
-        String tmpSecretKey = (String) ehCacheService.getCache(CacheConstant.TENCENT_ACHE_NAME, CacheConstant.TENCENT_COS_TMP_SECRET_KEY);
-        String sessionToken = (String) ehCacheService.getCache(CacheConstant.TENCENT_ACHE_NAME, CacheConstant.TENCENT_COS_TMP_SECRET_SESSIONTOKEN);
+        String tmpSecretId = (String) redisUtil.get(RedisConstant.TENCENT_COS_TMP_SECRET_ID);
+        String tmpSecretKey = (String) redisUtil.get(RedisConstant.TENCENT_COS_TMP_SECRET_KEY);
+        String sessionToken = (String) redisUtil.get(RedisConstant.TENCENT_COS_TMP_SESSIONTOKEN);
 
         if (StringUtil.isNotEmpty(tmpSecretId)) {
             credMap.put("requestId", null);
@@ -148,10 +149,11 @@ public class TencentCosAuthService {
             credMap.put("sessionToken", sessionToken);
             System.out.println(credential.toString(4));
 
-            // 缓存临时凭据
-            ehCacheService.putCache(CacheConstant.TENCENT_ACHE_NAME, CacheConstant.TENCENT_COS_TMP_SECRET_ID, tmpSecretId, 1500);
-            ehCacheService.putCache(CacheConstant.TENCENT_ACHE_NAME, CacheConstant.TENCENT_COS_TMP_SECRET_KEY, tmpSecretKey, 1500);
-            ehCacheService.putCache(CacheConstant.TENCENT_ACHE_NAME, CacheConstant.TENCENT_COS_TMP_SECRET_SESSIONTOKEN, sessionToken, 1500);
+            // 先从缓存里面读取
+            redisUtil.set(RedisConstant.TENCENT_COS_TMP_SECRET_ID,tmpSecretId,RedisConstant.TENCENT_COS_TMP_CACHETIME);
+            redisUtil.set(RedisConstant.TENCENT_COS_TMP_SECRET_KEY,tmpSecretKey,RedisConstant.TENCENT_COS_TMP_CACHETIME);
+            redisUtil.set(RedisConstant.TENCENT_COS_TMP_SESSIONTOKEN,sessionToken,RedisConstant.TENCENT_COS_TMP_CACHETIME);
+
             logger.info("[{}]获取cos临时凭据成功,并设置缓存结束,耗时[{}]", serviceName, DateUtil.diffTime(logStartTime, System.currentTimeMillis()));
             return credMap;
         } catch (IOException e) {

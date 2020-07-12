@@ -19,6 +19,9 @@ public class SysConfigAttribute {
     @Value("${system.chineseName}")
     private String chineseName;
 
+    @Value("${system.sessionTokenName}")
+    private String sessionTokenName;
+
     @Value("${system.mailVerifyUrl}")
     private String mailVerifyUrl;
 

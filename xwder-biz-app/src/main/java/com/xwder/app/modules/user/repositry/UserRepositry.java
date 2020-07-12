@@ -20,4 +20,12 @@ public interface UserRepositry extends JpaRepository<User, Integer> {
      */
     List<User> findAllByUserId(String userId);
 
+    /**
+     * 根据email查找用户
+     *
+     * @param email
+     * @return
+     */
+    List<User> findAllByEmail(String email);
+
 }

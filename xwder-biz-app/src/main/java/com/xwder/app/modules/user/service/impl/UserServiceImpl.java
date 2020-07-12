@@ -4,13 +4,14 @@ import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.json.JSONUtil;
 import com.google.common.collect.Maps;
 import com.xwder.app.attribute.SysConfigAttribute;
+import com.xwder.app.common.RedisConstant;
 import com.xwder.app.common.UserStatusEnum;
-import com.xwder.app.config.cache.EhCacheService;
 import com.xwder.app.config.mq.MQProducerMessage;
 import com.xwder.app.config.mq.RabbitConfig;
 import com.xwder.app.modules.user.entity.User;
 import com.xwder.app.modules.user.repositry.UserRepositry;
 import com.xwder.app.modules.user.service.intf.UserService;
+import com.xwder.app.utils.RedisUtil;
 import com.xwder.app.utils.UpdateUtil;
 import com.xwder.cloud.commmon.constan.MailTypeConstant;
 import lombok.extern.slf4j.Slf4j;
@@ -50,7 +51,7 @@ public class UserServiceImpl implements UserService {
     private SysConfigAttribute sysConfigAttribute;
 
     @Autowired
-    private EhCacheService ehCacheService;
+    private RedisUtil redisUtil;
 
     @Autowired
     private UserRepositry userRepositry;
@@ -73,6 +74,23 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
+     * 根据email查找用户
+     *
+     * @param email
+     * @return
+     */
+    @Override
+    public User getUserByUserEmail(String email) {
+        List<User> userList = userRepositry.findAllByEmail(email);
+        if (CollectionUtil.isNotEmpty(userList)) {
+            log.info("查询用户email[{}]已存在", email);
+            return userList.get(0);
+        }
+        log.info("查询用户email[{}]不存在", email);
+        return null;
+    }
+
+    /**
      * 根据主键ID,保存或者更新user
      *
      * @param user
@@ -81,7 +99,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public User saveOrUpdateUser(User user) {
         // id 为 null 且用户名不存在
-        if (user.getId() == null && getUserByUserUserId(user.getUserId()) == null) {
+        if (user.getId() == null) {
+            // 注册逻辑
             // 设置用户基础参数值
             String salt = RandomStringUtils.randomAlphanumeric(16);
             String password = Md5Crypt.apr1Crypt(user.getPassword().getBytes(), salt);
@@ -94,6 +113,8 @@ public class UserServiceImpl implements UserService {
             user.setLastUpdateTime(nowDate);
             // 用户状态
             user.setStatus(UserStatusEnum.UN_VERIFY.getCode());
+            // 设置未删除状态
+            user.setAvailable(1);
             user = userRepositry.save(user);
             log.info("保存新注册用户[{}]成功", user.getUserId());
             user.setSalt(null);
@@ -107,11 +128,14 @@ public class UserServiceImpl implements UserService {
                 log.error("该用户不存在");
                 return null;
             }
-            User source = userList.get(0);
-            UpdateUtil.copyNullProperties(user, source);
-            userRepositry.save(source);
-            log.info("更新用户[{}]信息成功", source.getUserId());
-            user = source;
+            User sourceUser = userList.get(0);
+            // 忽略掉密码相关信息
+            sourceUser.setPassword(null);
+            sourceUser.setSalt(null);
+            UpdateUtil.copyNullProperties(user, sourceUser);
+            userRepositry.save(sourceUser);
+            log.info("更新用户[{}]信息成功", sourceUser.getUserId());
+            user = sourceUser;
         }
 
         user.setSalt(null);
@@ -129,6 +153,9 @@ public class UserServiceImpl implements UserService {
     public User userLogin(User user) {
         String userId = user.getUserId();
         User sourceUser = getUserByUserUserId(userId);
+        if (sourceUser==null) {
+            return null;
+        }
         String loginPassWord = Md5Crypt.apr1Crypt(user.getPassword().getBytes(), sourceUser.getSalt());
         if (StringUtils.endsWithIgnoreCase(sourceUser.getPassword(), loginPassWord)) {
             sourceUser.setPassword(null);
@@ -163,7 +190,8 @@ public class UserServiceImpl implements UserService {
         log.info("用户[{}]发送邮箱验证成功", user.getUserId());
 
         // ehcache缓存 key 和 用户userId
-        ehCacheService.putCache(key, user, 1800);
+        String redisKey = RedisConstant.EMAIL_VERIFY_KEY_CACHETIME + ":" + key;
+        redisUtil.set(redisKey, user, RedisConstant.EMAIL_VERIFY_KEY_CACHETIME);
 
         // 发送消息给管理员由用户注册了
         if (sysConfigAttribute.getNewUserReigsterWeChatNoticeAdmin()) {
@@ -188,7 +216,9 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public User verifyEmail(String verifyKey) {
-        User user = (User) ehCacheService.getCache(verifyKey);
+        String redisKey = RedisConstant.EMAIL_VERIFY_KEY_CACHETIME + ":" + verifyKey;
+        User user = (User) redisUtil.get(redisKey);
+
         if (user == null) {
             return null;
         }
@@ -196,7 +226,7 @@ public class UserServiceImpl implements UserService {
         saveOrUpdateUser(user);
         log.info("验证用户[{}]邮箱成功", user.getUserId());
         // 清除缓存
-        ehCacheService.removeCache(verifyKey);
+        redisUtil.del(redisKey);
         return user;
     }
 }

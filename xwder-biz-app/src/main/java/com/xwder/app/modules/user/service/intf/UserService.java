@@ -16,6 +16,14 @@ public interface UserService {
     User getUserByUserUserId(String userId);
 
     /**
+     * 根据email查找用户
+     *
+     * @param email
+     * @return
+     */
+    User getUserByUserEmail(String email);
+
+    /**
      * 根据主键ID,保存或者更新user
      *
      * @param user

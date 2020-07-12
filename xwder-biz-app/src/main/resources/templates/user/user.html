@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html  lang="zh" xmlns:th="http://www.thymeleaf.org">
+<title>用户</title>
+<head th:include="include :: head"></head>
+  <body class="antialiased">
+    <div class="page">
+      <header class="navbar navbar-expand-md navbar-light">
+        <div class="container-xl">
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <a th:href="@{index}" href=".." class="navbar-brand navbar-brand-autodark d-none-navbar-horizontal pr-0 pr-md-3">
+            <img th:src="@{/image/logo/logo.svg}" src="../static/images/logo/logo.svg" alt="Tabler" class="navbar-brand-image">
+          </a>
+          <!--头部右边 是否登录还是显示用户头像-->
+          <div th:include="include :: navigationBar"></div>
+        </div>
+      </header>
+      <div class="navbar-expand-md">
+        <div class="collapse navbar-collapse" id="navbar-menu">
+          <div class="navbar navbar-light">
+            <div class="container-xl">
+              <ul class="navbar-nav">
+                <li class="nav-item active">
+                  <a class="nav-link" th:href="@{index}" href="../index.html" >
+                    <span class="nav-link-icon d-md-none d-lg-inline-block"><svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><polyline points="5 12 3 12 12 3 21 12 19 12" /><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" /><path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" /></svg>
+                    </span>
+                    <span class="nav-link-title">
+                      首页
+                    </span>
+                  </a>
+                </li>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" th:href="@{index}" href="#navbar-base" data-toggle="dropdown" role="button" aria-expanded="false" >
+                    <span class="nav-link-icon d-md-none d-lg-inline-block"><svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><polyline points="12 3 20 7.5 20 16.5 12 21 4 16.5 4 7.5 12 3" /><line x1="12" y1="12" x2="20" y2="7.5" /><line x1="12" y1="12" x2="12" y2="21" /><line x1="12" y1="12" x2="4" y2="7.5" /><line x1="16" y1="5.25" x2="8" y2="9.75" /></svg>
+                    </span>
+                    <span class="nav-link-title">
+                      文章归类
+                    </span>
+                  </a>
+                  <ul class="dropdown-menu dropdown-menu-columns  dropdown-menu-columns-2">
+                    <li >
+                      <a class="dropdown-item" th:href="@{index}" href="#" >
+                        JavaEE
+                      </a>
+                    </li>
+                    <li >
+                      <a class="dropdown-item" th:href="@{index}" href="#" >
+                        MySQL
+                      </a>
+                    </li>
+                    <li >
+                      <a class="dropdown-item" th:href="@{index}" href="..#" >
+                        Oracle
+                      </a>
+                    </li>
+                    <li >
+                      <a class="dropdown-item" th:href="@{index}" href="#" >
+                        Flutter
+                      </a>
+                    </li>
+                    <li >
+                      <a class="dropdown-item" th:href="@{index}" href="#" >
+                        ElasticSearch
+                      </a>
+                    </li>
+                    <li >
+                      <a class="dropdown-item" th:href="@{index}" href="#" >
+                        Linux
+                      </a>
+                    </li>
+                    <li >
+                      <a class="dropdown-item" th:href="@{index}" href="#" >
+                        Nginx
+                      </a>
+                    </li>
+                    <li >
+                      <a class="dropdown-item" th:href="@{index}" href="#" >
+                        Redis
+                      </a>
+                    </li>
+                    <li >
+                      <a class="dropdown-item" th:href="@{index}" href="#" >
+                        RabbitMQ
+                      </a>
+                    </li>
+                    <li >
+                      <a class="dropdown-item" th:href="@{index}" href="#" >
+                        Navigation
+                      </a>
+                    </li>
+                    <li >
+                      <a class="dropdown-item" th:href="@{index}" href="#" >
+                        Charts
+                      </a>
+                    </li>
+                    <li >
+                      <a class="dropdown-item" th:href="@{index}" href="#" >
+                        Tables
+                      </a>
+                    </li>
+                    <li >
+                      <a class="dropdown-item" th:href="@{index}" href="#" >
+                        Calendar
+                      </a>
+                    </li>
+                    <li >
+                      <a class="dropdown-item" th:href="@{index}" href="#" >
+                        Carousel
+                      </a>
+                    </li>
+                    <li >
+                      <a class="dropdown-item" th:href="@{index}" href="#" >
+                        Lists
+                      </a>
+                    </li>
+                    <li class="dropright">
+                      <a class="dropdown-item dropdown-toggle" th:href="@{index}" href="#sidebar-authentication" data-toggle="dropdown" role="button" aria-expanded="false" >
+                        Authentication
+                      </a>
+                      <div class="dropdown-menu">
+                        <a th:href="@{index}" href="../sign-in.html" class="dropdown-item">Sign in</a>
+                        <a th:href="@{index}" href="../sign-up.html" class="dropdown-item">Sign up</a>
+                        <a th:href="@{index}" href="../forgot-password.html" class="dropdown-item">Forgot password</a>
+                        <a th:href="@{index}" href="../terms-of-service.html" class="dropdown-item">Terms of service</a>
+                      </div>
+                    </li>
+                    <li class="dropright">
+                      <a class="dropdown-item dropdown-toggle" th:href="@{index}" href="#sidebar-error" data-toggle="dropdown" role="button" aria-expanded="false" >
+                        Error pages
+                      </a>
+                      <div class="dropdown-menu">
+                        <a th:href="@{index}" href="../400.html" class="dropdown-item">400 page</a>
+                        <a th:href="@{index}" href="../401.html" class="dropdown-item">401 page</a>
+                        <a th:href="@{index}" href="../403.html" class="dropdown-item">403 page</a>
+                        <a th:href="@{index}" href="../404.html" class="dropdown-item">404 page</a>
+                        <a th:href="@{index}" href="../500.html" class="dropdown-item">500 page</a>
+                        <a th:href="@{index}" href="../503.html" class="dropdown-item">503 page</a>
+                        <a th:href="@{index}" href="../maintenance.html" class="dropdown-item">Maintenance page</a>
+                      </div>
+                    </li>
+                  </ul>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" th:href="@{index}" href="video/video.html" >
+                    <span class="nav-link-icon d-md-none d-lg-inline-block">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-md" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z"></path>
+                            <rect x="4" y="13" rx="2" width="5" height="7"></rect>
+                            <rect x="15" y="13" rx="2" width="5" height="7"></rect>
+                            <path d="M4 15v-3a8 8 0 0 1 16 0v3"></path>
+                        </svg>
+                    </span>
+                    <span class="nav-link-title">
+                      视频MV
+                    </span>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" th:href="@{index}" href="#" >
+                    <span class="nav-link-icon d-md-none d-lg-inline-block"><svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><polyline points="9 11 12 14 20 6" /><path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9" /></svg>
+                    </span>
+                    <span class="nav-link-title">
+                      Form elements
+                    </span>
+                  </a>
+                </li>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" th:href="@{index}" href="#navbar-extra" data-toggle="dropdown" role="button" aria-expanded="false" >
+                    <span class="nav-link-icon d-md-none d-lg-inline-block"><svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M12 17.75l-6.172 3.245 1.179-6.873-4.993-4.867 6.9-1.002L12 2l3.086 6.253 6.9 1.002-4.993 4.867 1.179 6.873z" /></svg>
+                    </span>
+                    <span class="nav-link-title">
+                      Extra
+                    </span>
+                  </a>
+                  <ul class="dropdown-menu">
+                    <li >
+                      <a class="dropdown-item" th:href="@{index}" href="#" >
+                        Invoice
+                      </a>
+                    </li>
+                    <li >
+                      <a class="dropdown-item" th:href="@{index}" href="#" >
+                        Blog cards
+                      </a>
+                    </li>
+                    <li >
+                      <a class="dropdown-item" th:href="@{index}" href="#" >
+                        Snippets
+                      </a>
+                    </li>
+                    <li >
+                      <a class="dropdown-item" th:href="@{index}" href="#" >
+                        Search results
+                      </a>
+                    </li>
+                    <li >
+                      <a class="dropdown-item" th:href="@{index}" href="#" >
+                        Pricing cards
+                      </a>
+                    </li>
+                    <li >
+                      <a class="dropdown-item" th:href="@{index}" href="#" >
+                        Users
+                      </a>
+                    </li>
+                    <li >
+                      <a class="dropdown-item" th:href="@{index}" href="#" >
+                        Gallery
+                      </a>
+                    </li>
+                    <li >
+                      <a class="dropdown-item" th:href="@{index}" href="#" >
+                        Profile
+                      </a>
+                    </li>
+                    <li >
+                      <a class="dropdown-item" th:href="@{index}" href="#" >
+                        Music
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" th:href="@{index}" href="#navbar-layout" data-toggle="dropdown" role="button" aria-expanded="false" >
+                    <span class="nav-link-icon d-md-none d-lg-inline-block"><svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><rect x="4" y="4" width="6" height="5" rx="2" /><rect x="4" y="13" width="6" height="7" rx="2" /><rect x="14" y="4" width="6" height="7" rx="2" /><rect x="14" y="15" width="6" height="5" rx="2" /></svg>
+                    </span>
+                    <span class="nav-link-title">
+                      Layout
+                    </span>
+                  </a>
+                  <ul class="dropdown-menu">
+                    <li >
+                      <a class="dropdown-item" th:href="@{index}" href="#" >
+                        Horizontal
+                      </a>
+                    </li>
+                    <li >
+                      <a class="dropdown-item" th:href="@{index}" href="#" >
+                        Vertical
+                      </a>
+                    </li>
+                    <li >
+                      <a class="dropdown-item" th:href="@{index}" href="#" >
+                        Right vertical
+                      </a>
+                    </li>
+                    <li >
+                      <a class="dropdown-item" th:href="@{index}" href="#" >
+                        Condensed
+                      </a>
+                    </li>
+                    <li >
+                      <a class="dropdown-item" th:href="@{index}" href="#" >
+                        Condensed dark
+                      </a>
+                    </li>
+                    <li >
+                      <a class="dropdown-item" th:href="@{index}" href="#" >
+                        Combined
+                      </a>
+                    </li>
+                    <li >
+                      <a class="dropdown-item" th:href="@{index}" href="#" >
+                        Navbar dark
+                      </a>
+                    </li>
+                    <li >
+                      <a class="dropdown-item" th:href="@{index}" href="#" >
+                        Dark mode
+                      </a>
+                    </li>
+                    <li >
+                      <a class="dropdown-item" th:href="@{index}" href="#" >
+                        Fluid
+                      </a>
+                    </li>
+                    <li >
+                      <a class="dropdown-item" th:href="@{index}" href="#" >
+                        Fluid vertical
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle"  href="#navbar-docs" data-toggle="dropdown" role="button" aria-expanded="false" >
+                    <span class="nav-link-icon d-md-none d-lg-inline-block"><svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><polyline points="14 3 14 8 19 8" /><path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" /><line x1="9" y1="9" x2="10" y2="9" /><line x1="9" y1="13" x2="15" y2="13" /><line x1="9" y1="17" x2="15" y2="17" /></svg>
+                    </span>
+                    <span class="nav-link-title">
+                      Docs
+                    </span>
+                  </a>
+                  <ul class="dropdown-menu dropdown-menu-columns  dropdown-menu-columns-3">
+                    <li >
+                      <a class="dropdown-item" th:href="@{index}" href="../docs/index.html" >
+                        Introduction
+                      </a>
+                    </li>
+                    <li >
+                      <a class="dropdown-item" th:href="@{index}" href="../docs/alerts.html" >
+                        Alerts
+                      </a>
+                    </li>
+                    <li >
+                      <a class="dropdown-item" th:href="@{index}" href="../docs/autosize.html" >
+                        Autosize
+                      </a>
+                    </li>
+                    <li >
+                      <a class="dropdown-item" th:href="@{index}" href="../docs/avatars.html" >
+                        Avatars
+                      </a>
+                    </li>
+                    <li >
+                      <a class="dropdown-item" th:href="@{index}" href="../docs/badges.html" >
+                        Badges
+                      </a>
+                    </li>
+                    <li >
+                      <a class="dropdown-item" th:href="@{index}" href="../docs/breadcrumb.html" >
+                        Breadcrumb
+                      </a>
+                    </li>
+                    <li >
+                      <a class="dropdown-item" th:href="@{index}" href="../docs/buttons.html" >
+                        Buttons
+                      </a>
+                    </li>
+                    <li >
+                      <a class="dropdown-item" th:href="@{index}" href="../docs/cards.html" >
+                        Cards
+                      </a>
+                    </li>
+                    <li >
+                      <a class="dropdown-item" th:href="@{index}" href="../docs/carousel.html" >
+                        Carousel
+                      </a>
+                    </li>
+                    <li >
+                      <a class="dropdown-item" th:href="@{index}" href="../docs/colors.html" >
+                        Colors
+                      </a>
+                    </li>
+                    <li >
+                      <a class="dropdown-item" th:href="@{index}" href="../docs/countup.html" >
+                        Countup
+                      </a>
+                    </li>
+                    <li >
+                      <a class="dropdown-item" th:href="@{index}" href="../docs/cursors.html" >
+                        Cursors
+                      </a>
+                    </li>
+                    <li >
+                      <a class="dropdown-item" th:href="@{index}" href="../docs/charts.html" >
+                        Charts
+                      </a>
+                    </li>
+                    <li >
+                      <a class="dropdown-item" th:href="@{index}" href="../docs/dropdowns.html" >
+                        Dropdowns
+                      </a>
+                    </li>
+                    <li >
+                      <a class="dropdown-item" th:href="@{index}" href="../docs/divider.html" >
+                        Divider
+                      </a>
+                    </li>
+                    <li >
+                      <a class="dropdown-item" th:href="@{index}" href="../docs/empty.html" >
+                        Empty states
+                      </a>
+                    </li>
+                    <li >
+                      <a class="dropdown-item" th:href="@{index}" href="../docs/flags.html" >
+                        Flags
+                      </a>
+                    </li>
+                    <li >
+                      <a class="dropdown-item" th:href="@{index}" href="../docs/form-elements.html" >
+                        Form elements
+                      </a>
+                    </li>
+                    <li >
+                      <a class="dropdown-item" th:href="@{index}" href="../docs/form-helpers.html" >
+                        Form helpers
+                      </a>
+                    </li>
+                    <li >
+                      <a class="dropdown-item" th:href="@{index}" href="../docs/input-mask.html" >
+                        Form input mask
+                      </a>
+                    </li>
+                    <li >
+                      <a class="dropdown-item" th:href="@{index}" href="../docs/modals.html" >
+                        Modals
+                      </a>
+                    </li>
+                    <li >
+                      <a class="dropdown-item" th:href="@{index}" href="../docs/progress.html" >
+                        Progress
+                      </a>
+                    </li>
+                    <li >
+                      <a class="dropdown-item" th:href="@{index}" href="../docs/payments.html" >
+                        Payments
+                      </a>
+                    </li>
+                    <li >
+                      <a class="dropdown-item" th:href="@{index}" href="../docs/range-slider.html" >
+                        Range slider
+                      </a>
+                    </li>
+                    <li >
+                      <a class="dropdown-item" th:href="@{index}" href="../docs/ribbons.html" >
+                        Ribbons
+                      </a>
+                    </li>
+                    <li >
+                      <a class="dropdown-item" th:href="@{index}" href="../docs/spinners.html" >
+                        Spinners
+                      </a>
+                    </li>
+                    <li >
+                      <a class="dropdown-item" th:href="@{index}" href="../docs/steps.html" >
+                        Steps
+                      </a>
+                    </li>
+                    <li >
+                      <a class="dropdown-item" th:href="@{index}" href="../docs/tables.html" >
+                        Tables
+                      </a>
+                    </li>
+                    <li >
+                      <a class="dropdown-item" th:href="@{index}" href="../docs/tabs.html" >
+                        Tabs
+                      </a>
+                    </li>
+                    <li >
+                      <a class="dropdown-item" th:href="@{index}" href="../docs/timelines.html" >
+                        Timelines
+                      </a>
+                    </li>
+                    <li >
+                      <a class="dropdown-item" th:href="@{index}" href="../docs/toasts.html" >
+                        Toasts
+                      </a>
+                    </li>
+                    <li >
+                      <a class="dropdown-item" th:href="@{index}" href="../docs/tooltips.html" >
+                        Tooltips
+                      </a>
+                    </li>
+                    <li >
+                      <a class="dropdown-item" th:href="@{index}" href="../docs/typography.html" >
+                        Typography
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+              <div class="my-2 my-md-0 flex-grow-1 flex-md-grow-0 order-first order-md-last">
+                <form action=".." method="get">
+                  <div class="input-icon">
+                    <span class="input-icon-addon">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="10" cy="10" r="7" /><line x1="21" y1="21" x2="15" y2="15" /></svg>
+                    </span>
+                    <input type="text" class="form-control" placeholder="Search…">
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="content">
+        <div class="container-xl">
+          <!-- Page title -->
+          <div class="page-header">
+            <div class="row align-items-center">
+              <div class="col-auto">
+                <h2 class="page-title">
+                  Empty page
+                </h2>
+              </div>
+            </div>
+          </div>
+          <!-- Content here -->
+        </div>
+        <footer class="footer footer-transparent">
+          <div class="container">
+            <div class="row text-center align-items-center flex-row-reverse">
+              <div class="col-lg-auto ml-lg-auto">
+                <ul class="list-inline list-inline-dots mb-0">
+                  <li class="list-inline-item"><a href="./docs/index.html" class="link-secondary">Documentation</a></li>
+                  <li class="list-inline-item"><a href="./faq.html" class="link-secondary">FAQ</a></li>
+                  <li class="list-inline-item"><a href="https://github.com/tabler/tabler" target="_blank" class="link-secondary">Source code</a></li>
+                </ul>
+              </div>
+              <div class="col-12 col-lg-auto mt-3 mt-lg-0">
+                Copyright © 2020
+                <a href="." class="link-secondary">Tabler</a>.
+                All rights reserved.
+              </div>
+            </div>
+          </div>
+        </footer>
+      </div>
+    </div>
+    <!-- Libs JS -->
+    <script th:src="@{/dist/libs/bootstrap/dist/js/bootstrap.bundle.min.js}" src="../../static/dist/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Tabler Core -->
+    <script th:src="@{/dist/js/tabler.min.js}" src="../../static/dist/js/tabler.min.js"></script>
+    <script>
+      document.body.style.display = "block"
+    </script>
+  </body>
+</html>

@@ -115,7 +115,7 @@ public class User implements Serializable {
      * 0-删除不可用，1-未删除可用
      */
     @Column(name = "is_available")
-    private Integer isAvailable;
+    private Integer available;
 
     /**
      * 备注
@@ -266,12 +266,12 @@ public class User implements Serializable {
     }
 
 
-    public Integer getIsAvailable() {
-        return isAvailable;
+    public Integer getAvailable() {
+        return available;
     }
 
-    public void setIsAvailable(Integer isAvailable) {
-        this.isAvailable = isAvailable;
+    public void setAvailable(Integer isAvailable) {
+        this.available = isAvailable;
     }
 
 
