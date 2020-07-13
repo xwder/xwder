@@ -1,7 +1,7 @@
 package com.xwder.app.modules.cloud.baidu.ocr.auth;
 
 import com.xwder.app.attribute.SysConfigAttribute;
-import com.xwder.app.common.RedisConstant;
+import com.xwder.app.consts.RedisConstant;
 import com.xwder.app.utils.DateUtil;
 import com.xwder.app.utils.RedisUtil;
 import org.json.JSONObject;

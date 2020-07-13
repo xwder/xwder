@@ -128,7 +128,7 @@
     $("#userId").blur(function () {
         console.log("输入用户名,移动鼠标");
         var userId = $("#userId").val();
-        if (userId.length == 0 || userId.length<6 || userId.length>16) {
+        if (userId.length == 0 || userId.length<3 || userId.length>16) {
             console.info("请输入6-16位长度用户名");
             inValid($("#userId"),$("#userIdInvalid"),'请输入6-16位长度用户名');
             return false;
@@ -265,7 +265,7 @@
      */
     function validatorForm() {
         var userId = $("#userId").val();
-        if (userId.length == 0 || userId.length<6 || userId.length>16) {
+        if (userId.length == 0 || userId.length<3 || userId.length>16) {
             console.info("请输入6-16位长度用户名");
             inValid($("#userId"),$("#userIdInvalid"),'请输入6-16位长度用户名');
             return false;

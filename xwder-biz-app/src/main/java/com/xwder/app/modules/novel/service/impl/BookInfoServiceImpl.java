@@ -5,7 +5,7 @@ import cn.hutool.core.io.FileUtil;
 import com.github.pagehelper.util.StringUtil;
 import com.google.common.collect.Maps;
 import com.xwder.app.attribute.SysConfigAttribute;
-import com.xwder.app.common.OffsetBasedPageRequest;
+import com.xwder.app.consts.OffsetBasedPageRequest;
 import com.xwder.app.modules.novel.entity.BookChapter;
 import com.xwder.app.modules.novel.entity.BookInfo;
 import com.xwder.app.modules.novel.repository.BookChapterRepository;
@@ -21,7 +21,10 @@ import org.jsoup.safety.Whitelist;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
@@ -53,12 +56,40 @@ public class BookInfoServiceImpl implements BookInfoService {
     @Autowired
     private BookInfoRepository bookInfoRepository;
 
+    /**
+     * 分页查询书籍信息
+     *
+     * @param category
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
+    @Override
+    public Page<BookInfo> listBookInfo(String category, Integer pageNum, Integer pageSize) {
+        Sort sort = Sort.by(Sort.Direction.ASC, "id");
+        Pageable pageable = PageRequest.of(pageNum - 1, pageSize, sort);
+        Page<BookInfo> pageBookInfo;
+        // 直接查
+        if (StringUtil.isEmpty(category)) {
+            pageBookInfo = bookInfoRepository.findAll(pageable);
+        } else {
+            pageBookInfo = bookInfoRepository.findByCategory(category, pageable);
+        }
+        return pageBookInfo;
+    }
+
+    /**
+     * 根据书名下载书籍
+     *
+     * @param bookName
+     * @return
+     */
     @Override
     public CommonResult downBookByBookName(String bookName) {
         List<BookInfo> bookInfoList = bookInfoRepository.findAllByBookName(bookName);
         if (CollectionUtil.isEmpty(bookInfoList)) {
             logger.info("[{}] 未查询到该书籍", serviceName);
-            return CommonResult.failed(ResultCode.VALIDATE_FAILED.getCode(),bookName + "  未查询到该书籍");
+            return CommonResult.failed(ResultCode.VALIDATE_FAILED.getCode(), bookName + "  未查询到该书籍");
         }
         return downBook(bookInfoList.get(0));
     }
@@ -288,4 +319,6 @@ public class BookInfoServiceImpl implements BookInfoService {
         String result = StringEscapeUtils.unescapeHtml(plainText.trim());
         return result;
     }
+
+
 }

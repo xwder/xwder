@@ -5,6 +5,7 @@ import cn.hutool.core.util.RandomUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.kaptcha.Kaptcha;
 import com.xwder.app.attribute.SysConfigAttribute;
+import com.xwder.app.consts.SysConstant;
 import com.xwder.app.modules.user.entity.User;
 import com.xwder.app.modules.user.service.intf.UserService;
 import com.xwder.app.utils.AssertUtil;
@@ -147,10 +148,9 @@ public class LoginRegisterController {
 
         String xwderToken = RandomUtil.randomString(32);
         // session 写入用户信息
-        SessionUtil.setSessionAttribute(xwderToken, user);
-        SessionUtil.setSessionAttribute("sessionUser", user);
+        SessionUtil.setSessionAttribute(SysConstant.SESSION_USER, user);
         // cookie 写人 认证 xwder-token
-        CookieUtils.setCookie(request,response,sysConfigAttribute.getSessionTokenName(), xwderToken);
+        CookieUtils.setCookie(request, response, sysConfigAttribute.getSessionTokenName(), xwderToken);
 
         CommonResult<User> commonResult = CommonResult.success(resultUser);
         return commonResult;
@@ -164,8 +164,8 @@ public class LoginRegisterController {
      * @return
      */
     @GetMapping(value = "/doLoginOut")
-    public Object userLogin( HttpServletRequest request, HttpServletResponse response) {
-        String xwderToken = CookieUtils.getCookieValue(request,sysConfigAttribute.getSessionTokenName());
+    public Object userLogin(HttpServletRequest request, HttpServletResponse response) {
+        String xwderToken = CookieUtils.getCookieValue(request, sysConfigAttribute.getSessionTokenName());
 
         RedirectView redirectTarget = new RedirectView();
         redirectTarget.setContextRelative(true);
@@ -174,11 +174,10 @@ public class LoginRegisterController {
             return redirectTarget;
         }
         // session 写入用户信息
-        SessionUtil.removeSessionAttribute(xwderToken);
-        SessionUtil.removeSessionAttribute("sessionUser");
+        SessionUtil.removeSessionAttribute(SysConstant.SESSION_USER);
         // cookie 写人 认证 xwder-token
-        CookieUtils.setCookie(request,response,sysConfigAttribute.getSessionTokenName(), xwderToken);
-        CookieUtils.deleteCookie(request,response,xwderToken);
+        CookieUtils.setCookie(request, response, sysConfigAttribute.getSessionTokenName(), xwderToken);
+        CookieUtils.deleteCookie(request, response, xwderToken);
         return redirectTarget;
     }
 

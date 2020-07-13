@@ -4,17 +4,22 @@ import com.xwder.app.modules.novel.entity.BookInfo;
 import com.xwder.app.modules.novel.service.intf.BookInfoService;
 import com.xwder.cloud.commmon.api.CommonResult;
 import com.xwder.cloud.commmon.api.ResultCode;
+import com.xwder.cloud.commmon.constan.Constant;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -30,25 +35,28 @@ import java.util.Map;
  * @date 2020/07/07
  */
 @Validated
-@RequestMapping(value = "/novel/books")
-@RestController
+@RequestMapping(value = "/book")
+@Controller
 public class BookInfoController {
 
     @Autowired
     private BookInfoService bookInfoService;
 
+    @ResponseBody
     @RequestMapping(value = "/{id}")
     public CommonResult getBookInfoById(@PathVariable @Min(1) @Max(10000) Integer id) {
         BookInfo bookInfo = bookInfoService.getBookInfoById(id);
         return CommonResult.success(bookInfo);
     }
 
+    @ResponseBody
     @RequestMapping(value = "")
     public CommonResult getBookInfoByBookName(@RequestParam("bookName") String bookName) {
         List<BookInfo> bookInfoList = bookInfoService.listBookInfoByBookName(bookName);
         return CommonResult.success(bookInfoList);
     }
 
+    @ResponseBody
     @RequestMapping(value = "/down")
     public Object downBook(String bookName) throws Exception {
         CommonResult commonResult = bookInfoService.downBookByBookName(bookName);
@@ -69,6 +77,30 @@ public class BookInfoController {
             return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(file), headers, HttpStatus.CREATED);
         }
         return commonResult;
+    }
+
+    /**
+     * 书籍模块首页
+     *
+     * @return
+     */
+    @RequestMapping("/index")
+    public String toBookIndex(@RequestParam(value = "category", required = false) String category,
+                              @RequestParam(value = "pageNum", required = false) @Min(1) @Max(10000) Integer pageNum,
+                              @RequestParam(value = "pageSize", required = false) @Min(1) @Max(50) Integer pageSize,
+                              ModelAndView modelAndView, Model model) {
+        pageNum = pageNum == null ? Constant.DEFAULT_PAGE_NUM : pageNum;
+        pageSize = pageSize == null ? Constant.DEFAULT_PAGE_SIZE + 1 : pageSize;
+        Page<BookInfo> bookInfoPage = bookInfoService.listBookInfo(category, pageNum, pageSize);
+        model.addAttribute("bookInfos", bookInfoPage.getContent());
+        model.addAttribute("startNum", pageSize * (pageNum - 1) + 1);
+        model.addAttribute("endNum", pageSize * pageNum);
+        model.addAttribute("totalNum", bookInfoPage.getTotalElements());
+        model.addAttribute("totalPages", bookInfoPage.getTotalPages());
+        model.addAttribute("currentPage", pageNum);
+        model.addAttribute("bookInfoPage", bookInfoPage);
+
+        return "book/index";
     }
 
 }

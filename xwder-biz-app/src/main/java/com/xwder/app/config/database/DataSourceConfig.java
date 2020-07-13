@@ -1,6 +1,6 @@
 package com.xwder.app.config.database;
 
-import com.xwder.app.common.DataBaseConstant;
+import com.xwder.app.consts.DataBaseConstant;
 import io.shardingjdbc.core.api.config.ShardingRuleConfiguration;
 import io.shardingjdbc.core.api.config.TableRuleConfiguration;
 import io.shardingjdbc.core.api.config.strategy.StandardShardingStrategyConfiguration;

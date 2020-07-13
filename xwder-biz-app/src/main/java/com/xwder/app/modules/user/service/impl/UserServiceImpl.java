@@ -4,8 +4,8 @@ import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.json.JSONUtil;
 import com.google.common.collect.Maps;
 import com.xwder.app.attribute.SysConfigAttribute;
-import com.xwder.app.common.RedisConstant;
-import com.xwder.app.common.UserStatusEnum;
+import com.xwder.app.consts.RedisConstant;
+import com.xwder.app.consts.UserStatusEnum;
 import com.xwder.app.config.mq.MQProducerMessage;
 import com.xwder.app.config.mq.RabbitConfig;
 import com.xwder.app.modules.user.entity.User;
@@ -190,7 +190,7 @@ public class UserServiceImpl implements UserService {
         log.info("用户[{}]发送邮箱验证成功", user.getUserId());
 
         // ehcache缓存 key 和 用户userId
-        String redisKey = RedisConstant.EMAIL_VERIFY_KEY_CACHETIME + ":" + key;
+        String redisKey = RedisConstant.EMAIL_VERIFY_KEY + ":" + key;
         redisUtil.set(redisKey, user, RedisConstant.EMAIL_VERIFY_KEY_CACHETIME);
 
         // 发送消息给管理员由用户注册了
@@ -216,7 +216,7 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public User verifyEmail(String verifyKey) {
-        String redisKey = RedisConstant.EMAIL_VERIFY_KEY_CACHETIME + ":" + verifyKey;
+        String redisKey = RedisConstant.EMAIL_VERIFY_KEY + ":" + verifyKey;
         User user = (User) redisUtil.get(redisKey);
 
         if (user == null) {

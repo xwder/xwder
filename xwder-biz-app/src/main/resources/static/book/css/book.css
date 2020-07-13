@@ -1,0 +1,192 @@
+#body {
+    background-color: #FFFFFF;
+}
+
+
+
+.bookstore_tbox {
+    background: #f7f7f7;
+    border: 1px solid #e6e6e6;
+    padding: 12px 20px;
+    overflow: hidden;
+    font-size: 13px;
+}
+
+.bookstore_tbox {
+    background: #f7f7f7;
+    border: 1px solid #e6e6e6;
+    padding: 12px 20px;
+    overflow: hidden;
+    font-size: 13px;
+}
+
+.bookstore_tbox .sexsel {
+    padding-bottom: 2px;
+    color: #999;
+    overflow: hidden;
+}
+
+.bookstore_tbox .sexsel a.current {
+    color: #333;
+    background: 0 0;
+    font-weight: 700;
+}
+.bookstore_tbox .sexsel a {
+    font-size: 15px;
+    color: #999;
+    margin: 0;
+    line-height: 30px;
+    padding: 0;
+    float: left;
+}
+
+.bookstore_tbox .sexsel span {
+    float: left;
+    margin: 0 10px;
+    vertical-align: middle;
+    line-height: 30px;
+    color: #e6e6e6;
+}
+
+.bookstore_tbox .sexsel a {
+    font-size: 15px;
+    color: #999;
+    margin: 0;
+    line-height: 30px;
+    padding: 0;
+    float: left;
+}
+.bookstore_select .kind {
+    clear: both;
+    padding: 3px 0;
+    line-height: 20px;
+    overflow: hidden;
+}
+
+.storeline {
+    height: 1px;
+    background: #e6e6e6;
+    overflow: hidden;
+    margin: 5px auto;
+}
+
+.bookstore_select .kind .bz {
+    float: left;
+    width: 88px;
+    color: #999;
+    padding-top: 5px;
+}
+
+.bookstore_select .kind .nr {
+    float: left;
+    width: 1020px;
+    color: #888;
+}
+
+.bookstore_tbox a.current {
+    color: #fff;
+    background: #206bc4;
+    border-radius: 2px;
+    padding: 0 5px;
+}
+.bookstore_tbox a {
+    color: #151515;
+    font-size: 13px;
+    margin: 5px 6px 5px 7px;
+    display: inline-block;
+}
+/*-----------------------------*/
+.store_list_wrap {
+    border: 1px solid #e6e6e6;
+    padding: 0 20px 20px;
+    font-size: 12px;
+    overflow: hidden;
+}
+
+
+.store_collist {
+    overflow: hidden;
+}
+.fl {
+    float: left;
+}
+.fr {
+    float: right;
+}
+.store_collist .bookbox {
+    width: 558px;
+    height: 135px;
+    padding: 20px 0;
+    display: block;
+    margin-bottom: 60px;
+    margin-top: 0px;
+}
+.bookbox .bookimg {
+    width: 100px;
+    height: 132px;
+    float: left;
+    margin-right: 20px;
+}
+.bookbox .bookinfo {
+    width: auto;
+    overflow: hidden;
+}
+.dotline {
+    border-bottom: 1px dotted #ccc;
+    height: 0;
+    overflow: hidden;
+    clear: both;
+}
+.bookbox .bookname, .bookbox .bookname a {
+    font-size: 20px;
+    color: #333;
+    line-height: 26px;
+}
+.bookbox .bookilnk {
+    height: 16px;
+    line-height: 16px;
+    font-size: 12px;
+    color: #e6e6e6;
+    margin: 10px 1px 15px;
+    text-indent: -8px;
+}
+.bookbox .bookilnk a, .bookbox .bookilnk span {
+    margin: 0 8px;
+    color: #999;
+}
+.bookbox .bookilnk a:hover, .bookbox .bookname a:hover, .bookbox .bookupdate a:hover {
+    color: #e84848;
+}
+
+.bookbox .bookupdate a {
+    color: #999;
+}
+.bookbox .bookilnk a, .bookbox .bookilnk span {
+    margin: 0 8px;
+    color: #999;
+}
+
+.bookbox .bookintro {
+    font-size: 13px;
+    color: #666;
+    line-height: 20px;
+    max-height: 40px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+}
+.bookbox .bookupdate {
+    line-height: 20px;
+    margin-top: 10px;
+    text-align: right;
+    color: #999;
+}
+
+.pageItem {
+    text-align: center;
+    margin-left: 10px;
+}
+
+
+

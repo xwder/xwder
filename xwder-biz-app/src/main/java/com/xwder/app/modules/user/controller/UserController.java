@@ -30,7 +30,7 @@ public class UserController {
      * @param modelAndView
      * @return
      */
-    @RequestMapping("")
+    @RequestMapping("/index")
     private String toUser(ModelAndView modelAndView) {
 
 

@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html  lang="zh" xmlns:th="http://www.thymeleaf.org">
+<title>小说阅读</title>
+<head th:include="include :: head"></head>
+<link th:href="@{/book/css/book.css}" href="../../static/book/css/book.css" rel="stylesheet"/>
+<body class="antialiased">
+<div class="page">
+  <header class="navbar navbar-expand-md navbar-light">
+    <div class="container-xl">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <a th:href="@{index}" href=".." class="navbar-brand navbar-brand-autodark d-none-navbar-horizontal pr-0 pr-md-3">
+        <img th:src="@{/image/logo/logo.svg}" src="../static/images/logo/logo.svg" alt="Tabler" class="navbar-brand-image">
+      </a>
+      <!--头部右边 是否登录还是显示用户头像-->
+      <div th:include="include :: navigationBar"></div>
+    </div>
+  </header>
+  <!--导航栏-->
+  <div th:include="include :: navigationMenu" class="navbar-expand-md"></div>
+      <div class="content">
+        <div class="container-xl">
+          <!-- Page title -->
+          <div class="page-header">
+            <div class="row align-items-center">
+              <div class="col-auto">
+                <h2 class="page-title">
+                 小说
+                </h2>
+              </div>
+              <div class="col-auto" style="margin-left: 10px;">
+                <div class="text-muted text-h5 mt-2" th:text="${startNum} + '-' + ${endNum} + '&nbsp;of&nbsp;' + ${totalNum} +'  本小说'">1-12 of 241 books</div>
+              </div>
+              <!-- Page title actions -->
+              <div class="col-auto ml-auto d-print-none">
+                <div class="d-flex">
+                  <div class="mr-3" style="margin-right: 0rem!important;">
+                    <div class="input-icon">
+                      <input type="text" class="form-control" placeholder="Search…">
+                      <span class="input-icon-addon">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="10" cy="10" r="7" /><line x1="21" y1="21" x2="15" y2="15" /></svg>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="page-header">
+            <div class="row align-items-center">
+                <div>
+                  <!--book分类-->
+                  <div class="bookstore_tbox ">
+                    <div class="bookstore_select">
+                      <div class="nr sexsel">
+                        <a class="current store" href="javascript:void(0)" booktype="0">男生频道</a>
+                        <span>|</span>
+                        <a class="store" href="javascript:void(0)" booktype="1">女生频道</a>
+                      </div>
+                      <div class="select_con">
+                        <!-- 作品分类 -->
+                        <div class="kind">
+                          <div class="bz">作品分类：</div>
+                          <div class="nr br sub">
+                            <a class="current store" href="javascript:void(0)" categoryid="0">全部作品</a>
+                            <a class="store" href="javascript:void(0)" categoryid="1">奇幻玄幻<em></em></a><a class="store" href="javascript:void(0)" categoryid="3">武侠仙侠<em></em></a><a class="store" href="javascript:void(0)" categoryid="6">历史军事<em></em></a><a class="store" href="javascript:void(0)" categoryid="9">都市娱乐<em></em></a><a class="store" href="javascript:void(0)" categoryid="15">科幻游戏<em></em></a><a class="store" href="javascript:void(0)" categoryid="18">悬疑灵异<em></em></a><a class="store" href="javascript:void(0)" categoryid="21">竞技同人<em></em></a><a class="store" href="javascript:void(0)" categoryid="24">评论文集<em></em></a><a class="store" href="javascript:void(0)" categoryid="40">二次元<em></em></a>
+                            <br>
+                          </div>
+
+                        </div>
+                        <!-- 写作进度 -->
+                        <div class="kind">
+                          <div class="bz">写作进度：</div>
+                          <div class="nr br">
+                            <a class="current store" href="javascript:void(0)" serialstatus="9">全部</a>
+                            <a class="store" href="javascript:void(0)" serialstatus="0">连载中</a>
+                            <a class="store" href="javascript:void(0)" serialstatus="1">已完结</a>
+                          </div>
+                          <div class="cl0"></div>
+                        </div>
+                        <!-- 作品字数 -->
+                        <div class="kind">
+                          <div class="bz">作品字数：</div>
+                          <div class="nr br">
+                            <a class="current store" href="javascript:void(0)" totalword="0">全部</a>
+                            <a class="store" href="javascript:void(0)" totalword="1">30万字以下</a>
+                            <a class="store" href="javascript:void(0)" totalword="2">30万-50万</a>
+                            <a class="store" href="javascript:void(0)" totalword="3">50万-100万</a>
+                            <a class="store" href="javascript:void(0)" totalword="4">100万-200万</a>
+                            <a class="store" href="javascript:void(0)" totalword="5">200万以上</a>
+                          </div>
+                          <div class="cl0"></div>
+                        </div>
+                        <!-- 更新时间 -->
+                        <div class="kind">
+                          <div class="bz">更新时间：</div>
+                          <div class="nr br">
+                            <a class="current store" href="javascript:void(0)" updatetime="0">全部</a>
+                            <a class="store" href="javascript:void(0)" updatetime="1">三日内</a>
+                            <a class="store" href="javascript:void(0)" updatetime="2">七日内</a>
+                            <a class="store" href="javascript:void(0)" updatetime="3">半月内</a>
+                            <a class="store" href="javascript:void(0)" updatetime="4">一月内</a>
+                          </div>
+                          <div class="cl0"></div>
+                        </div>
+                        <!-- 书名首字母 -->
+                        <div class="kind">
+                          <div class="bz">书名首字母：</div>
+                          <div class="nr">
+                            <a class="current store" href="javascript:void(0)" firstchar="ALL">全部</a>
+                            <a class="store" href="javascript:void(0)" firstchar="A">A</a><a class="store" href="javascript:void(0)" firstchar="B">B</a><a class="store" href="javascript:void(0)" firstchar="C">C</a><a class="store" href="javascript:void(0)" firstchar="D">D</a><a class="store" href="javascript:void(0)" firstchar="E">E</a><a class="store" href="javascript:void(0)" firstchar="F">F</a><a class="store" href="javascript:void(0)" firstchar="G">G</a><a class="store" href="javascript:void(0)" firstchar="H">H</a><a class="store" href="javascript:void(0)" firstchar="I">I</a><a class="store" href="javascript:void(0)" firstchar="J">J</a><a class="store" href="javascript:void(0)" firstchar="K">K</a><a class="store" href="javascript:void(0)" firstchar="L">L</a><a class="store" href="javascript:void(0)" firstchar="M">M</a><a class="store" href="javascript:void(0)" firstchar="N">N</a><a class="store" href="javascript:void(0)" firstchar="O">O</a><a class="store" href="javascript:void(0)" firstchar="P">P</a><a class="store" href="javascript:void(0)" firstchar="Q">Q</a><a class="store" href="javascript:void(0)" firstchar="R">R</a><a class="store" href="javascript:void(0)" firstchar="S">S</a><a class="store" href="javascript:void(0)" firstchar="T">T</a><a class="store" href="javascript:void(0)" firstchar="U">U</a><a class="store" href="javascript:void(0)" firstchar="V">V</a><a class="store" href="javascript:void(0)" firstchar="W">W</a><a class="store" href="javascript:void(0)" firstchar="X">X</a><a class="store" href="javascript:void(0)" firstchar="Y">Y</a><a class="store" href="javascript:void(0)" firstchar="Z">Z</a>
+                            <a class="store" href="javascript:void(0)" firstchar="OTHER">其他</a>
+                          </div>
+                          <div class="cl0"></div>
+                        </div>
+                        <!-- 其他 -->
+                        <div class="kind">
+                          <div class="bz">其他：</div>
+                          <div class="nr">
+                            <a class="current store" href="javascript:void(0)" vip="9">不限</a>
+                            <a class="store" href="javascript:void(0)" vip="0">免费</a>
+                            <a class="store" href="javascript:void(0)" vip="1">VIP</a>
+                            <a class="store" href="javascript:void(0)" vip="4">只看签约</a>
+                          </div>
+                          <div class="cl0"></div>
+                        </div>
+                        <div class="storeline"></div>
+                        <div class="kind">
+                          <div class="bz">已选条件：</div>
+                          <div class="nr" id="selectedParams">
+                          </div>
+                          <div class="cl0"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+          </div>
+          <div class="row" style="    --bs-gutter-x: 0.0rem;">
+            <div class="store_list_wrap">
+              <div class="store_collist">
+                  <div  th:each="bookInfo,bookInfoStat : ${bookInfos}">
+                    <div th:class="${bookInfoStat.odd}?'bookbox fl' : 'bookbox fr'" class="bookbox fl">
+                      <div class="bookimg">
+                        <a href="http://book.zongheng.com/book/1017644.html" target="_blank">
+                          <img src="http://static.zongheng.com/upload/cover/f9/d9/f9d90d8aa073d13c7a2dc0e83fecbc55.jpeg" th:src="${bookInfo.bookImgSource}" alt="悟道寻真">
+                        </a>
+                      </div>
+                      <div class="bookinfo">
+                        <div class="bookname">
+                          <a href="http://book.zongheng.com/book/1017644.html" target="_blank" th:text="${bookInfo.bookName}">悟道寻真</a>
+                        </div>
+                        <div class="bookilnk">
+                          <a href="http://home.zongheng.com/show/userInfo/52368118.html" target="_blank" th:text="${bookInfo.author}">苏自在</a>|
+                          <a href="http://www.zongheng.com/category/3.html" target="_blank" th:text="${bookInfo.category}">武侠仙侠</a>|
+                          <span th:text="${bookInfo.updateStatus}">
+
+                                    连载中
+
+                                </span>|
+                          <span th:text="'更新时间&nbsp;&nbsp;'+ ${#dates.format(bookInfo.lastUpdateTime, 'yyyy-MM-dd HH:mm')}">
+                                更新时间&nbsp;&nbsp;07-13 16:05
+                                </span>
+                        </div>
+                        <div class="bookintro" th:text="${bookInfo.bookDesc}">受够了世间冷暖，苏无暇在也不相信那些天上那些仙人说的不痛不痒的话。
+                          既然你们都如此的安于天命，一切都是天定的，那我就把你们都废了法力丢到人间，那你们被废也是天定的，让你们自己去感受你们口中的天命。
+                          这是一个少年逆天的故事，你们说一切天定，那我就成为你们的天。
+                          不是六月风光好，人红酒香入眼帘。熟读道典三万字，不知白面值几钱。
+                          细品万家滋味饭，修的无为道德仙。清滴浊酒还相愿，亦疯亦颠看人间。</div>
+                        <div class="bookupdate">
+                          <a href="http://book.zongheng.com/chapter/1017644/61969261.html" class="fl" th:text="'最新章节：' + ${bookInfo.latestChapter}">最新章节：第三十七章 弃卜修山</a>
+                          <span class="rank_d_b_time"></span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="dotline" th:style="${bookInfoStat.odd}?'display:none' : ''"></div>
+                  </div>
+
+              </div>
+            </div>
+          </div>
+
+          <!-- 分页 -->
+          <div class="d-flex" style="margin-top: 15px;">
+            <ul class="pagination ml-auto">
+
+              <!-- 首页 -->
+              <li class="page-item pageItem" ><a class="page-link" href="#" th:href="'/book/index.html?pageNum=1'">首页</a></li>
+
+              <!-- 上一页 -->
+              <li class="page-item pageItem disabled" th:if="${bookInfoPage.hasPrevious()}" th:class="${bookInfoPage.hasPrevious()?'page-item pageItem':'page-item pageItem disabled'}">
+                <a class="page-link" href="#" th:href="'/book/index.html?pageNum=' + ${bookInfoPage.previousPageable().getPageNumber()+1}" tabindex="-1">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><polyline points="15 6 9 12 15 18" /></svg>
+                  上一页
+                </a>
+              </li>
+
+              <!-- 中间页 -->
+              <li  class="page-item active" th:class="${pageNum==currentPage} ? 'page-item pageItem active' : 'page-item pageItem'" th:if="${currentPage>=4 && currentPage+2<bookInfoPage.getTotalPages()}" th:each="pageNum:${#numbers.sequence(currentPage+-2, currentPage+2)}">
+                <a class="page-link"  th:href="'/book/index.html?pageNum=' + ${pageNum}" th:text="${pageNum}" th:if="${pageNum ne bookInfoPage.pageable.getPageNumber()}" href="#">2</a>
+                <a class="page-link"  th:href="'/book/index.html?pageNum=' + ${pageNum}" th:text="${pageNum}" th:if="${pageNum eq bookInfoPage.pageable.getPageNumber()}" href="#">2</a>
+              </li>
+
+              <!-- 中间页 -->
+              <li  class="page-item active" th:class="${pageNum==currentPage} ? 'page-item pageItem active' : 'page-item pageItem'" th:if="${currentPage<=3}" th:each="pageNum:${#numbers.sequence(currentPage, currentPage+4)}">
+                <a class="page-link"  th:href="'/book/index.html?pageNum=' + ${pageNum}" th:text="${pageNum}" th:if="${pageNum ne bookInfoPage.pageable.getPageNumber()}" href="#">2</a>
+                <a class="page-link"  th:href="'/book/index.html?pageNum=' + ${pageNum}" th:text="${pageNum}" th:if="${pageNum eq bookInfoPage.pageable.getPageNumber()}" href="#">2</a>
+              </li>
+
+              <!-- 下一页 -->
+              <li class="page-item pageItem"><a class="page-link" href="#" th:if="${bookInfoPage.hasNext()}"  th:href="'/book/index.html?pageNum=' + ${bookInfoPage.nextPageable().getPageNumber()+1}" th:text="下一页">3</a></li>
+
+              <!-- 尾页 -->
+              <li class="page-item pageItem"><a class="page-link" href="#"  th:href="'/book/index.html?pageNum=' + ${bookInfoPage.getTotalPages()}">尾页</a></li>
+
+            </ul>
+          </div>
+        </div>
+
+        <footer class="footer footer-transparent">
+          <div class="container">
+            <div class="row text-center align-items-center flex-row-reverse">
+              <div class="col-lg-auto ml-lg-auto">
+                <ul class="list-inline list-inline-dots mb-0">
+                  <li class="list-inline-item"><a href="./docs/index.html" class="link-secondary">Documentation</a></li>
+                  <li class="list-inline-item"><a href="./faq.html" class="link-secondary">FAQ</a></li>
+                  <li class="list-inline-item"><a href="https://github.com/tabler/tabler" target="_blank" class="link-secondary">Source code</a></li>
+                </ul>
+              </div>
+              <div class="col-12 col-lg-auto mt-3 mt-lg-0">
+                Copyright © 2020
+                <a href="." class="link-secondary">Tabler</a>.
+                All rights reserved.
+              </div>
+            </div>
+          </div>
+        </footer>
+      </div>
+    </div>
+    <!-- Libs JS -->
+    <script th:src="@{/dist/libs/bootstrap/dist/js/bootstrap.bundle.min.js}" src="../../static/dist/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      document.body.style.display = "block";
+
+      $(function() {
+        // 隐藏全局搜索框
+        $("#totalSearchDiv").attr("style","display:none;");
+      });
+    </script>
+  </body>
+</html>
