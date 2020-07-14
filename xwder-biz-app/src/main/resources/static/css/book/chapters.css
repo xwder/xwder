@@ -1,0 +1,467 @@
+.book-main {
+    width: 923px;
+}
+.book-side {
+    width: 237px;
+}
+.fl {
+    float: left;
+}
+.fr {
+    float: right;
+}
+.book-detail {
+    padding: 10px 0 0;
+}
+
+.clearfix {
+    zoom: 1;
+}
+.book-new-chapter {
+    position: relative;
+    padding: 10px 0 20px;
+    border-bottom: 1px solid #f0f0f0;
+    border-top: 1px dotted #d6d6d6;
+    padding-right: 98px;
+    margin-bottom: 30px;
+}
+.book-img {
+    width: 200px;
+    margin-right: 26px;
+    position: relative;
+}
+.book-info {
+    overflow: hidden;
+    padding-bottom: 30px;
+}
+.book-img em {
+    width: 43px;
+    height: 19px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    display: block;
+}
+.book-img img {
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,.2);
+    border-radius: 4px;
+    width: 200px;
+    margin-right: 26px;
+}
+.book-name {
+    font-size: 24px;
+    color: #333;
+    letter-spacing: 1.33px;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+.book-name .sign {
+    background: url(http://rcode.zongheng.com/v2018/images/forums/sign.png) no-repeat;
+    width: 16px;
+    height: 15px;
+    vertical-align: 1px;
+}
+.book-name em {
+    display: inline-block;
+    vertical-align: -3px;
+    margin-right: 10px;
+}
+.book-label {
+    margin-bottom: 20px;
+}
+.book-label {
+    font-size: 0;
+}
+.book-label a {
+    margin-right: 5px;
+}
+a, a:active, a:hover, a:link {
+    text-decoration: none;
+}
+.label, .state {
+    background: #02b389;
+    border-radius: 2px;
+    color: #fff;
+    font-size: 12px;
+    display: inline-block;
+    padding: 0 5px;
+    height: 20px;
+    line-height: 20px;
+}
+.book-label a {
+    margin-right: 5px;
+}
+a, a:active, a:hover, a:link {
+    text-decoration: none;
+}
+
+.label {
+    background: #d32f2f;
+}
+.book-label span {
+    font-size: 0;
+}
+.book-label span a {
+    color: #999;
+    display: inline-block;
+    font-size: 12px;
+    border: 1px solid #cdd0d6;
+    border-radius: 2px;
+    letter-spacing: 1px;
+    padding: 0 5px;
+    height: 18px;
+    line-height: 18px;
+    margin-right: 4px;
+}
+.book-info .nums {
+    color: #999;
+    margin-bottom: 25px;
+}
+.book-info .nums span {
+    margin-right: 20px;
+}
+.book-info .nums i {
+    font-size: 16px;
+    color: #333;
+    font-family: Arial,Helvetica,sans-serif;
+}
+.book-dec {
+    position: relative;
+    min-height: 96px;
+}
+.book-dec.hide p {
+    max-height: 76px;
+    overflow: hidden;
+}
+.book-dec p {
+    font-size: 14px;
+    color: #333;
+    line-height: 25px;
+    margin-bottom: 5px;
+}
+.book-info .btn-group .btn {
+    width: 220px;
+    height: 36px;
+    display: inline-block;
+    line-height: 22px;
+    margin-right: 7px;
+}
+.book-info .btn-group .store-btn {
+    background: 0 0;
+    border: 1px solid #edacac;
+    color: #a11313;
+    width: 100px;
+    height: 34px;
+    line-height: 18px;
+    margin-right: 30px;
+}
+.book-info .link-group {
+    padding-top: 10px;
+    font-size: 0;
+}
+.book-info .link-group a {
+    font-size: 12px;
+}
+.book-info .all-catalog {
+    padding: 0 16px;
+    display: inline-block;
+    border-right: 1px solid #e6e6e6;
+    cursor: pointer;
+    color: #999;
+}
+.book-info .link-group a {
+    font-size: 12px;
+}
+.book-info .orderlink, .book-info .vote {
+    padding: 0 0 0 16px;
+    display: inline-block;
+    cursor: pointer;
+    color: #999;
+}
+.book-new-chapter {
+    position: relative;
+    padding: 10px 0 20px;
+    border-bottom: 1px solid #f0f0f0;
+    border-top: 1px dotted #d6d6d6;
+    padding-right: 98px;
+    margin-bottom: 30px;
+}
+.book-new-chapter h4 {
+    color: #999;
+    font-size: 14px;
+    line-height: 30px;
+    font-weight: 400;
+    margin-bottom: 4px;
+}
+.book-new-chapter .tit {
+    font-size: 14px;
+    letter-spacing: 1.17px;
+    margin-bottom: 6px;
+}
+.book-new-chapter .tit a {
+    color: #333;
+}
+.book-new-chapter .con {
+    font-size: 13px;
+    color: #999;
+    letter-spacing: 1.08px;
+    width: 100%;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+.book-new-chapter .time {
+    position: absolute;
+    right: 0;
+    top: 40px;
+    font-size: 12px;
+    color: #999;
+    line-height: 25px;
+}
+
+.book-author {
+    background: #f5f5f5;
+    border: 1px solid #f0f0f0;
+    padding: 13px 0 0;
+    margin-bottom: 2px;
+}
+.book-author .au-head {
+    width: 60px;
+    height: 60px;
+    position: relative;
+    margin: 0 auto 24px;
+}
+.book-author .au-head em {
+    position: absolute;
+    background: #fc7403;
+    border-radius: 3px;
+    display: block;
+    width: 60px;
+    height: 20px;
+    text-align: center;
+    color: #fff;
+    line-height: 20px;
+    left: 0;
+    bottom: -16px;
+}
+.au-name {
+    font-size: 14px;
+    margin-bottom: 10px;
+    font-weight: 700;
+    text-align: center;
+}
+.au-name a {
+    color: #333;
+}
+.au-words {
+    font-size: 0;
+    margin-bottom: 19px;
+}
+.au-words span {
+    width: 33%;
+    display: inline-block;
+    font-size: 12px;
+    text-align: center;
+    color: #999;
+    border-right: 1px solid #e6e6e6;
+}
+.au-words span i {
+    display: block;
+    color: #666;
+    letter-spacing: 1.17px;
+    font-size: 14px;
+    padding-top: 5px;
+    font-family: Arial;
+}
+.au-says {
+    padding: 0 20px 18px;
+}
+.au-says h4 {
+    color: #999;
+    margin-bottom: 6px;
+}
+.au-says .con.empty {
+    /*line-height: 66px;*/
+    text-align: center;
+    color: #999;
+}
+.au-says .con {
+    color: #333;
+    line-height: 22px;
+    height: 66px;
+    overflow: hidden;
+}
+.app-in {
+    background: #f5f5f5;
+    border: 1px solid #f0f0f0;
+    padding: 16px 10px 16px 20px;
+}
+.app-in .ewm {
+    float: left;
+    margin-right: 10px;
+}
+.app-in .txt {
+    overflow: hidden;
+    padding-top: 12px;
+}
+.app-in .txt h3 {
+    font-size: 14px;
+    color: #999;
+    letter-spacing: 1.17px;
+    margin-bottom: 11px;
+    font-weight: 700;
+}
+.app-in .txt p {
+    font-size: 13px;
+    color: #333;
+    letter-spacing: 1.17px;
+}
+
+
+/*
+----------------------------*/
+.vip-color {
+    color: #fc7403;
+}
+.volume {
+    color: #333;
+    font: 700 18px/24px PingFangSC-Regular,HelveticaNeue-Light,'Helvetica Neue Light','Microsoft YaHei',sans-serif;
+    overflow: hidden;
+    /*height: 24px;*/
+    position: relative;
+    line-height: 100%;
+    padding: 15px 0 0 0;
+}
+.arrow-box {
+    width: 15px;
+    height: 15px;
+    position: absolute;
+    right: 0;
+    top: 23px;
+}
+.top {
+    width: 8px;
+    height: 8px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 2;
+}
+.top .arrow1 {
+    border-bottom: 4px #999 solid;
+}
+.top .arrow1, .top .arrow2 {
+    width: 0;
+    height: 0;
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 5;
+    border-top: 4px transparent dashed;
+    border-left: 4px transparent dashed;
+    border-right: 4px transparent dashed;
+    border-bottom: 4px #fff solid;
+    overflow: hidden;
+}
+.top .arrow2 {
+    top: 1px;
+    border-bottom: 4px #fff solid;
+}
+.top .arrow1, .top .arrow2 {
+    width: 0;
+    height: 0;
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 5;
+    border-top: 4px transparent dashed;
+    border-left: 4px transparent dashed;
+    border-right: 4px transparent dashed;
+    border-bottom: 4px #fff solid;
+    overflow: hidden;
+}
+.volume .subscri, .volume .subscribe {
+    position: relative;
+    z-index: 2;
+    float: right;
+}
+.volume-list .link, .volume-list a {
+    color: #333;
+    font-size: 14px;
+    text-decoration: none;
+    -webkit-transition: color .3s ease;
+    -moz-transition: color .3s ease;
+    -ms-transition: color .3s ease;
+    transition: color .3s ease;
+    line-height: 100%;
+}
+.volume .v-line {
+    border-left: 4px solid #fc7403;
+    padding-right: 8px;
+    display: inline-block;
+    height: 17px;
+    margin-bottom: -2px;
+}
+.volume .count {
+    font: 12px/19px PingFangSC-Regular,'-apple-system',Simsun;
+    color: #999;
+    padding-left: 12px;
+}
+
+.chapter-list {
+    background: #fff;
+    overflow: hidden;
+    margin-bottom: 45px;
+    margin-top: 20px;
+    padding-left: 1rem;
+}
+.chapter-list li {
+    height: 48px;
+    list-style: none;
+}
+.chapter-list li a {
+    color: #333;
+    font-family:"宋体/楷体";
+    font-size: 14px;
+    font-weight: 500;
+}
+.chapter-list li a:hover{
+    color: red;
+}
+.lastChapter a:hover{
+    color: red;
+}
+.col-4 {
+    width: 30%;
+    float: left;
+    padding-right: 60px;
+}
+.chapter-list>* {
+    padding: 11px 0;
+    position: relative;
+    border-bottom: 1px #ccc dotted;
+}
+
+.chapter-list a:visited {
+    color: #999;
+}
+.chapter-list a {
+    float: left;
+    max-width: 80%;
+    line-height: 35px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.volume-list .link, .volume-list a {
+    color: #333;
+    font-size: 14px;
+    text-decoration: none;
+    -webkit-transition: color .3s ease;
+    -moz-transition: color .3s ease;
+    -ms-transition: color .3s ease;
+    transition: color .3s ease;
+    line-height: 100%;
+}

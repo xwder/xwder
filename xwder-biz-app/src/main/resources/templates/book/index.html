@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html  lang="zh" xmlns:th="http://www.thymeleaf.org">
 <title>小说阅读</title>
+<link th:href="@{/css/book/book.css}" href="http://v.xwder.com/xwder/book/book.css" rel="stylesheet"/>
 <head th:include="include :: head"></head>
-<link th:href="@{/book/css/book.css}" href="../../static/book/css/book.css" rel="stylesheet"/>
-<body class="antialiased">
+
+<body class="antialiased" style="background-color: #FFFFFF;">
 <div class="page">
   <header class="navbar navbar-expand-md navbar-light">
     <div class="container-xl">
@@ -26,7 +27,7 @@
             <div class="row align-items-center">
               <div class="col-auto">
                 <h2 class="page-title">
-                 小说
+                 小说书籍列表
                 </h2>
               </div>
               <div class="col-auto" style="margin-left: 10px;">
@@ -54,17 +55,25 @@
                   <div class="bookstore_tbox ">
                     <div class="bookstore_select">
                       <div class="nr sexsel">
-                        <a class="current store" href="javascript:void(0)" booktype="0">男生频道</a>
+                        <a class="current store" href="" booktype="0">男生频道</a>
                         <span>|</span>
-                        <a class="store" href="javascript:void(0)" booktype="1">女生频道</a>
+                        <a class="store" href="" booktype="1">女生频道</a>
                       </div>
                       <div class="select_con">
                         <!-- 作品分类 -->
                         <div class="kind">
                           <div class="bz">作品分类：</div>
                           <div class="nr br sub">
-                            <a class="current store" href="javascript:void(0)" categoryid="0">全部作品</a>
-                            <a class="store" href="javascript:void(0)" categoryid="1">奇幻玄幻<em></em></a><a class="store" href="javascript:void(0)" categoryid="3">武侠仙侠<em></em></a><a class="store" href="javascript:void(0)" categoryid="6">历史军事<em></em></a><a class="store" href="javascript:void(0)" categoryid="9">都市娱乐<em></em></a><a class="store" href="javascript:void(0)" categoryid="15">科幻游戏<em></em></a><a class="store" href="javascript:void(0)" categoryid="18">悬疑灵异<em></em></a><a class="store" href="javascript:void(0)" categoryid="21">竞技同人<em></em></a><a class="store" href="javascript:void(0)" categoryid="24">评论文集<em></em></a><a class="store" href="javascript:void(0)" categoryid="40">二次元<em></em></a>
+                            <a class="current store" href="" th:href="${'index.html'}" th:class="${category==null?'current store':'current'}">全部作品</a>
+                            <a class="store" href="" th:href="${'index.html?category=玄幻魔法'}" th:class="${category=='玄幻魔法'?'current store':'current'}">玄幻魔法<em></em></a>
+                            <a class="store" href="" th:href="${'index.html?category=武侠修真'}" th:class="${category=='武侠修真'?'current store':'current'}">武侠修真<em></em></a>
+                            <a class="store" href="" th:href="${'index.html?category=都市言情'}" th:class="${category=='都市言情'?'current store':'current'}">都市言情<em></em></a>
+                            <a class="store" href="" th:href="${'index.html?category=历史军事'}" th:class="${category=='历史军事'?'current store':'current'}">历史军事<em></em></a>
+                            <a class="store" href="" th:href="${'index.html?category=侦探推理'}" th:class="${category=='侦探推理'?'current store':'current'}">侦探推理<em></em></a>
+                            <a class="store" href="" th:href="${'index.html?category=网游动漫'}" th:class="${category=='网游动漫'?'current store':'current'}">网游动漫<em></em></a>
+                            <a class="store" href="" th:href="${'index.html?category=科幻灵异'}" th:class="${category=='科幻灵异'?'current store':'current'}">科幻灵异<em></em></a>
+                            <a class="store" href="" >评论文集<em></em></a>
+                            <a class="store" href="" >二次元<em></em></a>
                             <br>
                           </div>
 
@@ -73,9 +82,9 @@
                         <div class="kind">
                           <div class="bz">写作进度：</div>
                           <div class="nr br">
-                            <a class="current store" href="javascript:void(0)" serialstatus="9">全部</a>
-                            <a class="store" href="javascript:void(0)" serialstatus="0">连载中</a>
-                            <a class="store" href="javascript:void(0)" serialstatus="1">已完结</a>
+                            <a class="current store" href="" serialstatus="9">全部</a>
+                            <a class="store" href="" serialstatus="0">连载中</a>
+                            <a class="store" href="" serialstatus="1">已完结</a>
                           </div>
                           <div class="cl0"></div>
                         </div>
@@ -83,12 +92,12 @@
                         <div class="kind">
                           <div class="bz">作品字数：</div>
                           <div class="nr br">
-                            <a class="current store" href="javascript:void(0)" totalword="0">全部</a>
-                            <a class="store" href="javascript:void(0)" totalword="1">30万字以下</a>
-                            <a class="store" href="javascript:void(0)" totalword="2">30万-50万</a>
-                            <a class="store" href="javascript:void(0)" totalword="3">50万-100万</a>
-                            <a class="store" href="javascript:void(0)" totalword="4">100万-200万</a>
-                            <a class="store" href="javascript:void(0)" totalword="5">200万以上</a>
+                            <a class="current store" href="" totalword="0">全部</a>
+                            <a class="store" href="" totalword="1">30万字以下</a>
+                            <a class="store" href="" totalword="2">30万-50万</a>
+                            <a class="store" href="" totalword="3">50万-100万</a>
+                            <a class="store" href="" totalword="4">100万-200万</a>
+                            <a class="store" href="" totalword="5">200万以上</a>
                           </div>
                           <div class="cl0"></div>
                         </div>
@@ -96,11 +105,11 @@
                         <div class="kind">
                           <div class="bz">更新时间：</div>
                           <div class="nr br">
-                            <a class="current store" href="javascript:void(0)" updatetime="0">全部</a>
-                            <a class="store" href="javascript:void(0)" updatetime="1">三日内</a>
-                            <a class="store" href="javascript:void(0)" updatetime="2">七日内</a>
-                            <a class="store" href="javascript:void(0)" updatetime="3">半月内</a>
-                            <a class="store" href="javascript:void(0)" updatetime="4">一月内</a>
+                            <a class="current store" href="" updatetime="0">全部</a>
+                            <a class="store" href="" updatetime="1">三日内</a>
+                            <a class="store" href="" updatetime="2">七日内</a>
+                            <a class="store" href="" updatetime="3">半月内</a>
+                            <a class="store" href="" updatetime="4">一月内</a>
                           </div>
                           <div class="cl0"></div>
                         </div>
@@ -108,9 +117,9 @@
                         <div class="kind">
                           <div class="bz">书名首字母：</div>
                           <div class="nr">
-                            <a class="current store" href="javascript:void(0)" firstchar="ALL">全部</a>
-                            <a class="store" href="javascript:void(0)" firstchar="A">A</a><a class="store" href="javascript:void(0)" firstchar="B">B</a><a class="store" href="javascript:void(0)" firstchar="C">C</a><a class="store" href="javascript:void(0)" firstchar="D">D</a><a class="store" href="javascript:void(0)" firstchar="E">E</a><a class="store" href="javascript:void(0)" firstchar="F">F</a><a class="store" href="javascript:void(0)" firstchar="G">G</a><a class="store" href="javascript:void(0)" firstchar="H">H</a><a class="store" href="javascript:void(0)" firstchar="I">I</a><a class="store" href="javascript:void(0)" firstchar="J">J</a><a class="store" href="javascript:void(0)" firstchar="K">K</a><a class="store" href="javascript:void(0)" firstchar="L">L</a><a class="store" href="javascript:void(0)" firstchar="M">M</a><a class="store" href="javascript:void(0)" firstchar="N">N</a><a class="store" href="javascript:void(0)" firstchar="O">O</a><a class="store" href="javascript:void(0)" firstchar="P">P</a><a class="store" href="javascript:void(0)" firstchar="Q">Q</a><a class="store" href="javascript:void(0)" firstchar="R">R</a><a class="store" href="javascript:void(0)" firstchar="S">S</a><a class="store" href="javascript:void(0)" firstchar="T">T</a><a class="store" href="javascript:void(0)" firstchar="U">U</a><a class="store" href="javascript:void(0)" firstchar="V">V</a><a class="store" href="javascript:void(0)" firstchar="W">W</a><a class="store" href="javascript:void(0)" firstchar="X">X</a><a class="store" href="javascript:void(0)" firstchar="Y">Y</a><a class="store" href="javascript:void(0)" firstchar="Z">Z</a>
-                            <a class="store" href="javascript:void(0)" firstchar="OTHER">其他</a>
+                            <a class="current store" href="" firstchar="ALL">全部</a>
+                            <a class="store" href="" firstchar="A">A</a><a class="store" href="" firstchar="B">B</a><a class="store" href="" firstchar="C">C</a><a class="store" href="" firstchar="D">D</a><a class="store" href="" firstchar="E">E</a><a class="store" href="" firstchar="F">F</a><a class="store" href="" firstchar="G">G</a><a class="store" href="" firstchar="H">H</a><a class="store" href="" firstchar="I">I</a><a class="store" href="" firstchar="J">J</a><a class="store" href="" firstchar="K">K</a><a class="store" href="" firstchar="L">L</a><a class="store" href="" firstchar="M">M</a><a class="store" href="" firstchar="N">N</a><a class="store" href="" firstchar="O">O</a><a class="store" href="" firstchar="P">P</a><a class="store" href="" firstchar="Q">Q</a><a class="store" href="" firstchar="R">R</a><a class="store" href="" firstchar="S">S</a><a class="store" href="" firstchar="T">T</a><a class="store" href="" firstchar="U">U</a><a class="store" href="" firstchar="V">V</a><a class="store" href="" firstchar="W">W</a><a class="store" href="" firstchar="X">X</a><a class="store" href="" firstchar="Y">Y</a><a class="store" href="" firstchar="Z">Z</a>
+                            <a class="store" href="" firstchar="OTHER">其他</a>
                           </div>
                           <div class="cl0"></div>
                         </div>
@@ -118,10 +127,10 @@
                         <div class="kind">
                           <div class="bz">其他：</div>
                           <div class="nr">
-                            <a class="current store" href="javascript:void(0)" vip="9">不限</a>
-                            <a class="store" href="javascript:void(0)" vip="0">免费</a>
-                            <a class="store" href="javascript:void(0)" vip="1">VIP</a>
-                            <a class="store" href="javascript:void(0)" vip="4">只看签约</a>
+                            <a class="current store" href="" vip="9">不限</a>
+                            <a class="store" href="" vip="0">免费</a>
+                            <a class="store" href="" vip="1">VIP</a>
+                            <a class="store" href="" vip="4">只看签约</a>
                           </div>
                           <div class="cl0"></div>
                         </div>
@@ -144,17 +153,17 @@
                   <div  th:each="bookInfo,bookInfoStat : ${bookInfos}">
                     <div th:class="${bookInfoStat.odd}?'bookbox fl' : 'bookbox fr'" class="bookbox fl">
                       <div class="bookimg">
-                        <a href="http://book.zongheng.com/book/1017644.html" target="_blank">
-                          <img src="http://static.zongheng.com/upload/cover/f9/d9/f9d90d8aa073d13c7a2dc0e83fecbc55.jpeg" th:src="${bookInfo.bookImgSource}" alt="悟道寻真">
+                        <a href="http://book.zongheng.com/book/1017644.html" th:href="${bookInfo.id+'.html'}" target="_blank">
+                          <img src="http://static.zongheng.com/upload/cover/f9/d9/f9d90d8aa073d13c7a2dc0e83fecbc55.jpeg" th:src="${bookInfo.bookImgSource}" th:alt="${bookInfo.bookName}" alt="悟道寻真">
                         </a>
                       </div>
                       <div class="bookinfo">
                         <div class="bookname">
-                          <a href="http://book.zongheng.com/book/1017644.html" target="_blank" th:text="${bookInfo.bookName}">悟道寻真</a>
+                          <a href="http://book.zongheng.com/book/1017644.html"  th:href="${bookInfo.id+'.html'}" target="_blank" th:text="${bookInfo.bookName}">悟道寻真</a>
                         </div>
                         <div class="bookilnk">
-                          <a href="http://home.zongheng.com/show/userInfo/52368118.html" target="_blank" th:text="${bookInfo.author}">苏自在</a>|
-                          <a href="http://www.zongheng.com/category/3.html" target="_blank" th:text="${bookInfo.category}">武侠仙侠</a>|
+                          <a href="http://home.zongheng.com/show/userInfo/52368118.html" target="_blank" th:href="${'author.html?author='+bookInfo.author}"   th:text="${bookInfo.author}">苏自在</a>|
+                          <a href="http://www.zongheng.com/category/3.html" th:href="${'category.html?category='+bookInfo.category}" target="_blank" th:text="${bookInfo.category}">武侠仙侠</a>|
                           <span th:text="${bookInfo.updateStatus}">
 
                                     连载中
@@ -170,7 +179,7 @@
                           不是六月风光好，人红酒香入眼帘。熟读道典三万字，不知白面值几钱。
                           细品万家滋味饭，修的无为道德仙。清滴浊酒还相愿，亦疯亦颠看人间。</div>
                         <div class="bookupdate">
-                          <a href="http://book.zongheng.com/chapter/1017644/61969261.html" class="fl" th:text="'最新章节：' + ${bookInfo.latestChapter}">最新章节：第三十七章 弃卜修山</a>
+                          <a href="http://book.zongheng.com/chapter/1017644/61969261.html"  th:href="${'latest.html?id='+bookInfo.id}"  class="fl" th:text="'最新章节：' + ${bookInfo.latestChapter}">最新章节：第三十七章 弃卜修山</a>
                           <span class="rank_d_b_time"></span>
                         </div>
                       </div>
@@ -250,5 +259,6 @@
         $("#totalSearchDiv").attr("style","display:none;");
       });
     </script>
+
   </body>
 </html>
