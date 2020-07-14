@@ -1,6 +1,8 @@
 package com.xwder.app.modules.novel.service.impl;
 
 import cn.hutool.core.collection.CollectionUtil;
+import cn.hutool.core.util.StrUtil;
+import com.xwder.app.consts.SysConstant;
 import com.xwder.app.modules.novel.entity.BookChapter;
 import com.xwder.app.modules.novel.entity.BookInfo;
 import com.xwder.app.modules.novel.repository.BookChapterRepository;
@@ -39,8 +41,12 @@ public class BookChapterServiceImpl implements BookChapterService {
      */
     @Override
     @Transactional(readOnly = true)
-    public Page<BookChapter> listBookChapterByBookId(Integer bookId, Integer pageNum, Integer pageSize) {
-        Sort sort = Sort.by(Sort.Direction.ASC, "id");
+    public Page<BookChapter> listBookChapterByBookId(Integer bookId, Integer pageNum, Integer pageSize, String order) {
+        Sort.Direction direction = Sort.Direction.ASC;
+        if (StrUtil.equalsIgnoreCase(SysConstant.order_desc,order)) {
+            direction = Sort.Direction.DESC;
+        }
+        Sort sort = Sort.by(direction, "id");
         Pageable pageable = PageRequest.of(pageNum-1, pageSize, sort);
         return bookChapterRepository.findByBookId(bookId, pageable);
     }
@@ -63,5 +69,18 @@ public class BookChapterServiceImpl implements BookChapterService {
             return bookChapterRepository.findByBookId(bookInfo.getId(), pageable);
         }
         return null;
+    }
+
+    /**
+     * 根据书籍编号和章节编号查询章节信息
+     *
+     * @param bookId
+     * @param chapterId
+     * @return
+     */
+    @Override
+    public BookChapter getBookChapterByBookIdAndChapterId(Integer bookId, Integer chapterId) {
+        BookChapter bookChapter = bookChapterRepository.findBookChapterByBookIdAndId(bookId, chapterId);
+        return bookChapter;
     }
 }

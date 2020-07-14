@@ -44,4 +44,11 @@ public interface BookChapterRepository extends JpaRepository<BookChapter, Intege
      */
     Page<BookChapter> findByBookName(String bookName, Pageable pageable);
 
+    /**
+     * 根据书籍号和章节号查询章节信息
+     *
+     * @return
+     */
+    BookChapter findBookChapterByBookIdAndId(Integer bookId, Integer Id);
+
 }

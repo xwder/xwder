@@ -37,4 +37,10 @@ public class XwdeNovelTests {
         List<BookInfo> bookInfoList = bookInfoRepository.findAllByBookName("剑来");
         System.out.println(bookInfoList);
     }
+
+    @Test
+    public void findBookChapterByBookIdAndIdTest(){
+        BookChapter bookChapter = bookChapterRepository.findBookChapterByBookIdAndId(50001, 5);
+        System.out.println(bookChapter);
+    }
 }

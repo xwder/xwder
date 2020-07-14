@@ -16,9 +16,10 @@ public interface BookChapterService {
      * @param bookId
      * @param pageNum
      * @param pageSize
+     * @param order    id 排序 desc asc
      * @return
      */
-    Page<BookChapter> listBookChapterByBookId(Integer bookId, Integer pageNum, Integer pageSize);
+    Page<BookChapter> listBookChapterByBookId(Integer bookId, Integer pageNum, Integer pageSize, String order);
 
     /**
      * 根据bookName分页查询章节信息
@@ -29,5 +30,15 @@ public interface BookChapterService {
      * @return
      */
     Page<BookChapter> listBookChapterByBookName(String bookName, Integer pageNum, Integer pageSize);
+
+
+    /**
+     * 根据书籍编号和章节编号查询章节信息
+     *
+     * @param bookId
+     * @param chapterId
+     * @return
+     */
+    BookChapter getBookChapterByBookIdAndChapterId(Integer bookId, Integer chapterId);
 
 }
