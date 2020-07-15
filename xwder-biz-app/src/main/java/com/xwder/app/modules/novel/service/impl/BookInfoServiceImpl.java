@@ -91,6 +91,24 @@ public class BookInfoServiceImpl implements BookInfoService {
     }
 
     /**
+     * 从本地获取章节内容
+     * @param bookId
+     * @param chapterId
+     * @return
+     */
+    @Override
+    public String getLocalChapterContent(Integer bookId, Integer chapterId){
+        String bookSaveDir = getBookSaveDir(bookId);
+        String chapterPath = bookSaveDir+File.separator+chapterId+".html";
+        File chapterFile = new File(chapterPath);
+        if (!chapterFile.exists()) {
+            return null;
+        }
+        String chapterContent = FileUtil.readUtf8String(chapterFile);
+        return chapterContent;
+    }
+
+    /**
      * 根据书名下载书籍
      *
      * @param bookName

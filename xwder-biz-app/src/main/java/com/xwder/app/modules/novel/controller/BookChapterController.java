@@ -92,7 +92,7 @@ public class BookChapterController {
         for (BookInfo book : bookInfoList) {
             totalWords += book.getWordSize();
         }
-        model.addAttribute("totalWords", totalWords/10000);
+        model.addAttribute("totalWords", totalWords / 10000);
 
         Page<BookChapter> bookChapterPage = bookChapterService.listBookChapterByBookId(bookId, 1, 20000, SysConstant.order_asc);
         List<BookChapter> bookChapterList = bookChapterPage.getContent();
@@ -101,7 +101,7 @@ public class BookChapterController {
             BookChapter lastChapter = bookChapterList.get(bookChapterList.size() - 1);
             model.addAttribute("lastChapter", lastChapter);
             String lastChapterContentStr = HtmlUtils.htmmConvertTxt(lastChapter.getChapterContent());
-            model.addAttribute("lastChapterContent", StringUtils.left(lastChapterContentStr,50));
+            model.addAttribute("lastChapterContent", StringUtils.left(lastChapterContentStr, 50));
             model.addAttribute("startChapter", bookChapterList.get(0));
         }
 
@@ -118,9 +118,24 @@ public class BookChapterController {
      */
     @RequestMapping(value = "/{bookId}/{chapterId}")
     public String getChapterInfoByBookIdAndChapterId(@PathVariable @Min(1) @Max(100000) Integer bookId,
-                                                     @PathVariable @Min(1) @Max(20000) Integer chapterId,
+                                                     @PathVariable @Min(1) Integer chapterId,
                                                      Model model) {
+        BookChapter currentChapter = bookChapterService.getBookChapterByBookIdAndChapterId(bookId, chapterId);
+        if (currentChapter == null) {
+            return "book/chapter";
+        }
 
+        // 章节内容
+        String localChapterContent = bookInfoService.getLocalChapterContent(bookId, chapterId);
+        currentChapter.setChapterContent(localChapterContent);
+
+        model.addAttribute("currentChapter",currentChapter);
+        BookInfo bookInfo = bookInfoService.getBookInfoById(bookId);
+        model.addAttribute("bookInfo",bookInfo);
+        BookChapter frontChapter = bookChapterService.getBookChapterByBookIdAndChapterId(bookId, chapterId-1);
+        BookChapter nextChapter = bookChapterService.getBookChapterByBookIdAndChapterId(bookId, chapterId+1);
+        model.addAttribute("frontChapter",frontChapter);
+        model.addAttribute("nextChapter",nextChapter);
         return "book/chapter";
     }
 }

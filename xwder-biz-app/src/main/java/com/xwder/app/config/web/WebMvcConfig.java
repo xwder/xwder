@@ -34,7 +34,7 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
     @Override
     protected void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(userLoginInterceptor)
-                .addPathPatterns("/user/**")
+                .addPathPatterns("/user/**","/book/**")
                 .excludePathPatterns("/static/*");
 
         super.addInterceptors(registry);

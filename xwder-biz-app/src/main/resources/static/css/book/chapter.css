@@ -1,0 +1,328 @@
+#reader_warp {
+    margin: 0 auto;
+    position: relative;
+}
+.rw_3 {
+    width: 960px;
+}
+.com-recbox {
+    line-height: 1;
+}
+.reader_crumb, .reader_crumb a {
+    color: #666;
+}
+.reader_crumb {
+    font-size: 13px;
+    letter-spacing: .86px;
+    line-height: 33px;
+}
+.reader_crumb, .reader_crumb a {
+    color: #666;
+}
+.rb_1 .reader_box {
+    background: #faeed7;
+    box-shadow: 0 2px 20px 0 rgba(0,0,0,.05);
+}
+
+.reader_box {
+    /*padding: 0 27px;*/
+    position: relative;
+}
+.marker {
+    width: 17px;
+    height: 26px;
+    background-image: url(http://rcode.zongheng.com/v2018/images/reader_ico.png);
+    position: absolute;
+    right: 18px;
+    top: 0;
+    cursor: pointer;
+    background-position: -120px 0;
+}
+.reader_box .title {
+    padding-top: 40px;
+    padding-bottom: 10px;
+    text-align: center;
+}
+.reader_box .title .iconbox {
+    display: inline-block;
+}
+.title_txtbox {
+    line-height: 40px;
+    font-size: 28px;
+    color: #333;
+    letter-spacing: 1.08px;
+    display: inline;
+    font-weight: 700;
+}
+.bookinfo {
+    color: #999;
+}
+.bookinfo {
+    text-align: center;
+    font-family: MicrosoftYaHei;
+    font-size: 12px;
+    letter-spacing: .86px;
+    line-height: 23px;
+    padding-bottom: 20px;
+    position: relative;
+}
+.bookinfo a {
+    color: #2a2a2a;
+}
+a, a:active, a:hover, a:link {
+    text-decoration: none;
+}
+.reader_lnkbtn {
+    color: #333;
+    font-size: 12px;
+    width: 87px;
+    height: 24px;
+}
+.reader_lnkbtn {
+    border: 1px solid #b3b3b3;
+    border-radius: 2px;
+    height: 24px;
+    line-height: 24px;
+    position: absolute;
+    right: 0;
+    margin-top: -2px;
+    color: #333;
+    text-align: center;
+}
+.reader_line {
+    border-top: 1px dotted #ccc;
+    height: 1px;
+    overflow: hidden;
+    display: block;
+}
+.content {
+    border-left: 1px dotted #ccc;
+    border-right:1px dotted #ccc;
+}
+
+.reader_box .content {
+    padding: 30px 0 50px;
+}
+.reader_box .content p {
+    color: #333;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    letter-spacing: 1px;
+    line-height: 2em;
+    text-indent: 2em;
+    padding: .5em .3em;
+    font-size: 18px;
+    font-family: 微软雅黑, "Microsoft YaHei", "Apple LiGothic Medium";
+}
+
+ .gpd_setfont .sbf_1, .rft_1 p {
+     font-family: 宋体, SimSun, STSong;
+ }
+a, a:active, a:hover, a:link {
+    text-decoration: none;
+}
+.big_donate {
+    width: 250px;
+    height: 50px;
+    background: #d32f2f;
+    color: #fff;
+    text-align: center;
+    display: block;
+    margin: 0 auto;
+    border-radius: 2px;
+}
+.space_h80 {
+    height: 80px;
+    clear: both;
+}
+.chap_btnbox {
+    display: table;
+    height: 50px;
+    width: 100%;
+    border-spacing: 5px 0;
+}
+.chap_btnbox a {
+    background: rgba(0,0,0,.03);
+    border-radius: 2px;
+    height: 50px;
+    display: table-cell;
+    border-collapse: separate;
+    line-height: 50px;
+    text-align: center;
+    font-size: 14px;
+    color: #333;
+    letter-spacing: .93px;
+    width: 180px;
+}
+.chap_btnbox a.nextchapter {
+    width: 200px;
+}
+.chap_btnbox a {
+    background: rgba(0,0,0,.03);
+    border-radius: 2px;
+    height: 50px;
+    display: table-cell;
+    border-collapse: separate;
+    line-height: 50px;
+    text-align: center;
+    font-size: 14px;
+    color: #333;
+    letter-spacing: .93px;
+    width: 180px;
+}
+.ctrl_tips {
+    text-align: center;
+    font-size: 12px;
+    color: #999;
+    letter-spacing: 1.2px;
+    line-height: 60px;
+}
+.chapter_forum {
+    width: auto;
+    padding-bottom: 30px;
+}
+.chapter_forum .chapter_forum_tit {
+    border-bottom: 1px solid #ddd5c6;
+    height: 48px;
+    line-height: 48px;
+}
+.chapter_forum .chapter_forum_tit h3 {
+    float: left;
+    font-family: MicrosoftYaHei;
+    font-size: 16px;
+    color: #333;
+    letter-spacing: .8px;
+    margin-right: 15px;
+    font-weight: 700;
+}
+a, a:active, a:hover, a:link {
+    text-decoration: none;
+}
+.chapter_forum_btn {
+    border: 1px solid #d32f2f;
+    border-radius: 2px;
+    width: 87px;
+    height: 24px;
+    float: right;
+    line-height: 24px;
+    color: #a11313;
+    letter-spacing: .86px;
+    text-align: center;
+    margin-top: 10px;
+    font-size: 12px;
+}
+li, ol, ul {
+    list-style: none;
+}
+blockquote, body, button, dd, dl, dt, embed, fieldset, form, h1, h2, h3, h4, h5, h6, input, li, object, ol, pre, table, td, th, ul {
+    margin: 0;
+    padding: 0;
+    font-size: 12px;
+    word-wrap: break-word;
+    font-family: PingFangSC-Regular,HelveticaNeue-Light,'Helvetica Neue Light','Microsoft YaHei',sans-serif,Simsun;
+    color: #333;
+}
+.forums-list li {
+    padding: 30px 0 0;
+    border-bottom: 1px dotted #d6d6d6;
+}
+.user-head {
+    position: relative;
+    width: 50px;
+    height: 50px;
+    float: left;
+    margin-right: 20px;
+    text-align: center;
+}
+.chapter_morethread {
+    font-size: 14px;
+    color: #999;
+    letter-spacing: 1.17px;
+    text-align: center;
+    margin: 20px 0 30px;
+}
+
+
+/*----------------*/
+.error-html-box {
+    margin-top: 100px;
+}
+.error-html {
+    width: 690px;
+    margin: 0 auto;
+}
+.error-html .error-top {
+    background: url(http://rcode.zongheng.com/v2018/images/error/error-bg.png) 60px top no-repeat;
+    border-bottom: 10px solid #f7f8fa;
+    padding-bottom: 40px;
+    min-height: 250px;
+    height: auto!important;
+    height: 250px;
+    padding-left: 300px;
+}
+.error-html .error-top-1 {
+    width: 260px;
+    padding-top: 10px;
+}
+.error-html .error-top-1 p {
+    font-size: 14px;
+    color: #aeafc5;
+    letter-spacing: .78px;
+    text-align: center;
+    font-weight: 700;
+    background: url(http://rcode.zongheng.com/v2018/images/error/oops.png) center bottom no-repeat;
+    padding-bottom: 75px;
+}
+.error-html .error-top-2 {
+    padding-top: 25px;
+}
+.error-bottom {
+    padding: 20px 0 0 100px;
+}
+.error-bottom .btns {
+    padding: 18px 0;
+}
+
+.clearfix {
+    zoom: 1;
+}
+.error-bottom .btns a {
+    border: 1px solid #e6e6e6;
+    border-radius: 2px;
+    width: 100px;
+    height: 30px;
+    float: left;
+    line-height: 30px;
+    text-align: center;
+    margin-right: 10px;
+    color: #333;
+    letter-spacing: .86px;
+}
+.error-bottom .tel {
+    color: #666;
+    letter-spacing: .86px;
+}
+.error-bottom .tel em {
+    color: #e9e9e9;
+}
+
+.reader_crumb a:hover{
+    color: red;
+}
+.bookinfo a:hover{
+    color: red;
+}
+.chap_btnbox a:hover{
+    color: red;
+}
+#reader-chapterforum-wrap a:hover{
+    color: red;
+}
+
+
+#chapterContent {
+    font-size: 18px;
+    padding-left: 20px;
+    padding-right: 20px;
+    line-height: 35px;
+}

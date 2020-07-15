@@ -193,7 +193,7 @@ mq:
 novel:
   book:
     # 书籍章节本地存放目录
-    dir: E:\\novel
+    dir: I:\\novel
 lottery:
   save:
     # 上传的lottery本地存放目录

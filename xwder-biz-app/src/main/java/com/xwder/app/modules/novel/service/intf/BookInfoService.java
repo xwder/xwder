@@ -57,4 +57,13 @@ public interface BookInfoService {
      */
     List<BookInfo> listBookInfoByAuthor(String author);
 
+    /**
+     * 从本地获取章节内容
+     *
+     * @param bookId
+     * @param chapterId
+     * @return
+     */
+    String getLocalChapterContent(Integer bookId, Integer chapterId);
+
 }
