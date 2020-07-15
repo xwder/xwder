@@ -7,6 +7,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import java.util.TimeZone;
@@ -16,6 +17,7 @@ import java.util.TimeZone;
  * @version 1.0
  * @date 2020/07/07
  */
+@EnableAsync
 @EnableJpaAuditing
 @EnableCaching
 @ServletComponentScan

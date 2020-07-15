@@ -1,9 +1,14 @@
 package com.xwder.app.interceptor;
 
+import cn.hutool.core.util.StrUtil;
+import com.xwder.app.attribute.SysConfigAttribute;
 import com.xwder.app.consts.SysConstant;
 import com.xwder.app.modules.user.entity.User;
+import com.xwder.app.modules.user.service.intf.UserService;
+import com.xwder.app.utils.CookieUtils;
 import com.xwder.app.utils.SessionUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -20,6 +25,12 @@ import javax.servlet.http.HttpServletResponse;
 @Component
 public class UserLoginInterceptor implements HandlerInterceptor {
 
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private SysConfigAttribute sysConfigAttribute;
+
     /**
      * 请求处理前，也就是访问Controller前
      *
@@ -34,11 +45,28 @@ public class UserLoginInterceptor implements HandlerInterceptor {
         User sessionUser = (User) SessionUtil.getSessionAttribute(SysConstant.SESSION_USER);
         StringBuffer requestURLSB = request.getRequestURL();
         log.info("用户登录拦截器获取到用户访问的地址: {}", requestURLSB.toString());
+        String userSessionToken = CookieUtils.getCookieValue(request, sysConfigAttribute.getSessionTokenName());
         if (sessionUser == null) {
-            //request.getRequestDispatcher("/login.html").forward(request, response);
-            response.sendRedirect("/login.html?redirect=" + requestURLSB);
-            return false;
+            if (StrUtil.isNotEmpty(userSessionToken)) {
+                // 从redis中获取
+                User redisSessionUser = userService.getUserSessionFromRedis(userSessionToken);
+                if (redisSessionUser != null) {
+                    // session 写入用户信息
+                    SessionUtil.setSessionAttribute(SysConstant.SESSION_USER, redisSessionUser);
+                }else {
+                    //request.getRequestDispatcher("/login.html").forward(request, response);
+                    response.sendRedirect("/login.html?redirect=" + requestURLSB);
+                    return false;
+                }
+            }else {
+                //request.getRequestDispatcher("/login.html").forward(request, response);
+                response.sendRedirect("/login.html?redirect=" + requestURLSB);
+                return false;
+            }
         }
+
+        // 更新redis中session时间 可以考虑使用异步处理
+        userService.updateRedisUserSessionExpireTime(userSessionToken,SysConstant.USER_SESSION_REDIS_TIME);
         return true;
     }
 
@@ -69,4 +97,7 @@ public class UserLoginInterceptor implements HandlerInterceptor {
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
 
     }
+
+
+
 }

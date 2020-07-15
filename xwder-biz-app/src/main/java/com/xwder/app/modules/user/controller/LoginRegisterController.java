@@ -151,6 +151,8 @@ public class LoginRegisterController {
         SessionUtil.setSessionAttribute(SysConstant.SESSION_USER, user);
         // cookie 写人 认证 xwder-token
         CookieUtils.setCookie(request, response, sysConfigAttribute.getSessionTokenName(), xwderToken);
+        // 写入redis session
+        userService.saveUserSessionToRedis(xwderToken,resultUser,SysConstant.USER_SESSION_REDIS_TIME);
 
         CommonResult<User> commonResult = CommonResult.success(resultUser);
         return commonResult;
@@ -164,7 +166,7 @@ public class LoginRegisterController {
      * @return
      */
     @GetMapping(value = "/doLoginOut")
-    public Object userLogin(HttpServletRequest request, HttpServletResponse response) {
+    public Object loginOut(HttpServletRequest request, HttpServletResponse response) {
         String xwderToken = CookieUtils.getCookieValue(request, sysConfigAttribute.getSessionTokenName());
 
         RedirectView redirectTarget = new RedirectView();
@@ -178,6 +180,7 @@ public class LoginRegisterController {
         // cookie 写人 认证 xwder-token
         CookieUtils.setCookie(request, response, sysConfigAttribute.getSessionTokenName(), xwderToken);
         CookieUtils.deleteCookie(request, response, xwderToken);
+        userService.deleteRedisUserSession(xwderToken);
         return redirectTarget;
     }
 

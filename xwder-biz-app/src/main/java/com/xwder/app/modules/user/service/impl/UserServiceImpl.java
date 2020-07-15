@@ -5,6 +5,7 @@ import cn.hutool.json.JSONUtil;
 import com.google.common.collect.Maps;
 import com.xwder.app.attribute.SysConfigAttribute;
 import com.xwder.app.consts.RedisConstant;
+import com.xwder.app.consts.SysConstant;
 import com.xwder.app.consts.UserStatusEnum;
 import com.xwder.app.config.mq.MQProducerMessage;
 import com.xwder.app.config.mq.RabbitConfig;
@@ -153,7 +154,7 @@ public class UserServiceImpl implements UserService {
     public User userLogin(User user) {
         String userId = user.getUserId();
         User sourceUser = getUserByUserUserId(userId);
-        if (sourceUser==null) {
+        if (sourceUser == null) {
             return null;
         }
         String loginPassWord = Md5Crypt.apr1Crypt(user.getPassword().getBytes(), sourceUser.getSalt());
@@ -228,5 +229,54 @@ public class UserServiceImpl implements UserService {
         // 清除缓存
         redisUtil.del(redisKey);
         return user;
+    }
+
+    /**
+     * 从redis中获取会话信息
+     *
+     * @param token
+     * @return
+     */
+    @Override
+    public User getUserSessionFromRedis(String token) {
+        String userSessionRedisKey = SysConstant.USER_SESSION_REDIS_KEY + ":" + token;
+        User user = (User) redisUtil.get(userSessionRedisKey);
+        return user;
+    }
+
+    /**
+     * 保存用户会话到redis
+     *
+     * @param token
+     * @param user
+     * @param sessionTime
+     */
+    @Override
+    public void saveUserSessionToRedis(String token, User user, Integer sessionTime) {
+        String userSessionRedisKey = SysConstant.USER_SESSION_REDIS_KEY + ":" + token;
+        redisUtil.set(userSessionRedisKey, user, sessionTime);
+    }
+
+    /**
+     * 删除redis用户会话信息
+     *
+     * @param token
+     */
+    @Override
+    public void deleteRedisUserSession(String token) {
+        String userSessionRedisKey = SysConstant.USER_SESSION_REDIS_KEY + ":" + token;
+        redisUtil.del(userSessionRedisKey);
+    }
+
+    /**
+     * 删除redis用户会话信息
+     *
+     * @param token
+     * @param expireTime
+     */
+    @Override
+    public void updateRedisUserSessionExpireTime(String token, Integer expireTime) {
+        String userSessionRedisKey = SysConstant.USER_SESSION_REDIS_KEY + ":" + token;
+        redisUtil.expire(userSessionRedisKey, expireTime);
     }
 }

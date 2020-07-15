@@ -46,9 +46,41 @@ public interface UserService {
 
     /**
      * 邮箱验证操作
+     *
      * @param verifyKey
      * @return
      */
     User verifyEmail(String verifyKey);
 
+    /**
+     * 从redis中获取会话信息
+     *
+     * @param token
+     * @return
+     */
+    User getUserSessionFromRedis(String token);
+
+    /**
+     * 保存用户会话到redis
+     *
+     * @param token
+     * @param user
+     * @param sessionTime
+     */
+    void saveUserSessionToRedis(String token, User user, Integer sessionTime);
+
+    /**
+     * 删除redis用户会话信息
+     *
+     * @param token
+     */
+    void deleteRedisUserSession(String token);
+
+    /**
+     * 删除redis用户会话信息
+     *
+     * @param token
+     * @param expireTime
+     */
+    void updateRedisUserSessionExpireTime(String token, Integer expireTime);
 }

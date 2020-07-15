@@ -13,6 +13,16 @@ public class SysConstant {
     public static final String SESSION_USER = "sessionUser";
 
     /**
+     * redis user session key
+     */
+    public static final String USER_SESSION_REDIS_KEY = "xwder:user:session";
+
+    /**
+     * redis user session key TIME
+     */
+    public static final int USER_SESSION_REDIS_TIME = 1800;
+
+    /**
      * 排序字符串
      */
     public static final String order_desc = "desc";
