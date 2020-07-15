@@ -1,6 +1,5 @@
 package com.xwder.app.modules.novel.service.intf;
 
-import com.xwder.app.modules.novel.entity.BookChapter;
 import com.xwder.app.modules.novel.entity.BookInfo;
 import com.xwder.cloud.commmon.api.CommonResult;
 import org.springframework.data.domain.Page;
@@ -48,5 +47,14 @@ public interface BookInfoService {
      * @return
      */
     Page<BookInfo> listBookInfo(String category, Integer pageNum, Integer pageSize);
+
+
+    /**
+     * 根据author查询所有书籍
+     *
+     * @param author
+     * @return
+     */
+    List<BookInfo> listBookInfoByAuthor(String author);
 
 }

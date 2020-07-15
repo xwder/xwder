@@ -43,13 +43,6 @@ public class BookInfoController {
     private BookInfoService bookInfoService;
 
     @ResponseBody
-    @RequestMapping(value = "/{id}")
-    public CommonResult getBookInfoById(@PathVariable @Min(1) @Max(10000) Integer id) {
-        BookInfo bookInfo = bookInfoService.getBookInfoById(id);
-        return CommonResult.success(bookInfo);
-    }
-
-    @ResponseBody
     @RequestMapping(value = "")
     public CommonResult getBookInfoByBookName(@RequestParam("bookName") String bookName) {
         List<BookInfo> bookInfoList = bookInfoService.listBookInfoByBookName(bookName);
@@ -99,6 +92,7 @@ public class BookInfoController {
         model.addAttribute("totalPages", bookInfoPage.getTotalPages());
         model.addAttribute("currentPage", pageNum);
         model.addAttribute("bookInfoPage", bookInfoPage);
+        model.addAttribute("category", category);
 
         return "book/index";
     }

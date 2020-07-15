@@ -79,6 +79,18 @@ public class BookInfoServiceImpl implements BookInfoService {
     }
 
     /**
+     * 根据author查询所有书籍
+     *
+     * @param author
+     * @return
+     */
+    @Override
+    public List<BookInfo> listBookInfoByAuthor(String author){
+        List<BookInfo> bookInfoList = bookInfoRepository.findAllByAuthor(author);
+        return bookInfoList;
+    }
+
+    /**
      * 根据书名下载书籍
      *
      * @param bookName

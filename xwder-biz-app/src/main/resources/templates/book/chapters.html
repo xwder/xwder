@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html  lang="zh" xmlns:th="http://www.thymeleaf.org">
+<title th:text="${bookInfo.bookName}">小说阅读</title>
+<link th:href="@{/css/book/chapters.css}" href="../static/css/index.css" rel="stylesheet"/>
+<head th:include="include :: head"></head>
+
+<body class="antialiased" style="background-color: #FFFFFF;">
+<div class="page">
+  <header class="navbar navbar-expand-md navbar-light">
+    <div class="container-xl">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <a th:href="@{index}" href=".." class="navbar-brand navbar-brand-autodark d-none-navbar-horizontal pr-0 pr-md-3">
+        <img th:src="@{/image/logo/logo.svg}" src="../static/images/logo/logo.svg" alt="Tabler" class="navbar-brand-image">
+      </a>
+      <!--头部右边 是否登录还是显示用户头像-->
+      <div th:include="include :: navigationBar"></div>
+    </div>
+  </header>
+  <!--导航栏-->
+  <div th:include="include :: navigationMenu" class="navbar-expand-md"></div>
+      <div class="content">
+        <div class="container-xl">
+
+          <div class="page-header">
+            <div class="book-top clearfix">
+              <div class="book-main fl">
+                <div class="book-detail clearfix">
+                  <div class="book-img fl">
+
+                    <em class=""></em>
+
+                    <img src="http://static.zongheng.com/upload/cover/d9/10/d910eee9255ca96de144378e478db5dd.jpeg" alt="陆地键仙"
+                         th:if="${bookInfo!=null}"
+                         th:src="${bookInfo.getBookImgSource()}"
+                         th:alt="${bookInfo.bookName}" width="200" height="264">
+                  </div>
+                  <div class="book-info">
+                    <div class="book-name" th:if="${bookInfo!=null}" th:text="${bookInfo.bookName}">陆地键仙
+                      <em class="sign"></em>
+                    </div>
+                    <div class="book-label">
+                      <a href="#" th:if="${bookInfo!=null}" th:text="${bookInfo.updateStatus}"  class="state" target="_blank" >连载中</a>
+                      <a href="http://www.zongheng.com/store/c1/c0/b0/u0/p1/v9/s9/t0/u0/i0/ALL.html" th:href="${'category.html?category='+bookInfo.category}" th:if="${bookInfo!=null}" th:text="${bookInfo.category}"  class="label" target="_blank" >奇幻玄幻</a>
+                      <span>
+                                <a href="#" target="_blank" >穿越</a>
+                                <a href="#" target="_blank" >爽文</a>
+                                <a href="#" target="_blank" >搞笑</a>
+                                <a href="#" target="_blank" >异世</a>
+
+                            </span>
+                    </div>
+                    <div class="nums"><span>字数 <i th:if="${bookInfo!=null}" th:text="${bookInfo.wordSize}">35.9万 </i> </span> <span>总推荐 <i>好多万</i> </span> <span>总点击 <i>好多万</i> </span> <span>周推荐 <i>好多</i> </span></div>
+                    <div class="book-dec Jbook-dec hide">
+                      <p th:if="${bookInfo!=null}" th:text="${bookInfo.bookDesc}">天不生我祖安，喷道万古如长夜。键来！被雷劈的少年醒来发现自己成为公爵府上门女婿，新婚之夜被发现睡在小姨子床上，面对这地狱开局看他如何靠一块键盘逢凶化吉。公众号：六如和尚</p>
+                    </div>
+                    <div class="btn-group">
+                      <a class="btn read-btn btn-danger" target="_blank" href="http://book.zongheng.com/chapter/1005752/61244105.html" th:if="${startChapter!=null}" th:href="${startChapter.bookId+'/'+startChapter.id+'.html'}"  >开始阅读</a>
+                      <div class="btn store-btn Jaddshelf" >加入书架</div>
+                      <div class="fr link-group">
+                        <a class="all-catalog" target="_blank" href="" ><em></em>全部目录</a>
+                        <a class="vote" href="javascript:void(0);" id="bookDonate_openRecTicket"><em></em>投推荐票</a>
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="book-new-chapter">
+                  <h4>最新章节</h4>
+                  <div class="tit lastChapter"><a  target="_blank" th:if="${lastChapter!=null}" th:href="${lastChapter.bookId+'/'+lastChapter.id+'.html'}" th:text="${lastChapter.chapterName}">第110章 索然无味</a></div>
+                  <div class="con" th:if="${lastChapterContent!=null}" th:text="${lastChapterContent}">纪登徒鬼鬼祟祟地东张西望，每次看到美女就露出一脸痴-汉的样子，那模样搞得祖安想到前世的毛利...</div>
+                  <div class="time" th:if="${lastChapterContent!=null}" th:text="${'最后更新时间:&nbsp;&nbsp;&nbsp;'+ #dates.format(lastChapter.updateTime, 'yyyy-MM-dd HH:mm')}">
+                        最后更新时间:
+                  </div>
+                </div>
+              </div>
+              <div class="book-side fr">
+                <div class="book-author">
+                  <div class="au-head">
+                    <a href="" target="_blank"><img style="height: 60px;width: 60px;" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1594753584492&di=3309c3a456c04cd511371bdc31853378&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201704%2F15%2F20170415120933_h3VQv.thumb.224_0.jpeg" ></a>
+                    <em>签约作家</em>
+                  </div>
+                  <div class="au-name"><a href="" th:if="${bookInfo!=null}" th:text="${bookInfo.author}" >六如和尚</a></div>
+                  <div class="au-words">
+                    <span>作品总数<i a href="" th:if="${bookNum!=null}" th:text="${bookNum}" >2</i></span>
+                    <span>累计字数<i th:if="${totalWords!=null}" th:text="${totalWords}+'万'">674.5万</i></span>
+                    <span>本月更新<i>?天</i></span>
+                  </div>
+                  <div class="au-says">
+                    <h4>作者有话说</h4>
+                    <div class="con empty">写你大爷写个屁小说~~~</div>
+                  </div>
+                </div>
+                <div class="app-in clearfix">
+                  <div class="ewm" data-url="http://dl.zongheng.com/src/apk?bookId=1005752&amp;bookName=%E9%99%86%E5%9C%B0%E9%94%AE%E4%BB%99"><img src="http://rcode.zongheng.com/v2018/images/wx_book.png" alt="" width="80" height="79"></div>
+                  <div class="txt">
+                    <h3>手机看小说</h3>
+                    <p>新用户免费看7天</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="page-header">
+            <div class="volume vip-color">
+              <div>
+                <div class="volume vip-color">
+                  <div class="arrow-top arrow-box">
+                    <b class="top"><i class="arrow1"></i><i class="arrow2"></i></b>
+                  </div>
+                  <em class="v-line"></em><span th:if="${bookInfo!=null}" th:text="${bookInfo.bookName+' 章节目录'}">陆地键仙 章节目录</span>
+                  <em class="count"><span th:if="${bookInfo!=null}" th:text="${'共'+bookChapterList.size()+'章'}">共84章</span><i>·</i>全书共<cite th:if="${bookInfo!=null}" th:text="${bookInfo.getWordSize()}">397884</cite>字</em>
+                </div>
+                <ul class="chapter-list clearfix" >
+                  <li class=" col-4" th:if=" ${bookChapterList != null}"  th:each="bookChapter,bookChapterStat : ${bookChapterList}">
+                    <a href="http://book.zongheng.com/chapter/672340/36898237.html" th:href="${bookChapter.bookId+'/'+bookChapter.id+'.html'}" target="_blank"
+                       th:title="${bookChapter.chapterName + '&nbsp;字数:'+bookChapter.chapterWordSize+' &nbsp;&nbsp;更新时间:'+#dates.format(bookChapter.updateTime, 'yyyy-MM-dd HH:mm')}"
+                       th:text="${bookChapter.chapterName}"
+                       title="第一章 惊蛰 字数：2979 更新时间：2017-06-01 18:00 ">第一章 惊蛰</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <footer th:replace="include :: footer" class="footer footer-transparent"></footer>
+      </div>
+    </div>
+    <!-- Libs JS -->
+    <script th:src="@{/dist/libs/bootstrap/dist/js/bootstrap.bundle.min.js}" src="../../static/dist/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      document.body.style.display = "block";
+
+      $(function() {
+        // 隐藏全局搜索框
+        $("#totalSearchDiv").attr("style","display:none;");
+      });
+    </script>
+
+  </body>
+</html>
