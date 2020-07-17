@@ -38,7 +38,7 @@
                 <div class="d-flex">
                   <div class="mr-3" style="margin-right: 0rem!important;">
                     <div class="input-icon">
-                      <input type="text" class="form-control" placeholder="Search…">
+                      <input type="text" id="searchBook" th:value="${bookName}" name="bookName" class="form-control" placeholder="Search bookName…">
                       <span class="input-icon-addon">
                         <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="10" cy="10" r="7" /><line x1="21" y1="21" x2="15" y2="15" /></svg>
                       </span>
@@ -64,14 +64,14 @@
                         <div class="kind">
                           <div class="bz">作品分类：</div>
                           <div class="nr br sub">
-                            <a class="current store" href="" th:href="${'index.html'}" th:class="${category==null?'current store':'current'}">全部作品</a>
-                            <a class="store" href="" th:href="${'index.html?category=玄幻魔法'}" th:class="${category=='玄幻魔法'?'current store':'current'}">玄幻魔法<em></em></a>
-                            <a class="store" href="" th:href="${'index.html?category=武侠修真'}" th:class="${category=='武侠修真'?'current store':'current'}">武侠修真<em></em></a>
-                            <a class="store" href="" th:href="${'index.html?category=都市言情'}" th:class="${category=='都市言情'?'current store':'current'}">都市言情<em></em></a>
-                            <a class="store" href="" th:href="${'index.html?category=历史军事'}" th:class="${category=='历史军事'?'current store':'current'}">历史军事<em></em></a>
-                            <a class="store" href="" th:href="${'index.html?category=侦探推理'}" th:class="${category=='侦探推理'?'current store':'current'}">侦探推理<em></em></a>
-                            <a class="store" href="" th:href="${'index.html?category=网游动漫'}" th:class="${category=='网游动漫'?'current store':'current'}">网游动漫<em></em></a>
-                            <a class="store" href="" th:href="${'index.html?category=科幻灵异'}" th:class="${category=='科幻灵异'?'current store':'current'}">科幻灵异<em></em></a>
+                            <a class="current store" href="" th:href="${'index.html'}" th:class="${category==null?'current ':'store'}">全部作品</a>
+                            <a class="store" href="" th:href="${'index.html?category=玄幻魔法'}" th:class="${'玄幻魔法' eq category?'current':' store'}">玄幻魔法<em></em></a>
+                            <a class="store" href="" th:href="${'index.html?category=武侠修真'}" th:class="${'武侠修真' eq category?'current':' store'}">武侠修真<em></em></a>
+                            <a class="store" href="" th:href="${'index.html?category=都市言情'}" th:class="${'都市言情' eq category?'current':' store'}">都市言情<em></em></a>
+                            <a class="store" href="" th:href="${'index.html?category=历史军事'}" th:class="${'历史军事' eq category?'current':' store'}">历史军事<em></em></a>
+                            <a class="store" href="" th:href="${'index.html?category=侦探推理'}" th:class="${'侦探推理' eq category?'current':' store'}">侦探推理<em></em></a>
+                            <a class="store" href="" th:href="${'index.html?category=网游动漫'}" th:class="${'网游动漫' eq category?'current':' store'}">网游动漫<em></em></a>
+                            <a class="store" href="" th:href="${'index.html?category=科幻灵异'}" th:class="${'科幻灵异' eq category?'current':' store'}">科幻灵异<em></em></a>
                             <a class="store" href="" >评论文集<em></em></a>
                             <a class="store" href="" >二次元<em></em></a>
                             <br>
@@ -197,11 +197,11 @@
             <ul class="pagination ml-auto">
 
               <!-- 首页 -->
-              <li class="page-item pageItem" ><a class="page-link" href="#" th:href="'/book/index.html?pageNum=1'">首页</a></li>
+              <li class="page-item pageItem" ><a class="page-link" href="#" th:href="${'/book/index.html?pageNum=1'+ (category==null?'':('&category='+category)) + (bookName==null?'':('&bookName='+bookName)) }">首页</a></li>
 
               <!-- 上一页 -->
               <li class="page-item pageItem disabled" th:if="${bookInfoPage.hasPrevious()}" th:class="${bookInfoPage.hasPrevious()?'page-item pageItem':'page-item pageItem disabled'}">
-                <a class="page-link" href="#" th:href="'/book/index.html?pageNum=' + ${bookInfoPage.previousPageable().getPageNumber()+1}" tabindex="-1">
+                <a class="page-link" href="#" th:href="${'/book/index.html?pageNum=' + bookInfoPage.previousPageable().getPageNumber()+1+(category==null?'':('&category='+category)) + (bookName==null?'':('&bookName='+bookName))}" tabindex="-1">
                   <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><polyline points="15 6 9 12 15 18" /></svg>
                   上一页
                 </a>
@@ -209,21 +209,21 @@
 
               <!-- 中间页 -->
               <li  class="page-item active" th:class="${pageNum==currentPage} ? 'page-item pageItem active' : 'page-item pageItem'" th:if="${currentPage>=4 && currentPage+2<bookInfoPage.getTotalPages()}" th:each="pageNum:${#numbers.sequence(currentPage+-2, currentPage+2)}">
-                <a class="page-link"  th:href="'/book/index.html?pageNum=' + ${pageNum}" th:text="${pageNum}" th:if="${pageNum ne bookInfoPage.pageable.getPageNumber()}" href="#">2</a>
-                <a class="page-link"  th:href="'/book/index.html?pageNum=' + ${pageNum}" th:text="${pageNum}" th:if="${pageNum eq bookInfoPage.pageable.getPageNumber()}" href="#">2</a>
+                <a class="page-link"  th:href="${'/book/index.html?pageNum=' + pageNum+(category==null?'':('&category='+category)) + (bookName==null?'':('&bookName='+bookName))}" th:text="${pageNum}" th:if="${pageNum ne bookInfoPage.pageable.getPageNumber()}" href="#">2</a>
+                <a class="page-link"  th:href="${'/book/index.html?pageNum=' + pageNum+(category==null?'':('&category='+category)) + (bookName==null?'':('&bookName='+bookName))}" th:text="${pageNum}" th:if="${pageNum eq bookInfoPage.pageable.getPageNumber()}" href="#">2</a>
               </li>
 
               <!-- 中间页 -->
               <li  class="page-item active" th:class="${pageNum==currentPage} ? 'page-item pageItem active' : 'page-item pageItem'" th:if="${currentPage<=3}" th:each="pageNum:${#numbers.sequence(currentPage, currentPage+4)}">
-                <a class="page-link"  th:href="'/book/index.html?pageNum=' + ${pageNum}" th:text="${pageNum}" th:if="${pageNum ne bookInfoPage.pageable.getPageNumber()}" href="#">2</a>
-                <a class="page-link"  th:href="'/book/index.html?pageNum=' + ${pageNum}" th:text="${pageNum}" th:if="${pageNum eq bookInfoPage.pageable.getPageNumber()}" href="#">2</a>
+                <a class="page-link"  th:href="${'/book/index.html?pageNum=' + pageNum+(category==null?'':('&category='+category)) + (bookName==null?'':('&bookName='+bookName))}" th:text="${pageNum}" th:if="${pageNum ne bookInfoPage.pageable.getPageNumber()}" href="#">2</a>
+                <a class="page-link"  th:href="${'/book/index.html?pageNum=' + pageNum+(category==null?'':('&category='+category)) + (bookName==null?'':('&bookName='+bookName))}" th:text="${pageNum}" th:if="${pageNum eq bookInfoPage.pageable.getPageNumber()}" href="#">2</a>
               </li>
 
               <!-- 下一页 -->
-              <li class="page-item pageItem"><a class="page-link" href="#" th:if="${bookInfoPage.hasNext()}"  th:href="'/book/index.html?pageNum=' + ${bookInfoPage.nextPageable().getPageNumber()+1}" th:text="下一页">3</a></li>
+              <li class="page-item pageItem"><a class="page-link" href="#" th:if="${bookInfoPage.hasNext()}"  th:href="${'/book/index.html?pageNum=' + (bookInfoPage.nextPageable().getPageNumber()+1)+(category==null?'':('&category='+category)) + (bookName==null?'':('&bookName='+bookName))}" th:text="下一页">3</a></li>
 
               <!-- 尾页 -->
-              <li class="page-item pageItem"><a class="page-link" href="#"  th:href="'/book/index.html?pageNum=' + ${bookInfoPage.getTotalPages()}">尾页</a></li>
+              <li class="page-item pageItem"><a class="page-link" href="#"  th:href="${'/book/index.html?pageNum=' + bookInfoPage.getTotalPages()+(category==null?'':('&category='+category)) + (bookName==null?'':('&bookName='+bookName))}">尾页</a></li>
 
             </ul>
           </div>
@@ -257,6 +257,19 @@
       $(function() {
         // 隐藏全局搜索框
         $("#totalSearchDiv").attr("style","display:none;");
+      });
+
+      // 书籍搜索框
+      $('#searchBook').bind('keypress',function(event){
+        if(event.keyCode == 13){
+          var bookName = $('#searchBook').val();
+          console.log(bookName);
+          if (bookName.length < 1 || bookName.length > 20) {
+            return ;
+          }
+          var url = "/book/index.html?bookName="+bookName;
+          window.location.replace(url);
+        }
       });
     </script>
 

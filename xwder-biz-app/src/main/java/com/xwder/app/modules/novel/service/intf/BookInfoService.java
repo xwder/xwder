@@ -21,6 +21,15 @@ public interface BookInfoService {
      */
     CommonResult downBookByBookName(String bookName);
 
+
+    /**
+     * 根据bookId下载txt
+     *
+     * @param bookId
+     * @return
+     */
+    CommonResult downBookByBookId(Integer bookId);
+
     /**
      * 根据书名获取书籍
      *
@@ -47,6 +56,16 @@ public interface BookInfoService {
      * @return
      */
     Page<BookInfo> listBookInfo(String category, Integer pageNum, Integer pageSize);
+
+    /**
+     * 分页查询书籍信息
+     *
+     * @param bookName
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
+    Page<BookInfo> listBookInfoByBookName(String bookName, Integer pageNum, Integer pageSize);
 
 
     /**

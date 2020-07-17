@@ -1,5 +1,6 @@
 package com.xwder.app.modules.novel.controller;
 
+import cn.hutool.core.util.StrUtil;
 import com.xwder.app.modules.novel.entity.BookInfo;
 import com.xwder.app.modules.novel.service.intf.BookInfoService;
 import com.xwder.cloud.commmon.api.CommonResult;
@@ -51,17 +52,27 @@ public class BookInfoController {
 
     @ResponseBody
     @RequestMapping(value = "/down")
-    public Object downBook(String bookName) throws Exception {
-        CommonResult commonResult = bookInfoService.downBookByBookName(bookName);
+    public Object downBook(
+            @RequestParam(value = "bookName", required = false) String bookName,
+            @RequestParam(value = "bookId", required = false) @Min(1) @Max(200000) Integer bookId
+    ) throws Exception {
+        CommonResult commonResult = CommonResult.failed();
+        if (StrUtil.isNotEmpty(bookName)) {
+            commonResult = bookInfoService.downBookByBookName(bookName);
+        }
+        if (bookId != null) {
+            commonResult = bookInfoService.downBookByBookId(bookId);
+        }
         if (commonResult.getCode() == ResultCode.SUCCESS.getCode() && commonResult.getData() != null) {
             Map map = (Map) commonResult.getData();
             File file = (File) map.get("file");
+            String bookNameFile = (String) map.get("fileName");
             //获取文件名
             String fileName = file.getName();
             //创建springframework的HttpHeaders对象
             HttpHeaders headers = new HttpHeaders();
             //下载显示的文件名,解决文件名称乱码问题
-            String downLoadFileName = new String(fileName.getBytes("UTF-8"), "iso-8859-1");
+            String downLoadFileName = new String(bookNameFile.getBytes("UTF-8"), "iso-8859-1");
             //通知浏览器以attachment（下载方式）打开文件
             headers.setContentDispositionFormData("attachment", downLoadFileName);
             //application/octet-stream:二进制流数据(最常见的文件下载)
@@ -79,12 +90,19 @@ public class BookInfoController {
      */
     @RequestMapping("/index")
     public String toBookIndex(@RequestParam(value = "category", required = false) String category,
+                              @RequestParam(value = "bookName", required = false) String bookName,
                               @RequestParam(value = "pageNum", required = false) @Min(1) @Max(10000) Integer pageNum,
                               @RequestParam(value = "pageSize", required = false) @Min(1) @Max(50) Integer pageSize,
                               ModelAndView modelAndView, Model model) {
         pageNum = pageNum == null ? Constant.DEFAULT_PAGE_NUM : pageNum;
         pageSize = pageSize == null ? Constant.DEFAULT_PAGE_SIZE + 1 : pageSize;
-        Page<BookInfo> bookInfoPage = bookInfoService.listBookInfo(category, pageNum, pageSize);
+        Page<BookInfo> bookInfoPage;
+        if (StrUtil.isNotEmpty(bookName)) {
+            model.addAttribute("bookName", bookName);
+            bookInfoPage = bookInfoService.listBookInfoByBookName(bookName, pageNum, pageSize);
+        } else {
+            bookInfoPage = bookInfoService.listBookInfo(category, pageNum, pageSize);
+        }
         model.addAttribute("bookInfos", bookInfoPage.getContent());
         model.addAttribute("startNum", pageSize * (pageNum - 1) + 1);
         model.addAttribute("endNum", pageSize * pageNum);

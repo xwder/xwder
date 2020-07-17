@@ -41,4 +41,11 @@ public interface BookChapterService {
      */
     BookChapter getBookChapterByBookIdAndChapterId(Integer bookId, Integer chapterId);
 
+    /**
+     * 爬取章节内容详情
+     *
+     * @param bookChapter
+     * @return
+     */
+    BookChapter spiderChapterContent(BookChapter bookChapter);
 }

@@ -29,9 +29,9 @@
               </div>
               <!-- 阅读页start -->
               <div class="reader_crumb">当前位置： <a href="http://www.zongheng.com" th:href="${'/book/index.html'}" th:if="${currentChapter != null}"> 小说首页 </a>
-                &gt; <a th:if="${currentChapter != null}" th:href="${'/book/index.html?category='+bookInfo.category}" href="http://www.zongheng.com/category/9.html">都市娱乐 </a>
-                &gt; <a th:if="${currentChapter != null}" th:href="${'/book/'+bookInfo.id+'.html'}" href="http://book.zongheng.com/book/892247.html">大国名厨</a> &gt;
-                <span th:if="${currentChapter != null}" th:text="${bookInfo.bookName}">第一卷：网红食堂</span></div>
+                &gt; <a th:if="${currentChapter != null}" th:href="${'/book/index.html?category='+bookInfo.category}" th:text="${bookInfo.category}" href="http://www.zongheng.com/category/9.html">都市娱乐 </a>
+                &gt; <a th:if="${currentChapter != null}" th:href="${'/book/'+bookInfo.id+'.html'}" href="" th:text="${bookInfo.bookName}" >大国名厨</a> &gt;
+                <span th:if="${currentChapter != null}" th:text="${currentChapter.chapterName}">第一卷：网红食堂</span></div>
 
               <!-- 包裹层 -->
               <div class="rft_1" id="readerFt" style="font-size: 14px;">

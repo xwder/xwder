@@ -127,7 +127,11 @@ public class BookChapterController {
 
         // 章节内容
         String localChapterContent = bookInfoService.getLocalChapterContent(bookId, chapterId);
-        currentChapter.setChapterContent(localChapterContent);
+        if (StrUtil.isEmpty(localChapterContent)) {
+            bookChapterService.spiderChapterContent(currentChapter);
+        }else {
+            currentChapter.setChapterContent(localChapterContent);
+        }
 
         model.addAttribute("currentChapter",currentChapter);
         BookInfo bookInfo = bookInfoService.getBookInfoById(bookId);

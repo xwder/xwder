@@ -14,6 +14,7 @@ import com.xwder.app.modules.novel.service.intf.BookInfoService;
 import com.xwder.app.utils.DateUtil;
 import com.xwder.cloud.commmon.api.CommonResult;
 import com.xwder.cloud.commmon.api.ResultCode;
+import io.swagger.models.auth.In;
 import org.apache.commons.lang.StringEscapeUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -28,10 +29,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * bookservice service
@@ -79,6 +77,28 @@ public class BookInfoServiceImpl implements BookInfoService {
     }
 
     /**
+     * 分页查询书籍信息
+     *
+     * @param bookName
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
+    @Override
+    public Page<BookInfo> listBookInfoByBookName(String bookName, Integer pageNum, Integer pageSize) {
+        Sort sort = Sort.by(Sort.Direction.DESC, "wordSize");
+        Pageable pageable = PageRequest.of(pageNum - 1, pageSize, sort);
+        Page<BookInfo> pageBookInfo;
+        // 直接查
+        if (StringUtil.isEmpty(bookName)) {
+            pageBookInfo = bookInfoRepository.findAll(pageable);
+        } else {
+            pageBookInfo = bookInfoRepository.findByBookNameContaining(bookName, pageable);
+        }
+        return pageBookInfo;
+    }
+
+    /**
      * 根据author查询所有书籍
      *
      * @param author
@@ -120,6 +140,16 @@ public class BookInfoServiceImpl implements BookInfoService {
         if (CollectionUtil.isEmpty(bookInfoList)) {
             logger.info("[{}] 未查询到该书籍", serviceName);
             return CommonResult.failed(ResultCode.VALIDATE_FAILED.getCode(), bookName + "  未查询到该书籍");
+        }
+        return downBook(bookInfoList.get(0));
+    }
+
+    @Override
+    public CommonResult downBookByBookId(Integer bookId) {
+        List<BookInfo> bookInfoList = bookInfoRepository.findAllById(Collections.singleton(bookId));
+        if (CollectionUtil.isEmpty(bookInfoList)) {
+            logger.info("[{}] 未查询到该书籍", serviceName);
+            return CommonResult.failed(ResultCode.VALIDATE_FAILED.getCode(), bookId + "  未查询到该书籍");
         }
         return downBook(bookInfoList.get(0));
     }

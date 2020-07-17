@@ -56,7 +56,8 @@
                       <p th:if="${bookInfo!=null}" th:text="${bookInfo.bookDesc}">天不生我祖安，喷道万古如长夜。键来！被雷劈的少年醒来发现自己成为公爵府上门女婿，新婚之夜被发现睡在小姨子床上，面对这地狱开局看他如何靠一块键盘逢凶化吉。公众号：六如和尚</p>
                     </div>
                     <div class="btn-group">
-                      <a class="btn read-btn btn-danger" target="_blank" href="http://book.zongheng.com/chapter/1005752/61244105.html" th:if="${startChapter!=null}" th:href="${startChapter.bookId+'/'+startChapter.id+'.html'}"  >开始阅读</a>
+                      <a class="btn read-btn btn-danger" target="_blank" href="" th:if="${startChapter!=null}" th:href="${startChapter.bookId+'/'+startChapter.id+'.html'}"  >开始阅读</a>
+                      <a class="btn read-btn btn-danger" target="_blank" href="" th:if="${bookInfo!=null}" th:href="${'down.html?bookId='+bookInfo.id}" >下载</a>
                       <div class="btn store-btn Jaddshelf" >加入书架</div>
                       <div class="fr link-group">
                         <a class="all-catalog" target="_blank" href="" ><em></em>全部目录</a>

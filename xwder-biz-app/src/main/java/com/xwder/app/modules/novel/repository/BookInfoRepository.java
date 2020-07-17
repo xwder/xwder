@@ -36,4 +36,13 @@ public interface BookInfoRepository extends JpaRepository<BookInfo, Integer> {
      */
     List<BookInfo> findAllByAuthor(String author);
 
+
+    /**
+     * 根据书名查询书籍信息
+     *
+     * @param bookName
+     * @param pageable
+     * @return
+     */
+    Page<BookInfo> findByBookNameContaining(String bookName, Pageable pageable);
 }
