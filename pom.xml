@@ -23,6 +23,7 @@
         <module>xwder-biz-manage</module>
         <module>xwder-biz-message</module>
         <module>xwder-biz-app</module>
+        <module>xwder-cloud-admin-server</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
