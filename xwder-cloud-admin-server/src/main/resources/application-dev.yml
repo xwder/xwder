@@ -21,6 +21,7 @@ spring:
       name: "admin"
       password: "11NcXZgZLDx"
 
+
 eureka:
   client:
     service-url:
@@ -58,4 +59,10 @@ management:
         include: '*'
         # 取消暴露metrics端点，如需暴露多个，用,分隔；如需暴露所有端点，用'*'
         # exclude: '*'
-
+    logfile:
+#      config: classpath:config/logback.xml
+#      level:
+#        root: ${LOG_LEVEL:INFO}
+#        com.xwder: info
+      #  方便Spring Boot Admin页面上实时查看日志
+      external-file: D:/usr/local/xwder/logs/xwder-cloud-admin-server/xwder-cloud-admin-server.log

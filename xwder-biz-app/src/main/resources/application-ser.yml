@@ -156,6 +156,21 @@ eureka:
     # 表示Eureka Server至上一次收到client的心跳之后，等待下一次心跳的超时时间，在这个时间内若没收到下一次心跳，则移除该Instance。
     lease-expiration-duration-in-seconds: 5
 
+management:
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        # 暴露.端点
+        include: '*'
+        # 取消暴露metrics端点，如需暴露多个，用,分隔；如需暴露所有端点，用'*'
+        #exclude: '*'
+
+logging:
+  file: D:/usr/local/xwder/logs/xwder-biz-app/xwder-biz-app.log
+
 #图形验证码配置
 kaptcha:
   height: 50
@@ -214,7 +229,7 @@ mq:
 novel:
   book:
     # 书籍章节本地存放目录
-    dir: E:\\novel
+    dir: I:\\novel
 lottery:
   save:
     # 上传的lottery本地存放目录

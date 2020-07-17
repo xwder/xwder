@@ -24,15 +24,12 @@ spring:
 
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
-    time-zone: Asia/Shanghai
+    time-zone: GMT+8
 
   datasource:
-#    url: jdbc:mysql://114.67.85.146:3306/xwder?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai
-#    username: xwder
-#    password: ENC(FHsDQEpkPHG5Ou8eFedR2neYxGIoCIm2m2bSPT/Y+UY=)
-    url: jdbc:mysql://192.168.30.25:3306/xwder?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai
-    username: root
-    password: ENC(Z+wToNutiivpWkpHlL0zPw==)
+    url: jdbc:mysql://114.67.85.146:3306/xwder?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai
+    username: xwder
+    password: ENC(FHsDQEpkPHG5Ou8eFedR2neYxGIoCIm2m2bSPT/Y+UY=)
     driver-class-name: com.mysql.cj.jdbc.Driver
     platform: mysql
     type: com.alibaba.druid.pool.DruidDataSource
@@ -67,22 +64,6 @@ mybatis:
   mapper-locations:
     - classpath:mapper/*.xml
     - classpath*:com/**/mapper/*.xml
-
-# 日志配置
-logging:
-  level:
-    # 显示sql
-    com:
-      xwder:
-        biz:
-          model:
-            book:
-              # 控制台sql是否显示 debug 显示sql,info 不显示
-              mapper: info
-          book:
-            dao: debug
-
-
 
 jasypt:
   encryptor:
@@ -121,6 +102,10 @@ feign:
         readTimeout: 60000
         loggerLevel: full  # full | basic | none | headers
         #requestInterceptors: 拦截器
+
+logging:
+  file: D:/usr/local/xwder/logs/xwder-biz-book/xwder-biz-book.log
+
 
 management:
   endpoint:

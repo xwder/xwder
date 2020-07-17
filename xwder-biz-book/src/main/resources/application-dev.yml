@@ -103,6 +103,11 @@ feign:
         loggerLevel: full  # full | basic | none | headers
         #requestInterceptors: 拦截器
 
+# springboot admin 在线显示日志需要配置这个
+logging:
+  file: D:/usr/local/xwder/logs/xwder-biz-book/xwder-biz-book.log
+
+
 management:
   endpoint:
     health:
@@ -114,10 +119,6 @@ management:
         include: '*'
         # 取消暴露metrics端点，如需暴露多个，用,分隔；如需暴露所有端点，用'*'
         #exclude: '*'
-  # prometheus 监控
-  metrics:
-    tags:
-      application: ${spring.application.name}
 
 book:
   latest-chapter-url: https://spider.xwder.com/api/v1/book/book
