@@ -120,3 +120,12 @@ xwder-cloud-common/target/
 /xwder-biz-message/target/classes/
 /xwder-biz-gateway/target/classes/
 /xwder-biz-book/target/classes/
+/xwder-biz-book/target/xwder-biz-book-1.0-SNAPSHOT.jar.original
+/xwder-biz-message/target/
+/xwder-biz-app/target/
+/xwder-biz-model/target/classes/com/xwder/biz/model/book/mapper/
+/xwder-cloud-admin-server/target/
+/xwder-cloud-config-client/target/
+/xwder-cloud-config-server/target/
+/xwder-cloud-gateway/target/
+/xwder-cloud-mybatisgenerator/target/
