@@ -31,4 +31,14 @@ public class SysConstant {
      * 排序字符串
      */
     public static final String order_asc = "asc";
+
+    /**
+     * 通用成功标识
+     */
+    public static final String SUCCESS = "0";
+
+    /**
+     * 通用失败标识
+     */
+    public static final String FAIL = "1";
 }

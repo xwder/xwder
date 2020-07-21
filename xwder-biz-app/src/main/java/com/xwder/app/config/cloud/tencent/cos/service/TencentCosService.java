@@ -1,4 +1,4 @@
-package com.xwder.app.modules.cloud.tencent.cos.service;
+package com.xwder.app.config.cloud.tencent.cos.service;
 
 import com.qcloud.cos.COSClient;
 import com.qcloud.cos.ClientConfig;
@@ -9,7 +9,7 @@ import com.qcloud.cos.exception.CosClientException;
 import com.qcloud.cos.exception.CosServiceException;
 import com.qcloud.cos.model.*;
 import com.qcloud.cos.region.Region;
-import com.xwder.app.modules.cloud.tencent.cos.auth.TencentCosAuthService;
+import com.xwder.app.config.cloud.tencent.cos.auth.TencentCosAuthService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,8 +1,8 @@
-package com.xwder.app.modules.cloud.baidu.ocr.auth;
+package com.xwder.app.config.cloud.baidu.ocr.auth;
 
-import com.xwder.app.modules.cloud.baidu.ocr.util.Base64Util;
-import com.xwder.app.modules.cloud.baidu.ocr.util.FileUtil;
-import com.xwder.app.modules.cloud.baidu.ocr.util.HttpUtil;
+import com.xwder.app.config.cloud.baidu.ocr.util.Base64Util;
+import com.xwder.app.config.cloud.baidu.ocr.util.FileUtil;
+import com.xwder.app.config.cloud.baidu.ocr.util.HttpUtil;
 import com.xwder.app.utils.DateUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

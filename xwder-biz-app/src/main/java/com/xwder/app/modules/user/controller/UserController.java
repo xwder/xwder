@@ -33,7 +33,7 @@ public class UserController {
     @RequestMapping("/index")
     private String toUser(ModelAndView modelAndView) {
 
-
+        log.info("/user/index.html");
         return "user/user";
     }
 

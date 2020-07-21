@@ -1,4 +1,4 @@
-package com.xwder.app.modules.cloud.tencent.cos.auth;
+package com.xwder.app.config.cloud.tencent.cos.auth;
 
 import com.github.pagehelper.util.StringUtil;
 import com.google.common.collect.Maps;

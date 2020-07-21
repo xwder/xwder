@@ -4,7 +4,7 @@ import cn.hutool.core.util.NumberUtil;
 import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
-import com.xwder.app.modules.cloud.baidu.ocr.auth.BaiduCommonTextOCRService;
+import com.xwder.app.config.cloud.baidu.ocr.auth.BaiduCommonTextOCRService;
 import com.xwder.app.modules.lottery.service.intf.LotteryService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

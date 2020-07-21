@@ -1,4 +1,4 @@
-package com.xwder.app.modules.cloud.baidu.ocr.util;
+package com.xwder.app.config.cloud.baidu.ocr.util;
 
 /**
  * Base64 工具类

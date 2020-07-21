@@ -44,13 +44,18 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+        format_sql: true
+        # 指出是什么操作生成了该语句
+        use_sql_comments: true
     show-sql: true
 
   datasource:
-    url: jdbc:mysql://120.92.164.184:3306/xwder?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai
-    username: xwder
-    password: wvDwERwidZZJhfh2
-    driver-class-name: com.mysql.cj.jdbc.Driver
+    # url: jdbc:mysql://127.0.0.1:8066/xwder?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai
+    # slq显示参数值
+    url: jdbc:log4jdbc:mysql://127.0.0.1:8066/xwder?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai
+    username: root
+    password: 123456
+    driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
     platform: mysql
     type: com.alibaba.druid.pool.DruidDataSource
     # 下面为连接池的补充设置，应用到上面所有数据源中
@@ -145,6 +150,11 @@ eureka:
     # 用于开启健康检查，需要在pom.xml中引入actuator的依赖
     healthcheck:
       enabled: true
+
+    # 不启用eureka注册中心
+    # register-with-eureka: false
+    # fetch-registry: false
+
 
   instance:
     # 是否注册IP到eureka server，如不指定或设为false，那就会注册主机名到eureka server

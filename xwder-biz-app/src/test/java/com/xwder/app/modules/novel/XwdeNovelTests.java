@@ -40,7 +40,7 @@ public class XwdeNovelTests {
 
     @Test
     public void findBookChapterByBookIdAndIdTest(){
-        BookChapter bookChapter = bookChapterRepository.findBookChapterByBookIdAndId(50001, 5);
+        BookChapter bookChapter = bookChapterRepository.findBookChapterByBookIdAndId(1, 1);
         System.out.println(bookChapter);
     }
 }

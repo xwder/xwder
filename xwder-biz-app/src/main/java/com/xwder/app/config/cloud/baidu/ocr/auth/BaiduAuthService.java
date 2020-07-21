@@ -1,4 +1,4 @@
-package com.xwder.app.modules.cloud.baidu.ocr.auth;
+package com.xwder.app.config.cloud.baidu.ocr.auth;
 
 import com.xwder.app.attribute.SysConfigAttribute;
 import com.xwder.app.consts.RedisConstant;
