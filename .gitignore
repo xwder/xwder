@@ -129,3 +129,6 @@ xwder-cloud-common/target/
 /xwder-cloud-config-server/target/
 /xwder-cloud-gateway/target/
 /xwder-cloud-mybatisgenerator/target/
+
+/xwder-biz-app/src/main/resources/rebel-remote.xml
+/xwder-biz-app/src/main/resources/rebel.xml

@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<!DOCTYPE mycat:schema SYSTEM "schema.dtd">
+<mycat:schema xmlns:mycat="http://io.mycat/">
+
+	<schema name="xwder" checkSQLschema="true" sqlMaxLimit="100" randomDataNode="dn1">
+		<table name="book_info" dataNode="dn1"  />
+		<table name="app_user" dataNode="dn1"  />
+
+		<table name="sys_job" dataNode="dn1"  />
+		<table name="sys_job_log" dataNode="dn1"  />
+		<table name="qrtz_blob_triggers" dataNode="dn1"  />
+		<table name="qrtz_calendars" dataNode="dn1"  />
+		<table name="qrtz_cron_triggers" dataNode="dn1"  />
+		<table name="qrtz_fired_triggers" dataNode="dn1"  />
+		<table name="qrtz_job_details" dataNode="dn1"  />
+		<table name="qrtz_locks" dataNode="dn1"  />
+		<table name="qrtz_paused_trigger_grps" dataNode="dn1"  />
+		<table name="qrtz_scheduler_state" dataNode="dn1"  />
+		<table name="qrtz_simple_triggers" dataNode="dn1"  />
+		<table name="qrtz_simprop_triggers" dataNode="dn1"  />
+		<table name="qrtz_triggers" dataNode="dn1"  />
+
+		<!-- auto sharding by id (long) -->
+		<!--splitTableNames 启用<table name 属性使用逗号分割配置多个表,即多个表使用这个配置-->
+		<table name="book_chapter" primaryKey="id" autoIncrement="true" 
+		subTables="book_chapter_$0-2" dataNode="dn1" 
+		rule="bookChapter" splitTableNames ="true"/>
+		<!-- <table name="oc_call" primaryKey="ID" dataNode="dn1$0-743" rule="latest-month-calldate"
+			/> -->
+	</schema>
+	<!-- <dataNode name="dn1$0-743" dataHost="localhost1" database="db$0-743"
+		/> -->
+	<dataNode name="dn1" dataHost="jdbchost" database="xwder" />
+	<!-- <dataNode name="dn2" dataHost="localhost1" database="db2" />
+	<dataNode name="dn3" dataHost="localhost1" database="db3" /> -->
+	<!--<dataNode name="dn4" dataHost="sequoiadb1" database="SAMPLE" />
+	 <dataNode name="jdbc_dn1" dataHost="jdbchost" database="db1" />
+	<dataNode	name="jdbc_dn2" dataHost="jdbchost" database="db2" />
+	<dataNode name="jdbc_dn3" 	dataHost="jdbchost" database="db3" /> -->
+	<dataHost name="jdbchost" maxCon="1000" minCon="10" balance="0"
+			  writeType="0" dbType="mysql" dbDriver="native" switchType="1"  slaveThreshold="100">
+		<heartbeat>select user()</heartbeat>
+		<!-- can have multi write hosts -->
+		<writeHost host="hostM1" url="120.92.164.184:3306" user="xwder"
+				   password="wvDwERwidZZJhfh2">
+		</writeHost>
+		<!-- <writeHost host="hostM2" url="localhost:3316" user="root" password="123456"/> -->
+	</dataHost>
+	<!--
+		<dataHost name="sequoiadb1" maxCon="1000" minCon="1" balance="0" dbType="sequoiadb" dbDriver="jdbc">
+		<heartbeat> 		</heartbeat>
+		 <writeHost host="hostM1" url="sequoiadb://1426587161.dbaas.sequoialab.net:11920/SAMPLE" user="jifeng" 	password="jifeng"></writeHost>
+		 </dataHost>
+
+	  <dataHost name="oracle1" maxCon="1000" minCon="1" balance="0" writeType="0" 	dbType="oracle" dbDriver="jdbc"> <heartbeat>select 1 from dual</heartbeat>
+		<connectionInitSql>alter session set nls_date_format='yyyy-mm-dd hh24:mi:ss'</connectionInitSql>
+		<writeHost host="hostM1" url="jdbc:oracle:thin:@127.0.0.1:1521:nange" user="base" 	password="123456" > </writeHost> </dataHost>
+
+		<dataHost name="jdbchost" maxCon="1000" 	minCon="1" balance="0" writeType="0" dbType="mongodb" dbDriver="jdbc">
+		<heartbeat>select 	user()</heartbeat>
+		<writeHost host="hostM" url="mongodb://192.168.0.99/test" user="admin" password="123456" ></writeHost> </dataHost>
+
+		<dataHost name="sparksql" maxCon="1000" minCon="1" balance="0" dbType="spark" dbDriver="jdbc">
+		<heartbeat> </heartbeat>
+		 <writeHost host="hostM1" url="jdbc:hive2://feng01:10000" user="jifeng" 	password="jifeng"></writeHost> </dataHost> -->
+
+	<!-- <dataHost name="jdbchost" maxCon="1000" minCon="10" balance="0" dbType="mysql"
+		dbDriver="jdbc"> <heartbeat>select user()</heartbeat> <writeHost host="hostM1"
+		url="jdbc:mysql://localhost:3306" user="root" password="123456"> </writeHost>
+		</dataHost> -->
+</mycat:schema>
