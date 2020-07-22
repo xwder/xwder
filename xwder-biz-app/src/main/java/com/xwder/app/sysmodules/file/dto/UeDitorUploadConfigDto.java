@@ -1,6 +1,5 @@
-package com.xwder.app.modules.blog.dto;
+package com.xwder.app.sysmodules.file.dto;
 
-import lombok.Builder;
 import lombok.Data;
 
 /**
@@ -27,5 +26,10 @@ public class UeDitorUploadConfigDto {
     private String imageFieldName;
     private Integer imageMaxSize=5000;
     private String[] imageAllowFiles = {".png", ".jpg", ".jpeg", ".gif", ".bmp"};
+
+    private String state;
+    private String url;
+    private String title;
+    private String original;
 
 }

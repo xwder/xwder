@@ -94,7 +94,7 @@ public class BookChapterController {
         }
         model.addAttribute("totalWords", totalWords / 10000);
 
-        Page<BookChapter> bookChapterPage = bookChapterService.listBookChapterByBookId(bookId, 1, 20000, SysConstant.order_asc);
+        Page<BookChapter> bookChapterPage = bookChapterService.listBookChapterByBookId(bookId, 1, 2000, SysConstant.order_asc);
         List<BookChapter> bookChapterList = bookChapterPage.getContent();
         model.addAttribute("bookChapterList", bookChapterList);
         if (CollectionUtil.isNotEmpty(bookChapterList)) {

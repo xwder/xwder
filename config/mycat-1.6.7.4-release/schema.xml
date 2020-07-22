@@ -27,7 +27,7 @@
 		<!-- auto sharding by id (long) -->
 		<!--splitTableNames 启用<table name 属性使用逗号分割配置多个表,即多个表使用这个配置-->
 		<table name="book_chapter" primaryKey="id" autoIncrement="true" 
-		subTables="book_chapter_$0-2" dataNode="dn1" 
+		subTables="book_chapter_$0-96" dataNode="dn1" 
 		rule="bookChapter" splitTableNames ="true"/>
 		<!-- <table name="oc_call" primaryKey="ID" dataNode="dn1$0-743" rule="latest-month-calldate"
 			/> -->

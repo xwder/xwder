@@ -1,10 +1,11 @@
 package com.xwder.app.modules.blog.service.impl;
 
-import com.xwder.app.modules.blog.dto.UeDitorUploadConfigDto;
-import com.xwder.app.modules.blog.repository.ArticleRepository;
+import cn.hutool.core.bean.BeanUtil;
 import com.xwder.app.modules.blog.service.intf.ArticleService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.xwder.app.sysmodules.file.dto.UeDitorUploadConfigDto;
 import org.springframework.stereotype.Service;
+
+import java.util.Map;
 
 /**
  * 文章service impl
@@ -16,22 +17,24 @@ import org.springframework.stereotype.Service;
 @Service
 public class ArticleServiceImpl implements ArticleService {
 
-    @Autowired
-    private ArticleRepository articleRepository;
-
     /**
      * UEditor 请求格式规范 config
      *
      * @return
      */
     @Override
-    public UeDitorUploadConfigDto getUeDitorUploadConfigDto() {
+    public Map getUeDitorUploadConfig() {
         UeDitorUploadConfigDto ueDitorUploadConfigDto = new UeDitorUploadConfigDto();
-        ueDitorUploadConfigDto.setImageUrl("imageUrl");
-        ueDitorUploadConfigDto.setImagePath("/ueditor");
+        ueDitorUploadConfigDto.setImageUrl("/setImageUrl");
+        ueDitorUploadConfigDto.setImagePath("/path");
+        ueDitorUploadConfigDto.setImagePath("/setImagePath");
         ueDitorUploadConfigDto.setImageMaxSize(5000);
-        ueDitorUploadConfigDto.setImageFieldName("upfile");
-        return ueDitorUploadConfigDto;
+        ueDitorUploadConfigDto.setImageFieldName("file");
+
+        Map<String, Object> configMap = BeanUtil.beanToMap(ueDitorUploadConfigDto);
+        configMap.put("imageActionName","uploadimage");
+        configMap.put("imageUrlPrefix","");
+        return configMap;
     }
 
 

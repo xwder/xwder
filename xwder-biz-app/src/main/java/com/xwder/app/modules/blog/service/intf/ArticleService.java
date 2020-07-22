@@ -1,6 +1,6 @@
 package com.xwder.app.modules.blog.service.intf;
 
-import com.xwder.app.modules.blog.dto.UeDitorUploadConfigDto;
+import java.util.Map;
 
 /**
  * 文章service
@@ -15,6 +15,6 @@ public interface ArticleService {
      * UEditor 请求格式规范 config
      * @return
      */
-    UeDitorUploadConfigDto getUeDitorUploadConfigDto();
+    Map getUeDitorUploadConfig();
 
 }

@@ -18,10 +18,10 @@ public class Test {
         int i = 1;
         for (; i < 97; i++) {
             if (i == 1) {
-                String s[] = {"1-1000"};
+                String s[] = {"1-1000=1"};
                 FileUtil.appendLines(Arrays.asList(s), file, "Utf-8");
             } else {
-                String s = ((i - 1) * 1000 + 1) + "-" + (i * 1000);
+                String s = ((i - 1) * 1000 + 1) + "-" + (i * 1000) + "=" + i;
                 FileUtil.appendLines(Arrays.asList(s), file, "Utf-8");
             }
             i = i++;
