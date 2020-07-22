@@ -49,8 +49,7 @@ public class SysJobController {
      */
     @PostMapping("/changeStatus")
     @ResponseBody
-    public CommonResult changeStatus(SysJob job) throws SchedulerException
-    {
+    public CommonResult changeStatus(SysJob job) throws SchedulerException {
         SysJob sysJob = jobService.changeStatus(job);
         return CommonResult.success(sysJob);
     }

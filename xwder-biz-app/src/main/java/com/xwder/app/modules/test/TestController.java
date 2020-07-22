@@ -1,8 +1,8 @@
 package com.xwder.app.modules.test;
 
-import com.xwder.app.config.cloud.baidu.ocr.auth.BaiduAuthService;
-import com.xwder.app.config.cloud.baidu.ocr.auth.BaiduCommonTextOCRService;
-import com.xwder.app.config.cloud.tencent.cos.auth.TencentCosAuthService;
+import com.xwder.app.modules.cloud.baidu.ocr.auth.BaiduAuthService;
+import com.xwder.app.modules.cloud.baidu.ocr.auth.BaiduCommonTextOCRService;
+import com.xwder.app.modules.cloud.tencent.cos.auth.TencentCosAuthService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

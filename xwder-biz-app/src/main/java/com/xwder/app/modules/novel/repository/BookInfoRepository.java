@@ -1,7 +1,6 @@
 package com.xwder.app.modules.novel.repository;
 
 
-import com.xwder.app.modules.novel.entity.BookChapter;
 import com.xwder.app.modules.novel.entity.BookInfo;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
