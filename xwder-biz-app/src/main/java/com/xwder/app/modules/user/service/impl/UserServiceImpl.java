@@ -158,7 +158,7 @@ public class UserServiceImpl implements UserService {
             return null;
         }
         String loginPassWord = Md5Crypt.apr1Crypt(user.getPassword().getBytes(), sourceUser.getSalt());
-        if (StringUtils.endsWithIgnoreCase(sourceUser.getPassword(), loginPassWord)) {
+        if (StringUtils.equalsAnyIgnoreCase(sourceUser.getPassword(), loginPassWord)) {
             sourceUser.setPassword(null);
             sourceUser.setSalt(null);
             log.info("用户[{}]登录成功", userId);

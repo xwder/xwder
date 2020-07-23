@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org">
-<title>首页</title>
+<title>文章编辑</title>
 <head th:include="include :: head"></head>
-
+<link th:href="@{/dist/libs/selectize/dist/css/selectize.css}" href="./dist/libs/selectize/dist/css/selectize.css" rel="stylesheet"/>
+<link th:href="@{/dist/libs/flatpickr/dist/flatpickr.min.css}" href="./dist/libs/flatpickr/dist/flatpickr.min.css" rel="stylesheet"/>
+<link th:href="@{/dist/libs/nouislider/distribute/nouislider.min.css}" href="./dist/libs/nouislider/distribute/nouislider.min.css" rel="stylesheet"/>
 <body class="antialiased">
 <div class="page">
     <!--<div id="currentUrl" style="display: none" th:text="${#httpServletRequest.getRequestURL()}"></div>-->
@@ -63,56 +65,122 @@
                                     <div class="example-content">
                                         <div class="mb-3">
                                             <label class="form-label">标题</label>
-                                            <input type="text" class="form-control" name="example-text-input"
-                                                   placeholder="Input placeholder">
+                                            <input type="text" id="articleTitle" class="form-control" name="example-text-input" placeholder="">
                                         </div>
                                         <div class="mb-3">
-                                            <label class="form-label">摘要</label>
-                                            <input type="text" class="form-control" name="example-password-input"
-                                                   placeholder="Input placeholder">
+                                            <label class="form-label">摘要<span class="form-label-description">0/140</span></label>
+                                            <textarea class="form-control" id="articleSummary" name="example-textarea-input" rows="6" placeholder=""></textarea>
                                         </div>
                                         <div class="mb-3">
-                                            <script id="editor" type="text/plain" style="height: 500px"></script>
+                                            <div class="form-label">封面图片</div>
+                                            <div class="form-file">
+                                                <input type="file" class="form-file-input" id="customFile">
+                                                <label class="form-file-label" for="customFile">
+                                                    <span class="form-file-text">选择文件</span>
+                                                    <span class="form-file-button">浏览</span>
+                                                </label>
+                                            </div>
                                         </div>
-                                        <div id="btns">
-                                            <div>
-                                                <button onclick="getAllHtml()">获得整个html的内容</button>
-                                                <button onclick="getContent()">获得内容</button>
-                                                <button onclick="setContent()">写入内容</button>
-                                                <button onclick="setContent(true)">追加内容</button>
-                                                <button onclick="getContentTxt()">获得纯文本</button>
-                                                <button onclick="getPlainTxt()">获得带格式的纯文本</button>
-                                                <button onclick="hasContent()">判断是否有内容</button>
-                                                <button onclick="setFocus()">使编辑器获得焦点</button>
-                                                <button onmousedown="isFocus(event)">编辑器是否获得焦点</button>
-                                                <button onmousedown="setblur(event)">编辑器失去焦点</button>
-
-                                            </div>
-                                            <div>
-                                                <button onclick="getText()">获得当前选中的文本</button>
-                                                <button onclick="insertHtml()">插入给定的内容</button>
-                                                <button id="enable" onclick="setEnabled()">可以编辑</button>
-                                                <button onclick="setDisabled()">不可编辑</button>
-                                                <button onclick=" UE.getEditor('editor').setHide()">隐藏编辑器</button>
-                                                <button onclick=" UE.getEditor('editor').setShow()">显示编辑器</button>
-                                                <button onclick=" UE.getEditor('editor').setHeight(300)">
-                                                    设置高度为300默认关闭了自动长高
-                                                </button>
-                                            </div>
-
-                                            <div>
-                                                <button onclick="getLocalData()">获取草稿箱内容</button>
-                                                <button onclick="clearLocalData()">清空草稿箱</button>
-                                            </div>
-
+                                        <div class="mb-3">
+                                            <div class="form-label">文章内容</div>
+                                            <script id="editor" type="text/plain" style="height: auto"></script>
                                         </div>
                                         <div>
-                                            <button onclick="createEditor()">
-                                                创建编辑器
-                                            </button>
-                                            <button onclick="deleteEditor()">
-                                                删除编辑器
-                                            </button>
+                                            <div id="btns">
+                                                <div>
+                                                    <button onclick="getAllHtml()">获得整个html的内容</button>
+                                                    <button onclick="getContent()">获得内容</button>
+                                                    <button onclick="setContent()">写入内容</button>
+                                                    <button onclick="setContent(true)">追加内容</button>
+                                                    <button onclick="getContentTxt()">获得纯文本</button>
+                                                    <button onclick="getPlainTxt()">获得带格式的纯文本</button>
+                                                    <button onclick="hasContent()">判断是否有内容</button>
+                                                    <button onclick="setFocus()">使编辑器获得焦点</button>
+                                                    <button onmousedown="isFocus(event)">编辑器是否获得焦点</button>
+                                                    <button onmousedown="setblur(event)">编辑器失去焦点</button>
+
+                                                </div>
+                                                <div>
+                                                    <button onclick="getText()">获得当前选中的文本</button>
+                                                    <button onclick="insertHtml()">插入给定的内容</button>
+                                                    <button id="enable" onclick="setEnabled()">可以编辑</button>
+                                                    <button onclick="setDisabled()">不可编辑</button>
+                                                    <button onclick=" UE.getEditor('editor').setHide()">隐藏编辑器</button>
+                                                    <button onclick=" UE.getEditor('editor').setShow()">显示编辑器</button>
+                                                    <button onclick=" UE.getEditor('editor').setHeight(300)">
+                                                        设置高度为300默认关闭了自动长高
+                                                    </button>
+                                                </div>
+
+                                                <div>
+                                                    <button onclick="getLocalData()">获取草稿箱内容</button>
+                                                    <button onclick="clearLocalData()">清空草稿箱</button>
+                                                </div>
+
+                                            </div>
+                                            <div>
+                                                <button onclick="createEditor()">
+                                                    创建编辑器
+                                                </button>
+                                                <button onclick="deleteEditor()">
+                                                    删除编辑器
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">分类</label>
+                                            <div class="form-selectgroup form-selectgroup-pills">
+                                                <label class="form-selectgroup-item">
+                                                    <input type="checkbox" name="articleCategory" value="1" class="form-selectgroup-input articleCategory" checked>
+                                                    <span class="form-selectgroup-label">HTML</span>
+                                                </label>
+                                                <label class="form-selectgroup-item">
+                                                    <input type="checkbox" name="articleCategory" value="2" class="form-selectgroup-input  articleCategory">
+                                                    <span class="form-selectgroup-label">CSS</span>
+                                                </label>
+                                                <label class="form-selectgroup-item">
+                                                    <input type="checkbox" name="articleCategory" value="3" class="form-selectgroup-input  articleCategory">
+                                                    <span class="form-selectgroup-label">PHP</span>
+                                                </label>
+                                                <label class="form-selectgroup-item">
+                                                    <input type="checkbox" name="articleCategory" value="4" class="form-selectgroup-input  articleCategory">
+                                                    <span class="form-selectgroup-label">JavaScript</span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">标签</label>
+                                            <select name="articleTags" id="select-tags-advanced" class="form-select articleTags" multiple>
+                                                <option value="1">HTML</option>
+                                                <option value="2">JavaScript</option>
+                                                <option value="3">CSS</option>
+                                                <option value="4">jQuery</option>
+                                                <option value="5">Bootstrap</option>
+                                                <option value="6" selected>Ruby</option>
+                                                <option value="7" selected>Python</option>
+                                            </select>
+                                        </div>
+                                        <div class="mb-3">
+                                            <div class="form-label">文章类型</div>
+                                            <div>
+                                                <label class="form-check form-check-inline">
+                                                    <input class="form-check-input" th:value="'原创'" name="articleType" type="checkbox">
+                                                    <span class="form-check-label">原创</span>
+                                                </label>
+                                                <label class="form-check form-check-inline">
+                                                    <input class="form-check-input"  th:value="'转载'" name="articleType" type="checkbox">
+                                                    <span class="form-check-label">转载</span>
+                                                </label>
+                                                <label class="form-check form-check-inline">
+                                                    <input class="form-check-input" th:value="'翻译'"  name="articleType" type="checkbox" checked>
+                                                    <span class="form-check-label">翻译</span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="form-footer">
+                                            <button type="" class="btn btn-primary" onclick="saveArticle()">保存</button>
+                                            <button type="" class="btn btn-primary" onclick="previewArticle()">预览</button>
+                                            <button type="" class="btn btn-primary">发布</button>
                                         </div>
                                     </div>
                                 </div>
@@ -146,15 +214,14 @@
 </div>
 
 <!-- Libs JS -->
-<script th:src="@{/dist/libs/bootstrap/dist/js/bootstrap.bundle.min.js}"
-        src="../static/dist/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-<script>
-    document.body.style.display = "block";
-    var ctxPath = /*[[@{/}]]*/'';
-    // var domain = window.location.protocol + "//" + window.location.host;
-    // window.UEDITOR_HOME_URL = domain + ctxPath + "/ueditor/";
-    // console.log("UEDITOR_HOME_URL: " + window.UEDITOR_HOME_URL)
-</script>
+<script th:src="@{/dist/libs/bootstrap/dist/js/bootstrap.bundle.min.js}" src="../static/dist/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<!--<script th:src="@{/dist/libs/jquery/dist/jquery.slim.min.js}" src="./dist/libs/jquery/dist/jquery.slim.min.js"></script>-->
+<script th:src="@{/dist/libs/autosize/dist/autosize.min.js}" src="./dist/libs/autosize/dist/autosize.min.js"></script>
+<script th:src="@{/dist/libs/imask/dist/imask.min.js}" src="./dist/libs/imask/dist/imask.min.js"></script>
+<script th:src="@{/dist/libs/selectize/dist/js/standalone/selectize.min.js}" src="./dist/libs/selectize/dist/js/standalone/selectize.min.js"></script>
+<script th:src="@{/dist/libs/flatpickr/dist/flatpickr.min.js}" src="./dist/libs/flatpickr/dist/flatpickr.min.js"></script>
+<script th:src="@{/dist/libs/flatpickr/dist/plugins/rangePlugin.js}" src="./dist/libs/flatpickr/dist/plugins/rangePlugin.js"></script>
+<script th:src="@{/dist/libs/nouislider/distribute/nouislider.min.js}" src="./dist/libs/nouislider/distribute/nouislider.min.js"></script>
 <script type="text/javascript" th:src="@{/ueditor/ueditor.config.js}" charset="utf-8" src="ueditor.config.js"></script>
 <script type="text/javascript" th:src="@{/ueditor/ueditor.all.min.js}" charset="utf-8"
         src="ueditor.all.min.js"></script>
@@ -162,20 +229,28 @@
 <!--这里加载的语言文件会覆盖你在配置项目里添加的语言类型，比如你在配置项目里配置的是英文，这里加载的中文，那最后就是中文-->
 <script type="text/javascript" th:src="@{/ueditor/lang/zh-cn/zh-cn.js}" charset="utf-8"
         src="lang/zh-cn/zh-cn.js"></script>
-<script type="text/javascript">
 
+<script>
+    document.body.style.display = "block";
+    var ctxPath = /*[[@{/}]]*/'';
+    var domain = window.location.protocol + "//" + window.location.host;
+    window.UEDITOR_HOME_URL = domain + ctxPath + "/ueditor/";
+    console.log("UEDITOR_HOME_URL: " + window.UEDITOR_HOME_URL)
+</script>
+<script type="text/javascript">
     //实例化编辑器
     var ue = UE.getEditor('editor');
     //建议使用工厂方法getEditor创建和引用编辑器实例，如果在某个闭包下引用该编辑器，直接调用UE.getEditor('editor')就能拿到相关的实例
     UE.Editor.prototype._bkGetActionUrl = UE.Editor.prototype.getActionUrl;
-    UE.Editor.prototype._bkGetActionUrl = UE.Editor.prototype.getActionUrl;
-    UE.Editor.prototype.getActionUrl = function(action){
-        console.log("action: "+ action);
-        if(action == 'uploadimage' || action == 'uploadscrawl' || action == 'uploadimage'){
-            return '/ueditor?action='+action;
-        }else{
-            return this._bkGetActionUrl.call(this, action);
+    UE.Editor.prototype.getActionUrl = function (action) {
+        console.log("action: " + action);
+        if (action == "config") {
+            return "/ueditor?action=" + action;
         }
+        if (action == 'uploadimage' || action == 'uploadscrawl' || action == 'uploadimage') {
+            return '/file/up/ue?action=' + action;
+        }
+        return this._bkGetActionUrl.call(this, action);
     };
 
     function isFocus(e) {
@@ -297,6 +372,58 @@
         alert("已清空草稿箱")
     }
 </script>
+<script>
+    $(document).ready(function () {
+        $('#select-tags-advanced').selectize({
+            maxItems: 15,
+            plugins: ['remove_button'],
+        });
+    });
 
+    function previewArticle() {
+        var articleCategory = $("input:checkbox[name='articleCategory']:checked");
+        console.log("articleCategory: " + articleCategory.val());
+
+        var packageCodeList=new Array();
+        $("#select-tags-advanced option:selected").each(function(){
+            packageCodeList.push($(this).val());//向数组中添加元素
+        });
+        console.log("packageCodeList: " + packageCodeList.toString());
+
+        var title = $("#articleTitle").val();
+        var summary = $("#articleSummary").val();
+        var content = UE.getEditor('editor').getAllHtml();
+        var type = $("input:checkbox[name='articleType']:checked").val();
+        var category = $("input:checkbox[name='articleCategory']:checked").val();
+
+        var postData = {
+            "title": title,
+            "summary": summary,
+            "content": content,
+            "type": type,
+            "category": category,
+            "tags":packageCodeList
+        }
+        $.ajax({
+            type: "post",
+            url: "/blog/article/doPreview",
+            traditional: true,
+            data: {paramData:JSON.stringify(postData)},
+            success: function (data) {
+                console.log("data: " + data.code)
+                if (data.code == 200) {
+                    console.log("提交失败" + data.message);
+                    // 跳转成功页面
+                    //window.location.replace(getRedirect());
+                } else {
+                    console.log("提交失败" + data.message);
+                }
+            }
+        });
+    }
+
+
+
+</script>
 </body>
 </html>

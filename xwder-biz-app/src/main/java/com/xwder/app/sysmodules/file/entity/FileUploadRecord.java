@@ -33,8 +33,14 @@ public class FileUploadRecord implements Serializable {
     /**
      * 文件类型
      */
+    @Column(name = "user_name")
+    private String userName;
+
+    /**
+     * 文件类型
+     */
     @Column(name = "file_type")
-    private Integer fileType;
+    private String fileType;
 
     /**
      * 文件大小单位KB
@@ -102,11 +108,11 @@ public class FileUploadRecord implements Serializable {
     }
 
 
-    public Integer getFileType() {
+    public String getFileType() {
         return fileType;
     }
 
-    public void setFileType(Integer fileType) {
+    public void setFileType(String fileType) {
         this.fileType = fileType;
     }
 
@@ -182,4 +188,11 @@ public class FileUploadRecord implements Serializable {
         this.gmtModified = gmtModified;
     }
 
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
 }

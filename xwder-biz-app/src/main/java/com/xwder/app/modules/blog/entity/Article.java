@@ -92,6 +92,12 @@ public class Article implements Serializable {
     private Integer status;
 
     /**
+     * 预览图片
+     */
+    @Column(name = "article_type")
+    private String articleType = "原创";
+
+    /**
      * 文章编辑次数
      */
     @Column(name = "modifie_count")
@@ -303,4 +309,11 @@ public class Article implements Serializable {
         this.gmtModified = gmtModified;
     }
 
+    public String getArticleType() {
+        return articleType;
+    }
+
+    public void setArticleType(String articleType) {
+        this.articleType = articleType;
+    }
 }

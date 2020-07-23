@@ -2,7 +2,7 @@ package com.xwder.app.modules.blog.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
 import com.xwder.app.modules.blog.service.intf.ArticleService;
-import com.xwder.app.sysmodules.file.dto.UeDitorUploadConfigDto;
+import com.xwder.app.sysmodules.file.dto.UEditorUploadConfigDto;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
@@ -24,16 +24,8 @@ public class ArticleServiceImpl implements ArticleService {
      */
     @Override
     public Map getUeDitorUploadConfig() {
-        UeDitorUploadConfigDto ueDitorUploadConfigDto = new UeDitorUploadConfigDto();
-        ueDitorUploadConfigDto.setImageUrl("/setImageUrl");
-        ueDitorUploadConfigDto.setImagePath("/path");
-        ueDitorUploadConfigDto.setImagePath("/setImagePath");
-        ueDitorUploadConfigDto.setImageMaxSize(5000);
-        ueDitorUploadConfigDto.setImageFieldName("file");
-
+        UEditorUploadConfigDto ueDitorUploadConfigDto = new UEditorUploadConfigDto();
         Map<String, Object> configMap = BeanUtil.beanToMap(ueDitorUploadConfigDto);
-        configMap.put("imageActionName","uploadimage");
-        configMap.put("imageUrlPrefix","");
         return configMap;
     }
 

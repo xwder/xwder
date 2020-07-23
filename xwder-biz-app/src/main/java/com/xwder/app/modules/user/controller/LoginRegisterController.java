@@ -148,7 +148,7 @@ public class LoginRegisterController {
 
         String xwderToken = RandomUtil.randomString(32);
         // session 写入用户信息
-        SessionUtil.setSessionAttribute(SysConstant.SESSION_USER, user);
+        SessionUtil.setSessionAttribute(SysConstant.SESSION_USER, resultUser);
         // cookie 写人 认证 xwder-token
         CookieUtils.setCookie(request, response, sysConfigAttribute.getSessionTokenName(), xwderToken);
         // 写入redis session

@@ -4,6 +4,7 @@ import com.xwder.app.sysmodules.file.entity.FileUploadRecord;
 
 /**
  * 文件上传记录service
+ *
  * @author xwder
  */
 public interface FileUploadRecordService {

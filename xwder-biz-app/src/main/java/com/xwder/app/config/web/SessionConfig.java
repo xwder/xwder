@@ -13,12 +13,13 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-/**
- * @author louie
- * @date created in 2018-5-12 19:02
- */
+
 //@Configuration
-public class SessionCofig implements WebMvcConfigurer {
+
+/**
+ *
+ */
+public class SessionConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {

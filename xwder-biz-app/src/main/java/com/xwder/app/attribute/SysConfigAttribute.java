@@ -4,6 +4,8 @@ import lombok.Data;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 
+import java.io.File;
+
 /**
  * @author wande
  * @version 1.0
@@ -34,11 +36,12 @@ public class SysConfigAttribute {
     @Value("${novel.book.dir}")
     private String novelBookDir;
 
-    @Value("${lottery.save.dir}")
-    private String lotterySaveDir;
-
-    @Value("${video.upload.saveDir}")
-    private String videoUploadSaveDir;
+    @Value("${upload.saveBaseDir}")
+    private String uploadSaveBaseDir;
+    /** 视频上传保存服务器的besedir 完整的路径+/+user主键编号 */
+    private String videoUploadSaveDir = uploadSaveBaseDir + File.separator + "video";
+    /** lottery上传保存服务器的besedir 完整的路径+/+user主键编号 */
+    private String lotterySaveDir = uploadSaveBaseDir + File.separator + "lottery";
 
     @Value("${video.videoSplitTime}")
     private Integer videoSplitTime;

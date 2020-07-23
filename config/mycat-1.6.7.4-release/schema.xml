@@ -10,6 +10,8 @@
 		<table name="blog_tag" dataNode="dn1"  />
 		<table name="blog_article" dataNode="dn1"  />
 
+		<table name="file_upload" dataNode="dn1"  />
+
 		<table name="sys_job" dataNode="dn1"  />
 		<table name="sys_job_log" dataNode="dn1"  />
 		<table name="qrtz_blob_triggers" dataNode="dn1"  />
