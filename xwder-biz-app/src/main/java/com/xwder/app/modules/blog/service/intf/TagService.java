@@ -14,6 +14,14 @@ public interface TagService {
      * @param ids
      * @return
      */
-    List<Tag> listTagById(Long ids);
+    List<Tag> listTagById(List<Long> ids);
+
+
+    /**
+     * 根据userId查询
+     * @param userId
+     * @return
+     */
+    List<Tag> listTagByUserId(Long userId);
 
 }

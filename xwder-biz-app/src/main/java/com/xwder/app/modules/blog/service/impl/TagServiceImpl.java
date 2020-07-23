@@ -19,9 +19,25 @@ public class TagServiceImpl implements TagService {
     @Autowired
     private TagRepository tagRepository;
 
-
+    /**
+     * 查询tags
+     *
+     * @param ids
+     * @return
+     */
     @Override
-    public List<Tag> listTagById(Long ids) {
-        return null;
+    public List<Tag> listTagById(List<Long> ids) {
+        return tagRepository.listTagByUserId(ids);
+    }
+
+    /**
+     * 根据userId查询
+     *
+     * @param userId
+     * @return
+     */
+    @Override
+    public List<Tag> listTagByUserId(Long userId) {
+        return tagRepository.findByUserIdAndAvailable(userId, 1);
     }
 }

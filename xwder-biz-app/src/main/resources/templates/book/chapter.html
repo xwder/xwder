@@ -1,134 +1,290 @@
 <!DOCTYPE html>
-<html  lang="zh" xmlns:th="http://www.thymeleaf.org">
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
 <title th:if="${bookInfo!=null}" th:text="${bookInfo.bookName+'-'+currentChapter.chapterName}">小说阅读</title>
 <link th:href="@{/css/book/chapter.css}" href="../static/css/index.css" rel="stylesheet"/>
 <head th:include="include :: head"></head>
 
 <body class="antialiased" style="background-color: #FFFFFF;">
 <div class="page">
-  <header class="navbar navbar-expand-md navbar-light">
-    <div class="container-xl">
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <a th:href="@{index}" href=".." class="navbar-brand navbar-brand-autodark d-none-navbar-horizontal pr-0 pr-md-3">
-        <img th:src="@{/image/logo/logo.svg}" src="../static/images/logo/logo.svg" alt="Tabler" class="navbar-brand-image">
-      </a>
-      <!--头部右边 是否登录还是显示用户头像-->
-      <div th:include="include :: navigationBar"></div>
-    </div>
-  </header>
-  <!--导航栏-->
-  <div th:include="include :: navigationMenu" class="navbar-expand-md"></div>
-      <div class="content">
+    <header class="navbar navbar-expand-md navbar-light">
         <div class="container-xl">
-          <div class="page-header">
-            <div class="rw_3" id="reader_warp" th:if="${currentChapter != null}">
-              <!-- 1.	阅读器头部推荐位 -->
-              <div class="com-recbox" data-sa-d="{&quot;adv_type&quot;:&quot;readPage00&quot;,&quot;adv_res&quot;:&quot;zongheng&quot;,&quot;pos&quot;:&quot;&quot;}">
-              </div>
-              <!-- 阅读页start -->
-              <div class="reader_crumb">当前位置： <a href="http://www.zongheng.com" th:href="${'/book/index.html'}" th:if="${currentChapter != null}"> 小说首页 </a>
-                &gt; <a th:if="${currentChapter != null}" th:href="${'/book/index.html?category='+bookInfo.category}" th:text="${bookInfo.category}" href="http://www.zongheng.com/category/9.html">都市娱乐 </a>
-                &gt; <a th:if="${currentChapter != null}" th:href="${'/book/'+bookInfo.id+'.html'}" href="" th:text="${bookInfo.bookName}" >大国名厨</a> &gt;
-                <span th:if="${currentChapter != null}" th:text="${currentChapter.chapterName}">第一卷：网红食堂</span></div>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <a th:href="@{index}" href=".."
+               class="navbar-brand navbar-brand-autodark d-none-navbar-horizontal pr-0 pr-md-3">
+                <img th:src="@{/image/logo/logo.svg}" src="../static/images/logo/logo.svg" alt="Tabler"
+                     class="navbar-brand-image">
+            </a>
+            <!--头部右边 是否登录还是显示用户头像-->
+            <div th:include="include :: navigationBar"></div>
+        </div>
+    </header>
+    <!--导航栏-->
+    <div th:include="include :: navigationMenu" class="navbar-expand-md"></div>
 
-              <!-- 包裹层 -->
-              <div class="rft_1" id="readerFt" style="font-size: 14px;">
-                <!-- 内容主盒 -->
-                <div class="reader_box" style="user-select: auto;" unselectable="on" onselectstart="return false;">
-                  <div class="marker " tomeid="1949545" chapterid="58415869" ></div>
-                  <div class="title">
-                    <div class="iconbox">
-                      <em class=""></em>
+    <div class="content">
+        <div class="container-xl">
+            <div class="page-header">
+                <div class="rw_3" id="reader_warp" th:if="${currentChapter != null}">
+                    <!-- 1.	阅读器头部推荐位 -->
+                    <div class="com-recbox"
+                         data-sa-d="{&quot;adv_type&quot;:&quot;readPage00&quot;,&quot;adv_res&quot;:&quot;zongheng&quot;,&quot;pos&quot;:&quot;&quot;}">
                     </div>
-                    <div class="title_txtbox" th:if="${currentChapter != null}" th:text="${currentChapter.chapterName}">第001章 史上最没有求生欲的男人！</div>
-                  </div>
-                  <div class="bookinfo">
-                    作者：<a href="" th:if="${currentChapter != null}" th:text="${bookInfo.author}" >烟斗老哥</a>&nbsp;&nbsp;|&nbsp;&nbsp;
-                    字数：<span th:if="${currentChapter != null}" th:text="${currentChapter.chapterWordSize}">3896</span>&nbsp;&nbsp;|&nbsp;&nbsp;
-                    更新时间：<span th:if="${currentChapter != null}" th:text="${#dates.format(currentChapter.updateTime, 'yyyy-MM-dd HH:mm')}">2019-12-24 10:46:25</span>
-                    <a href="#" class="reader_lnkbtn" >全文阅读</a>
-                  </div>
+                    <!-- 阅读页start -->
+                    <div class="reader_crumb">当前位置： <a href="http://www.zongheng.com" th:href="${'/book/index.html'}"
+                                                       th:if="${currentChapter != null}"> 小说首页 </a>
+                        &gt; <a th:if="${currentChapter != null}"
+                                th:href="${'/book/index.html?category='+bookInfo.category}"
+                                th:text="${bookInfo.category}" href="http://www.zongheng.com/category/9.html">都市娱乐 </a>
+                        &gt; <a th:if="${currentChapter != null}" th:href="${'/book/'+bookInfo.id+'.html'}" href=""
+                                th:text="${bookInfo.bookName}">大国名厨</a> &gt;
+                        <span th:if="${currentChapter != null}" th:text="${currentChapter.chapterName}">第一卷：网红食堂</span>
+                    </div>
 
-                  <div class="reader_line"></div>
-                  <div class="content" itemprop="acticleBody" >
-                    <div id="chapterContent"  th:if="${currentChapter != null && currentChapter.chapterContent!=null}" th:utext="${currentChapter.chapterContent}">
-                      <p>夜色露出獠牙，吞噬星空。</p><p>雷声大作，电闪如蛇，磅礴大雨铺天盖地而下。</p><p>五星级酒店餐厅包厢内，两男一女，气氛诡异。</p><p>陶茹雪唇薄鼻挺，眼眸淡淡一瞟，溢出的光彩，仿佛能将人溶了。</p><p>噬魂销骨，不过如此。</p><p>身高一米七左右，标准的九头身，五官立体宛如艺术大师鬼斧神工之作，肌肤赛雪，宛如白玉般似能反射光彩。</p><p>身后站着一个男人，叫做韩斌，与陶茹雪是高中同学，琼金市现在最有名的年轻外科专家。</p><p>“乔智，我最瞧不起你这种没有尊严和底线的人。出卖自己的灵魂，觊觎、偷窃我陶家的产业。”</p><p>“我和茹雪两情相悦，但对我们而言，你是第三者，所以请你自己主动退出，我愿意给你一笔钱，你开个价码吧！”</p><p>啪，一声清脆的响声，干净利落地狠狠扇在韩斌的脸上。</p><p>韩斌的镜架被打歪，揉了下鼻子。</p><p>两道红线蜿蜒，竟流血了。</p><p>这混蛋！</p><p>韩斌眼中满是恶毒之色。</p><p>乔智愿意当陶家的女婿，除了偿还父亲欠下的人情债之外，还有一个重要原因，陶茹雪本身出众，是琼金一枝花，知名度高，追求者众多。</p><p>能娶到这种女人，是所有男人梦寐以求的荣幸。</p><p>何况她不只是美，而且家底也殷实。</p><p>母亲陶南芳是琼金赫赫有名的餐饮界企业家，名下的淮南菜餐馆连锁，不仅遍布省内，而且在国外也有多家分店。</p><p>原本以为娶到白富美，是种幸福，未曾想是麻烦的开始。</p><p>乔智娶了陶茹雪，两人不仅分房，陶茹雪对他的态度越来越糟糕。</p><p>乔智几次想要主动接近陶茹雪，都被她直接给拒绝，还有几次动手，甚至抓破了乔智的脸。</p><p>原本以为陶茹雪是觉得自己很陌生，等接触一段时间便能破冰。</p><p>后来乔智才知道，陶茹雪之前处过一个男朋友。</p><p>分手，但没有放下。</p><p>韩斌不敢把事情闹大，被扇了一记耳光，僵在现场。</p><p>陶茹雪怕乔智冲动之下，做出不理智的行为，提包扭身，离开房间。</p><p>两人一前一后坐入出租车，司机不时通过后视镜望向后排两人。</p><p>他发现从酒店出来的这对男女关系很诡异。</p><p>女人长得很好看，跟明星似的，面沉如水，冰冷无比。</p><p>男人浑身湿漉漉的，像刚从水里捞出来的落水公鸡，眼睛却是雪亮。</p><p>接下来的对话，让司机三观崩毁。</p><p>“为什么还能忍着，为什么不同意离婚……果然，你就是只缩头乌龟。”</p><p>“没错，我就是特么世界独一无二的忍宗大弟子！我贪图你陶家的财产，我要的可不是咱俩婚后那可怜的一半财产，而是要整个淮香集团收入名下。你的这点小挫折小花招，根本撼动不了我，阻止不了我，所以想踹了我，跟你的情郎结秦晋之好，那就是做梦！”</p><p>乔智面色铁青，这么晚赶到这儿，还不是担心你出事了？</p><p>他故意刺激陶茹雪。</p><p>你不是说我冲着你的家世吗，行，我就专门拿这个来刺激你。</p><p>“你别做梦吧，我妈没那么傻！”</p><p>“是吗？你妈好像更喜欢我这个拿厨刀的粗人，而不喜欢那个拿手术刀的斯文败类。”</p><p>“呵呵，我妈喜欢你，你怎么不娶她？”</p><p>“嗯，如果她愿意的话，我当然愿意娶她，我眼睛里只剩下钱，谁给我钱，我就娶谁！”</p><p>“你你你……渣男！”</p><p>“那也比你强，你你你……潘金莲。”</p><p>司机听得目瞪口呆！</p><p>两人好像是夫妻，虽说夫妻吵架是常事，但这么吵的闻所未闻。</p><p>还有，特么的信息量实在太大，简直令人难以置信。</p><p>乔智爆粗口，那是受到强烈的刺激。</p><p>暴怒当中，失了智，骂脏话的时候，谁还讲究什么正确的价值观、世界观！</p><p>当然是，骂得怎么爽，怎么来！</p><p>咆哮过，是死一般的宁静。</p><p>车窗外，炸山般的雷声，蛇信般的电芒不断。</p><p>抵达所住的小区，陶茹雪半天不下车，乔智以为她又闹别扭，过去一看，或许是因为之前喝了酒，现在酒意上涌，她竟然直接昏睡过去。</p><p>无奈，只能将她拦腰抱了出来。</p><p>好不容易，进电梯，按开指纹锁，嘭地一脚直接踹开半开的房门，再将软弱无辜的陶茹雪，故意重重地摔在松软的床上。</p><p>刚才牙尖嘴利的女人，现在变成了一滩水，没有半点反应。</p><p>乔智也累得气喘吁吁，躺在床上休息，感慨刚才是经历了什么屁事儿！</p><p>陶茹雪翻了个身，手臂搭在乔智的胸口，吐气如兰，轻声呢喃：“好热，好渴。”</p><p>乔智挣脱陶茹雪的手臂，掏出手机，拍下视频，冷笑：“多留个把柄，将你的丑态拍下来，看你清醒的时候，该如何面对。”</p><p>仔细想想，乔智删掉了这段视频，她和自己是名义上的夫妻，家丑不可外扬，如果视频泄露，被太多人知道，只会嘲笑自己无能无用罢了。</p><p>只是短短的走神功夫，未曾想，床上的陶茹雪身体扭成一团，外面的披肩散开，拉扯到两边，露出吊带打底衫。</p><p>乔智呼吸加重，心里瞬间蹦出个魔鬼。</p><p>它用恶毒的话语，刺激自己，你是不是男人？</p><p>现在去碰陶茹雪，那是趁火打劫，不是正人君子所为！</p><p>乔智到厨房自己先喝了一大杯凉水，然后再倒了一杯喂陶茹雪喝了几口。</p><p>怀中女人的面色不对劲，雪白中透着妖冶的红，浑身发烫，柔若无骨。</p><p>乔智积蓄了数月的悲闷情绪，宛如大河决堤……</p><p>玻璃窗外，电闪雷鸣，帮着掩盖这满屋和心里的乱。</p><p>不对！</p><p>他迅速发现问题。</p><p>陶茹雪不仅仅是喝了酒那么简单，她可能还吃了特殊的药物，难道那狗一样的韩斌给她吃了什么？</p><p>……</p><p>暴雨还在持续，乔智从报复性的情绪里，慢慢回落。</p><p>空虚、懊恼，还有些怜悯……</p><p>最终，乔智做了个奇怪的决定，拦腰抱起了她……</p><p>“嘭”，白色如玉的浴缸，溅出水花！</p><p>冰凉的水浸没陶茹雪的身体，她被水包围，吸入一口水，呛到肺部，从迷幻朦胧的世界回归现实。</p><p>有人要谋杀自己吗？</p><p>她张开双臂，努力将头浮出水面，看见极其厌恶的那个人，用冰冷的眼神望着自己。</p><p>“好好清醒一下吧！”</p><p>花洒打开，冰冷的水柱，朝陶茹雪的脸狂喷。</p><p>乔智没有做出更不理智的行为，而是将她无情地扔入浴缸，再用冷水将她浇醒！</p><p>前所未有的耻辱……</p><p>乔智从卫生间消失，陶茹雪艰难地从浴缸里爬出。</p><p>水珠顺着脸颊往下流，刘海软趴趴地贴在额头，像水鬼一样从厕所摸到床前的桌子上，抽了一块洗脸巾把水擦干净，湿湿的刘海也被撸上去，露出一张明艳的脸蛋。</p><p>换上了绸质睡袍，房间内已经没有那个人渣的影子。</p><p>体内的那团热气烟消云散，精疲力竭，她倒在床上，昏沉地睡去。</p><p>直到窗帘被拉开。</p><p>温和的光掀开眼皮，骨头如同散架，头疼欲裂。</p><p>乔智站在帘布旁，陶茹雪死死地盯着乔智。</p><p>“你别用那样的眼神看着我，我没对你做什么。男人虽然是下半身动物，但也不是所有的女人都能引起欲望，像你这样的女人，还没法引起我的兴趣。”乔智面无表情地打击对方。</p><p>“我有几句话想跟你说，你能不能靠近一点？”陶茹雪嘴角带笑说道。</p><p>他刚靠近两步，突然感觉到杀气，陶茹雪将埋在枕头下多日的水果刀取出，朝自己的胯下扫过来。</p><p>“好险！”</p><p>乔智背脊冒着虚汗，下体凉飕飕，刹那间也不知中招没有，“你疯了吧？”</p><p>疯婆子谋杀亲夫的想法多么深重，幸好这段时间保持克制。</p><p>“臭渣子，我阉了你。”陶茹雪是动真格的，幸好没有专业练过武，招式没有章法。</p><p>乔智瞄准机会，探手按住她的手腕，陶茹雪另外一只手狠狠地扇向他的右脸。</p><p>乔智又被刮到面颊，动了真火，怜惜的情绪一扫而空，用另一只手扭住她的手腕，将她的身体挤在墙壁上。</p><p>后背撞击冰冷的墙壁，陶茹雪疼得泪水流了下来。</p><p>乔智正心软，突然感觉胯下发寒，陶茹雪抬起膝盖顶上来，乔智只能用双腿夹住对方的细腿，将陶茹雪死死地顶在墙壁上。</p><p>陶茹雪咬牙切齿，狠狠地用头去撞乔智的下巴，乔智被顶得眼冒金星。</p><p>他也狠狠地回击，砰，鸡蛋碰鸡蛋，脑门磕脑门，两人都不好受，就看谁更能忍痛。</p><p>乔智赢了，他不再怜香惜玉！</p><p>陶茹雪没想到乔智这么凶残，别提把自己当女神对待，就是连女人都算不上，悲从中来，呜呜地痛哭起来。</p><p>“你放开我！”</p><p>陶茹雪变聪明，她知道对方是男人，力气比自己大，嘴巴还特别贱，继续闹下去，只会自己吃亏。</p><p>“放开你，没问题，但你要答应我，不要再发神经。”乔智皱眉，水果刀已经被他摘下，扔到远处。</p><p>“好的，我答应你。”</p><p>陶茹雪目光满是冰冷之色。</p><p>乔智缓缓松开手，陶茹雪嘴角浮出一抹凄美的笑容，“你等着离婚吧，我已经下定决心，我不想继续演下去了！”</p><p>乔智仰天大笑，“演？昨晚你那样子别提多主动了。”他拉开自己的衣衫，指着胸口的红痕，“昨晚你不知道当时多么的饥渴。这就是证据，我已经拍照了。当然，我知道，你心里肯定把我幻想成另外一个男人。”</p><p>“另外，昨晚我去之前，你跟韩斌喝了酒。你难道就不怀疑，韩斌给你喝的酒有问题吗？不然，为什么你在出租车里就没意识了，回家躺在床上还嚷着自己口渴，特别热！”</p><p>陶茹雪又气又怒，内心却在翻腾。</p><p>自己的酒量挺不错，昨晚只喝了两三杯红酒，即使是喝的是假酒，也绝不可能那么容易醉倒。</p><p>“还有，记住不是我求着娶你，而是你妈求着让我娶你。她觉得事业如果落到你和你妹两个败家娘们手里，绝对会破产。如果不是我爸受过你外公的恩惠，我怎么可能接受这个要求？”乔智冷笑道，“另外，你妈是对我很好，但其实她有自己的野心和算盘，不过是利用我，帮你们陶家守家业。”</p><p>陶茹雪大脑嗡嗡作响，哪有功夫琢磨乔智的话，满是乔智提及韩斌给自己下药的事情。</p><p>她心情混乱不安。</p><p>韩斌会那么做吗？</p><p>她和韩斌相识那么多年，确定恋爱关系也就在数月前，两人保持一道清白的界线。</p><p>若不是自己的闺蜜从机场拍下韩斌与一个年轻女孩相拥的画面，陶茹雪或许还会坚持跟韩斌在一起。</p><p>陶茹雪因为失恋，心如死灰才会接受妈妈的要求，与乔智结婚。</p><p>她当时作出这个决定，既是想让自己尽快走出伤痛，也是希望刺激韩斌。</p><p>但韩斌前不久又开始联系自己，明明知道自己已经结婚，还纠缠不清，陶茹雪不敢往深处去想。</p><p>“我去上班了！”</p><p>乔智见陶茹雪发呆，决定不再与她继续纠缠。</p><p>陶茹雪距离上班还有一段时间。</p><p>她没有搭理乔智，坐在镜子前。</p><p>拉开化妆盒，她先是吃惊，随后发出撕心裂肺的猪吼声！</p><p>迪奥红管999、纪梵希小羊皮304、YSL小金条21号、兰蔻哑505朱砂红、香奈儿磨砂黑管112、雅诗兰黛520全部被掰断，干净利落地成了两截……</p><p>近百支口红全军覆没！</p><p>口红就是女人行走的鸡血，动什么都不能动口红。</p><p>想要摧毁一个女人，就折断她所有的口红。 </p><p>他太狠毒了！</p><p>“你弄断我多少支口红，我会弄断你多少根骨头，此仇不报，誓不为人。”</p><p>……</p>
-                    </div>
-                    <div  th:if="${currentChapter==null || currentChapter.chapterContent==null}" style="text-align: center">
-                      <p>章节内容缺失,或者是没有章节内容访问权限</p>
-                    </div>
-                  </div>
+                    <!-- 包裹层 -->
+                    <div class="rft_1" id="readerFt" style="font-size: 14px;">
+                        <!-- 内容主盒 -->
+                        <div class="reader_box" style="user-select: auto;" unselectable="on"
+                             onselectstart="return false;">
+                            <div class="marker " tomeid="1949545" chapterid="58415869"></div>
+                            <div class="title">
+                                <div class="iconbox">
+                                    <em class=""></em>
+                                </div>
+                                <div class="title_txtbox" th:if="${currentChapter != null}"
+                                     th:text="${currentChapter.chapterName}">第001章 史上最没有求生欲的男人！
+                                </div>
+                            </div>
+                            <div class="bookinfo">
+                                作者：<a href="" th:if="${currentChapter != null}" th:text="${bookInfo.author}">烟斗老哥</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+                                字数：<span th:if="${currentChapter != null}" th:text="${currentChapter.chapterWordSize}">3896</span>&nbsp;&nbsp;|&nbsp;&nbsp;
+                                更新时间：<span th:if="${currentChapter != null}"
+                                           th:text="${#dates.format(currentChapter.updateTime, 'yyyy-MM-dd HH:mm')}">2019-12-24 10:46:25</span>
+                                <a href="#" class="reader_lnkbtn">全文阅读</a>
+                            </div>
 
-                  <!-- 操作区 -->
-                  <div class="chap_btnbox">
-                    <a href="" data-hook="pageStart" th:text="${frontChapter!=null?'上一章':'没有上一章'}" th:href="${frontChapter!=null?'/book/'+bookInfo.id+'/'+frontChapter.id+'.html':'#'}" >上一章</a>
-                    <a href="" th:if="${currentChapter != null}" th:href="${'/book/'+bookInfo.id+'.html'}" >目录</a>
-                    <a href="" th:text="${nextChapter!=null?'下一章':'没有下一章'}"  th:href="${nextChapter!=null?'/book/'+bookInfo.id+'/'+nextChapter.id+'.html':'#'}"  class="nextchapter" >下一章</a>
-                  </div>
+                            <div class="reader_line"></div>
+                            <div class="content" itemprop="acticleBody">
+                                <div id="chapterContent"
+                                     th:if="${currentChapter != null && currentChapter.chapterContent!=null}"
+                                     th:utext="${currentChapter.chapterContent}">
+                                    <p>夜色露出獠牙，吞噬星空。</p>
+                                    <p>雷声大作，电闪如蛇，磅礴大雨铺天盖地而下。</p>
+                                    <p>五星级酒店餐厅包厢内，两男一女，气氛诡异。</p>
+                                    <p>陶茹雪唇薄鼻挺，眼眸淡淡一瞟，溢出的光彩，仿佛能将人溶了。</p>
+                                    <p>噬魂销骨，不过如此。</p>
+                                    <p>身高一米七左右，标准的九头身，五官立体宛如艺术大师鬼斧神工之作，肌肤赛雪，宛如白玉般似能反射光彩。</p>
+                                    <p>身后站着一个男人，叫做韩斌，与陶茹雪是高中同学，琼金市现在最有名的年轻外科专家。</p>
+                                    <p>“乔智，我最瞧不起你这种没有尊严和底线的人。出卖自己的灵魂，觊觎、偷窃我陶家的产业。”</p>
+                                    <p>“我和茹雪两情相悦，但对我们而言，你是第三者，所以请你自己主动退出，我愿意给你一笔钱，你开个价码吧！”</p>
+                                    <p>啪，一声清脆的响声，干净利落地狠狠扇在韩斌的脸上。</p>
+                                    <p>韩斌的镜架被打歪，揉了下鼻子。</p>
+                                    <p>两道红线蜿蜒，竟流血了。</p>
+                                    <p>这混蛋！</p>
+                                    <p>韩斌眼中满是恶毒之色。</p>
+                                    <p>乔智愿意当陶家的女婿，除了偿还父亲欠下的人情债之外，还有一个重要原因，陶茹雪本身出众，是琼金一枝花，知名度高，追求者众多。</p>
+                                    <p>能娶到这种女人，是所有男人梦寐以求的荣幸。</p>
+                                    <p>何况她不只是美，而且家底也殷实。</p>
+                                    <p>母亲陶南芳是琼金赫赫有名的餐饮界企业家，名下的淮南菜餐馆连锁，不仅遍布省内，而且在国外也有多家分店。</p>
+                                    <p>原本以为娶到白富美，是种幸福，未曾想是麻烦的开始。</p>
+                                    <p>乔智娶了陶茹雪，两人不仅分房，陶茹雪对他的态度越来越糟糕。</p>
+                                    <p>乔智几次想要主动接近陶茹雪，都被她直接给拒绝，还有几次动手，甚至抓破了乔智的脸。</p>
+                                    <p>原本以为陶茹雪是觉得自己很陌生，等接触一段时间便能破冰。</p>
+                                    <p>后来乔智才知道，陶茹雪之前处过一个男朋友。</p>
+                                    <p>分手，但没有放下。</p>
+                                    <p>韩斌不敢把事情闹大，被扇了一记耳光，僵在现场。</p>
+                                    <p>陶茹雪怕乔智冲动之下，做出不理智的行为，提包扭身，离开房间。</p>
+                                    <p>两人一前一后坐入出租车，司机不时通过后视镜望向后排两人。</p>
+                                    <p>他发现从酒店出来的这对男女关系很诡异。</p>
+                                    <p>女人长得很好看，跟明星似的，面沉如水，冰冷无比。</p>
+                                    <p>男人浑身湿漉漉的，像刚从水里捞出来的落水公鸡，眼睛却是雪亮。</p>
+                                    <p>接下来的对话，让司机三观崩毁。</p>
+                                    <p>“为什么还能忍着，为什么不同意离婚……果然，你就是只缩头乌龟。”</p>
+                                    <p>
+                                        “没错，我就是特么世界独一无二的忍宗大弟子！我贪图你陶家的财产，我要的可不是咱俩婚后那可怜的一半财产，而是要整个淮香集团收入名下。你的这点小挫折小花招，根本撼动不了我，阻止不了我，所以想踹了我，跟你的情郎结秦晋之好，那就是做梦！”</p>
+                                    <p>乔智面色铁青，这么晚赶到这儿，还不是担心你出事了？</p>
+                                    <p>他故意刺激陶茹雪。</p>
+                                    <p>你不是说我冲着你的家世吗，行，我就专门拿这个来刺激你。</p>
+                                    <p>“你别做梦吧，我妈没那么傻！”</p>
+                                    <p>“是吗？你妈好像更喜欢我这个拿厨刀的粗人，而不喜欢那个拿手术刀的斯文败类。”</p>
+                                    <p>“呵呵，我妈喜欢你，你怎么不娶她？”</p>
+                                    <p>“嗯，如果她愿意的话，我当然愿意娶她，我眼睛里只剩下钱，谁给我钱，我就娶谁！”</p>
+                                    <p>“你你你……渣男！”</p>
+                                    <p>“那也比你强，你你你……潘金莲。”</p>
+                                    <p>司机听得目瞪口呆！</p>
+                                    <p>两人好像是夫妻，虽说夫妻吵架是常事，但这么吵的闻所未闻。</p>
+                                    <p>还有，特么的信息量实在太大，简直令人难以置信。</p>
+                                    <p>乔智爆粗口，那是受到强烈的刺激。</p>
+                                    <p>暴怒当中，失了智，骂脏话的时候，谁还讲究什么正确的价值观、世界观！</p>
+                                    <p>当然是，骂得怎么爽，怎么来！</p>
+                                    <p>咆哮过，是死一般的宁静。</p>
+                                    <p>车窗外，炸山般的雷声，蛇信般的电芒不断。</p>
+                                    <p>抵达所住的小区，陶茹雪半天不下车，乔智以为她又闹别扭，过去一看，或许是因为之前喝了酒，现在酒意上涌，她竟然直接昏睡过去。</p>
+                                    <p>无奈，只能将她拦腰抱了出来。</p>
+                                    <p>好不容易，进电梯，按开指纹锁，嘭地一脚直接踹开半开的房门，再将软弱无辜的陶茹雪，故意重重地摔在松软的床上。</p>
+                                    <p>刚才牙尖嘴利的女人，现在变成了一滩水，没有半点反应。</p>
+                                    <p>乔智也累得气喘吁吁，躺在床上休息，感慨刚才是经历了什么屁事儿！</p>
+                                    <p>陶茹雪翻了个身，手臂搭在乔智的胸口，吐气如兰，轻声呢喃：“好热，好渴。”</p>
+                                    <p>乔智挣脱陶茹雪的手臂，掏出手机，拍下视频，冷笑：“多留个把柄，将你的丑态拍下来，看你清醒的时候，该如何面对。”</p>
+                                    <p>仔细想想，乔智删掉了这段视频，她和自己是名义上的夫妻，家丑不可外扬，如果视频泄露，被太多人知道，只会嘲笑自己无能无用罢了。</p>
+                                    <p>只是短短的走神功夫，未曾想，床上的陶茹雪身体扭成一团，外面的披肩散开，拉扯到两边，露出吊带打底衫。</p>
+                                    <p>乔智呼吸加重，心里瞬间蹦出个魔鬼。</p>
+                                    <p>它用恶毒的话语，刺激自己，你是不是男人？</p>
+                                    <p>现在去碰陶茹雪，那是趁火打劫，不是正人君子所为！</p>
+                                    <p>乔智到厨房自己先喝了一大杯凉水，然后再倒了一杯喂陶茹雪喝了几口。</p>
+                                    <p>怀中女人的面色不对劲，雪白中透着妖冶的红，浑身发烫，柔若无骨。</p>
+                                    <p>乔智积蓄了数月的悲闷情绪，宛如大河决堤……</p>
+                                    <p>玻璃窗外，电闪雷鸣，帮着掩盖这满屋和心里的乱。</p>
+                                    <p>不对！</p>
+                                    <p>他迅速发现问题。</p>
+                                    <p>陶茹雪不仅仅是喝了酒那么简单，她可能还吃了特殊的药物，难道那狗一样的韩斌给她吃了什么？</p>
+                                    <p>……</p>
+                                    <p>暴雨还在持续，乔智从报复性的情绪里，慢慢回落。</p>
+                                    <p>空虚、懊恼，还有些怜悯……</p>
+                                    <p>最终，乔智做了个奇怪的决定，拦腰抱起了她……</p>
+                                    <p>“嘭”，白色如玉的浴缸，溅出水花！</p>
+                                    <p>冰凉的水浸没陶茹雪的身体，她被水包围，吸入一口水，呛到肺部，从迷幻朦胧的世界回归现实。</p>
+                                    <p>有人要谋杀自己吗？</p>
+                                    <p>她张开双臂，努力将头浮出水面，看见极其厌恶的那个人，用冰冷的眼神望着自己。</p>
+                                    <p>“好好清醒一下吧！”</p>
+                                    <p>花洒打开，冰冷的水柱，朝陶茹雪的脸狂喷。</p>
+                                    <p>乔智没有做出更不理智的行为，而是将她无情地扔入浴缸，再用冷水将她浇醒！</p>
+                                    <p>前所未有的耻辱……</p>
+                                    <p>乔智从卫生间消失，陶茹雪艰难地从浴缸里爬出。</p>
+                                    <p>水珠顺着脸颊往下流，刘海软趴趴地贴在额头，像水鬼一样从厕所摸到床前的桌子上，抽了一块洗脸巾把水擦干净，湿湿的刘海也被撸上去，露出一张明艳的脸蛋。</p>
+                                    <p>换上了绸质睡袍，房间内已经没有那个人渣的影子。</p>
+                                    <p>体内的那团热气烟消云散，精疲力竭，她倒在床上，昏沉地睡去。</p>
+                                    <p>直到窗帘被拉开。</p>
+                                    <p>温和的光掀开眼皮，骨头如同散架，头疼欲裂。</p>
+                                    <p>乔智站在帘布旁，陶茹雪死死地盯着乔智。</p>
+                                    <p>
+                                        “你别用那样的眼神看着我，我没对你做什么。男人虽然是下半身动物，但也不是所有的女人都能引起欲望，像你这样的女人，还没法引起我的兴趣。”乔智面无表情地打击对方。</p>
+                                    <p>“我有几句话想跟你说，你能不能靠近一点？”陶茹雪嘴角带笑说道。</p>
+                                    <p>他刚靠近两步，突然感觉到杀气，陶茹雪将埋在枕头下多日的水果刀取出，朝自己的胯下扫过来。</p>
+                                    <p>“好险！”</p>
+                                    <p>乔智背脊冒着虚汗，下体凉飕飕，刹那间也不知中招没有，“你疯了吧？”</p>
+                                    <p>疯婆子谋杀亲夫的想法多么深重，幸好这段时间保持克制。</p>
+                                    <p>“臭渣子，我阉了你。”陶茹雪是动真格的，幸好没有专业练过武，招式没有章法。</p>
+                                    <p>乔智瞄准机会，探手按住她的手腕，陶茹雪另外一只手狠狠地扇向他的右脸。</p>
+                                    <p>乔智又被刮到面颊，动了真火，怜惜的情绪一扫而空，用另一只手扭住她的手腕，将她的身体挤在墙壁上。</p>
+                                    <p>后背撞击冰冷的墙壁，陶茹雪疼得泪水流了下来。</p>
+                                    <p>乔智正心软，突然感觉胯下发寒，陶茹雪抬起膝盖顶上来，乔智只能用双腿夹住对方的细腿，将陶茹雪死死地顶在墙壁上。</p>
+                                    <p>陶茹雪咬牙切齿，狠狠地用头去撞乔智的下巴，乔智被顶得眼冒金星。</p>
+                                    <p>他也狠狠地回击，砰，鸡蛋碰鸡蛋，脑门磕脑门，两人都不好受，就看谁更能忍痛。</p>
+                                    <p>乔智赢了，他不再怜香惜玉！</p>
+                                    <p>陶茹雪没想到乔智这么凶残，别提把自己当女神对待，就是连女人都算不上，悲从中来，呜呜地痛哭起来。</p>
+                                    <p>“你放开我！”</p>
+                                    <p>陶茹雪变聪明，她知道对方是男人，力气比自己大，嘴巴还特别贱，继续闹下去，只会自己吃亏。</p>
+                                    <p>“放开你，没问题，但你要答应我，不要再发神经。”乔智皱眉，水果刀已经被他摘下，扔到远处。</p>
+                                    <p>“好的，我答应你。”</p>
+                                    <p>陶茹雪目光满是冰冷之色。</p>
+                                    <p>乔智缓缓松开手，陶茹雪嘴角浮出一抹凄美的笑容，“你等着离婚吧，我已经下定决心，我不想继续演下去了！”</p>
+                                    <p>
+                                        乔智仰天大笑，“演？昨晚你那样子别提多主动了。”他拉开自己的衣衫，指着胸口的红痕，“昨晚你不知道当时多么的饥渴。这就是证据，我已经拍照了。当然，我知道，你心里肯定把我幻想成另外一个男人。”</p>
+                                    <p>“另外，昨晚我去之前，你跟韩斌喝了酒。你难道就不怀疑，韩斌给你喝的酒有问题吗？不然，为什么你在出租车里就没意识了，回家躺在床上还嚷着自己口渴，特别热！”</p>
+                                    <p>陶茹雪又气又怒，内心却在翻腾。</p>
+                                    <p>自己的酒量挺不错，昨晚只喝了两三杯红酒，即使是喝的是假酒，也绝不可能那么容易醉倒。</p>
+                                    <p>
+                                        “还有，记住不是我求着娶你，而是你妈求着让我娶你。她觉得事业如果落到你和你妹两个败家娘们手里，绝对会破产。如果不是我爸受过你外公的恩惠，我怎么可能接受这个要求？”乔智冷笑道，“另外，你妈是对我很好，但其实她有自己的野心和算盘，不过是利用我，帮你们陶家守家业。”</p>
+                                    <p>陶茹雪大脑嗡嗡作响，哪有功夫琢磨乔智的话，满是乔智提及韩斌给自己下药的事情。</p>
+                                    <p>她心情混乱不安。</p>
+                                    <p>韩斌会那么做吗？</p>
+                                    <p>她和韩斌相识那么多年，确定恋爱关系也就在数月前，两人保持一道清白的界线。</p>
+                                    <p>若不是自己的闺蜜从机场拍下韩斌与一个年轻女孩相拥的画面，陶茹雪或许还会坚持跟韩斌在一起。</p>
+                                    <p>陶茹雪因为失恋，心如死灰才会接受妈妈的要求，与乔智结婚。</p>
+                                    <p>她当时作出这个决定，既是想让自己尽快走出伤痛，也是希望刺激韩斌。</p>
+                                    <p>但韩斌前不久又开始联系自己，明明知道自己已经结婚，还纠缠不清，陶茹雪不敢往深处去想。</p>
+                                    <p>“我去上班了！”</p>
+                                    <p>乔智见陶茹雪发呆，决定不再与她继续纠缠。</p>
+                                    <p>陶茹雪距离上班还有一段时间。</p>
+                                    <p>她没有搭理乔智，坐在镜子前。</p>
+                                    <p>拉开化妆盒，她先是吃惊，随后发出撕心裂肺的猪吼声！</p>
+                                    <p>迪奥红管999、纪梵希小羊皮304、YSL小金条21号、兰蔻哑505朱砂红、香奈儿磨砂黑管112、雅诗兰黛520全部被掰断，干净利落地成了两截……</p>
+                                    <p>近百支口红全军覆没！</p>
+                                    <p>口红就是女人行走的鸡血，动什么都不能动口红。</p>
+                                    <p>想要摧毁一个女人，就折断她所有的口红。 </p>
+                                    <p>他太狠毒了！</p>
+                                    <p>“你弄断我多少支口红，我会弄断你多少根骨头，此仇不报，誓不为人。”</p>
+                                    <p>……</p>
+                                </div>
+                                <div th:if="${currentChapter==null || currentChapter.chapterContent==null}"
+                                     style="text-align: center">
+                                    <p>章节内容缺失,或者是没有章节内容访问权限</p>
+                                </div>
+                            </div>
 
-                  <div class="ctrl_tips">按“键盘左键←”返回上一章&nbsp;&nbsp;&nbsp;按“键盘右键→”进入下一章&nbsp;&nbsp;&nbsp;按“空格键”向下滚动</div>
+                            <!-- 操作区 -->
+                            <div class="chap_btnbox">
+                                <a href="" data-hook="pageStart" th:text="${frontChapter!=null?'上一章':'没有上一章'}"
+                                   th:href="${frontChapter!=null?'/book/'+bookInfo.id+'/'+frontChapter.id+'.html':'#'}">上一章</a>
+                                <a href="" th:if="${currentChapter != null}" th:href="${'/book/'+bookInfo.id+'.html'}">目录</a>
+                                <a href="" th:text="${nextChapter!=null?'下一章':'没有下一章'}"
+                                   th:href="${nextChapter!=null?'/book/'+bookInfo.id+'/'+nextChapter.id+'.html':'#'}"
+                                   class="nextchapter">下一章</a>
+                            </div>
 
-                  <!-- 章评盒 -->
-                  <div id="reader-chapterforum-wrap" class="chapter_forum">
-                    <div class="chapter_forum_tit">
-                      <h3>章节评论</h3>
-                      <a href="javascript:void(0)" class="chapter_forum_btn" >发表章评</a>
-                    </div>
-                    <div class="chapter_thread_list">
-                      <div class="chapter_thread">
-                        <ul class="forums-list" id="JthreadList"></ul>
-                      </div>
-                    </div>
-                    <div class="chapter_morethread">
+                            <div class="ctrl_tips">按“键盘左键←”返回上一章&nbsp;&nbsp;&nbsp;按“键盘右键→”进入下一章&nbsp;&nbsp;&nbsp;按“空格键”向下滚动</div>
 
+                            <!-- 章评盒 -->
+                            <div id="reader-chapterforum-wrap" class="chapter_forum">
+                                <div class="chapter_forum_tit">
+                                    <h3>章节评论</h3>
+                                    <a href="javascript:void(0)" class="chapter_forum_btn">发表章评</a>
+                                </div>
+                                <div class="chapter_thread_list">
+                                    <div class="chapter_thread">
+                                        <ul class="forums-list" id="JthreadList"></ul>
+                                    </div>
+                                </div>
+                                <div class="chapter_morethread">
+
+                                </div>
+                            </div>
+                            <!-- /章评盒 -->
+                        </div>
+                        <!-- /内容主盒 -->
                     </div>
-                  </div>
-                  <!-- /章评盒 -->
+                    <!-- /包裹层 -->
+
+
                 </div>
-                <!-- /内容主盒 -->
-              </div>
-              <!-- /包裹层 -->
-
-
-
+                <div class="error-html-box" th:if="${currentChapter==null}">
+                    <div class="error-html">
+                        <div class="error-top">
+                            <div class="error-top-1">
+                                <p>出错啦~</p>
+                            </div>
+                            <div class="error-top-2">
+                                <p class="tips">您访问的页面熬夜追书去啦~</p>
+                                <p>最有可能的原因：</p>
+                                <p><em class="icon"></em>数据访问失败，请稍后重试~</p>
+                            </div>
+                        </div>
+                        <div class="error-bottom">
+                            <div class="btns clearfix"><a href="http://www.zongheng.com">返回首页</a>
+                                <a href="http://www.zongheng.com/store.html" target="_blank">访问书库</a>
+                                <a href="#">我的书架</a><a href="#">刷新本页</a></div>
+                            <p class="tel">客服电话：010-6666 6666&nbsp;&nbsp;<em>|</em>&nbsp;&nbsp;客服QQ：666 666 666</p>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="error-html-box" th:if="${currentChapter==null}">
-              <div class="error-html">
-                <div class="error-top">
-                  <div class="error-top-1">
-                    <p>出错啦~</p>
-                  </div>
-                  <div class="error-top-2">
-                    <p class="tips">您访问的页面熬夜追书去啦~</p>
-                    <p>最有可能的原因：</p>
-                    <p><em class="icon"></em>数据访问失败，请稍后重试~</p>
-                  </div>
-                </div>
-                <div class="error-bottom">
-                  <div class="btns clearfix"><a href="http://www.zongheng.com">返回首页</a>
-                    <a href="http://www.zongheng.com/store.html" target="_blank">访问书库</a>
-                    <a href="#">我的书架</a><a href="#">刷新本页</a></div>
-                  <p class="tel">客服电话：010-6666 6666&nbsp;&nbsp;<em>|</em>&nbsp;&nbsp;客服QQ：666 666 666</p>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
 
         <footer th:replace="include :: footer" class="footer footer-transparent"></footer>
-      </div>
     </div>
-    <!-- Libs JS -->
-    <script th:src="@{/dist/libs/bootstrap/dist/js/bootstrap.bundle.min.js}" src="../../static/dist/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-      document.body.style.display = "block";
-      $(function() {
+</div>
+<!-- Libs JS -->
+<script th:src="@{/dist/libs/bootstrap/dist/js/bootstrap.bundle.min.js}"
+        src="../../static/dist/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    document.body.style.display = "block";
+    $(function () {
         // 隐藏全局搜索框
-        $("#totalSearchDiv").attr("style","display:none;");
-      });
-    </script>
+        $("#totalSearchDiv").attr("style", "display:none;");
+    });
+</script>
 
-  </body>
+</body>
 </html>

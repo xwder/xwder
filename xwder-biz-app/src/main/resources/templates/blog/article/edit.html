@@ -392,7 +392,7 @@
 
         var title = $("#articleTitle").val();
         var summary = $("#articleSummary").val();
-        var content = UE.getEditor('editor').getAllHtml();
+        var content = UE.getEditor('editor').getContent();
         var type = $("input:checkbox[name='articleType']:checked").val();
         var category = $("input:checkbox[name='articleCategory']:checked").val();
 

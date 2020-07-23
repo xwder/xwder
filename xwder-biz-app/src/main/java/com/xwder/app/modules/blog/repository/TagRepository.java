@@ -2,6 +2,8 @@ package com.xwder.app.modules.blog.repository;
 
 import com.xwder.app.modules.blog.entity.Tag;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
@@ -15,5 +17,15 @@ public interface TagRepository extends JpaRepository<Tag, Long> {
      * @return
      */
     List<Tag> findByUserIdAndAvailable(Long userId, Integer available);
+
+    /**
+     * 根据id查询tags
+     *
+     * @param ids
+     * @return
+     */
+
+    @Query(value = "SELECT * FROM blog_tag WHERE id IN (:ids)",nativeQuery = true)
+    List<Tag> listTagByUserId(@Param("ids") List<Long> ids);
 
 }
