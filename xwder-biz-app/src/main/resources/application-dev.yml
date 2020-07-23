@@ -155,8 +155,8 @@ eureka:
       enabled: true
 
     # 不启用eureka注册中心
-#    register-with-eureka: false
-#    fetch-registry: false
+    register-with-eureka: false
+    fetch-registry: false
 
 
   instance:
@@ -238,20 +238,15 @@ mq:
       # 书籍模块微信通知消息队列
       chapterUpdate: xwder-wechat-chapterUpdate
 
+upload:
+  saveBaseDir: D:\\
 
 novel:
   book:
     # 书籍章节本地存放目录
     dir: I:\\novel
-lottery:
-  save:
-    # 上传的lottery本地存放目录
-    dir: E:\\lottery
 
 video:
-  upload:
-    # 上传的video保存目录
-    saveDir: E:\\videoUploadSaveDir
   # video切割文件时间长度
   videoSplitTime: 5
 
