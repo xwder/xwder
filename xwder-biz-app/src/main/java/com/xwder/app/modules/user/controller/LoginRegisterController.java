@@ -67,15 +67,15 @@ public class LoginRegisterController {
     /**
      * 注册校验用户名是否存在
      *
-     * @param userId
+     * @param userName
      * @return
      */
     @ResponseBody
-    @PostMapping("/checkUserId")
-    public Object checkUserIdExist(@RequestParam("userId") String userId) {
-        AssertUtil.paramIsNotNull(userId, "用户名不能为空");
-        User existUser = userService.getUserByUserUserId(userId);
-        AssertUtil.isNull(existUser, (int) ResultCode.PARAM_VALIDATE_FAILD.getCode(), "用户{}已存在 ", userId);
+    @PostMapping("/checkUserName")
+    public Object checkUserNameExist(@RequestParam("userName") String userName) {
+        AssertUtil.paramIsNotNull(userName, "用户名不能为空");
+        User existUser = userService.getUserByUserName(userName);
+        AssertUtil.isNull(existUser, (int) ResultCode.PARAM_VALIDATE_FAILD.getCode(), "用户{}已存在 ", userName);
         return CommonResult.success();
     }
 
@@ -104,16 +104,16 @@ public class LoginRegisterController {
     @ResponseBody
     @PostMapping("/doRegister")
     public Object userRegister(User user, HttpServletRequest request) {
-        AssertUtil.paramIsNotNull(user.getUserId(), "用户名不能为空");
+        AssertUtil.paramIsNotNull(user.getUserName(), "用户名不能为空");
         AssertUtil.paramIsNotNull(user.getPassword(), "密码不能为空");
         AssertUtil.paramIsNotTrue(Validator.isEmail(user.getEmail()), "邮箱{}格式校验失败", user.getEmail());
 
         if (user.getId() == null) {
-            // 注册逻辑 先检查 用户userId 邮箱 是否存在
-            User existUser = userService.getUserByUserUserId(user.getUserId());
+            // 注册逻辑 先检查 用户名 邮箱 是否存在
+            User existUser = userService.getUserByUserName(user.getUserName());
             if (existUser != null) {
-                log.info("注册用户用户名userId[{}]已经存在", user.getUserId());
-                return CommonResult.failed("注册用户用户名 " + user.getUserId() + " 已经存在");
+                log.info("注册用户用户名[{}]已经存在", user.getUserName());
+                return CommonResult.failed("注册用户用户名 " + user.getUserName() + " 已经存在");
             }
             existUser = userService.getUserByUserEmail(user.getEmail());
             if (existUser != null) {
@@ -139,7 +139,7 @@ public class LoginRegisterController {
     @ResponseBody
     @PostMapping(value = "/doLogin")
     public Object userLogin(User user, String redirect, HttpServletRequest request, HttpServletResponse response) {
-        AssertUtil.paramIsNotNull(user.getUserId(), "用户名不能为空");
+        AssertUtil.paramIsNotNull(user.getUserName(), "用户名不能为空");
         AssertUtil.paramIsNotNull(user.getPassword(), "密码不能为空");
         User resultUser = userService.userLogin(user);
         if (resultUser == null) {
@@ -205,7 +205,7 @@ public class LoginRegisterController {
      * 图形验证码
      */
     @GetMapping("/sendVerifyCode")
-    public void checkUserIdExist() {
+    public void checkUserNameExist() {
         kaptcha.render();
     }
 

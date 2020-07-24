@@ -45,9 +45,9 @@
 
                             <div class="form-group">
                                 <label class="form-label  required">用户名</label>
-                                <input type="text" class="form-control" name="userId" id="userId" aria-describedby=""
+                                <input type="text" class="form-control" name="userName" id="userName" aria-describedby=""
                                        placeholder="Enter UserName">
-                                <div id="userIdInvalid" class="invalid-feedback">Invalid feedback</div>
+                                <div id="userNameInvalid" class="invalid-feedback">Invalid feedback</div>
                             </div>
                             <div class="form-group">
                                 <label class="form-label required">
@@ -86,13 +86,13 @@
             return;
         }
         // 注册
-        var userId = $("#userId").val();
+        var userName = $("#userName").val();
         var password = $("#password").val();
         $.ajax({
             type: "post",
             url: "/doLogin",
             data: {
-                "userId": userId,
+                "userName": userName,
                 "password": password
             },
             success: function (data) {
@@ -110,16 +110,16 @@
         });
     });
 
-    $("#userId").blur(function () {
+    $("#userName").blur(function () {
         console.log("输入用户名,移动鼠标");
-        var userId = $("#userId").val();
-        if (userId.length == 0) {
+        var userName = $("#userName").val();
+        if (userName.length == 0) {
             console.info("用户名未输入");
-            inValid($("#userId"), $("#userIdInvalid"), '用户名未输入');
+            inValid($("#userName"), $("#userNameInvalid"), '用户名未输入');
             return false;
         }
-        $("#userId").removeClass("is-invalid");
-        $("#userId").addClass("is-valid mb-2");
+        $("#userName").removeClass("is-invalid");
+        $("#userName").addClass("is-valid mb-2");
     });
 
     $("#password").blur(function () {
@@ -139,10 +139,10 @@
      *
      */
     function validatorForm() {
-        var userId = $("#userId").val();
-        if (userId.length == 0) {
+        var userName = $("#userName").val();
+        if (userName.length == 0) {
             console.info("用户名未输入");
-            inValid($("#userId"), $("#userIdInvalid"), '用户名未输入');
+            inValid($("#userName"), $("#userNameInvalid"), '用户名未输入');
             return false;
         }
         var password = $("#password").val();
@@ -186,7 +186,7 @@
         if ((!redirect) || (! CheckIsNullOrEmpty(redirect))) {
             var ctxPath = /*[[@{/}]]*/'';
             var domain = window.location.protocol+"//"+window.location.host;
-            return domain+ctxPath+"/index.html";;
+            return domain+ctxPath+"index.html";;
         }
         return redirect;
     }

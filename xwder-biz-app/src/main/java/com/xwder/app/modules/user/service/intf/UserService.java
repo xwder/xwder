@@ -8,12 +8,12 @@ import com.xwder.app.modules.user.entity.User;
 public interface UserService {
 
     /**
-     * 根据userId查找用户
+     * 根据userName查找用户
      *
-     * @param userId
+     * @param userName
      * @return
      */
-    User getUserByUserUserId(String userId);
+    User getUserByUserName(String userName);
 
     /**
      * 根据email查找用户

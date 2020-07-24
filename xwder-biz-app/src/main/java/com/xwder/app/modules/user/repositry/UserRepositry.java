@@ -2,6 +2,7 @@ package com.xwder.app.modules.user.repositry;
 
 import com.xwder.app.modules.user.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
@@ -10,15 +11,16 @@ import java.util.List;
  * @version 1.0
  * @date 2020/07/09
  */
+@Repository
 public interface UserRepositry extends JpaRepository<User, Integer> {
 
     /**
-     * 根据UserId查找用户
+     * 根据userName查找用户
      *
-     * @param userId
+     * @param userName
      * @return
      */
-    List<User> findAllByUserId(String userId);
+    List<User> findAllByUserName(String userName);
 
     /**
      * 根据email查找用户

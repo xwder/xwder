@@ -88,7 +88,7 @@ public class FileUploadServiceImpl implements FileUploadService {
         FileUploadRecord fileUploadRecord = new FileUploadRecord();
         User sessionUser = (User) SessionUtil.getSessionAttribute(SysConstant.SESSION_USER);
         fileUploadRecord.setUserId(sessionUser.getId());
-        fileUploadRecord.setUserName(sessionUser.getUserId());
+        fileUploadRecord.setUserName(sessionUser.getUserName());
         fileUploadRecord.setFileType(getFileType(fileName));
         fileUploadRecord.setFileSize(FileUtil.size(serverSaveFile));
         fileUploadRecord.setLocalUrl(serverSaveCompleteDir);
@@ -117,7 +117,7 @@ public class FileUploadServiceImpl implements FileUploadService {
         String fileSuffix = splits.length >= 2 ? splits[splits.length-1] : "";
         String fileType = getFileType(fileName);
         // 服务器保存地址 baseDir + 文件类型 + 用户主键-用户名 + 用户主键-当前时间 + 文件后缀
-        String saveDir = fileType + File.separator + sessionUser.getId() + "-" + sessionUser.getUserId()
+        String saveDir = fileType + File.separator + sessionUser.getId() + "-" + sessionUser.getUserName()
                 + File.separator + sessionUser.getId() + "-" + DateUtil.formatDate(new Date(), DateUtil.format_yyyyMMddHHmmssSSS) + "." + fileSuffix;
         return saveDir;
     }

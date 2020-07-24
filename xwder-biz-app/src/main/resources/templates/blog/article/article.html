@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org">
-<title th:if="${session.previewMap != null}" th:text="${session.previewMap['article'].title}">预览</title>
+<title th:if="${articleMap != null}" th:text="${articleMap['article'].title}">预览</title>
 <head th:include="include :: head"></head>
 <body class="antialiased">
 <div class="page">
@@ -32,7 +32,7 @@
                         <div class="article-header-box">
                             <div class="article-header">
                                 <div class="article-title-box">
-                                    <h1 class="title-article" id="articleContentId" th:if="${session.previewMap != null}" th:text="${session.previewMap['article'].title}">Ueditor 图片自定义上传</h1>
+                                    <h1 class="title-article" id="articleContentId" th:if="${articleMap != null}" th:text="${articleMap['article'].title}">Ueditor 图片自定义上传</h1>
                                 </div>
                                 <div class="article-info-box">
                                     <div class="article-bar-top">
@@ -42,10 +42,10 @@
                                         <!--翻译-->
                                         <!--转载-->
                                         <div class="bar-content">
-                                            <a class="follow-nickName" href="https://me.csdn.net/Only_Wan" target="_blank" rel="noopener" th:text="${session.sessionUser.userName}">Only_Wan</a>
-                                            <span class="time" th:if="${session.previewMap != null}" th:text="${#dates.format(session.previewMap['article'].gmtCreate, 'yyyy-MM-dd HH:mm')}">2017-04-06 14:19:56</span>
+                                            <a class="follow-nickName" href="https://me.csdn.net/Only_Wan" target="_blank" rel="noopener" th:text="${articleMap['article'].userName}">Only_Wan</a>
+                                            <span class="time" th:if="${articleMap != null}" th:text="${#dates.format(articleMap['article'].publishTime, 'yyyy-MM-dd HH:mm')}">2017-04-06 14:19:56</span>
                                             <img class="article-read-img article-heard-img" src="https://csdnimg.cn/release/phoenix/template/new_img/articleReadEyes.png" alt="">
-                                            <span class="read-count" th:if="${session.previewMap != null}" th:text="${session.previewMap['article'].readCount}">3960</span>
+                                            <span class="read-count" th:if="${articleMap != null}" th:text="${articleMap['article'].readCount}">3960</span>
                                             <a id="blog_detail_zk_collection" class="un-collection" data-report-click="{&quot;mod&quot;:&quot;popu_823&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4232&quot;,&quot;ab&quot;:&quot;new&quot;}">
                                                 <img class="article-collect-img article-heard-img un-collect-status" style="display:inline-block" src="https://csdnimg.cn/release/phoenix/template/new_img/tobarCollect.png" alt="">
                                                 <img class="article-collect-img article-heard-img collect-status" style="display:none" src="https://csdnimg.cn/release/phoenix/template/new_img/tobarCollectionActive.png" alt="">
@@ -58,12 +58,12 @@
                                         </div>
                                     </div>
                                     <div class="blog-tags-box">
-                                        <div class="tags-box artic-tag-box" th:if="${session.previewMap != null}">
+                                        <div class="tags-box artic-tag-box" th:if="${articleMap != null}">
                                             <span class="label">分类专栏：</span>
-                                            <a class="tag-link" target="_blank" rel="noopener" href="" th:if="${session.previewMap != null}" th:text="${session.previewMap['category'].categoryName}">
+                                            <a class="tag-link" target="_blank" rel="noopener" href="" th:if="${articleMap != null}" th:text="${articleMap['category'].categoryName}">
                                                 web应用开发                                   </a>
                                             <span class="label">文章标签：</span>
-                                            <span th:if="${session.previewMap['tagList'] != null}" th:each="tag,tagStat : ${session.previewMap['tagList']}">
+                                            <span th:if="${articleMap['tagList'] != null}" th:each="tag,tagStat : ${articleMap['tagList']}">
                                                 <a th:if="${tag != null}" th:text="${tag.tagName}"  class="tag-link" href="" target="_blank" rel="noopener">富文本编辑器 </a>
                                             </span>
                                         </div>
@@ -95,7 +95,7 @@
                     <div class="card card-lg">
                         <div class="card-body" id="contentCardBody">
                             <div class="markdown">
-                                <div th:if="${session.previewMap != null}" th:utext="${session.previewMap['article'].content}"></div>
+                                <div th:if="${articleMap != null}" th:utext="${articleMap['article'].content}"></div>
                             </div>
                         </div>
                     </div>

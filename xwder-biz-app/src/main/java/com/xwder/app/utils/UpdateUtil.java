@@ -16,6 +16,7 @@ public class UpdateUtil {
 
 
     /**
+     * 将source更新至target
      * 将目标源中不为空的字段过滤，将数据库中查出的数据源复制到提交的目标源中
      *
      * @param source 用id从数据库中查出来的数据源

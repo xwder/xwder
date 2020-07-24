@@ -1,9 +1,6 @@
 package com.xwder.app.modules.blog.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -23,6 +20,7 @@ public class Article implements Serializable {
      */
     @Id
     @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     /**
@@ -30,6 +28,12 @@ public class Article implements Serializable {
      */
     @Column(name = "user_id")
     private Long userId;
+
+    /**
+     * 用户Id
+     */
+    @Column(name = "user_name")
+    private String userName;
 
     /**
      * 分类ID
@@ -156,6 +160,13 @@ public class Article implements Serializable {
         this.userId = userId;
     }
 
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
 
     public Long getCategoryId() {
         return categoryId;

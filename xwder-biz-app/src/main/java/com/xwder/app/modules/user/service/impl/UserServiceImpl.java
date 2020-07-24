@@ -58,19 +58,19 @@ public class UserServiceImpl implements UserService {
     private UserRepositry userRepositry;
 
     /**
-     * 根据userId查找用户
+     * 根据userName查找用户
      *
-     * @param userId
+     * @param userName
      * @return
      */
     @Override
-    public User getUserByUserUserId(String userId) {
-        List<User> userList = userRepositry.findAllByUserId(userId);
+    public User getUserByUserName(String userName) {
+        List<User> userList = userRepositry.findAllByUserName(userName);
         if (CollectionUtil.isNotEmpty(userList)) {
-            log.info("查询用户id[{}]已存在", userId);
+            log.info("查询用户id[{}]已存在", userName);
             return userList.get(0);
         }
-        log.info("查询用户id[{}]不存在", userId);
+        log.info("查询用户id[{}]不存在", userName);
         return null;
     }
 
@@ -117,14 +117,14 @@ public class UserServiceImpl implements UserService {
             // 设置未删除状态
             user.setAvailable(1);
             user = userRepositry.save(user);
-            log.info("保存新注册用户[{}]成功", user.getUserId());
+            log.info("保存新注册用户[{}]成功", user.getUserName());
             user.setSalt(null);
             user.setPassword(null);
             // 发送激活账户邮件
             sendVerifyEmail(user);
         } else {
-            String userId = user.getUserId();
-            List<User> userList = userRepositry.findAllByUserId(userId);
+            String userName = user.getUserName();
+            List<User> userList = userRepositry.findAllByUserName(userName);
             if (userList == null && userList.size() != 1) {
                 log.error("该用户不存在");
                 return null;
@@ -135,7 +135,7 @@ public class UserServiceImpl implements UserService {
             sourceUser.setSalt(null);
             UpdateUtil.copyNullProperties(user, sourceUser);
             userRepositry.save(sourceUser);
-            log.info("更新用户[{}]信息成功", sourceUser.getUserId());
+            log.info("更新用户[{}]信息成功", sourceUser.getUserName());
             user = sourceUser;
         }
 
@@ -152,8 +152,8 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public User userLogin(User user) {
-        String userId = user.getUserId();
-        User sourceUser = getUserByUserUserId(userId);
+        String userName = user.getUserName();
+        User sourceUser = getUserByUserName(userName);
         if (sourceUser == null) {
             return null;
         }
@@ -161,10 +161,10 @@ public class UserServiceImpl implements UserService {
         if (StringUtils.equalsAnyIgnoreCase(sourceUser.getPassword(), loginPassWord)) {
             sourceUser.setPassword(null);
             sourceUser.setSalt(null);
-            log.info("用户[{}]登录成功", userId);
+            log.info("用户[{}]登录成功", userName);
             return sourceUser;
         }
-        log.info("用户[{}]登录失败", userId);
+        log.info("用户[{}]登录失败", userName);
         return null;
     }
 
@@ -188,9 +188,9 @@ public class UserServiceImpl implements UserService {
         mailMap.put("content", content);
         String jsonContent = JSONUtil.toJsonStr(mailMap);
         mqProducerMessage.sendMsg(jsonContent, rabbitConfig.getXwderExchageEmail(), rabbitConfig.getXwderEmailVerifyEmailRoutingkey());
-        log.info("用户[{}]发送邮箱验证成功", user.getUserId());
+        log.info("用户[{}]发送邮箱验证成功", user.getUserName());
 
-        // ehcache缓存 key 和 用户userId
+        // ehcache缓存 key 和 用户userName
         String redisKey = RedisConstant.EMAIL_VERIFY_KEY + ":" + key;
         redisUtil.set(redisKey, user, RedisConstant.EMAIL_VERIFY_KEY_CACHETIME);
 
@@ -198,13 +198,13 @@ public class UserServiceImpl implements UserService {
         if (sysConfigAttribute.getNewUserReigsterWeChatNoticeAdmin()) {
             String wxPusherContent = String.format("新用户注册                                        " +
                             "\n用户名:%s\n邮箱:%s\n电话:%s",
-                    user.getUserId(), user.getEmail(), user.getPhone());
+                    user.getUserName(), user.getEmail(), user.getPhone());
             HashMap<String, Object> pusherMap = Maps.newHashMap();
             pusherMap.put("uid", sysConfigAttribute.getAdminWxPusherUid());
             pusherMap.put("msg", wxPusherContent);
             jsonContent = JSONUtil.toJsonStr(pusherMap);
             mqProducerMessage.sendMsg(jsonContent, rabbitConfig.getXwderExchageWeChat(), rabbitConfig.getXwderWeChatChapterUpdateRoutingkey());
-            log.info("新用户[{}]注册，给管理员发送微信通知成功,通知消息内容:{}", user.getUserId(), wxPusherContent);
+            log.info("新用户[{}]注册，给管理员发送微信通知成功,通知消息内容:{}", user.getUserName(), wxPusherContent);
         }
     }
 
@@ -225,7 +225,7 @@ public class UserServiceImpl implements UserService {
         }
         user.setStatus(UserStatusEnum.EMAIL_VERIFY.getCode());
         saveOrUpdateUser(user);
-        log.info("验证用户[{}]邮箱成功", user.getUserId());
+        log.info("验证用户[{}]邮箱成功", user.getUserName());
         // 清除缓存
         redisUtil.del(redisKey);
         return user;

@@ -1,6 +1,8 @@
 package com.xwder.app.modules.blog.service.intf;
 
-import java.util.Map;
+import com.xwder.app.modules.blog.entity.Article;
+
+import java.util.List;
 
 /**
  * 文章service
@@ -12,9 +14,28 @@ import java.util.Map;
 public interface ArticleService {
 
     /**
-     * UEditor 请求格式规范 config
+     * 根据是否有主键修改或者更新文章
+     *
+     * @param article
      * @return
      */
-    Map getUeDitorUploadConfig();
+    Article saveOrUpdateArticle(Article article);
+
+    /**
+     * 根据id查询文章信息
+     *
+     * @param articleId
+     * @return
+     */
+    Article getArticleById(Long articleId);
+
+
+    /**
+     * 根据用户id查询文章列表
+     *
+     * @param userId
+     * @return
+     */
+    List<Article> listArticleByUserId(Long userId);
 
 }

@@ -1,9 +1,12 @@
 package com.xwder.app;
 
 import cn.hutool.core.io.FileUtil;
+import com.google.common.base.Joiner;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author wande
@@ -28,4 +31,16 @@ public class Test {
         }
     }
 
+    /**
+     * 测试guava joiner
+     */
+    @org.junit.Test
+    public void joinerTest(){
+        List list = new ArrayList<>();
+        list.add(1);
+        list.add(2);
+        list.add(3);
+        String join = Joiner.on("-").join(list);
+        System.out.println("join: " + join);
+    }
 }

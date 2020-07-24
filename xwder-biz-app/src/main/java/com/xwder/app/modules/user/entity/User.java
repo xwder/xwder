@@ -28,12 +28,6 @@ public class User implements Serializable {
     private Long id;
 
     /**
-     * 用户ID 全局唯一
-     */
-    @Column(name = "user_id")
-    private String userId;
-
-    /**
      * 用户名
      */
     @Column(name = "user_name")
@@ -44,6 +38,12 @@ public class User implements Serializable {
      */
     @Column(name = "password")
     private String password;
+
+    /**
+     * 电话
+     */
+    @Column(name = "nickname")
+    private String nickname;
 
     /**
      * 电话
@@ -140,14 +140,14 @@ public class User implements Serializable {
     }
 
 
-    public String getUserId() {
-        return userId;
+
+    public String getNickname() {
+        return nickname;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
-
 
     public String getUserName() {
         return userName;

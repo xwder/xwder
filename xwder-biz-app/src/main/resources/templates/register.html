@@ -46,9 +46,9 @@
                             <div class="card-title" style="text-align: center"><h1>用户注册</h1></div>
                             <div class="form-group">
                                 <label class="form-label required">用户名</label>
-                                <input type="text" id="userId" name="userId" class="form-control"
+                                <input type="text" id="userName" name="userName" class="form-control"
                                        placeholder="Enter name">
-                                <div id="userIdInvalid" class="invalid-feedback">Invalid feedback</div>
+                                <div id="userNameInvalid" class="invalid-feedback">Invalid feedback</div>
                             </div>
                             <div class="form-group">
                                 <label class="form-label required">邮箱</label>
@@ -75,7 +75,7 @@
                                     <span class="custom-control-label">同意 <a href="#">用户协议</a></span>
                                 </label>
                             </div>
-                            <div class="card-title" style="text-align: center"><h1>用户注册</h1></div>
+
                             <div class="form-footer">
                                 <button type="button" id="registerButten" class="btn btn-primary btn-block">注册</button>
                             </div>
@@ -98,14 +98,14 @@
             return;
         }
         // 注册
-        var userId = $("#userId").val();
+        var userName = $("#userName").val();
         var email = $("#email").val();
         var password = $("#password").val();
         $.ajax({
             type: "post",
             url: "/doRegister",
             data: {
-                "userId": userId,
+                "userName": userName,
                 "email": email,
                 "password": password
             },
@@ -117,37 +117,37 @@
                     window.location.replace(getRedirect());
                 } else {
                     console.log("注册失败 " + data.message);
-                    inValid($("#userId"), $("#userIdInvalid"), '注册失败');
-                    $("#userId").focus();
+                    inValid($("#userName"), $("#userNameInvalid"), '注册失败');
+                    $("#userName").focus();
                 }
 
             }
         });
     });
 
-    $("#userId").blur(function () {
+    $("#userName").blur(function () {
         console.log("输入用户名,移动鼠标");
-        var userId = $("#userId").val();
-        if (userId.length == 0 || userId.length<3 || userId.length>16) {
+        var userName = $("#userName").val();
+        if (userName.length == 0 || userName.length<3 || userName.length>16) {
             console.info("请输入6-16位长度用户名");
-            inValid($("#userId"),$("#userIdInvalid"),'请输入6-16位长度用户名');
+            inValid($("#userName"),$("#userNameInvalid"),'请输入6-16位长度用户名');
             return false;
         }
 
         $.ajax({
             type: "post",
-            url: "/checkUserId",
+            url: "/checkUserName",
             data: {
-                "userId": userId
+                "userName": userName
             },
             success: function (data) {
                 if (data.code == 200) {
-                    console.log("checkUserId suceess");
-                    $("#userId").removeClass("is-invalid");
-                    $("#userId").addClass("is-valid mb-2");
+                    console.log("checkuserName suceess");
+                    $("#userName").removeClass("is-invalid");
+                    $("#userName").addClass("is-valid mb-2");
                 } else {
-                    console.log("checkUserId fail " + data.message);
-                    inValid($("#userId"),$("#userIdInvalid"),data.message);
+                    console.log("checkuserName fail " + data.message);
+                    inValid($("#userName"),$("#userNameInvalid"),data.message);
                 }
 
             }
@@ -187,7 +187,7 @@
                     $("#email").removeClass("is-invalid");
                     $("#email").addClass("is-valid mb-2");
                 } else {
-                    console.log("checkUserId fail " + data.message);
+                    console.log("checkuserName fail " + data.message);
                     inValid($("#email"),$("#emailInvalid"),data.message);
                 }
 
@@ -264,10 +264,10 @@
      *
      */
     function validatorForm() {
-        var userId = $("#userId").val();
-        if (userId.length == 0 || userId.length<3 || userId.length>16) {
+        var userName = $("#userName").val();
+        if (userName.length == 0 || userName.length<3 || userName.length>16) {
             console.info("请输入6-16位长度用户名");
-            inValid($("#userId"),$("#userIdInvalid"),'请输入6-16位长度用户名');
+            inValid($("#userName"),$("#userNameInvalid"),'请输入6-16位长度用户名');
             return false;
         }
         var email = $("#email").val();
