@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * 文章service impl
@@ -45,7 +46,7 @@ public class ArticleServiceImpl implements ArticleService {
      */
     @Override
     public Article getArticleById(Long articleId) {
-        Article article = articleRepository.findById(articleId).get();
+        Article article = articleRepository.findById(articleId).orElse(null);
         return article;
     }
 

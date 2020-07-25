@@ -16,7 +16,7 @@ public interface CategoryRepository extends JpaRepository<Category, Long> {
      * @param userId
      * @return
      */
-    @Query(value = "select * from blog_category t where t.user_id = ?1 and is_avaliable = 1", nativeQuery = true)
+    @Query(value = "select * from blog_category t where t.user_id = ?1 and is_avaliable = 1 order by sequence desc", nativeQuery = true)
     List<Category> findByUserId(Long userId);
 
 }

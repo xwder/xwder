@@ -38,6 +38,12 @@ public class Category implements Serializable {
     private String categoryName;
 
     /**
+     * 顺序
+     */
+    @Column(name = "sequence")
+    private Integer sequence;
+
+    /**
      * 是否可用
      */
     @Column(name = "is_avaliable")
@@ -78,6 +84,13 @@ public class Category implements Serializable {
         this.categoryName = categoryName;
     }
 
+    public Integer getSequence() {
+        return sequence;
+    }
+
+    public void setSequence(Integer sequence) {
+        this.sequence = sequence;
+    }
 
     public Integer getAvailable() {
         return available;

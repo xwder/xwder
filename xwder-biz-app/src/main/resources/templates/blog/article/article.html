@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org">
 <title th:if="${articleMap != null}" th:text="${articleMap['article'].title}">预览</title>
+<link rel="stylesheet" th:href="@{/css/blog/article.css}">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.2/styles/default.min.css">
 <head th:include="include :: head"></head>
 <body class="antialiased">
 <div class="page">
@@ -32,39 +34,64 @@
                         <div class="article-header-box">
                             <div class="article-header">
                                 <div class="article-title-box">
-                                    <h1 class="title-article" id="articleContentId" th:if="${articleMap != null}" th:text="${articleMap['article'].title}">Ueditor 图片自定义上传</h1>
+                                    <h1 class="title-article" id="articleContentId" th:if="${articleMap != null}"
+                                        th:text="${articleMap['article'].title}">Ueditor 图片自定义上传</h1>
                                 </div>
                                 <div class="article-info-box">
                                     <div class="article-bar-top">
                                         <!--文章类型-->
                                         <!--原创-->
-                                        <img class="article-type-img" src="https://csdnimg.cn/release/phoenix/template/new_img/original.png" alt="">
+                                        <img class="article-type-img" th:src="@{/image/blog/original.png}"
+                                             src="https://csdnimg.cn/release/phoenix/template/new_img/original.png"
+                                             alt="">
                                         <!--翻译-->
                                         <!--转载-->
                                         <div class="bar-content">
-                                            <a class="follow-nickName" href="https://me.csdn.net/Only_Wan" target="_blank" rel="noopener" th:text="${articleMap['article'].userName}">Only_Wan</a>
-                                            <span class="time" th:if="${articleMap != null}" th:text="${#dates.format(articleMap['article'].publishTime, 'yyyy-MM-dd HH:mm')}">2017-04-06 14:19:56</span>
-                                            <img class="article-read-img article-heard-img" src="https://csdnimg.cn/release/phoenix/template/new_img/articleReadEyes.png" alt="">
-                                            <span class="read-count" th:if="${articleMap != null}" th:text="${articleMap['article'].readCount}">3960</span>
-                                            <a id="blog_detail_zk_collection" class="un-collection" data-report-click="{&quot;mod&quot;:&quot;popu_823&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4232&quot;,&quot;ab&quot;:&quot;new&quot;}">
-                                                <img class="article-collect-img article-heard-img un-collect-status" style="display:inline-block" src="https://csdnimg.cn/release/phoenix/template/new_img/tobarCollect.png" alt="">
-                                                <img class="article-collect-img article-heard-img collect-status" style="display:none" src="https://csdnimg.cn/release/phoenix/template/new_img/tobarCollectionActive.png" alt="">
+                                            <a class="follow-nickName" href="https://me.csdn.net/Only_Wan"
+                                               target="_blank" rel="noopener" th:if="${articleMap != null}"
+                                               th:text="${articleMap['article'].userName}">Only_Wan</a>
+                                            <span class="time" th:if="${articleMap != null}"
+                                                  th:text="${#dates.format(articleMap['article'].publishTime, 'yyyy-MM-dd HH:mm')}">2017-04-06 14:19:56</span>
+                                            <img class="article-read-img article-heard-img"
+                                                 th:src="@{/image/blog/articleReadEyes.png}"
+                                                 src="https://csdnimg.cn/release/phoenix/template/new_img/articleReadEyes.png"
+                                                 alt="">
+                                            <span class="read-count" th:if="${articleMap != null}"
+                                                  th:text="${articleMap['article'].readCount}">3960</span>
+                                            <a id="blog_detail_zk_collection" class="un-collection"
+                                               data-report-click="{&quot;mod&quot;:&quot;popu_823&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4232&quot;,&quot;ab&quot;:&quot;new&quot;}">
+                                                <img class="article-collect-img article-heard-img un-collect-status"
+                                                     th:src="@{/image/blog/tobarCollect.png}"
+                                                     style="display:inline-block"
+                                                     src="https://csdnimg.cn/release/phoenix/template/new_img/tobarCollect.png"
+                                                     alt="">
+                                                <img class="article-collect-img article-heard-img collect-status"
+                                                     style="display:none"
+                                                     th:src="@{/image/blog/tobarCollectionActive.png}"
+                                                     src="https://csdnimg.cn/release/phoenix/template/new_img/tobarCollectionActive.png"
+                                                     alt="">
                                                 <span class="name">收藏</span>
                                                 <span class="get-collection">
                                                 </span>
                                             </a>
-                                            <a class="href-article-edit" href="https://mp.csdn.net/console/editor/html/69388161">编辑</a>
+                                            <a class="href-article-edit" href="" target="_blank"
+                                               th:if="${articleMap != null && session.sessionUser != null && session.sessionUser.userName eq  articleMap['article'].userName}"
+                                               th:href="'/blog/article/edit?id='+ ${articleMap['article'].id}">编辑</a>
                                             <a class="href-article-edit slide-toggle">版权</a>
                                         </div>
                                     </div>
                                     <div class="blog-tags-box">
                                         <div class="tags-box artic-tag-box" th:if="${articleMap != null}">
                                             <span class="label">分类专栏：</span>
-                                            <a class="tag-link" target="_blank" rel="noopener" href="" th:if="${articleMap != null}" th:text="${articleMap['category'].categoryName}">
-                                                web应用开发                                   </a>
+                                            <a class="tag-link" target="_blank" rel="noopener" href=""
+                                               th:if="${articleMap != null}"
+                                               th:text="${articleMap['category'].categoryName}">
+                                                web应用开发 </a>
                                             <span class="label">文章标签：</span>
-                                            <span th:if="${articleMap['tagList'] != null}" th:each="tag,tagStat : ${articleMap['tagList']}">
-                                                <a th:if="${tag != null}" th:text="${tag.tagName}"  class="tag-link" href="" target="_blank" rel="noopener">富文本编辑器 </a>
+                                            <span th:if="${articleMap['tagList'] != null}"
+                                                  th:each="tag,tagStat : ${articleMap['tagList']}">
+                                                <a th:if="${tag != null}" th:text="${tag.tagName}" class="tag-link"
+                                                   href="" target="_blank" rel="noopener">富文本编辑器 </a>
                                             </span>
                                         </div>
                                     </div>
@@ -77,25 +104,33 @@
             <div class="row justify-content-center">
                 <div class="d-none d-lg-block col-lg-3 order-lg-1 mb-4">
                     <div class="sticky-top">
-                        <a href="https://github.com/tabler/tabler" class="btn btn-white mb-6 btn-block" target="_blank" rel="noreferrer">
-                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="icon" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+                        <a href="https://github.com/tabler/tabler" class="btn btn-white mb-6 btn-block" target="_blank"
+                           rel="noreferrer">
+                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="icon"
+                                 fill="currentColor">
+                                <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
+                            </svg>
                             Browse source code
                         </a>
                         <h5 class="subheader">On this page</h5>
                         <ul class="list-unstyled">
                             <li class="toc-entry toc-h2"><a href="#what-is-tabler">What is Tabler?</a></li>
-                            <li class="toc-entry toc-h2"><a href="#what-are-the-benefits">What are the benefits?</a></li>
-                            <li class="toc-entry toc-h2"><a href="#set-up-the-environment">Set up the environment</a></li>
+                            <li class="toc-entry toc-h2"><a href="#what-are-the-benefits">What are the benefits?</a>
+                            </li>
+                            <li class="toc-entry toc-h2"><a href="#set-up-the-environment">Set up the environment</a>
+                            </li>
                             <li class="toc-entry toc-h2"><a href="#build-tabler-locally">Build Tabler locally</a></li>
-                            <li class="toc-entry toc-h2"><a href="#bugs-and-feature-requests">Bugs and feature requests</a></li>
+                            <li class="toc-entry toc-h2"><a href="#bugs-and-feature-requests">Bugs and feature
+                                requests</a></li>
                         </ul>
+                        <div class="autoMenu" id="autoMenu" data-autoMenu> </div>
                     </div>
                 </div>
                 <div class="col-lg-9">
                     <div class="card card-lg">
                         <div class="card-body" id="contentCardBody">
                             <div class="markdown">
-                                <div th:if="${articleMap != null}" th:utext="${articleMap['article'].content}"></div>
+                                <div th:if="${articleMap != null}" th:utext="${articleMap['article'].content}" class="content"></div>
                             </div>
                         </div>
                     </div>
@@ -107,114 +142,48 @@
 </div>
 
 <!-- Libs JS -->
-<script th:src="@{/dist/libs/bootstrap/dist/js/bootstrap.bundle.min.js}" src="../static/dist/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script th:src="@{/dist/libs/bootstrap/dist/js/bootstrap.bundle.min.js}" src=""></script>
+
+<script th:src="@{/js/blog/highlight.min.js}" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.2/highlight.min.js"></script>
+
+<link rel="stylesheet" th:href="@{/css/blog/autoc.min.css}" href="https://unpkg.com/autocjs@1.3.0/dist/autoc.min.css">
+<script type="text/javascript" th:src="@{/js/blog/autoc.min.js}" src="https://unpkg.com/autocjs@1.3.0/dist/autoc.min.js"></script>
+
+<!--<link rel="stylesheet" th:href="@{/css/blog/jquery.autoMenu.css}" href="https://unpkg.com/autocjs@1.3.0/dist/autoc.min.css">-->
+<script type="text/javascript" th:src="@{/js/blog/jquery.autoMenu.js}" src=""></script>
 
 <script>
     document.body.style.display = "block";
+    // 实现代码高亮的函数。
+    hljs.initHighlightingOnLoad();
+    // 由于UEditor的代码中都是<pre>标签包裹的代码，所以执行下面的操作为其添加<code>标签。
+    var allpre = document.getElementsByTagName("pre");
+    for (i = 0; i < allpre.length; i++) {
+        var onepre = document.getElementsByTagName("pre")[i];
+        var mycode = document.getElementsByTagName("pre")[i].innerHTML;
+        onepre.innerHTML = '<code id="mycode">' + mycode + '</code>';
+    }
+
+    new AutocJS({
+        article: '#contentCardBody',
+        isOnlyAnchors: true,
+        //selector: 'h1',
+        // 不配置 selector 属性，即使用默认选择器
+        title: '文章导读',
+        // 是否在正文的文章标题中创建锚点
+        isGenerateOutline: true,
+        position: 'inside',
+
+    });
+
+
+
+    $(function(){
+        //$('#autoMenu').autoMenu();
+    })
 </script>
 </body>
 <style>
-    #contentCardBody{
-        /*上左下右边*/
-        padding: 2rem 2rem 1rem 2rem;
-    }
-    .article-header-box {
-        border-bottom: 1px solid #f5f6f7;
-        padding-top: 8px;
-        z-index: 9;
-        background: #f5f7fb;
-    }
-    .article-header-box .article-header div.article-title-box {
-        margin-bottom: 8px;
-        text-align: left;
-    }
-    .article-header-box .article-header div.article-title-box .title-article {
-        font-size: 28px;
-        word-wrap: break-word;
-        color: #222226;
-        font-weight: 600;
-        margin: 0;
-        word-break: break-all;
-    }
-    .article-header-box .article-header div.article-info-box {
-        position: relative;
-        background: #f7f7fc;
-        border-radius: 4px;
-    }
-    .article-header-box .article-header div.article-info-box div.article-bar-top {
-        color: #999aaa;
-        width: 88%;
-        display: -webkit-box;
-        display: -ms-flexbox;
-        display: flex;
-    }
-    .article-header-box .article-header div.article-info-box div.article-bar-top .article-type-img {
-        width: 36px;
-        height: 32px;
-        margin-right: 12px;
-        line-height: 32px;
-    }
-    .article-header-box .article-header div.article-info-box div.article-bar-top .follow-nickName {
-        color: #5893c2;
-        margin-right: 20px;
-    }
-    .article-header-box .article-header div.article-info-box div.article-bar-top span.time {
-        position: relative;
-    }
-    .article-header-box .article-header div.article-info-box div.article-bar-top .article-read-img {
-        width: 24px;
-        height: 24px;
-        margin-top: 4px;
-    }
-    .article-header-box .article-header div.article-info-box div.article-bar-top span, .article-header-box .article-header div.article-info-box div.article-bar-top a {
-        vertical-align: top;
-        margin-right: 12px;
-        line-height: 32px;
-    }
-    .article-header-box .article-header div.article-info-box div.article-bar-top #blog_detail_zk_collection {
-        color: #999aaa;
-        display: inline-block;
-    }
-    .article-header-box .article-header div.article-info-box div.article-bar-top .article-collect-img {
-        vertical-align: middle;
-        margin-top: 0;
-        margin-right: 2px;
-        width: 20px;
-        height: 20px;
-    }
-    .blog-tags-box{
-        text-align: left;
-    }
-    .article-header-box .article-header div.article-info-box div.blog-tags-box .tags-box {
-        font-size: 13px;
-        line-height: 24px;
-        margin-bottom: 4px;
-        margin-right: 8px;
-    }
-    .article-header-box .article-header div.article-info-box div.blog-tags-box .tags-box span.label {
-        display: inline-block;
-        color: #999aaa;
-    }
-    .article-header-box .article-header div.article-info-box div.blog-tags-box .tags-box.artic-tag-box a.tag-link:hover {
-        color: #277ccc;
-    }
-    .article-header-box .article-header div.article-info-box div.blog-tags-box .tags-box span.label {
-        display: inline-block;
-        color: #999aaa;
-    }
-    .article-header-box .article-header div.article-info-box div.blog-tags-box .tags-box.artic-tag-box a.tag-link {
-        -webkit-box-sizing: border-box;
-        box-sizing: border-box;
-        margin-right: 8px;
-        padding: 3px 6px;
-        font-size: 12px;
-        background-color: #fff;
-        color: #5094d5;
-        border: 1px solid #eaeaef;
-        height: 23px;
-        line-height: 17px;
-        border-radius: 4px;
-        display: inline-block;
-    }
+
 </style>
 </html>

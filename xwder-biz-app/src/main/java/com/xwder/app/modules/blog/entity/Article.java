@@ -96,7 +96,7 @@ public class Article implements Serializable {
     private Integer status;
 
     /**
-     * 预览图片
+     * 文章类型 原创 转载 翻译
      */
     @Column(name = "article_type")
     private String articleType = "原创";

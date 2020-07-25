@@ -1,0 +1,108 @@
+/*代码样式*/
+#mycode {
+    color: #383a42;
+    background: #fafafa;
+    font-size: 14px;
+}
+#contentCardBody{
+    /*上左下右边*/
+    padding: 2rem 2rem 1rem 2rem;
+}
+.article-header-box {
+    border-bottom: 1px solid #f5f6f7;
+    padding-top: 8px;
+    z-index: 9;
+    background: #f5f7fb;
+}
+.article-header-box .article-header div.article-title-box {
+    margin-bottom: 8px;
+    text-align: left;
+}
+.article-header-box .article-header div.article-title-box .title-article {
+    font-size: 28px;
+    word-wrap: break-word;
+    color: #222226;
+    font-weight: 600;
+    margin: 0;
+    word-break: break-all;
+}
+.article-header-box .article-header div.article-info-box {
+    position: relative;
+    background: #f7f7fc;
+    border-radius: 4px;
+}
+.article-header-box .article-header div.article-info-box div.article-bar-top {
+    color: #999aaa;
+    width: 88%;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+}
+.article-header-box .article-header div.article-info-box div.article-bar-top .article-type-img {
+    width: 36px;
+    height: 32px;
+    margin-right: 12px;
+    line-height: 32px;
+}
+.article-header-box .article-header div.article-info-box div.article-bar-top .follow-nickName {
+    color: #5893c2;
+    margin-right: 20px;
+}
+.article-header-box .article-header div.article-info-box div.article-bar-top span.time {
+    position: relative;
+}
+.article-header-box .article-header div.article-info-box div.article-bar-top .article-read-img {
+    width: 24px;
+    height: 24px;
+    margin-top: 4px;
+}
+.article-header-box .article-header div.article-info-box div.article-bar-top span, .article-header-box .article-header div.article-info-box div.article-bar-top a {
+    vertical-align: top;
+    margin-right: 12px;
+    line-height: 32px;
+}
+.article-header-box .article-header div.article-info-box div.article-bar-top #blog_detail_zk_collection {
+    color: #999aaa;
+    display: inline-block;
+}
+.article-header-box .article-header div.article-info-box div.article-bar-top .article-collect-img {
+    vertical-align: middle;
+    margin-top: 0;
+    margin-right: 2px;
+    width: 20px;
+    height: 20px;
+}
+.blog-tags-box{
+    text-align: left;
+}
+.article-header-box .article-header div.article-info-box div.blog-tags-box .tags-box {
+    font-size: 13px;
+    line-height: 24px;
+    margin-bottom: 4px;
+    margin-right: 8px;
+}
+.article-header-box .article-header div.article-info-box div.blog-tags-box .tags-box span.label {
+    display: inline-block;
+    color: #999aaa;
+}
+.article-header-box .article-header div.article-info-box div.blog-tags-box .tags-box.artic-tag-box a.tag-link:hover {
+    color: #277ccc;
+}
+.article-header-box .article-header div.article-info-box div.blog-tags-box .tags-box span.label {
+    display: inline-block;
+    color: #999aaa;
+}
+.article-header-box .article-header div.article-info-box div.blog-tags-box .tags-box.artic-tag-box a.tag-link {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    margin-right: 8px;
+    padding: 3px 6px;
+    font-size: 12px;
+    background-color: #fff;
+    color: #5094d5;
+    border: 1px solid #eaeaef;
+    height: 23px;
+    line-height: 17px;
+    border-radius: 4px;
+    display: inline-block;
+}

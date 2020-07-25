@@ -47,7 +47,7 @@
                         <div class="card-body">
                             <div class="markdown">
                                 <div class="d-flex">
-                                    <h2 class="h1 mt-0 mb-3">Form elements</h2>
+                                    <div class="h2 mt-0 mb-3" th:text="${article != null ? ('博客归类 -> ' + currentCategory.categoryName +' -> '+article.title) : '博客文章编辑' }"> </div>
                                     <p class="ml-auto">
                                         <a href="https://getbootstrap.com/docs/4.4/components/forms/" target="_blank">
                                             <svg xmlns="http://www.w3.org/2000/svg" class="icon pr-1 text-blue"
@@ -68,31 +68,44 @@
                                     <div class="example-content">
                                         <div class="mb-3" style="display: none">
                                             <input type="text" id="articleId" class="form-control"
+                                                   th:value="${article != null ? article.id : ''}"
                                                    name="example-text-input" placeholder="">
                                         </div>
                                         <div class="mb-3">
                                             <label class="form-label">标题</label>
                                             <input type="text" id="articleTitle" class="form-control"
+                                                   th:value="${article != null ? article.title : ''}"
                                                    name="example-text-input" placeholder="">
                                         </div>
                                         <div class="mb-3">
                                             <label class="form-label">摘要<span
                                                     class="form-label-description">0/140</span></label>
-                                            <textarea class="form-control" id="articleSummary"
-                                                      name="example-textarea-input" rows="6" placeholder=""></textarea>
+                                            <textarea t class="form-control" id="articleSummary"
+                                                      th:text="${article != null ? article.summary : ''}"
+                                                      name="example-textarea-input" rows="6" placeholder="">
+
+                                            </textarea>
                                         </div>
+
                                         <div class="mb-3">
-                                            <div class="form-label">封面图片</div>
-                                            <div class="form-file">
-                                                <input type="file" class="form-file-input" id="customFile">
-                                                <label class="form-file-label" for="customFile">
-                                                    <span class="form-file-text">选择文件</span>
-                                                    <span class="form-file-button">浏览</span>
-                                                </label>
+                                            <div class="form-label">
+                                                封面图片
+                                                <button type="" class="btn btn-primary " onclick="choosePhoto()">选择图片</button>
+                                                <button type="" class="btn btn-primary " onclick="uploadPhoto()">上传图片</button>
+                                            </div>
+                                            <div class="form-file" style="display: none;">
+                                                <input type="file" class="form-file-input" id="previewImageUp">
                                             </div>
                                         </div>
+                                        <div class="mb-3" id="showImg">
+                                            <img id="preview_photo" th:if="${article != null}" th:src="${article.previewImage}"  src="https://cdn.xwder.com/image/1-Joe/1-20200725203232453.jpg" width="200" height="200">
+                                        </div>
+
                                         <div class="mb-3">
                                             <div class="form-label">文章内容</div>
+                                            <div style="display: none" id="articleContent">
+                                                <div th:if="${article != null}" th:utext="${article != null ? article.content : ''}"></div>
+                                            </div>
                                             <script id="editor" type="text/plain" style="height: auto"></script>
                                         </div>
                                         <div>
@@ -140,25 +153,15 @@
                                         <div class="mb-3">
                                             <label class="form-label">分类</label>
                                             <div class="form-selectgroup form-selectgroup-pills">
-                                                <label class="form-selectgroup-item">
-                                                    <input type="checkbox" name="articleCategory" value="1"
+
+                                                <label th:if="${allCategorys != null}"
+                                                       th:each="t,tStat : ${allCategorys}"
+                                                       class="form-selectgroup-item articleCategory">
+                                                    <input type="checkbox" name="articleCategory"
+                                                           th:value="${t.id}" value="1"
+                                                           th:attr ="checked=${article != null && (article.categoryId eq t.id ? true : false)}"
                                                            class="form-selectgroup-input articleCategory" checked>
-                                                    <span class="form-selectgroup-label">HTML</span>
-                                                </label>
-                                                <label class="form-selectgroup-item">
-                                                    <input type="checkbox" name="articleCategory" value="2"
-                                                           class="form-selectgroup-input  articleCategory">
-                                                    <span class="form-selectgroup-label">CSS</span>
-                                                </label>
-                                                <label class="form-selectgroup-item">
-                                                    <input type="checkbox" name="articleCategory" value="3"
-                                                           class="form-selectgroup-input  articleCategory">
-                                                    <span class="form-selectgroup-label">PHP</span>
-                                                </label>
-                                                <label class="form-selectgroup-item">
-                                                    <input type="checkbox" name="articleCategory" value="4"
-                                                           class="form-selectgroup-input  articleCategory">
-                                                    <span class="form-selectgroup-label">JavaScript</span>
+                                                    <span class="form-selectgroup-label" th:text="${t.categoryName}">HTML</span>
                                                 </label>
                                             </div>
                                         </div>
@@ -166,39 +169,39 @@
                                             <label class="form-label">标签</label>
                                             <select name="articleTags" id="select-tags-advanced"
                                                     class="form-select articleTags" multiple>
-                                                <option value="1">HTML</option>
-                                                <option value="2">JavaScript</option>
-                                                <option value="3">CSS</option>
-                                                <option value="4">jQuery</option>
-                                                <option value="5">Bootstrap</option>
-                                                <option value="6" selected>Ruby</option>
-                                                <option value="7" selected>Python</option>
+                                                <option th:if="${allTags != null}"
+                                                        th:each="tag,tagStat : ${allTags}"
+                                                        th:text="${tag.tagName}"
+                                                        th:value="${tag.id}"
+                                                        th:selected="${tagIds != null && tagIds.contains(tag.id)}" value="1"  >HTML</option>
                                             </select>
                                         </div>
                                         <div class="mb-3">
-                                            <div class="form-label">文章类型</div>
-                                            <div>
-                                                <label class="form-check form-check-inline">
-                                                    <input class="form-check-input" th:value="'原创'" name="articleType"
-                                                           type="checkbox">
-                                                    <span class="form-check-label">原创</span>
-                                                </label>
-                                                <label class="form-check form-check-inline">
-                                                    <input class="form-check-input" th:value="'转载'" name="articleType"
-                                                           type="checkbox">
-                                                    <span class="form-check-label">转载</span>
-                                                </label>
-                                                <label class="form-check form-check-inline">
-                                                    <input class="form-check-input" th:value="'翻译'" name="articleType"
-                                                           type="checkbox" checked>
-                                                    <span class="form-check-label">翻译</span>
-                                                </label>
+                                            <div class="form-label" >文章类型</div>
+                                                <div id="articleType">
+                                                    <label class="form-check form-check-inline articleType">
+                                                        <input class="form-check-input" th:value="'原创'" name="articleType"
+                                                               th:attr ="checked=${article == null ? true : (article.articleType eq '原创' ? true : false)}" type="checkbox">
+                                                        <span class="form-check-label">原创</span>
+                                                    </label>
+                                                    <label class="form-check form-check-inline articleType">
+                                                        <input class="form-check-input" th:value="'转载'" name="articleType"
+                                                               th:attr ="checked=${article == null ? false : (article.articleType eq '转载' ? true : false)}" type="checkbox">
+                                                        <span class="form-check-label">转载</span>
+                                                    </label>
+                                                    <label class="form-check form-check-inline articleType">
+                                                        <input class="form-check-input" th:value="'翻译'" name="articleType"
+                                                               th:attr ="checked=${article == null ? false : (article.articleType eq '翻译' ? true : false)}" type="checkbox">
+                                                        <span class="form-check-label">翻译</span>
+                                                    </label>
+                                                </div>
                                             </div>
-                                        </div>
                                         <div class="form-footer">
                                             <button type="" class="btn btn-primary" onclick="saveArticle()">保存</button>
-                                            <button type="" class="btn btn-primary" onclick="previewArticle()">预览</button>
-                                            <button type="" class="btn btn-primary " onclick="publishArticle()">发布</button>
+                                            <button type="" class="btn btn-primary" onclick="previewArticle()">预览
+                                            </button>
+                                            <button type="" class="btn btn-primary " onclick="publishArticle()">发布
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
@@ -208,26 +211,7 @@
                 </div>
             </div>
         </div>
-        <footer class="footer footer-transparent">
-            <div class="container">
-                <div class="row text-center align-items-center flex-row-reverse">
-                    <div class="col-lg-auto ml-lg-auto">
-                        <ul class="list-inline list-inline-dots mb-0">
-                            <li class="list-inline-item"><a href="../docs/index.html" class="link-secondary">Documentation</a>
-                            </li>
-                            <li class="list-inline-item"><a href="../faq.html" class="link-secondary">FAQ</a></li>
-                            <li class="list-inline-item"><a href="https://github.com/tabler/tabler" target="_blank"
-                                                            class="link-secondary">Source code</a></li>
-                        </ul>
-                    </div>
-                    <div class="col-12 col-lg-auto mt-3 mt-lg-0">
-                        Copyright © 2020
-                        <a href=".." class="link-secondary">Tabler</a>.
-                        All rights reserved.
-                    </div>
-                </div>
-            </div>
-        </footer>
+        <footer th:replace="include :: footer" class="footer footer-transparent"></footer>
     </div>
 </div>
 
@@ -245,13 +229,17 @@
         src="./dist/libs/flatpickr/dist/plugins/rangePlugin.js"></script>
 <script th:src="@{/dist/libs/nouislider/distribute/nouislider.min.js}"
         src="./dist/libs/nouislider/distribute/nouislider.min.js"></script>
+
 <script type="text/javascript" th:src="@{/ueditor/ueditor.config.js}" charset="utf-8" src="ueditor.config.js"></script>
-<script type="text/javascript" th:src="@{/ueditor/ueditor.all.min.js}" charset="utf-8"
-        src="ueditor.all.min.js"></script>
+<script type="text/javascript" th:src="@{/ueditor/ueditor.all.min.js}" charset="utf-8" src="ueditor.all.min.js"></script>
 <!--建议手动加在语言，避免在ie下有时因为加载语言失败导致编辑器加载失败-->
 <!--这里加载的语言文件会覆盖你在配置项目里添加的语言类型，比如你在配置项目里配置的是英文，这里加载的中文，那最后就是中文-->
-<script type="text/javascript" th:src="@{/ueditor/lang/zh-cn/zh-cn.js}" charset="utf-8"
-        src="lang/zh-cn/zh-cn.js"></script>
+<script type="text/javascript" th:src="@{/ueditor/lang/zh-cn/zh-cn.js}" charset="utf-8" src="lang/zh-cn/zh-cn.js"></script>
+
+
+<link rel="stylesheet"   href="http://www.jq22.com/demo/fileUpload201709120034/css/fileUpload.css">
+<script type="text/javascript" th:src="@{/js/blog/fileUpload.js}" src="http://www.jq22.com/demo/fileUpload201709120034/js/fileUpload.js"></script>
+
 
 <script>
     document.body.style.display = "block";
@@ -275,6 +263,14 @@
         }
         return this._bkGetActionUrl.call(this, action);
     };
+
+    // 编辑的时候 设置值
+    var content = $('#articleContent:first').html();
+
+    ue.ready(function () {
+        ue.execCommand('insertHtml', content);
+    });
+
 
     function isFocus(e) {
         alert(UE.getEditor('editor').isFocus());
@@ -396,100 +392,5 @@
     }
 </script>
 <script th:src="@{/js/blog/editblog.js}" type="text/javascript"></script>
-<!--<script>
-    $(document).ready(function () {
-        $('#select-tags-advanced').selectize({
-            maxItems: 15,
-            plugins: ['remove_button'],
-        });
-    });
-
-    function publishArticle() {
-        var action = "/blog/article/save?action=publish";
-        var data = getArticleData();
-        var responseData = articleOperat(action,data);
-        if (responseData.code == 200) {
-            // 设置文章ID
-            $("articleId").val(responseData.data.id);
-            window.open(responseData.data.redirectUrl);
-        }
-    }
-
-    function saveArticle() {
-        var action = "/blog/article/save?action=save";
-        var data = getArticleData();
-        var responseData = articleOperat(action,data);
-        if (responseData.code == 200) {
-            // 设置文章ID
-            $("articleId").val(responseData.data.id);
-            alert("保存成功");
-        }
-    }
-
-    function previewArticle() {
-        var action = "/blog/article/save?action=preview";
-        var data = getArticleData();
-        var responseData = articleOperat(action,data);
-        if (responseData.code == 200) {
-            window.open(responseData.data.redirectUrl);
-        }
-    }
-
-    function articleOperat(action,data) {
-        var resultData;
-        $.ajax({
-            type: "post",
-            url: action,
-            traditional: true,
-            data: {paramData: JSON.stringify(data)},
-            success: function (data) {
-                console.log("data: " + data.code)
-                if (data.code == 200) {
-                    alert("操作成功！")
-                    console.log("操作成功" + data.data);
-                } else {
-                    console.log("操作失败" + data.message);
-                }
-                return  data;
-            }
-        });
-        return resultData;
-    }
-
-    /**
-     * 获取表单参数
-     */
-    function getArticleData(){
-
-        var articleId = $("#articleId").val();
-
-        var articleCategory = $("input:checkbox[name='articleCategory']:checked");
-        console.log("articleCategory: " + articleCategory.val());
-
-        var packageCodeList = new Array();
-        $("#select-tags-advanced option:selected").each(function () {
-            packageCodeList.push($(this).val());//向数组中添加元素
-        });
-        console.log("packageCodeList: " + packageCodeList.toString());
-
-        var title = $("#articleTitle").val();
-        var summary = $("#articleSummary").val();
-        var content = UE.getEditor('editor').getContent();
-        var type = $("input:checkbox[name='articleType']:checked").val();
-        var category = $("input:checkbox[name='articleCategory']:checked").val();
-
-        var postData = {
-            "id": articleId,
-            "title": title,
-            "summary": summary,
-            "content": content,
-            "type": type,
-            "category": category,
-            "tags": packageCodeList
-        }
-        return postData;
-    }
-
-</script>-->
 </body>
 </html>

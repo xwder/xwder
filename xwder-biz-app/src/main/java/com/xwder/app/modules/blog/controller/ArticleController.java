@@ -44,9 +44,43 @@ public class ArticleController {
     private TagService tagService;
 
 
+    /**
+     * 新增、编辑文章
+     *
+     * @param id
+     * @param model
+     * @return
+     */
     @RequestMapping("/edit")
-    public String articleEdit() {
-        return "blog/article/edit";
+    public String articleEdit(@RequestParam(value = "id", required = false) Long id, Model model) {
+        String templateUrl = "blog/article/edit";
+        User sessionUser = (User) SessionUtil.getSessionAttribute(SysConstant.SESSION_USER);
+        // 获取用户所有的 category 和 tags
+        List<Tag> allTags = tagService.listTagByUserId(sessionUser.getId());
+        List<Category> allCategorys = categoryService.listCategoryByUserId(sessionUser.getId());
+        model.addAttribute("allTags", allTags);
+        model.addAttribute("allCategorys", allCategorys);
+
+        if (id != null) {
+            Article article = articleService.getArticleById(id);
+            if (article == null) {
+                return templateUrl;
+            }
+            String tagIdsStr = article.getTags();
+            String[] splits = tagIdsStr.split("-");
+            // 选中的tags id
+            List<Long> tagIds = new ArrayList<>();
+            for (String split : splits) {
+                if (StrUtil.isNotEmpty(split)) {
+                    tagIds.add(Long.parseLong(split));
+                }
+            }
+            Category currentCategory = categoryService.getCategoryById(article.getCategoryId());
+            model.addAttribute("article", article);
+            model.addAttribute("currentCategory", currentCategory);
+            model.addAttribute("tagIds", tagIds);
+        }
+        return templateUrl;
     }
 
     @RequestMapping(value = "/preview")
@@ -74,7 +108,7 @@ public class ArticleController {
             articleMap.put("tagList", tagList);
         }
         articleMap.put("article", article);
-        model.addAttribute("articleMap",articleMap);
+        model.addAttribute("articleMap", articleMap);
         return "blog/article/article";
     }
 
@@ -93,6 +127,7 @@ public class ArticleController {
         String title = (String) jsonObject.get("title");
         String summary = (String) jsonObject.get("summary");
         String content = (String) jsonObject.get("content");
+        String previewImgUrl = (String) jsonObject.get("previewImgUrl");
         String type = (String) jsonObject.get("type");
         // 文章id 根据文章id判断时新增还是修改
         String idStr = (String) jsonObject.get("id");
@@ -100,8 +135,11 @@ public class ArticleController {
         Category category = categoryService.getCategoryById(Long.parseLong(categoryId));
         JSONArray jsonArray = (JSONArray) jsonObject.get("tags");
         List tags = jsonArray.toList(Integer.class);
-        List<Tag> tagList = tagService.listTagById(tags);
-        List<Long> tagIds = tagList.stream().map(Tag::getId).collect(Collectors.toList());
+        List<Tag> tagList = new ArrayList<>();
+        if (tags.size() > 0) {
+            tagService.listTagById(tags);
+        }
+        List<Long> tagIds = tagList.size() == 0 ? new ArrayList<>() : tagList.stream().map(Tag::getId).collect(Collectors.toList());
 
         // TODO 参数校验
 
@@ -125,6 +163,7 @@ public class ArticleController {
             article.setUserId(sessionUser.getId());
             article.setUserName(sessionUser.getUserName());
         }
+        article.setPreviewImage(previewImgUrl);
         article.setCategoryId(category.getId());
         String tagsStr = Joiner.on("-").join(tagIds);
         article.setTags(tagsStr);
@@ -140,7 +179,7 @@ public class ArticleController {
         // 保存只给出响应信息 预览和发布调整到新的页面
         if (StrUtil.equalsAnyIgnoreCase(action, "save")) {
             Article saveArticle = articleService.saveOrUpdateArticle(article);
-            responseData.put("id",saveArticle.getId());
+            responseData.put("id", saveArticle.getId());
             return CommonResult.success(responseData);
         }
 
@@ -162,8 +201,8 @@ public class ArticleController {
             article.setPublishTime(new Date());
             Article saveArticle = articleService.saveOrUpdateArticle(article);
             String redirectUrl = "/blog/article/" + saveArticle.getId() + ".html";
-            responseData.put("id",saveArticle.getId());
-            responseData.put("redirectUrl",redirectUrl);
+            responseData.put("id", saveArticle.getId());
+            responseData.put("redirectUrl", redirectUrl);
             return CommonResult.success(responseData);
         }
 

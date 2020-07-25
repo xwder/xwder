@@ -102,6 +102,7 @@ public class FileUploadServiceImpl implements FileUploadService {
         resultMap.put("url", fileCdnUrl);
         resultMap.put("title", serverSaveFile.getName());
         resultMap.put("original", fileCdnUrl);
+        resultMap.put("code",200);
         return resultMap;
     }
 
