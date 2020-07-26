@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<title>博客文章列表</title>
+<link rel="stylesheet" th:href="@{/css/blog/article.list.css}">
+<head th:include="include :: head"></head>
+  <body class="antialiased">
+    <div class="page">
+      <header class="navbar navbar-expand-md navbar-light">
+        <div class="container-xl">
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <a th:href="@{index.html}" href="../.."
+             class="navbar-brand navbar-brand-autodark d-none-navbar-horizontal pr-0 pr-md-3">
+            <img th:src="@{/image/logo/logo.svg}" src="../static/images/logo/logo.svg" alt="Tabler"
+                 class="navbar-brand-image">
+          </a>
+          <!--头部右边 是否登录还是显示用户头像-->
+          <div th:replace="include :: navigationBar">
+          </div>
+        </div>
+      </header>
+      <!--导航栏-->
+      <div th:include="include :: navigationMenu" class="navbar-expand-md"></div>
+
+      <div class="content">
+        <div class="container-xl">
+          <!-- Page title -->
+          <div class="page-header">
+            <div class="row align-items-center">
+              <div class="col-auto">
+                <h2 class="page-title">
+                  博客归类
+                </h2>
+              </div>
+              <div class="col-auto">
+                <div class="text-muted text-h5 mt-2">About 2,410 result (0.19 seconds)</div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-3">
+              <form action="" method="get">
+                <div class="subheader mb-2">博客分类</div>
+                <div class="list-group list-group-transparent mb-3">
+                  <a class="list-group-item list-group-item-action d-flex align-items-center active" href="#">
+                    SpringCloud
+                    <small class="text-muted ml-auto">24</small>
+                  </a>
+                  <a class="list-group-item list-group-item-action d-flex align-items-center" href="#">
+                    MySQL
+                    <small class="text-muted ml-auto">149</small>
+                  </a>
+                  <a class="list-group-item list-group-item-action d-flex align-items-center" href="#">
+                    Flutter
+                    <small class="text-muted ml-auto">88</small>
+                  </a>
+                  <a class="list-group-item list-group-item-action d-flex align-items-center" href="#">
+                    ElasticSearch
+                    <small class="text-muted ml-auto">54</small>
+                  </a>
+                </div>
+                <div class="subheader mb-2">博客标签</div>
+                <div class="subheader mb-3">
+                  <div class="form-selectgroup form-selectgroup-pills">
+                    <label class="form-selectgroup-item">
+                      <input type="checkbox" name="name" value="HTML" class="form-selectgroup-input" checked>
+                      <span class="form-selectgroup-label">HTML</span>
+                    </label>
+                    <label class="form-selectgroup-item">
+                      <input type="checkbox" name="name" value="CSS" class="form-selectgroup-input">
+                      <span class="form-selectgroup-label">CSS</span>
+                    </label>
+                    <label class="form-selectgroup-item">
+                      <input type="checkbox" name="name" value="PHP" class="form-selectgroup-input">
+                      <span class="form-selectgroup-label">PHP</span>
+                    </label>
+                    <label class="form-selectgroup-item">
+                      <input type="checkbox" name="name" value="HTML" class="form-selectgroup-input" checked>
+                      <span class="form-selectgroup-label">HTML</span>
+                    </label>
+                    <label class="form-selectgroup-item">
+                      <input type="checkbox" name="name" value="CSS" class="form-selectgroup-input">
+                      <span class="form-selectgroup-label">CSS</span>
+                    </label>
+                    <label class="form-selectgroup-item">
+                      <input type="checkbox" name="name" value="PHP" class="form-selectgroup-input">
+                      <span class="form-selectgroup-label">PHP</span>
+                    </label>
+                    <label class="form-selectgroup-item">
+                      <input type="checkbox" name="name" value="JavaScript" class="form-selectgroup-input">
+                      <span class="form-selectgroup-label">JavaScript</span>
+                    </label>
+                    <label class="form-selectgroup-item">
+                      <input type="checkbox" name="name" value="HTML" class="form-selectgroup-input" checked>
+                      <span class="form-selectgroup-label">HTML</span>
+                    </label>
+                    <label class="form-selectgroup-item">
+                      <input type="checkbox" name="name" value="CSS" class="form-selectgroup-input">
+                      <span class="form-selectgroup-label">CSS</span>
+                    </label>
+                    <label class="form-selectgroup-item">
+                      <input type="checkbox" name="name" value="PHP" class="form-selectgroup-input">
+                      <span class="form-selectgroup-label">PHP</span>
+                    </label>
+                    <label class="form-selectgroup-item">
+                      <input type="checkbox" name="name" value="JavaScript" class="form-selectgroup-input">
+                      <span class="form-selectgroup-label">JavaScript</span>
+                    </label>
+                    <label class="form-selectgroup-item">
+                      <input type="checkbox" name="name" value="HTML" class="form-selectgroup-input" checked>
+                      <span class="form-selectgroup-label">HTML</span>
+                    </label>
+                    <label class="form-selectgroup-item">
+                      <input type="checkbox" name="name" value="CSS" class="form-selectgroup-input">
+                      <span class="form-selectgroup-label">CSS</span>
+                    </label>
+                    <label class="form-selectgroup-item">
+                      <input type="checkbox" name="name" value="PHP" class="form-selectgroup-input">
+                      <span class="form-selectgroup-label">PHP</span>
+                    </label>
+                    <label class="form-selectgroup-item">
+                      <input type="checkbox" name="name" value="JavaScript" class="form-selectgroup-input">
+                      <span class="form-selectgroup-label">JavaScript</span>
+                    </label>
+                  </div>
+                </div>
+              </form>
+            </div>
+            <div class="col-lg-9">
+              <div class="row">
+                <div class="posts widget">
+                  <ul class="posts-list">
+                    <div class="post-list-item">
+                      <li class="content">
+                        <div class="content-box">
+                          <div class="posts-item-img feature_img">
+                            <a href="/post/4">
+                              <i class="icon-frame"></i>
+                              <div class="overlay"></div>
+                              <img class="lazy thumbnail" src="https://www.zktools.cn/storage/thumbnails/_signature/2STGCKQNNKI1R0TDOUQG42U1LM.jpg" style="display: inline-block;">
+                            </a>
+                          </div>
+                          <div class="posts-item posts-item-gallery">
+                            <h2>
+                              <a href="/post/4">linux环境离线安装nginx</a>
+                            </h2>
+                            <div class="item-text hidden-xs">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 内网环境需要用到nginx时，就需要使用nginx离线安装包进行安装。由于nginx自linux环境需要自行编译后才能安装，编译时nginx会依赖第三方应用，本章介绍nginx...</div>
+                            <div class="item-info">
+                              <ul>
+                                <li class="post-author hidden-xs">
+                                  <div class="avatar">
+                                    <span class="avatar" style="background-image: url(https://gss3.bdstatic.com/84oSdTum2Q5BphGlnYG/timg?wapp&quality=80&size=b150_150&subsize=20480&cut_x=0&cut_w=0&cut_y=0&cut_h=0&sec=1369815402&srctrace&di=025a2098797ebd8640060bcc4663cb9e&wh_rate=null&src=http%3A%2F%2Fimgsrc.baidu.com%2Fforum%2Fpic%2Fitem%2F562c11dfa9ec8a13424f9c95fc03918fa0ecc06a.jpg)"></span>
+                                  </div>
+                                  <div class="avatar-name">
+                                    <a href="/users/1" target="_blank">无意</a>
+                                  </div>
+                                </li>
+
+                                <li class="ico-time">
+                                  <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                    <img th:src="@{/image/blog/clock.png}">
+                                  </span>
+                                  <span class="nav-link-title">
+                                    19小时前
+						          </span>
+                                </li>
+                              </ul>
+                              <ol class="post-meta meta mar10-t clearfix hidden-xs">
+                                <img th:src="@{/image/blog/liulan.png}" style="margin-left: 5px;margin-right: 4px;">5
+                                <img th:src="@{/image/blog/commits.png}" style="margin-left: 8px;margin-right: 4px;">0
+                                <img th:src="@{/image/blog/sc.png}" style="margin-left: 8px;margin-right: 4px;">0
+                              </ol>
+                            </div>
+                          </div>
+                        </div>
+                      </li>
+                    </div>
+                    <div class="post-list-item">
+                      <li class="content">
+                        <div class="content-box">
+                          <div class="posts-item-img feature_img">
+                            <a href="/post/4">
+                              <i class="icon-frame"></i>
+                              <div class="overlay"></div>
+                              <img class="lazy thumbnail" src="https://www.zktools.cn/storage/thumbnails/_signature/2STGCKQNNKI1R0TDOUQG42U1LM.jpg" style="display: inline-block;">
+                            </a>
+                          </div>
+                          <div class="posts-item posts-item-gallery">
+                            <h2>
+                              <span class=" hidden-xs label label-default  ">技术空间</span>
+                              <a href="/post/4">linux环境离线安装nginx</a>
+                            </h2>
+                            <div class="item-text hidden-xs">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 内网环境需要用到nginx时，就需要使用nginx离线安装包进行安装。由于nginx自linux环境需要自行编译后才能安装，编译时nginx会依赖第三方应用，本章介绍nginx...</div>
+                            <div class="item-info">
+                              <ul>
+                                <li class="post-author hidden-xs">
+                                  <div class="avatar">
+                                    <span class="avatar" style="background-image: url(https://gss3.bdstatic.com/84oSdTum2Q5BphGlnYG/timg?wapp&quality=80&size=b150_150&subsize=20480&cut_x=0&cut_w=0&cut_y=0&cut_h=0&sec=1369815402&srctrace&di=025a2098797ebd8640060bcc4663cb9e&wh_rate=null&src=http%3A%2F%2Fimgsrc.baidu.com%2Fforum%2Fpic%2Fitem%2F562c11dfa9ec8a13424f9c95fc03918fa0ecc06a.jpg)"></span>
+                                  </div>
+                                  <div class="avatar-name">
+                                    <a href="/users/1" target="_blank">无意</a>
+                                  </div>
+                                </li>
+
+                                <li class="ico-time">
+                                  <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                    <img th:src="@{/image/blog/clock.png}">
+                                  </span>
+                                  <span class="nav-link-title">
+                                    19小时前
+						          </span>
+                                </li>
+                              </ul>
+                              <ol class="post-meta meta mar10-t clearfix hidden-xs">
+                                <img th:src="@{/image/blog/liulan.png}" style="margin-left: 5px;margin-right: 4px;">5
+                                <img th:src="@{/image/blog/commits.png}" style="margin-left: 8px;margin-right: 4px;">0
+                                <img th:src="@{/image/blog/sc.png}" style="margin-left: 8px;margin-right: 4px;">0
+                              </ol>
+                            </div>
+                          </div>
+                        </div>
+                      </li>
+                    </div>
+                    <div class="post-list-item">
+                      <li class="content">
+                        <div class="content-box">
+                          <div class="posts-item-img feature_img">
+                            <a href="/post/4">
+                              <i class="icon-frame"></i>
+                              <div class="overlay"></div>
+                              <img class="lazy thumbnail" src="https://www.zktools.cn/storage/thumbnails/_signature/2STGCKQNNKI1R0TDOUQG42U1LM.jpg" style="display: inline-block;">
+                            </a>
+                          </div>
+                          <div class="posts-item posts-item-gallery">
+                            <h2>
+                              <span class=" hidden-xs label label-default  ">技术空间</span>
+                              <a href="/post/4">linux环境离线安装nginx</a>
+                            </h2>
+                            <div class="item-text hidden-xs">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 内网环境需要用到nginx时，就需要使用nginx离线安装包进行安装。由于nginx自linux环境需要自行编译后才能安装，编译时nginx会依赖第三方应用，本章介绍nginx...</div>
+                            <div class="item-info">
+                              <ul>
+                                <li class="post-author hidden-xs">
+                                  <div class="avatar">
+                                    <span class="avatar" style="background-image: url(https://gss3.bdstatic.com/84oSdTum2Q5BphGlnYG/timg?wapp&quality=80&size=b150_150&subsize=20480&cut_x=0&cut_w=0&cut_y=0&cut_h=0&sec=1369815402&srctrace&di=025a2098797ebd8640060bcc4663cb9e&wh_rate=null&src=http%3A%2F%2Fimgsrc.baidu.com%2Fforum%2Fpic%2Fitem%2F562c11dfa9ec8a13424f9c95fc03918fa0ecc06a.jpg)"></span>
+                                  </div>
+                                  <div class="avatar-name">
+                                    <a href="/users/1" target="_blank">无意</a>
+                                  </div>
+                                </li>
+
+                                <li class="ico-time">
+                                  <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                    <img th:src="@{/image/blog/clock.png}">
+                                  </span>
+                                  <span class="nav-link-title">
+                                    19小时前
+						          </span>
+                                </li>
+                              </ul>
+                              <ol class="post-meta meta mar10-t clearfix hidden-xs">
+                                <img th:src="@{/image/blog/liulan.png}" style="margin-left: 5px;margin-right: 4px;">5
+                                <img th:src="@{/image/blog/commits.png}" style="margin-left: 8px;margin-right: 4px;">0
+                                <img th:src="@{/image/blog/sc.png}" style="margin-left: 8px;margin-right: 4px;">0
+                              </ol>
+                            </div>
+                          </div>
+                        </div>
+                      </li>
+                    </div>
+                    <div class="post-list-item">
+                      <li class="content">
+                        <div class="content-box">
+                          <div class="posts-item-img feature_img">
+                            <a href="/post/4">
+                              <i class="icon-frame"></i>
+                              <div class="overlay"></div>
+                              <img class="lazy thumbnail" src="https://www.zktools.cn/storage/thumbnails/_signature/2STGCKQNNKI1R0TDOUQG42U1LM.jpg" style="display: inline-block;">
+                            </a>
+                          </div>
+                          <div class="posts-item posts-item-gallery">
+                            <h2>
+                              <a href="/post/4">linux环境离线安装nginx</a>
+                            </h2>
+                            <div class="item-text hidden-xs">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 内网环境需要用到nginx时，就需要使用nginx离线安装包进行安装。由于nginx自linux环境需要自行编译后才能安装，编译时nginx会依赖第三方应用，本章介绍nginx...</div>
+                            <div class="item-info">
+                              <ul>
+                                <li class="post-author hidden-xs">
+                                  <div class="avatar">
+                                    <span class="avatar" style="background-image: url(https://gss3.bdstatic.com/84oSdTum2Q5BphGlnYG/timg?wapp&quality=80&size=b150_150&subsize=20480&cut_x=0&cut_w=0&cut_y=0&cut_h=0&sec=1369815402&srctrace&di=025a2098797ebd8640060bcc4663cb9e&wh_rate=null&src=http%3A%2F%2Fimgsrc.baidu.com%2Fforum%2Fpic%2Fitem%2F562c11dfa9ec8a13424f9c95fc03918fa0ecc06a.jpg)"></span>
+                                  </div>
+                                  <div class="avatar-name">
+                                    <a href="/users/1" target="_blank">无意</a>
+                                  </div>
+                                </li>
+
+                                <li class="ico-time">
+                                  <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                    <img th:src="@{/image/blog/clock.png}">
+                                  </span>
+                                  <span class="nav-link-title">
+                                    19小时前
+						          </span>
+                                </li>
+                              </ul>
+                              <ol class="post-meta meta mar10-t clearfix hidden-xs">
+                                <img th:src="@{/image/blog/liulan.png}" style="margin-left: 5px;margin-right: 4px;">5
+                                <img th:src="@{/image/blog/commits.png}" style="margin-left: 8px;margin-right: 4px;">0
+                                <img th:src="@{/image/blog/sc.png}" style="margin-left: 8px;margin-right: 4px;">0
+                              </ol>
+                            </div>
+                          </div>
+                        </div>
+                      </li>
+                    </div>
+                    <div class="post-list-item">
+                      <li class="content">
+                        <div class="content-box">
+                          <div class="posts-item-img feature_img">
+                            <a href="/post/4">
+                              <i class="icon-frame"></i>
+                              <div class="overlay"></div>
+                              <img class="lazy thumbnail" src="https://www.zktools.cn/storage/thumbnails/_signature/2STGCKQNNKI1R0TDOUQG42U1LM.jpg" style="display: inline-block;">
+                            </a>
+                          </div>
+                          <div class="posts-item posts-item-gallery">
+                            <h2>
+                              <span class=" hidden-xs label label-default  ">技术空间</span>
+                              <a href="/post/4">linux环境离线安装nginx</a>
+                            </h2>
+                            <div class="item-text hidden-xs">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 内网环境需要用到nginx时，就需要使用nginx离线安装包进行安装。由于nginx自linux环境需要自行编译后才能安装，编译时nginx会依赖第三方应用，本章介绍nginx...</div>
+                            <div class="item-info">
+                              <ul>
+                                <li class="post-author hidden-xs">
+                                  <div class="avatar">
+                                    <span class="avatar" style="background-image: url(https://gss3.bdstatic.com/84oSdTum2Q5BphGlnYG/timg?wapp&quality=80&size=b150_150&subsize=20480&cut_x=0&cut_w=0&cut_y=0&cut_h=0&sec=1369815402&srctrace&di=025a2098797ebd8640060bcc4663cb9e&wh_rate=null&src=http%3A%2F%2Fimgsrc.baidu.com%2Fforum%2Fpic%2Fitem%2F562c11dfa9ec8a13424f9c95fc03918fa0ecc06a.jpg)"></span>
+                                  </div>
+                                  <div class="avatar-name">
+                                    <a href="/users/1" target="_blank">无意</a>
+                                  </div>
+                                </li>
+
+                                <li class="ico-time">
+                                  <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                    <img th:src="@{/image/blog/clock.png}">
+                                  </span>
+                                  <span class="nav-link-title">
+                                    19小时前
+						          </span>
+                                </li>
+                              </ul>
+                              <ol class="post-meta meta mar10-t clearfix hidden-xs">
+                                <img th:src="@{/image/blog/liulan.png}" style="margin-left: 5px;margin-right: 4px;">5
+                                <img th:src="@{/image/blog/commits.png}" style="margin-left: 8px;margin-right: 4px;">0
+                                <img th:src="@{/image/blog/sc.png}" style="margin-left: 8px;margin-right: 4px;">0
+                              </ol>
+                            </div>
+                          </div>
+                        </div>
+                      </li>
+                    </div>
+                    <div class="post-list-item">
+                      <li class="content">
+                        <div class="content-box">
+                          <div class="posts-item-img feature_img">
+                            <a href="/post/4">
+                              <i class="icon-frame"></i>
+                              <div class="overlay"></div>
+                              <img class="lazy thumbnail" src="https://www.zktools.cn/storage/thumbnails/_signature/2STGCKQNNKI1R0TDOUQG42U1LM.jpg" style="display: inline-block;">
+                            </a>
+                          </div>
+                          <div class="posts-item posts-item-gallery">
+                            <h2>
+                              <span class=" hidden-xs label label-default  ">技术空间</span>
+                              <a href="/post/4">linux环境离线安装nginx</a>
+                            </h2>
+                            <div class="item-text hidden-xs">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 内网环境需要用到nginx时，就需要使用nginx离线安装包进行安装。由于nginx自linux环境需要自行编译后才能安装，编译时nginx会依赖第三方应用，本章介绍nginx...</div>
+                            <div class="item-info">
+                              <ul>
+                                <li class="post-author hidden-xs">
+                                  <div class="avatar">
+                                    <span class="avatar" style="background-image: url(https://gss3.bdstatic.com/84oSdTum2Q5BphGlnYG/timg?wapp&quality=80&size=b150_150&subsize=20480&cut_x=0&cut_w=0&cut_y=0&cut_h=0&sec=1369815402&srctrace&di=025a2098797ebd8640060bcc4663cb9e&wh_rate=null&src=http%3A%2F%2Fimgsrc.baidu.com%2Fforum%2Fpic%2Fitem%2F562c11dfa9ec8a13424f9c95fc03918fa0ecc06a.jpg)"></span>
+                                  </div>
+                                  <div class="avatar-name">
+                                    <a href="/users/1" target="_blank">无意</a>
+                                  </div>
+                                </li>
+
+                                <li class="ico-time">
+                                  <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                    <img th:src="@{/image/blog/clock.png}">
+                                  </span>
+                                  <span class="nav-link-title">
+                                    19小时前
+						          </span>
+                                </li>
+                              </ul>
+                              <ol class="post-meta meta mar10-t clearfix hidden-xs">
+                                <img th:src="@{/image/blog/liulan.png}" style="margin-left: 5px;margin-right: 4px;">5
+                                <img th:src="@{/image/blog/commits.png}" style="margin-left: 8px;margin-right: 4px;">0
+                                <img th:src="@{/image/blog/sc.png}" style="margin-left: 8px;margin-right: 4px;">0
+                              </ol>
+                            </div>
+                          </div>
+                        </div>
+                      </li>
+                    </div>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <footer th:replace="include :: footer" class="footer footer-transparent"></footer>
+      </div>
+
+    </div>
+
+
+    <!-- Libs JS -->
+    <script th:src="@{/dist/libs/bootstrap/dist/js/bootstrap.bundle.min.js}" src=""></script>
+    <script th:src="@{/js/blog/highlight.min.js}" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.2/highlight.min.js"></script>
+
+    <script>
+      document.body.style.display = "block"
+    </script>
+  </body>
+</html>

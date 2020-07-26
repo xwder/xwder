@@ -92,13 +92,14 @@
                                                 封面图片
                                                 <button type="" class="btn btn-primary " onclick="choosePhoto()">选择图片</button>
                                                 <button type="" class="btn btn-primary " onclick="uploadPhoto()">上传图片</button>
+                                                <button type="" class="btn btn-primary " onclick="removePhoto()">清除图片</button>
                                             </div>
                                             <div class="form-file" style="display: none;">
                                                 <input type="file" class="form-file-input" id="previewImageUp">
                                             </div>
                                         </div>
                                         <div class="mb-3" id="showImg">
-                                            <img id="preview_photo" th:if="${article != null}" th:src="${article.previewImage}"  src="https://cdn.xwder.com/image/1-Joe/1-20200725203232453.jpg" width="200" height="200">
+                                            <img id="preview_photo" th:if="${article != null && article.previewImage != null &&  (!(article.previewImage eq ''))}" th:src="${article.previewImage}"  src="" width="200" height="200">
                                         </div>
 
                                         <div class="mb-3">

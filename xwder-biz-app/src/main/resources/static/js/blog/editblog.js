@@ -68,9 +68,20 @@ $("#previewImageUp").change(function() {
 
 });
 
+/**
+ * 清除图片
+ */
+function removePhoto() {
+    var showImg = $('#showImg');
+    showImg.empty();
+}
 
+
+/**
+ * 发布博客
+ */
 function publishArticle() {
-    var action = "/blog/article/save?action=publish";
+    var action = "/blog/edit/article?action=publish";
     var data = getArticleData();
     var responseData = articleOperat(action, data);
     if (responseData.code == 200) {
@@ -80,8 +91,11 @@ function publishArticle() {
     }
 }
 
+/**
+ * 保存 或者 修改后 保存 博客
+ */
 function saveArticle() {
-    var action = "/blog/article/save?action=save";
+    var action = "/blog/edit/article?action=save";
     var data = getArticleData();
     var responseData = articleOperat(action, data);
     if (responseData.code == 200) {
@@ -91,8 +105,11 @@ function saveArticle() {
     }
 }
 
+/**
+ * 预览博客文章 不保存
+ */
 function previewArticle() {
-    var action = "/blog/article/save?action=preview";
+    var action = "/blog/article?action=preview";
     var data = getArticleData();
     var validateResult = validateArticleData(data);
     if (!validateResult) {
@@ -148,7 +165,10 @@ function getArticleData() {
     var type = $("input:checkbox[name='articleType']:checked").val();
     var category = $("input:checkbox[name='articleCategory']:checked").val();
 
-    var previewImgUrl = $("#preview_photo")[0].src;
+    var previewImgUrl = '';
+    if( $("#preview_photo").length != 0 ){
+        previewImgUrl = $("#preview_photo")[0].src;
+    }
 
     var postData = {
         "id": articleId,

@@ -38,7 +38,7 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
                         "/user/**",
                         "/book/**",
                         "/file/**",
-                        "/blog/**")
+                        "/blog/edit/**")
                 .excludePathPatterns("/static/*");
 
         super.addInterceptors(registry);
