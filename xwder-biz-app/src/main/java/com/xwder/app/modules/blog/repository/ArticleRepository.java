@@ -23,6 +23,15 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
      */
     Page<Article> findByUserIdAndStatusAndAvaliable(Long userId, Integer status, Integer avaliable, Pageable pageable);
 
+    /**
+     * 根据用户、分类 分页查询article
+     *
+     * @param userId
+     * @param pageable
+     * @return
+     */
+    Page<Article> findByUserIdAndCategoryIdAndStatusAndAvaliable(Long userId, Long categoryId, Integer status, Integer avaliable, Pageable pageable);
+
 
     /**
      * 根据用户id查询文章列表

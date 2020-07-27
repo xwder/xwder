@@ -68,7 +68,7 @@ public class CategoryServiceImpl implements CategoryService {
      */
     @Override
     public List<Map> listCategory(Long userId) {
-        String sql = "SELECT t.user_id,t.category_name,IFNULL(t1.count,0) count\n" +
+        String sql = "SELECT t.id, t.user_id,t.category_name,IFNULL(t1.count,0) count\n" +
                 "from (SELECT * from blog_category WHERE user_id = 1 and  is_avaliable = 1 ) t\n" +
                 "LEFT JOIN (SELECT category_id,count(category_id) count from blog_article  WHERE  user_id = ? and   status = 1 and is_avaliable = 1 GROUP BY category_id) t1 \n" +
                 "on t.id = t1.category_id ORDER BY t1.count DESC";

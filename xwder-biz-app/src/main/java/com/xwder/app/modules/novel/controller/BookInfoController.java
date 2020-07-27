@@ -108,10 +108,10 @@ public class BookInfoController {
         model.addAttribute("endNum", pageSize * pageNum);
         model.addAttribute("totalNum", bookInfoPage.getTotalElements());
         model.addAttribute("totalPages", bookInfoPage.getTotalPages());
+        model.addAttribute("pageSize", pageSize);
         model.addAttribute("currentPage", pageNum);
         model.addAttribute("bookInfoPage", bookInfoPage);
         model.addAttribute("category", category);
-
         return "book/index";
     }
 

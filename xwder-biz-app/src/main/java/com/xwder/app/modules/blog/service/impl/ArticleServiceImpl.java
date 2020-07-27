@@ -54,15 +54,20 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     /**
-     * 根据用户id查询文章列表
+     * 根据用户id、分类 查询文章列表
      *
      * @param userId
      * @return
      */
     @Override
-    public Page<Article> listArticleByUserId(Long userId, Integer pageNum, Integer pageSize) {
+    public Page<Article> listArticleByUserId(Long userId, Long categoryId, Integer pageNum, Integer pageSize) {
         Sort sort = Sort.by(Sort.Direction.DESC, "gmtModified");
         Pageable pageable = PageRequest.of(pageNum - 1, pageSize, sort);
-        return articleRepository.findByUserIdAndStatusAndAvaliable(userId, 1, 1, pageable);
+        if (categoryId == null) {
+            return articleRepository.findByUserIdAndStatusAndAvaliable(userId, 1, 1, pageable);
+        } else {
+            return articleRepository.findByUserIdAndCategoryIdAndStatusAndAvaliable(userId, categoryId, 1, 1, pageable);
+        }
+
     }
 }

@@ -197,33 +197,37 @@
             <ul class="pagination ml-auto">
 
               <!-- 首页 -->
-              <li class="page-item pageItem" ><a class="page-link" href="#" th:href="${'/book/index.html?pageNum=1'+ (category==null?'':('&category='+category)) + (bookName==null?'':('&bookName='+bookName)) }">首页</a></li>
+              <li class="page-item pageItem" ><a class="page-link" href="#" th:href="${'/book/index.html?pageNum=1'+(pageSize == null ? '': ('&pageSize='+pageSize))+ (category==null?'':('&category='+category)) + (bookName==null?'':('&bookName='+bookName)) }">首页</a></li>
 
               <!-- 上一页 -->
               <li class="page-item pageItem disabled" th:if="${bookInfoPage.hasPrevious()}" th:class="${bookInfoPage.hasPrevious()?'page-item pageItem':'page-item pageItem disabled'}">
-                <a class="page-link" href="#" th:href="${'/book/index.html?pageNum=' + bookInfoPage.previousPageable().getPageNumber()+1+(category==null?'':('&category='+category)) + (bookName==null?'':('&bookName='+bookName))}" tabindex="-1">
+                <a class="page-link" href="#" th:href="${'/book/index.html?pageNum=' + (bookInfoPage.previousPageable().getPageNumber()+1)+(pageSize == null ? '': ('&pageSize='+pageSize))+(category==null?'':('&category='+category)) + (bookName==null?'':('&bookName='+bookName))}" tabindex="-1">
                   <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><polyline points="15 6 9 12 15 18" /></svg>
                   上一页
                 </a>
               </li>
 
-              <!-- 中间页 -->
-              <li  class="page-item active" th:class="${pageNum==currentPage} ? 'page-item pageItem active' : 'page-item pageItem'" th:if="${currentPage>=4 && currentPage+2<bookInfoPage.getTotalPages()}" th:each="pageNum:${#numbers.sequence(currentPage+-2, currentPage+2)}">
-                <a class="page-link"  th:href="${'/book/index.html?pageNum=' + pageNum+(category==null?'':('&category='+category)) + (bookName==null?'':('&bookName='+bookName))}" th:text="${pageNum}" th:if="${pageNum ne bookInfoPage.pageable.getPageNumber()}" href="#">2</a>
-                <a class="page-link"  th:href="${'/book/index.html?pageNum=' + pageNum+(category==null?'':('&category='+category)) + (bookName==null?'':('&bookName='+bookName))}" th:text="${pageNum}" th:if="${pageNum eq bookInfoPage.pageable.getPageNumber()}" href="#">2</a>
-              </li>
+              <span th:each="pageNum:${#numbers.sequence((currentPage+-2), currentPage+2)}">
+                <li  class="page-item active" th:class="${pageNum==currentPage} ? 'page-item pageItem active' : 'page-item pageItem'" th:if="${((pageNum le bookInfoPage.getTotalPages()) && (pageNum gt 0))}">
+                  <a class="page-link"  th:href="${'/book/index.html?pageNum=' + pageNum+(pageSize == null ? '': ('&pageSize='+pageSize))+(category==null?'':('&category='+category)) + (bookName==null?'':('&bookName='+bookName))}"
+                     th:text="${pageNum}"  href="#">2</a>
+                </li>
+              </span>
 
-              <!-- 中间页 -->
-              <li  class="page-item active" th:class="${pageNum==currentPage} ? 'page-item pageItem active' : 'page-item pageItem'" th:if="${currentPage<=3}" th:each="pageNum:${#numbers.sequence(currentPage, currentPage+4)}">
-                <a class="page-link"  th:href="${'/book/index.html?pageNum=' + pageNum+(category==null?'':('&category='+category)) + (bookName==null?'':('&bookName='+bookName))}" th:text="${pageNum}" th:if="${pageNum ne bookInfoPage.pageable.getPageNumber()}" href="#">2</a>
-                <a class="page-link"  th:href="${'/book/index.html?pageNum=' + pageNum+(category==null?'':('&category='+category)) + (bookName==null?'':('&bookName='+bookName))}" th:text="${pageNum}" th:if="${pageNum eq bookInfoPage.pageable.getPageNumber()}" href="#">2</a>
-              </li>
+<!--                <li  class="page-item active" th:class="${pageNum==currentPage} ? 'page-item pageItem active' : 'page-item pageItem'"
+                     th:if="${currentPage gt 5}"
+                     th:each="pageNum:${#numbers.sequence(currentPage+-2, currentPage+2)}">
+                  <a class="page-link"  th:href="${'/book/index.html?pageNum=' + pageNum+(category==null?'':('&category='+category)) + (bookName==null?'':('&bookName='+bookName))}"
+                     th:text="${pageNum}" th:if="${((pageNum le bookInfoPage.getTotalPages()) && (pageNum gt 0))}" href="#">2</a>
+                </li>
+              &lt;!&ndash; 中间页 &ndash;&gt;-->
+
 
               <!-- 下一页 -->
-              <li class="page-item pageItem"><a class="page-link" href="#" th:if="${bookInfoPage.hasNext()}"  th:href="${'/book/index.html?pageNum=' + (bookInfoPage.nextPageable().getPageNumber()+1)+(category==null?'':('&category='+category)) + (bookName==null?'':('&bookName='+bookName))}" th:text="下一页">3</a></li>
+              <li class="page-item pageItem"><a class="page-link" href="#" th:if="${bookInfoPage.hasNext()}"  th:href="${'/book/index.html?pageNum=' + (bookInfoPage.nextPageable().getPageNumber()+1)+(pageSize == null ? '': ('&pageSize='+pageSize))+(category==null?'':('&category='+category)) + (bookName==null?'':('&bookName='+bookName))}" th:text="下一页">3</a></li>
 
               <!-- 尾页 -->
-              <li class="page-item pageItem"><a class="page-link" href="#"  th:href="${'/book/index.html?pageNum=' + bookInfoPage.getTotalPages()+(category==null?'':('&category='+category)) + (bookName==null?'':('&bookName='+bookName))}">尾页</a></li>
+              <li class="page-item pageItem"><a class="page-link" href="#"  th:href="${'/book/index.html?pageNum=' + bookInfoPage.getTotalPages()+(pageSize == null ? '': ('&pageSize='+pageSize))+(category==null?'':('&category='+category)) + (bookName==null?'':('&bookName='+bookName))}">尾页</a></li>
 
             </ul>
           </div>

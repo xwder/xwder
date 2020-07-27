@@ -16,6 +16,7 @@ import com.xwder.app.modules.blog.service.intf.TagService;
 import com.xwder.app.modules.user.entity.User;
 import com.xwder.app.modules.user.service.intf.UserService;
 import com.xwder.app.utils.SessionUtil;
+import com.xwder.app.utils.TimeCountUtil;
 import com.xwder.cloud.commmon.api.CommonResult;
 import com.xwder.cloud.commmon.constan.Constant;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -242,30 +243,77 @@ public class ArticleController {
     public String articleList(@PathVariable(required = false) String userName, HttpServletRequest request,
                               @RequestParam(value = "pageNum", required = false, defaultValue = "1") @Min(1) @Max(10000) Integer pageNum,
                               @RequestParam(value = "pageSize", required = false, defaultValue = "6") @Min(1) @Max(10) Integer pageSize,
+                              @RequestParam(value = "category", required = false) Long category,
+                              @RequestParam(value = "tag", required = false) Integer tag,
                               Model model) {
+        Long startTime = System.currentTimeMillis();
         String templatesUrl = "/blog/article/list";
+        String currentUrl = "/blog/article";
         User searchUser = null;
+        // 是否有传递用户信息
         if (StrUtil.isNotEmpty(userName)) {
             searchUser = userService.getUserByUserName(userName);
+            currentUrl = currentUrl + "/user/" + userName + ".html";
+        } else {
+            currentUrl = currentUrl + "/list.html";
         }
         if (searchUser == null) {
-            List<User> users = userService.listManagerUser();
-            if (CollectionUtil.isNotEmpty(users)) {
-                searchUser = users.get(0);
+            // 没有传递用户信息 当前登录用户
+            User sessionUser = (User) SessionUtil.getSessionAttribute(SysConstant.SESSION_USER);
+            if (searchUser != null) {
+                searchUser = sessionUser;
             } else {
-                model.addAttribute("articleListError", 0);
-                return templatesUrl;
+                List<User> users = userService.listManagerUser();
+                if (CollectionUtil.isNotEmpty(users)) {
+                    searchUser = users.get(0);
+                } else {
+                    // 没有用户信息
+                    model.addAttribute("articleListError", 0);
+                    return templatesUrl;
+                }
             }
         }
+        searchUser.setPassword(null);
+        searchUser.setEmail(null);
+        searchUser.setSalt(null);
 
         List<Map> categoryMapList = categoryService.listCategory(searchUser.getId());
+        Page<Article> articlePage = null;
+        articlePage = articleService.listArticleByUserId(searchUser.getId(), category, pageNum, pageSize);
 
-        Page<Article> articlePage = articleService.listArticleByUserId(searchUser.getId(), pageNum, pageSize);
+
+        List<Article> articleList = articlePage.getContent();
+        for (Article article : articleList) {
+            Date gmtModified = article.getGmtModified();
+            // 格式化显示时间 几小时之前、几天之前
+            String remark = TimeCountUtil.format(gmtModified);
+            article.setRemark(remark);
+        }
+
         List<Tag> tags = tagService.listTagByUserId(searchUser.getId());
         model.addAttribute("articlePage", articlePage);
-        model.addAttribute("articles", articlePage.getContent());
+        model.addAttribute("currentPage", pageNum);
+        model.addAttribute("pageSize", pageSize);
+        model.addAttribute("articles", articleList);
         model.addAttribute("tags", tags);
         model.addAttribute("categoryMapList", categoryMapList);
+        model.addAttribute("currentUser", searchUser);
+        model.addAttribute("currentUrl", currentUrl);
+        model.addAttribute("category", category);
+        model.addAttribute("tag", tag);
+
+        int totalArticles = 0;
+        // 计算所有个文章总数
+        for (Map map : categoryMapList) {
+            int count = Integer.parseInt(map.get("count").toString());
+            totalArticles = totalArticles + count;
+        }
+        model.addAttribute("totalArticles", totalArticles);
+
+        double endTime = System.currentTimeMillis() - startTime;
+        double useTime = endTime /1000;
+        model.addAttribute("useTime", useTime);
+
         return templatesUrl;
     }
 }

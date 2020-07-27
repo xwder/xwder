@@ -35,11 +35,12 @@ public interface ArticleService {
      * 根据用户id查询文章列表
      *
      * @param userId
+     * @param categoryId
      * @param pageNum
      * @param pageSize
      * @return
      */
-    Page<Article> listArticleByUserId(Long userId, Integer pageNum, Integer pageSize);
+    Page<Article> listArticleByUserId(Long userId, Long categoryId, Integer pageNum, Integer pageSize);
 
 
 }
