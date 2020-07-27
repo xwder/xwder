@@ -2,6 +2,8 @@ package com.xwder.app.modules.user.service.intf;
 
 import com.xwder.app.modules.user.entity.User;
 
+import java.util.List;
+
 /**
  * 用户服务service
  */
@@ -83,4 +85,12 @@ public interface UserService {
      * @param expireTime
      */
     void updateRedisUserSessionExpireTime(String token, Integer expireTime);
+
+
+    /**
+     * 查询所有的管理员
+     *
+     * @return
+     */
+    List<User> listManagerUser();
 }

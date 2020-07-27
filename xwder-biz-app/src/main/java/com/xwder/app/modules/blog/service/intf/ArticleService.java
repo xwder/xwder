@@ -1,6 +1,7 @@
 package com.xwder.app.modules.blog.service.intf;
 
 import com.xwder.app.modules.blog.entity.Article;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
@@ -34,8 +35,11 @@ public interface ArticleService {
      * 根据用户id查询文章列表
      *
      * @param userId
+     * @param pageNum
+     * @param pageSize
      * @return
      */
-    List<Article> listArticleByUserId(Long userId);
+    Page<Article> listArticleByUserId(Long userId, Integer pageNum, Integer pageSize);
+
 
 }

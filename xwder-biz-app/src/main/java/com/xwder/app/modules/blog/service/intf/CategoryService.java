@@ -3,6 +3,7 @@ package com.xwder.app.modules.blog.service.intf;
 import com.xwder.app.modules.blog.entity.Category;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 文章分类service
@@ -24,5 +25,14 @@ public interface CategoryService {
      * @return
      */
     List listCategoryByUserId(Long userId);
+
+
+    /**
+     * 根据用户id查询分类信息
+     *
+     * @param userId
+     * @return
+     */
+    List<Map> listCategory(Long userId);
 
 }

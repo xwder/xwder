@@ -279,4 +279,14 @@ public class UserServiceImpl implements UserService {
         String userSessionRedisKey = SysConstant.USER_SESSION_REDIS_KEY + ":" + token;
         redisUtil.expire(userSessionRedisKey, expireTime);
     }
+
+    /**
+     * 查询所有的管理员
+     *
+     * @return
+     */
+    @Override
+    public List<User> listManagerUser() {
+        return userRepositry.findAllByManager(1);
+    }
 }

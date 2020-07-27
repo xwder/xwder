@@ -4,11 +4,14 @@ import com.xwder.app.modules.blog.entity.Article;
 import com.xwder.app.modules.blog.repository.ArticleRepository;
 import com.xwder.app.modules.blog.service.intf.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
  * 文章service impl
@@ -51,14 +54,15 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     /**
-     * TODO
      * 根据用户id查询文章列表
      *
      * @param userId
      * @return
      */
     @Override
-    public List<Article> listArticleByUserId(Long userId) {
-        return null;
+    public Page<Article> listArticleByUserId(Long userId, Integer pageNum, Integer pageSize) {
+        Sort sort = Sort.by(Sort.Direction.DESC, "gmtModified");
+        Pageable pageable = PageRequest.of(pageNum - 1, pageSize, sort);
+        return articleRepository.findByUserIdAndStatusAndAvaliable(userId, 1, 1, pageable);
     }
 }

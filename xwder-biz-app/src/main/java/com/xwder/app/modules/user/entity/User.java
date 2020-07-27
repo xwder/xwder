@@ -46,6 +46,12 @@ public class User implements Serializable {
     private String nickname;
 
     /**
+     * 0-不是管理员，1-管理员
+     */
+    @Column(name = "is_manager")
+    private Integer manager;
+
+    /**
      * 电话
      */
     @Column(name = "phone")
@@ -301,4 +307,11 @@ public class User implements Serializable {
         this.gmtModified = gmtModified;
     }
 
+    public Integer getManager() {
+        return manager;
+    }
+
+    public void setManager(Integer manager) {
+        this.manager = manager;
+    }
 }

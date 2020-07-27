@@ -43,86 +43,25 @@
               <form action="" method="get">
                 <div class="subheader mb-2">博客分类</div>
                 <div class="list-group list-group-transparent mb-3">
-                  <a class="list-group-item list-group-item-action d-flex align-items-center active" href="#">
-                    SpringCloud
-                    <small class="text-muted ml-auto">24</small>
-                  </a>
-                  <a class="list-group-item list-group-item-action d-flex align-items-center" href="#">
-                    MySQL
-                    <small class="text-muted ml-auto">149</small>
-                  </a>
-                  <a class="list-group-item list-group-item-action d-flex align-items-center" href="#">
-                    Flutter
-                    <small class="text-muted ml-auto">88</small>
-                  </a>
-                  <a class="list-group-item list-group-item-action d-flex align-items-center" href="#">
-                    ElasticSearch
-                    <small class="text-muted ml-auto">54</small>
-                  </a>
+                  <div th:if="${categoryMapList != null}"
+                       th:each="categoryMap,categoryStat : ${categoryMapList}">
+                    <a class="list-group-item list-group-item-action d-flex align-items-center <!--active-->"
+                       th:text="${categoryMap['category_name']}"
+                       href="#">
+                      SpringCloud
+                      <small class="text-muted ml-auto" th:text="${categoryMap['count']}">24</small>
+                    </a>
+                  </div>
                 </div>
                 <div class="subheader mb-2">博客标签</div>
                 <div class="subheader mb-3">
                   <div class="form-selectgroup form-selectgroup-pills">
-                    <label class="form-selectgroup-item">
-                      <input type="checkbox" name="name" value="HTML" class="form-selectgroup-input" checked>
-                      <span class="form-selectgroup-label">HTML</span>
-                    </label>
-                    <label class="form-selectgroup-item">
-                      <input type="checkbox" name="name" value="CSS" class="form-selectgroup-input">
-                      <span class="form-selectgroup-label">CSS</span>
-                    </label>
-                    <label class="form-selectgroup-item">
-                      <input type="checkbox" name="name" value="PHP" class="form-selectgroup-input">
-                      <span class="form-selectgroup-label">PHP</span>
-                    </label>
-                    <label class="form-selectgroup-item">
-                      <input type="checkbox" name="name" value="HTML" class="form-selectgroup-input" checked>
-                      <span class="form-selectgroup-label">HTML</span>
-                    </label>
-                    <label class="form-selectgroup-item">
-                      <input type="checkbox" name="name" value="CSS" class="form-selectgroup-input">
-                      <span class="form-selectgroup-label">CSS</span>
-                    </label>
-                    <label class="form-selectgroup-item">
-                      <input type="checkbox" name="name" value="PHP" class="form-selectgroup-input">
-                      <span class="form-selectgroup-label">PHP</span>
-                    </label>
-                    <label class="form-selectgroup-item">
-                      <input type="checkbox" name="name" value="JavaScript" class="form-selectgroup-input">
-                      <span class="form-selectgroup-label">JavaScript</span>
-                    </label>
-                    <label class="form-selectgroup-item">
-                      <input type="checkbox" name="name" value="HTML" class="form-selectgroup-input" checked>
-                      <span class="form-selectgroup-label">HTML</span>
-                    </label>
-                    <label class="form-selectgroup-item">
-                      <input type="checkbox" name="name" value="CSS" class="form-selectgroup-input">
-                      <span class="form-selectgroup-label">CSS</span>
-                    </label>
-                    <label class="form-selectgroup-item">
-                      <input type="checkbox" name="name" value="PHP" class="form-selectgroup-input">
-                      <span class="form-selectgroup-label">PHP</span>
-                    </label>
-                    <label class="form-selectgroup-item">
-                      <input type="checkbox" name="name" value="JavaScript" class="form-selectgroup-input">
-                      <span class="form-selectgroup-label">JavaScript</span>
-                    </label>
-                    <label class="form-selectgroup-item">
-                      <input type="checkbox" name="name" value="HTML" class="form-selectgroup-input" checked>
-                      <span class="form-selectgroup-label">HTML</span>
-                    </label>
-                    <label class="form-selectgroup-item">
-                      <input type="checkbox" name="name" value="CSS" class="form-selectgroup-input">
-                      <span class="form-selectgroup-label">CSS</span>
-                    </label>
-                    <label class="form-selectgroup-item">
-                      <input type="checkbox" name="name" value="PHP" class="form-selectgroup-input">
-                      <span class="form-selectgroup-label">PHP</span>
-                    </label>
-                    <label class="form-selectgroup-item">
-                      <input type="checkbox" name="name" value="JavaScript" class="form-selectgroup-input">
-                      <span class="form-selectgroup-label">JavaScript</span>
-                    </label>
+                      <label class="form-selectgroup-item"
+                             th:if="${tags != null}"
+                             th:each="tag,tagStat : ${tags}">
+                        <input type="checkbox" name="name" th:value="${tag.tagName}" value="HTML" class="form-selectgroup-input">
+                        <span class="form-selectgroup-label" th:text="${tag.tagName}">HTML</span>
+                      </label>
                   </div>
                 </div>
               </form>
@@ -131,21 +70,25 @@
               <div class="row">
                 <div class="posts widget">
                   <ul class="posts-list">
-                    <div class="post-list-item">
+
+                    <div class="post-list-item"
+                         th:if="${articles != null}"
+                         th:each="article,articleStat : ${articles}">
                       <li class="content">
-                        <div class="content-box">
-                          <div class="posts-item-img feature_img">
-                            <a href="/post/4">
-                              <i class="icon-frame"></i>
-                              <div class="overlay"></div>
-                              <img class="lazy thumbnail" src="https://www.zktools.cn/storage/thumbnails/_signature/2STGCKQNNKI1R0TDOUQG42U1LM.jpg" style="display: inline-block;">
-                            </a>
-                          </div>
+                        <div class="content-box" >
+                          <a href="/post/4" th:href="'/blog/article/'+ ${article.id}+'.html'">
+                            <div class="posts-item-img feature_img">
+
+                                <i class="icon-frame"></i>
+                                <div class="overlay"></div>
+                                <img class="lazy thumbnail" th:src="${(article.previewImage == null || article.previewImage eq '') ? 'https://www.zktools.cn/storage/thumbnails/_signature/2STGCKQNNKI1R0TDOUQG42U1LM.jpg' : article.previewImage}" src="https://www.zktools.cn/storage/thumbnails/_signature/2STGCKQNNKI1R0TDOUQG42U1LM.jpg" style="display: inline-block;object-fit: cover;">
+                            </div>
+                          </a>
                           <div class="posts-item posts-item-gallery">
                             <h2>
-                              <a href="/post/4">linux环境离线安装nginx</a>
+                              <a href="/post/4" th:text="${article.title}" th:href="'/blog/article/'+ ${article.id}+'.html'">linux环境离线安装nginx</a>
                             </h2>
-                            <div class="item-text hidden-xs">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 内网环境需要用到nginx时，就需要使用nginx离线安装包进行安装。由于nginx自linux环境需要自行编译后才能安装，编译时nginx会依赖第三方应用，本章介绍nginx...</div>
+                            <div class="item-text hidden-xs" th:utext="'&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; '+${article.summary}">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 内网环境需要用到nginx时，就需要使用nginx离线安装包进行安装。由于nginx自linux环境需要自行编译后才能安装，编译时nginx会依赖第三方应用，本章介绍nginx...</div>
                             <div class="item-info">
                               <ul>
                                 <li class="post-author hidden-xs">
@@ -176,6 +119,9 @@
                         </div>
                       </li>
                     </div>
+
+
+
                     <div class="post-list-item">
                       <li class="content">
                         <div class="content-box">

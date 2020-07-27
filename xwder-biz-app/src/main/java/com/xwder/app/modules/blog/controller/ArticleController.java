@@ -1,5 +1,6 @@
 package com.xwder.app.modules.blog.controller;
 
+import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONObject;
@@ -13,14 +14,19 @@ import com.xwder.app.modules.blog.service.intf.ArticleService;
 import com.xwder.app.modules.blog.service.intf.CategoryService;
 import com.xwder.app.modules.blog.service.intf.TagService;
 import com.xwder.app.modules.user.entity.User;
+import com.xwder.app.modules.user.service.intf.UserService;
 import com.xwder.app.utils.SessionUtil;
 import com.xwder.cloud.commmon.api.CommonResult;
+import com.xwder.cloud.commmon.constan.Constant;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -43,6 +49,9 @@ public class ArticleController {
 
     @Autowired
     private TagService tagService;
+
+    @Autowired
+    private UserService userService;
 
 
     /**
@@ -229,11 +238,34 @@ public class ArticleController {
      *
      * @return
      */
-    @RequestMapping(value = "/article/list")
-    public String articleList() {
+    @RequestMapping(value = {"/article/list", "/article/user/{userName}"})
+    public String articleList(@PathVariable(required = false) String userName, HttpServletRequest request,
+                              @RequestParam(value = "pageNum", required = false, defaultValue = "1") @Min(1) @Max(10000) Integer pageNum,
+                              @RequestParam(value = "pageSize", required = false, defaultValue = "6") @Min(1) @Max(10) Integer pageSize,
+                              Model model) {
         String templatesUrl = "/blog/article/list";
+        User searchUser = null;
+        if (StrUtil.isNotEmpty(userName)) {
+            searchUser = userService.getUserByUserName(userName);
+        }
+        if (searchUser == null) {
+            List<User> users = userService.listManagerUser();
+            if (CollectionUtil.isNotEmpty(users)) {
+                searchUser = users.get(0);
+            } else {
+                model.addAttribute("articleListError", 0);
+                return templatesUrl;
+            }
+        }
 
+        List<Map> categoryMapList = categoryService.listCategory(searchUser.getId());
 
+        Page<Article> articlePage = articleService.listArticleByUserId(searchUser.getId(), pageNum, pageSize);
+        List<Tag> tags = tagService.listTagByUserId(searchUser.getId());
+        model.addAttribute("articlePage", articlePage);
+        model.addAttribute("articles", articlePage.getContent());
+        model.addAttribute("tags", tags);
+        model.addAttribute("categoryMapList", categoryMapList);
         return templatesUrl;
     }
 }

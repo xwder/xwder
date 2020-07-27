@@ -93,7 +93,7 @@ public class BookInfoController {
                               @RequestParam(value = "bookName", required = false) String bookName,
                               @RequestParam(value = "pageNum", required = false) @Min(1) @Max(10000) Integer pageNum,
                               @RequestParam(value = "pageSize", required = false) @Min(1) @Max(50) Integer pageSize,
-                              ModelAndView modelAndView, Model model) {
+                              Model model) {
         pageNum = pageNum == null ? Constant.DEFAULT_PAGE_NUM : pageNum;
         pageSize = pageSize == null ? Constant.DEFAULT_PAGE_SIZE + 1 : pageSize;
         Page<BookInfo> bookInfoPage;
