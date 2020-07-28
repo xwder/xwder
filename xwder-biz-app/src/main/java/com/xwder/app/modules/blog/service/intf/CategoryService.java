@@ -28,11 +28,11 @@ public interface CategoryService {
 
 
     /**
-     * 根据用户id查询分类信息
+     * 根据用户id查询分类信息、每个分类文章数量
      *
      * @param userId
      * @return
      */
-    List<Map> listCategory(Long userId);
+    List<Map> listCategoryArticleCount(Long userId);
 
 }

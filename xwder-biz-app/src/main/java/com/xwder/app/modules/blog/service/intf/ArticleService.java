@@ -30,17 +30,26 @@ public interface ArticleService {
      */
     Article getArticleById(Long articleId);
 
+    /**
+     * 文章阅读数增加
+     *
+     * @param articleId
+     * @param addCount
+     */
+    Integer addArticleReadCount(Long articleId, Integer addCount);
+
 
     /**
      * 根据用户id查询文章列表
      *
      * @param userId
      * @param categoryId
+     * @param tagId
      * @param pageNum
      * @param pageSize
      * @return
      */
-    Page<Article> listArticleByUserId(Long userId, Long categoryId, Integer pageNum, Integer pageSize);
+    Page<Article> listArticleByUserId(Long userId, Long categoryId, Long tagId, Integer pageNum, Integer pageSize);
 
 
 }

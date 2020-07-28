@@ -1,8 +1,6 @@
 // 所有页面通用的js
-
-// 头像区域获取焦点和失去焦点事件 显示菜单
 $(function (){
-
+    // 头像区域获取焦点和失去焦点事件 显示菜单
     //鼠标的移入移出
     $("#showUserDropdown").mouseover(function (){
         $("#userMenuDropdown").addClass("show");
@@ -13,8 +11,18 @@ $(function (){
         $("#userMenuDropdown").attr("aria-expanded",false);
         $("#userMenu").removeClass("show");
     });
-});
 
+    // 博客分类添加鼠标移入移出显示分类
+    $("#showBlogCategory").mouseover(function (){
+        $("#showBlogCategoryA").addClass("show");
+        $("#showBlogCategoryA").attr("aria-expanded",true);
+        $("#showBlogCategoryUl").addClass("show");
+    }).mouseout(function (){
+        $("#showBlogCategoryA").removeClass("show");
+        $("#showBlogCategoryA").attr("aria-expanded",false);
+        $("#showBlogCategoryUl").removeClass("show");
+    });
+});
 
 function login() {
     // 登录

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org">
 <title th:if="${bookInfo!=null}" th:text="${bookInfo.bookName+'-'+currentChapter.chapterName}">小说阅读</title>
-<link th:href="@{/css/book/chapter.css}" href="../static/css/index.css" rel="stylesheet"/>
+<link th:href="@{/static/css/book/chapter.css}" href="../static/css/index.css" rel="stylesheet"/>
 <head th:include="include :: head"></head>
 
 <body class="antialiased" style="background-color: #FFFFFF;">
@@ -13,7 +13,7 @@
             </button>
             <a th:href="@{index}" href=".."
                class="navbar-brand navbar-brand-autodark d-none-navbar-horizontal pr-0 pr-md-3">
-                <img th:src="@{/image/logo/logo.svg}" src="../static/images/logo/logo.svg" alt="Tabler"
+                <img th:src="@{/static/image/logo/logo.svg}" src="../static/images/logo/logo.svg" alt="Tabler"
                      class="navbar-brand-image">
             </a>
             <!--头部右边 是否登录还是显示用户头像-->
@@ -276,7 +276,7 @@
     </div>
 </div>
 <!-- Libs JS -->
-<script th:src="@{/dist/libs/bootstrap/dist/js/bootstrap.bundle.min.js}"
+<script th:src="@{/static/dist/libs/bootstrap/dist/js/bootstrap.bundle.min.js}"
         src="../../static/dist/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <script>
     document.body.style.display = "block";

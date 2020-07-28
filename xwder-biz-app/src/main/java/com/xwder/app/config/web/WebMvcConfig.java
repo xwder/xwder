@@ -1,5 +1,6 @@
 package com.xwder.app.config.web;
 
+import com.xwder.app.interceptor.GlobalInterceptor;
 import com.xwder.app.interceptor.UserLoginInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -18,6 +19,8 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
     @Autowired
     private UserLoginInterceptor userLoginInterceptor;
 
+    @Autowired
+    private GlobalInterceptor globalInterceptor;
 
     /**
      * 注册类路径下的static和templates文件夹
@@ -27,7 +30,8 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
      */
     @Override
     protected void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/**").addResourceLocations("classpath:/static/");
+        registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static/");
+        //registry.addResourceHandler("/**").addResourceLocations("classpath:/static/");
         super.addResourceHandlers(registry);
     }
 
@@ -39,8 +43,14 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
                         "/book/**",
                         "/file/**",
                         "/blog/edit/**")
-                .excludePathPatterns("/static/*");
+                .excludePathPatterns("/static/**");
+
+        // 拦截所有的请求 导航栏分类数据
+        registry.addInterceptor(globalInterceptor)
+                .addPathPatterns("/**")
+                .excludePathPatterns("/static/**","/error");
 
         super.addInterceptors(registry);
     }
+
 }

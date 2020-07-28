@@ -24,7 +24,7 @@ public class BlogServiceTest {
 
     @Test
     public void listArticleByUserIdTest() {
-        Page<Article> articlePage = articleService.listArticleByUserId(1L, 1L, 1, 1);
+        Page<Article> articlePage = articleService.listArticleByUserId(1L, 1L,null,1, 1);
         System.out.println(articlePage.toString());
 
     }

@@ -287,6 +287,13 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public List<User> listManagerUser() {
-        return userRepositry.findAllByManager(1);
+        List<User> managerUserList = userRepositry.findAllByManager(1);
+        managerUserList.forEach(user -> {
+            user.setPassword(null);
+            user.setSalt(null);
+            user.setEmail(null);
+            user.setPhone(null);
+        });
+        return managerUserList;
     }
 }

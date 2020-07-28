@@ -14,16 +14,16 @@
 	<meta name="HandheldFriendly" content="True"/>
 	<meta name="MobileOptimized" content="320"/>
 	<!--<meta name="robots" content="noindex,nofollow,noarchive"/>-->
-	<link rel="icon" th:href="@{/favicon.ico}"  href="../favicon.ico" type="image/x-icon"/>
-	<link rel="shortcut icon" th:href="@{/favicon.ico}"  href="../favicon.ico" type="image/x-icon"/>
+	<link rel="icon" th:href="@{/static/favicon.ico}"  href="../favicon.ico" type="image/x-icon"/>
+	<link rel="shortcut icon" th:href="@{/static/favicon.ico}"  href="../favicon.ico" type="image/x-icon"/>
 	<!-- CSS files -->
-	<link th:href="@{/dist/libs/jqvmap/dist/jqvmap.min.css}" href="../static/dist/libs/jqvmap/dist/jqvmap.min.css" rel="stylesheet"/>
-	<link th:href="@{/dist/css/tabler.min.css}" href="../static/dist/css/tabler.min.css" rel="stylesheet"/>
-	<link th:href="@{/dist/css/demo.min.css}" href="../static/dist/css/demo.min.css" rel="stylesheet"/>
-	<link th:href="@{/css/index/index.css}" href="../static/css/index.css" rel="stylesheet"/>
+	<link th:href="@{/static/dist/libs/jqvmap/dist/jqvmap.min.css}" href="../static/dist/libs/jqvmap/dist/jqvmap.min.css" rel="stylesheet"/>
+	<link th:href="@{/static/dist/css/tabler.min.css}" href="../static/dist/css/tabler.min.css" rel="stylesheet"/>
+	<link th:href="@{/static/dist/css/demo.min.css}" href="../static/dist/css/demo.min.css" rel="stylesheet"/>
+	<link th:href="@{/static/css/index/index.css}" href="../static/css/index.css" rel="stylesheet"/>
 	<!-- JS files -->
 	<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-	<script th:src="@{/js/common.js}" src="../static/login/js/require.min.js"></script>
+	<script th:src="@{/static/js/common.js}" src="../static/login/js/require.min.js"></script>
 
 	<style>
 		body {
@@ -119,7 +119,7 @@
 		<div class="navbar navbar-light">
 			<div class="container-xl">
 				<ul class="navbar-nav">
-					<li class="nav-item active">
+					<li class="nav-item active" th:class="${(session.active != null && session.active eq 'index') ? 'nav-item active' : 'nav-item'}">
 						<a target="_blank" class="nav-link" th:href="@{/index.html}" href="../index.html" >
 						<span class="nav-link-icon d-md-none d-lg-inline-block"><svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><polyline points="5 12 3 12 12 3 21 12 19 12" /><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" /><path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" /></svg>
 						</span>
@@ -128,58 +128,19 @@
 						</span>
 						</a>
 					</li>
-					<li class="nav-item dropdown">
+					<li id="showBlogCategory" class="nav-item dropdown" th:class="${(session.active != null && session.active eq 'blog') ? 'nav-item dropdown active' : 'nav-item dropdown'}">
 						<!--这个a标签不能动-->
-						<a target="_blank" class="nav-link dropdown-toggle" href="#navbar-base"  data-toggle="dropdown" role="button" aria-expanded="false" >
+						<a id="showBlogCategoryA" target="_blank" class="nav-link dropdown-toggle" href="#navbar-base"  data-toggle="dropdown" role="button" aria-expanded="false" >
 						<span class="nav-link-icon d-md-none d-lg-inline-block"><svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><polyline points="12 3 20 7.5 20 16.5 12 21 4 16.5 4 7.5 12 3" /><line x1="12" y1="12" x2="20" y2="7.5" /><line x1="12" y1="12" x2="12" y2="21" /><line x1="12" y1="12" x2="4" y2="7.5" /><line x1="16" y1="5.25" x2="8" y2="9.75" /></svg>
 						</span>
 							<span class="nav-link-title">博客归类
 						</span>
 						</a>
-						<ul class="dropdown-menu dropdown-menu-columns  dropdown-menu-columns-2">
-							<li >
-								<a target="_blank" class="dropdown-item" th:href="@{/blog/article/list.html}" href="#" >
+						<ul id="showBlogCategoryUl" class="dropdown-menu dropdown-menu-columns  dropdown-menu-columns-2" >
+							<li th:if="${session['potalDataMap'] != null && session['potalDataMap']['categoryMapList'] != null}"
+								th:each="categoryMap,categoryStat : ${session.potalDataMap['categoryMapList']}">
+								<a target="_blank" class="dropdown-item" th:text="${categoryMap['category_name']}" th:href="${'/blog/article/list.html&category='+categoryMap['id']}" href="#" >
 									JavaEE
-								</a>
-							</li>
-							<li >
-								<a target="_blank" class="dropdown-item" th:href="@{/index.html}" href="#" >
-									MySQL
-								</a>
-							</li>
-							<li >
-								<a target="_blank" class="dropdown-item" th:href="@{/index.html}" href="..#" >
-									Oracle
-								</a>
-							</li>
-							<li >
-								<a target="_blank" class="dropdown-item" th:href="@{/index.html}" href="#" >
-									Flutter
-								</a>
-							</li>
-							<li >
-								<a target="_blank" class="dropdown-item" th:href="@{/index.html}" href="#" >
-									ElasticSearch
-								</a>
-							</li>
-							<li >
-								<a target="_blank" class="dropdown-item" th:href="@{/index.html}" href="#" >
-									Linux
-								</a>
-							</li>
-							<li >
-								<a target="_blank" class="dropdown-item" th:href="@{/index.html}" href="#" >
-									Nginx
-								</a>
-							</li>
-							<li >
-								<a target="_blank" class="dropdown-item" th:href="@{/index.html}" href="#" >
-									Redis
-								</a>
-							</li>
-							<li >
-								<a target="_blank" class="dropdown-item" th:href="@{/index.html}" href="#" >
-									RabbitMQ
 								</a>
 							</li>
 						</ul>
@@ -199,7 +160,7 @@
 						</span>
 						</a>
 					</li>
-					<li class="nav-item">
+					<li class="nav-item" th:class="${(session.active != null && session.active eq 'book') ? 'nav-item active' : 'nav-item'}">
 						<a target="_blank" class="nav-link" th:href="@{/book/index.html}" href="video/video.html" >
 						<span class="nav-link-icon d-md-none d-lg-inline-block">
 							<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-md" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M3 19a9 9 0 0 1 9 0a9 9 0 0 1 9 0" /><path d="M3 6a9 9 0 0 1 9 0a9 9 0 0 1 9 0" /><line x1="3" y1="6" x2="3" y2="19" /><line x1="12" y1="6" x2="12" y2="19" /><line x1="21" y1="6" x2="21" y2="19" /></svg>

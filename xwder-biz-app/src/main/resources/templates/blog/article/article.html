@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org">
 <title th:if="${articleMap != null}" th:text="${articleMap['article'].title}">预览</title>
-<link rel="stylesheet" th:href="@{/css/blog/article.css}">
+<link rel="stylesheet" th:href="@{/static/css/blog/article.css}">
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.2/styles/default.min.css">
 <head th:include="include :: head"></head>
 <body class="antialiased">
@@ -13,7 +13,7 @@
             </button>
             <a th:href="@{index.html}" href="../.."
                class="navbar-brand navbar-brand-autodark d-none-navbar-horizontal pr-0 pr-md-3">
-                <img th:src="@{/image/logo/logo.svg}" src="../static/images/logo/logo.svg" alt="Tabler"
+                <img th:src="@{/static/image/logo/logo.svg}" src="../static/images/logo/logo.svg" alt="Tabler"
                      class="navbar-brand-image">
             </a>
             <!--头部右边 是否登录还是显示用户头像-->
@@ -40,7 +40,7 @@
                                     <div class="article-bar-top">
                                         <!--文章类型-->
                                         <!--原创-->
-                                        <img class="article-type-img" th:src="@{/image/blog/original.png}"
+                                        <img class="article-type-img" th:src="@{/static/image/blog/original.png}"
                                              src="https://csdnimg.cn/release/phoenix/template/new_img/original.png"
                                              alt="">
                                         <!--翻译-->
@@ -52,7 +52,7 @@
                                             <span class="time" th:if="${articleMap != null}"
                                                   th:text="${#dates.format(articleMap['article'].publishTime, 'yyyy-MM-dd HH:mm')}">2017-04-06 14:19:56</span>
                                             <img class="article-read-img article-heard-img"
-                                                 th:src="@{/image/blog/articleReadEyes.png}"
+                                                 th:src="@{/static/image/blog/articleReadEyes.png}"
                                                  src="https://csdnimg.cn/release/phoenix/template/new_img/articleReadEyes.png"
                                                  alt="">
                                             <span class="read-count" th:if="${articleMap != null}"
@@ -60,13 +60,13 @@
                                             <a id="blog_detail_zk_collection" class="un-collection"
                                                data-report-click="{&quot;mod&quot;:&quot;popu_823&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4232&quot;,&quot;ab&quot;:&quot;new&quot;}">
                                                 <img class="article-collect-img article-heard-img un-collect-status"
-                                                     th:src="@{/image/blog/tobarCollect.png}"
+                                                     th:src="@{/static/image/blog/tobarCollect.png}"
                                                      style="display:inline-block"
                                                      src="https://csdnimg.cn/release/phoenix/template/new_img/tobarCollect.png"
                                                      alt="">
                                                 <img class="article-collect-img article-heard-img collect-status"
                                                      style="display:none"
-                                                     th:src="@{/image/blog/tobarCollectionActive.png}"
+                                                     th:src="@{/static/image/blog/tobarCollectionActive.png}"
                                                      src="https://csdnimg.cn/release/phoenix/template/new_img/tobarCollectionActive.png"
                                                      alt="">
                                                 <span class="name">收藏</span>
@@ -124,8 +124,8 @@
 </div>
 
 <!-- Libs JS -->
-<script th:src="@{/dist/libs/bootstrap/dist/js/bootstrap.bundle.min.js}" src=""></script>
-<script th:src="@{/js/blog/highlight.min.js}" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.2/highlight.min.js"></script>
+<script th:src="@{/static/dist/libs/bootstrap/dist/js/bootstrap.bundle.min.js}" src=""></script>
+<script th:src="@{/static/js/blog/highlight.min.js}" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.2/highlight.min.js"></script>
 
 <script>
     document.body.style.display = "block";

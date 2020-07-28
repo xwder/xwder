@@ -1,8 +1,15 @@
 package com.xwder.app.modules.blog.service.impl;
 
+import cn.hutool.core.collection.CollectionUtil;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
+import com.xwder.app.consts.RedisConstant;
 import com.xwder.app.modules.blog.entity.Category;
 import com.xwder.app.modules.blog.repository.CategoryRepository;
 import com.xwder.app.modules.blog.service.intf.CategoryService;
+import com.xwder.app.modules.user.entity.User;
+import com.xwder.app.modules.user.service.intf.UserService;
+import com.xwder.app.utils.RedisUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.SQLQuery;
 import org.hibernate.query.internal.NativeQueryImpl;
@@ -16,9 +23,7 @@ import org.springframework.stereotype.Service;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * @author xwder
@@ -35,6 +40,12 @@ public class CategoryServiceImpl implements CategoryService {
     @Autowired
     private CategoryRepository categoryRepository;
 
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private RedisUtil redisUtil;
+
     /**
      * 根据id查询分类信息
      *
@@ -43,8 +54,17 @@ public class CategoryServiceImpl implements CategoryService {
      */
     @Override
     public Category getCategoryById(Long id) {
-        Optional<Category> categoryOptional = categoryRepository.findById(id);
-        return categoryOptional.get();
+        Category category = null;
+        String categoryRedisKey = RedisConstant.BLOG_ARTICLE_CATEGORY + ":" + id;
+        category = (Category) redisUtil.get(categoryRedisKey);
+        if (category == null) {
+            Optional<Category> categoryOptional = categoryRepository.findById(id);
+            if (categoryOptional.isPresent()) {
+                redisUtil.set(categoryRedisKey, categoryOptional.get(), -1);
+                return categoryOptional.get();
+            }
+        }
+        return category;
     }
 
     /**
@@ -67,7 +87,17 @@ public class CategoryServiceImpl implements CategoryService {
      * @return
      */
     @Override
-    public List<Map> listCategory(Long userId) {
+    public List<Map> listCategoryArticleCount(Long userId) {
+        if (userId == null) {
+            List<User> users = userService.listManagerUser();
+            if (CollectionUtil.isEmpty(users)) {
+                HashMap<Object, Object> map = Maps.newHashMap();
+                ArrayList arrayList = Lists.newArrayList();
+                arrayList.add(map);
+                return arrayList;
+            }
+            userId = users.get(0).getId();
+        }
         String sql = "SELECT t.id, t.user_id,t.category_name,IFNULL(t1.count,0) count\n" +
                 "from (SELECT * from blog_category WHERE user_id = 1 and  is_avaliable = 1 ) t\n" +
                 "LEFT JOIN (SELECT category_id,count(category_id) count from blog_article  WHERE  user_id = ? and   status = 1 and is_avaliable = 1 GROUP BY category_id) t1 \n" +

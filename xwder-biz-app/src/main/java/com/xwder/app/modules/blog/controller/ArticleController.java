@@ -18,7 +18,6 @@ import com.xwder.app.modules.user.service.intf.UserService;
 import com.xwder.app.utils.SessionUtil;
 import com.xwder.app.utils.TimeCountUtil;
 import com.xwder.cloud.commmon.api.CommonResult;
-import com.xwder.cloud.commmon.constan.Constant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -212,12 +211,13 @@ public class ArticleController {
      */
     @RequestMapping(value = "/article/{articleId}")
     public String article(@PathVariable("articleId") Long articleId, Model model) {
-        Article article = articleService.getArticleById(articleId);
+        Article article = null;
+        article = articleService.getArticleById(articleId);
         if (article == null) {
             return "blog/article/article";
         }
-        Map articleMap = new HashMap();
         Category category = categoryService.getCategoryById(article.getCategoryId());
+        Map articleMap = new HashMap();
         articleMap.put("category", category);
         String tags = article.getTags();
         if (StrUtil.isNotEmpty(tags)) {
@@ -231,6 +231,10 @@ public class ArticleController {
         }
         articleMap.put("article", article);
         model.addAttribute("articleMap", articleMap);
+
+        // 文章阅读数+1
+        Integer readCount = articleService.addArticleReadCount(articleId, 1);
+        article.setReadCount(readCount.longValue());
         return "blog/article/article";
     }
 
@@ -244,7 +248,7 @@ public class ArticleController {
                               @RequestParam(value = "pageNum", required = false, defaultValue = "1") @Min(1) @Max(10000) Integer pageNum,
                               @RequestParam(value = "pageSize", required = false, defaultValue = "6") @Min(1) @Max(10) Integer pageSize,
                               @RequestParam(value = "category", required = false) Long category,
-                              @RequestParam(value = "tag", required = false) Integer tag,
+                              @RequestParam(value = "tag", required = false) Long tag,
                               Model model) {
         Long startTime = System.currentTimeMillis();
         String templatesUrl = "/blog/article/list";
@@ -277,9 +281,9 @@ public class ArticleController {
         searchUser.setEmail(null);
         searchUser.setSalt(null);
 
-        List<Map> categoryMapList = categoryService.listCategory(searchUser.getId());
+        List<Map> categoryMapList = categoryService.listCategoryArticleCount(searchUser.getId());
         Page<Article> articlePage = null;
-        articlePage = articleService.listArticleByUserId(searchUser.getId(), category, pageNum, pageSize);
+        articlePage = articleService.listArticleByUserId(searchUser.getId(), category, tag, pageNum, pageSize);
 
 
         List<Article> articleList = articlePage.getContent();
@@ -291,15 +295,18 @@ public class ArticleController {
         }
 
         List<Tag> tags = tagService.listTagByUserId(searchUser.getId());
-        model.addAttribute("articlePage", articlePage);
         model.addAttribute("currentPage", pageNum);
         model.addAttribute("pageSize", pageSize);
+
+        model.addAttribute("articlePage", articlePage);
         model.addAttribute("articles", articleList);
-        model.addAttribute("tags", tags);
         model.addAttribute("categoryMapList", categoryMapList);
+        model.addAttribute("category", category);
+
         model.addAttribute("currentUser", searchUser);
         model.addAttribute("currentUrl", currentUrl);
-        model.addAttribute("category", category);
+
+        model.addAttribute("tags", tags);
         model.addAttribute("tag", tag);
 
         int totalArticles = 0;
@@ -311,7 +318,7 @@ public class ArticleController {
         model.addAttribute("totalArticles", totalArticles);
 
         double endTime = System.currentTimeMillis() - startTime;
-        double useTime = endTime /1000;
+        double useTime = endTime / 1000;
         model.addAttribute("useTime", useTime);
 
         return templatesUrl;

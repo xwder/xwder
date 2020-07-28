@@ -48,4 +48,20 @@ public class RedisConstant {
      */
     public static final Integer EMAIL_VERIFY_KEY_CACHETIME = 1500;
 
+
+    /**
+     * 博客文章  xwder:blog:article:article:id
+     */
+    public static final String BLOG_ARTICLE_ARTICLE = "xwder:blog:article:article";
+
+    /**
+     * 博客文章分类  xwder:blog:article:article:id
+     */
+    public static final String BLOG_ARTICLE_CATEGORY = "xwder:blog:article:category";
+
+    /**
+     * 博客文章阅读数  xwder:blog:article:article:id
+     */
+    public static final String BLOG_ARTICLE_READCOUNT = "xwder:blog:article:read";
+
 }

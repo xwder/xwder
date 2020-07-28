@@ -5,6 +5,9 @@ server:
   servlet:
     # 项目contextPath
     context-path: /
+    session:
+      # 链接多出jsessionid的问题
+      tracking-modes: cookie
   tomcat:
     # tomcat的URI编码
     uri-encoding: UTF-8
@@ -128,8 +131,8 @@ spring:
     #确认消息已发送到队列(Queue)
     #publisher-returns: true
 
-  mvc:
-    static-path-pattern: /static/**
+#  mvc:
+#    static-path-pattern: /static/**
 
   # 模板引擎
   thymeleaf:
