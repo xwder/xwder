@@ -11,6 +11,7 @@
 		<table name="blog_article" dataNode="dn1"  />
 
 		<table name="file_upload" dataNode="dn1"  />
+		<table name="file_upload_block" dataNode="dn1"  />
 
 		<table name="sys_job" dataNode="dn1"  />
 		<table name="sys_job_log" dataNode="dn1"  />
@@ -47,8 +48,8 @@
 			  writeType="0" dbType="mysql" dbDriver="native" switchType="1"  slaveThreshold="100">
 		<heartbeat>select user()</heartbeat>
 		<!-- can have multi write hosts -->
-		<writeHost host="hostM1" url="120.92.164.184:3306" user="root"
-				   password="5J3hjcKTp47nFCSa">
+		<writeHost host="hostM1" url="127.0.0.1:3306" user="xwder"
+				   password="wvDwERwidZZJhfh2">
 		</writeHost>
 		<!-- <writeHost host="hostM2" url="localhost:3316" user="root" password="123456"/> -->
 	</dataHost>

@@ -42,8 +42,9 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
                         "/user/**",
                         "/book/**",
                         "/file/**",
+                        "/video/**",
                         "/blog/edit/**")
-                .excludePathPatterns("/static/**");
+                .excludePathPatterns("/static/**","/user/mail/verifyMail.html");
 
         // 拦截所有的请求 导航栏分类数据
         registry.addInterceptor(globalInterceptor)

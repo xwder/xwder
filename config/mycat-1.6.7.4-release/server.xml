@@ -105,8 +105,8 @@
 	</firewall>
 	-->
 
-	<user name="root" defaultAccount="true">
-		<property name="password">123456</property>
+	<user name="xwder" defaultAccount="true">
+		<property name="password">XxwmGls6UCnvziE3</property>
 		<property name="schemas">xwder</property>
 		<property name="defaultSchema">xwder</property>
 		<!--No MyCAT Database selected 错误前会尝试使用该schema作为schema，不设置则为null,报错 -->
@@ -122,11 +122,11 @@
 		 -->
 	</user>
 
-	<user name="user">
+<!--	<user name="user">
 		<property name="123456">user</property>
 		<property name="schemas">xwder</property>
 		<property name="readOnly">true</property>
 		<property name="defaultSchema">xwder</property>
-	</user>
+	</user>-->
 
 </mycat:server>

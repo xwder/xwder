@@ -1,17 +1,19 @@
 <!DOCTYPE html>
-<html  lang="zh" xmlns:th="http://www.thymeleaf.org">
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
 <title>首页</title>
+<link type="text/css" th:href="@{/static/css/index/fanstyle.css}" href="css/style.css" rel="stylesheet" />
 <head th:include="include :: head"></head>
 <body class="antialiased">
     <div class="page">
-        <!--<div id="currentUrl" style="display: none" th:text="${#httpServletRequest.getRequestURL()}"></div>-->
         <header class="navbar navbar-expand-md navbar-light">
             <div class="container-xl">
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <a th:href="@{index.html}" href=".." class="navbar-brand navbar-brand-autodark d-none-navbar-horizontal pr-0 pr-md-3">
-                    <img th:src="@{/static/image/logo/logo.svg}" src="../static/images/logo/logo.svg" alt="Tabler" class="navbar-brand-image">
+                <a th:href="@{index.html}" href=".."
+                   class="navbar-brand navbar-brand-autodark d-none-navbar-horizontal pr-0 pr-md-3">
+                    <img th:src="@{/static/image/logo/logo.svg}" src="../static/images/logo/logo.svg" alt="Tabler"
+                         class="navbar-brand-image">
                 </a>
                 <!--头部右边 是否登录还是显示用户头像-->
                 <div th:replace="include :: navigationBar">
@@ -21,114 +23,45 @@
         <!--导航栏-->
         <div th:include="include :: navigationMenu" class="navbar-expand-md"></div>
 
-    </div>
-    <div class="modal modal-blur fade" id="modal-report" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">New report</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="mb-3">
-                        <label class="form-label">Name</label>
-                        <input type="text" class="form-control" name="example-text-input" placeholder="Your report name">
-                    </div>
-                    <label class="form-label">Report type</label>
-                    <div class="form-selectgroup-boxes row mb-3">
-                        <div class="col-lg-6">
-                            <label class="form-selectgroup-item">
-                                <input type="radio" name="report-type" value="1" class="form-selectgroup-input" checked>
-                                <span class="form-selectgroup-label d-flex align-items-center p-3">
-                    <span class="mr-3">
-                      <span class="form-selectgroup-check"></span>
-                    </span>
-                    <span class="form-selectgroup-label-content">
-                      <span class="form-selectgroup-title strong mb-1">Simple</span>
-                      <span class="d-block text-muted">Provide only basic data needed for the report</span>
-                    </span>
-                  </span>
-                            </label>
-                        </div>
-                        <div class="col-lg-6">
-                            <label class="form-selectgroup-item">
-                                <input type="radio" name="report-type" value="1" class="form-selectgroup-input">
-                                <span class="form-selectgroup-label d-flex align-items-center p-3">
-                    <span class="mr-3">
-                      <span class="form-selectgroup-check"></span>
-                    </span>
-                    <span class="form-selectgroup-label-content">
-                      <span class="form-selectgroup-title strong mb-1">Advanced</span>
-                      <span class="d-block text-muted">Insert charts and additional advanced analyses to be inserted in the report</span>
-                    </span>
-                  </span>
-                            </label>
+        <div class="content">
+            <div class="container-xl">
+                <div id="fan">
+                    <input type="radio" name="switch" class="switch_0">
+                    <div class="switch_btn_0">0</div>
+                    <input type="radio" checked="" name="switch" class="switch_1">
+                    <div class="switch_btn_1">1</div>
+                    <input type="radio" name="switch" class="switch_2">
+                    <div class="switch_btn_2">2</div>
+                    <input type="radio" name="switch" class="switch_3">
+                    <div class="switch_btn_3">3</div>
+                    <div class="mask">
+                        <div class="logo">吹吹风扇</div>
+                        <div class="line_1"></div>
+                        <div class="line_2"></div>
+                        <div class="line_3"></div>
+                        <div class="line_4"></div>
+                        <div class="line_5"></div>
+                        <div class="line_6"></div>
+                        <div class="leafs">
+                            <div class="leaf_1"></div>
+                            <div class="leaf_2"></div>
+                            <div class="leaf_3"></div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-lg-8">
-                            <div class="mb-3">
-                                <label class="form-label">Report url</label>
-                                <div class="input-group input-group-flat">
-                    <span class="input-group-text">
-                      https://tabler.io/reports/
-                    </span>
-                                    <input type="text" class="form-control pl-0"  value="report-01">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="mb-3">
-                                <label class="form-label">Visibility</label>
-                                <select class="form-select">
-                                    <option value="1" selected>Private</option>
-                                    <option value="2">Public</option>
-                                    <option value="3">Hidden</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <div class="mb-3">
-                                <label class="form-label">Client name</label>
-                                <input type="text" class="form-control">
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="mb-3">
-                                <label class="form-label">Reporting period</label>
-                                <input type="date" class="form-control">
-                            </div>
-                        </div>
-                        <div class="col-lg-12">
-                            <div>
-                                <label class="form-label">Additional information</label>
-                                <textarea class="form-control" rows="3"></textarea>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <a th:href="@{index.html}" href="#" class="btn btn-link link-secondary" data-dismiss="modal">
-                        Cancel
-                    </a>
-                    <a th:href="@{index.html}" href="#" class="btn btn-primary ml-auto" data-dismiss="modal">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" /></svg>
-                        Create new report
-                    </a>
+                    <div class="header"></div>
+                    <div class="neck"></div>
+                    <div class="neck_footer"></div>
+                    <div class="bottom"></div>
+                    <div class="bottom_footer_1"></div>
+                    <div class="bottom_footer_2"></div>
                 </div>
             </div>
         </div>
     </div>
-    <!-- Libs JS -->
-    <script th:src="@{/static/dist/libs/bootstrap/dist/js/bootstrap.bundle.min.js}" src="../static/dist/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        document.body.style.display = "block"
-    </script>
+<!-- Libs JS -->
+<script th:src="@{/static/dist/libs/bootstrap/dist/js/bootstrap.bundle.min.js}" src=""></script>
+<script>
+    document.body.style.display = "block"
+</script>
 </body>
 </html>

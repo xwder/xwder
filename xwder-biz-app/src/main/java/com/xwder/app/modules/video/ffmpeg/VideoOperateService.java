@@ -1,4 +1,4 @@
-package com.xwder.biz.app.modules.video.ffmpeg;
+package com.xwder.app.modules.video.ffmpeg;
 
 import cn.hutool.core.io.FileUtil;
 import com.github.pagehelper.util.StringUtil;

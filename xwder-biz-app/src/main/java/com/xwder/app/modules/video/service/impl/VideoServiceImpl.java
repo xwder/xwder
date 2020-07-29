@@ -1,9 +1,9 @@
-package com.xwder.biz.app.modules.video.service.impl;
+package com.xwder.app.modules.video.service.impl;
 
 import com.github.pagehelper.util.StringUtil;
 import com.xwder.app.modules.cloud.tencent.cos.service.TencentCosService;
+import com.xwder.app.modules.video.ffmpeg.VideoOperateService;
 import com.xwder.app.modules.video.service.intf.VideoService;
-import com.xwder.biz.app.modules.video.ffmpeg.VideoOperateService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

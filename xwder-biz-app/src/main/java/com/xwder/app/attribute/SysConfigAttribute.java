@@ -38,10 +38,14 @@ public class SysConfigAttribute {
 
     @Value("${upload.saveBaseDir}")
     private String uploadSaveBaseDir;
+
     /** 视频上传保存服务器的besedir 完整的路径+/+user主键编号 */
-    private String videoUploadSaveDir = uploadSaveBaseDir + File.separator + "video";
+    @Value("${upload.videoUploadSaveDir}")
+    private String videoUploadSaveDir;
+
     /** lottery上传保存服务器的besedir 完整的路径+/+user主键编号 */
-    private String lotterySaveDir = uploadSaveBaseDir + File.separator + "lottery";
+    @Value("${upload.lotterySaveDir}")
+    private String lotterySaveDir;
 
     @Value("${video.videoSplitTime}")
     private Integer videoSplitTime;
