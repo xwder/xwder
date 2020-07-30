@@ -6,7 +6,7 @@ function test1(shardIndex) {
     //获取表单中的file
     var file = $('#inputfile').get(0).files[0];
     //文件分片 以20MB去分片
-    var shardSize = 20 * 1024 * 1024;
+    var shardSize = 2 * 1024 * 1024;
     //定义分片索引
     var shardIndex = shardIndex;
     //定义分片的起始位置

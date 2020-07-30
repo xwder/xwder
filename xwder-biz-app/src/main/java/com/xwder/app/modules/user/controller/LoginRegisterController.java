@@ -152,7 +152,7 @@ public class LoginRegisterController {
         // cookie 写人 认证 xwder-token
         CookieUtils.setCookie(request, response, sysConfigAttribute.getSessionTokenName(), xwderToken);
         // 写入redis session
-        userService.saveUserSessionToRedis(xwderToken,resultUser,SysConstant.USER_SESSION_REDIS_TIME);
+        userService.saveUserSessionToRedis(xwderToken, resultUser, SysConstant.USER_SESSION_REDIS_TIME);
 
         CommonResult<User> commonResult = CommonResult.success(resultUser);
         return commonResult;
@@ -166,22 +166,16 @@ public class LoginRegisterController {
      * @return
      */
     @GetMapping(value = "/doLoginOut")
-    public Object loginOut(HttpServletRequest request, HttpServletResponse response) {
+    public String loginOut(HttpServletRequest request, HttpServletResponse response) {
         String xwderToken = CookieUtils.getCookieValue(request, sysConfigAttribute.getSessionTokenName());
-
-        RedirectView redirectTarget = new RedirectView();
-        redirectTarget.setContextRelative(true);
-        redirectTarget.setUrl("index.html");
-        if (StrUtil.isEmpty(xwderToken)) {
-            return redirectTarget;
-        }
-        // session 写入用户信息
+        // session 删除 用户信息
         SessionUtil.removeSessionAttribute(SysConstant.SESSION_USER);
-        // cookie 写人 认证 xwder-token
-        CookieUtils.setCookie(request, response, sysConfigAttribute.getSessionTokenName(), xwderToken);
+        // cookie 删除 认证 xwder-token
         CookieUtils.deleteCookie(request, response, xwderToken);
+        // 删除 redis 用户信息
         userService.deleteRedisUserSession(xwderToken);
-        return redirectTarget;
+
+        return "redirect:/index.html";
     }
 
     /**
