@@ -36,7 +36,7 @@ public class ArticleServiceImpl implements ArticleService {
      * @return
      */
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public Article saveOrUpdateArticle(Article article) {
         if (article.getId()!=null) {
             // 先删除redis
@@ -97,6 +97,18 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     /**
+     * 修改article的阅读数
+     *
+     * @param articleId
+     * @param readCount
+     */
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void updateArticleReadCount(Long articleId, Long readCount) {
+        articleRepository.updateArticleReadCountById(articleId,readCount);
+    }
+
+    /**
      * 文章阅读数增加
      *
      * @param articleId
@@ -109,9 +121,11 @@ public class ArticleServiceImpl implements ArticleService {
         if (readCount != null) {
             readCount += addCount;
         } else {
-            readCount = 0;
+            readCount = 1;
         }
         redisUtil.set(articleReadCountRedisKey, readCount);
         return readCount;
     }
+
+
 }

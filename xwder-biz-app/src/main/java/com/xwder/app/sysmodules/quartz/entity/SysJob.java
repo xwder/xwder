@@ -1,6 +1,7 @@
 package com.xwder.app.sysmodules.quartz.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -75,6 +76,7 @@ public class SysJob implements Serializable {
     /**
      * 创建时间
      */
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     @Column(name = "create_time")
     private Date createTime;
@@ -88,6 +90,7 @@ public class SysJob implements Serializable {
     /**
      * 更新时间
      */
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Column(name = "update_time")
     private Date updateTime;
 

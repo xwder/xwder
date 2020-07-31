@@ -75,7 +75,6 @@ public class BookChapterServiceImpl implements BookChapterService {
      * @return
      */
     @Override
-    @Transactional(readOnly = true)
     public Page<BookChapter> listBookChapterByBookName(String bookName, Integer pageNum, Integer pageSize) {
         List<BookInfo> bookInfoList = bookInfoRepository.findAllByBookName(bookName);
         if (CollectionUtil.isNotEmpty(bookInfoList)) {

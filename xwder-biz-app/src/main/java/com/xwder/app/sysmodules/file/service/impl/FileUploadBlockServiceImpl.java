@@ -40,7 +40,7 @@ public class FileUploadBlockServiceImpl implements FileUploadBlockService {
      * @param fileUploadBlock
      */
     @Override
-    @Transactional
+    @Transactional(rollbackFor = {Exception.class})
     public void saveOrUpdateFileUploadBlock(FileUploadBlock fileUploadBlock) {
         FileUploadBlock existFileUploadBlock = checkFileUpload(fileUploadBlock.getFileKey());
         if (existFileUploadBlock == null) {

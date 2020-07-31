@@ -21,6 +21,7 @@ import java.util.Optional;
  * @date 2020/07/20
  */
 @Service
+@Transactional
 public class SysJobServiceImpl implements SysJobService {
 
     @Autowired
@@ -35,6 +36,7 @@ public class SysJobServiceImpl implements SysJobService {
      * @param job 调度信息 调度信息
      */
     @Override
+    @Transactional(rollbackFor = {Exception.class})
     public SysJob insertJob(SysJob job) throws SchedulerException, TaskException {
         job.setStatus(ScheduleConstants.Status.PAUSE.getValue());
         SysJob sysJob = sysJobRepository.save(job);
@@ -48,7 +50,6 @@ public class SysJobServiceImpl implements SysJobService {
      * @param job 调度信息
      */
     @Override
-    @Transactional
     public SysJob run(SysJob job) throws SchedulerException {
         Long jobId = job.getJobId();
         String jobGroup = job.getJobGroup();
@@ -69,7 +70,6 @@ public class SysJobServiceImpl implements SysJobService {
      * @param job 调度信息
      */
     @Override
-    @Transactional
     public SysJob changeStatus(SysJob job) throws SchedulerException {
         Optional<SysJob> sysJobOptional = sysJobRepository.findById(job.getJobId());
         SysJob sysJob = sysJobOptional.get();
@@ -90,7 +90,7 @@ public class SysJobServiceImpl implements SysJobService {
      * @param job 调度信息
      */
     @Override
-    @Transactional
+    @Transactional(rollbackFor = {Exception.class})
     public SysJob resumeJob(SysJob job) throws SchedulerException {
         Long jobId = job.getJobId();
         String jobGroup = job.getJobGroup();
@@ -107,7 +107,7 @@ public class SysJobServiceImpl implements SysJobService {
      * @param job 调度信息
      */
     @Override
-    @Transactional
+    @Transactional(rollbackFor = {Exception.class})
     public SysJob pauseJob(SysJob job) throws SchedulerException {
         Long jobId = job.getJobId();
         String jobGroup = job.getJobGroup();

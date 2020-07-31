@@ -22,6 +22,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -98,6 +99,7 @@ public class UserServiceImpl implements UserService {
      * @return 操作成功返回user 操作失败返回null
      */
     @Override
+    @Transactional(rollbackFor = {Exception.class})
     public User saveOrUpdateUser(User user) {
         // id 为 null 且用户名不存在
         if (user.getId() == null) {
@@ -216,6 +218,7 @@ public class UserServiceImpl implements UserService {
      * @return
      */
     @Override
+    @Transactional(rollbackFor = {Exception.class})
     public User verifyEmail(String verifyKey) {
         String redisKey = RedisConstant.EMAIL_VERIFY_KEY + ":" + verifyKey;
         User user = (User) redisUtil.get(redisKey);
