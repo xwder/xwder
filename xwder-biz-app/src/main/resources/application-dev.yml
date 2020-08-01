@@ -5,9 +5,9 @@ server:
   servlet:
     # 项目contextPath
     context-path: /
-    session:
-      # 链接多出jsessionid的问题
-      tracking-modes: cookie
+  #    session:
+  #      # 链接多出jsessionid的问题
+  #      tracking-modes: cookie
   tomcat:
     # tomcat的URI编码
     uri-encoding: UTF-8
@@ -53,11 +53,13 @@ spring:
     show-sql: true
 
   datasource:
-    # url: jdbc:mysql://127.0.0.1:8066/xwder?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai
-    # slq显示参数值
-    url: jdbc:log4jdbc:mysql://127.0.0.1:8066/xwder?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai
-    username: root
-    password: XxwmGls6UCnvziE3
+#    url: jdbc:log4jdbc:mysql://120.92.164.184:8066/xwder?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai&useLocalSessionState=true
+#    username: xwder
+#    password: XxwmGls6UCnvziE3
+    url: jdbc:log4jdbc:mysql://120.92.164.184:3306/xwder?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai&useLocalSessionState=true
+    username: xwder
+    password: wvDwERwidZZJhfh2
+
     driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
     platform: mysql
     type: com.alibaba.druid.pool.DruidDataSource
@@ -72,8 +74,8 @@ spring:
       # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
       time-between-eviction-runs-millis: 60000
       # 配置一个连接在池中最小生存的时间，单位是毫秒
-      min-evictable-idle-time-millis: 30000
-      max-evictable-idle-time-millis: 60000
+      # min-evictable-idle-time-millis: 30000
+      # max-evictable-idle-time-millis: 60000
 
       # 打开PSCache，并且指定每个连接上PSCache的大小
       max-pool-prepared-statement-per-connection-size: 20
@@ -90,10 +92,9 @@ spring:
         stat,wall,log4j
 
   redis:
-    database: 1
-    host: 114.67.85.146
+    host: 120.92.164.184
     port: 6379
-    password: 9t6U3OBxxd
+    password: 9t6U3OB43FRECxxd
     jedis:
       pool:
         #连接池最大连接数（使用负值表示没有限制）
@@ -131,8 +132,8 @@ spring:
     #确认消息已发送到队列(Queue)
     #publisher-returns: true
 
-#  mvc:
-#    static-path-pattern: /static/**
+  #  mvc:
+  #    static-path-pattern: /static/**
 
   # 模板引擎
   thymeleaf:
@@ -150,7 +151,7 @@ eureka:
   client:
     service-url:
       # 指定eureka server通信地址，注意/eureka/小尾巴不能少
-      defaultZone: http://eureka:11NcXZgZLD@localhost:8001/eureka/
+      defaultZone: https://eureka:11NcXZgZLD@registry.xwder.com/eureka/
 
     # 清理间隔 实际开发过程中，我们可能会不停地重启服务，由于Eureka有自己的保护机制，故节点下线后，服务信息还会一直存在于Eureka中。
     # 我们可以通过增加一些配置让移除的速度更快一点，当然只在开发环境下使用，生产环境下不推荐使用
@@ -181,12 +182,12 @@ management:
     web:
       exposure:
         # 暴露.端点
-        include: '*'
+        #        include: '*'
         # 取消暴露metrics端点，如需暴露多个，用,分隔；如需暴露所有端点，用'*'
-        #exclude: '*'
+        exclude: '*'
 
 logging:
-  file: D:/usr/local/xwder/logs/xwder-biz-app/xwder-biz-app.log
+  file: /usr/local/xwder/logs/xwder-biz-app/xwder-biz-app.log
 
 #图形验证码配置
 kaptcha:
@@ -243,9 +244,9 @@ mq:
       chapterUpdate: xwder-wechat-chapterUpdate
 
 upload:
-  saveBaseDir: D:\\
-  videoUploadSaveDir:  D:\\upload\video
-  lotterySaveDir:  D:\\upload\lottery
+  saveBaseDir: /usr/local/xwder/upload
+  videoUploadSaveDir: /usr/local/xwder/upload/video
+  lotterySaveDir: /usr/local/xwder/upload/lottery
 
 novel:
   book:

@@ -274,7 +274,7 @@ public class BookInfoServiceImpl implements BookInfoService {
                     FileUtil.appendUtf8Lines(Arrays.asList(chapterName), existTxtFile);
 
                     String htmlContent = FileUtil.readUtf8String(ChapterFile);
-                    String strChapterContent = htmmConvertTxt(htmlContent);
+                    String strChapterContent = htmlConvertTxt(htmlContent);
                     FileUtil.appendUtf8String(strChapterContent, existTxtFile);
 
                     // 修改文件名称
@@ -363,7 +363,7 @@ public class BookInfoServiceImpl implements BookInfoService {
      * @param html
      * @return
      */
-    private String htmmConvertTxt(String html) {
+    private String htmlConvertTxt(String html) {
         if (StringUtil.isEmpty(html)) {
             return "";
         }

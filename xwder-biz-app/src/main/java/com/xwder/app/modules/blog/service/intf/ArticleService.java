@@ -51,5 +51,11 @@ public interface ArticleService {
      */
     Page<Article> listArticleByUserId(Long userId, Long categoryId, Long tagId, Integer pageNum, Integer pageSize);
 
-
+    /**
+     * 修改article的阅读数
+     *
+     * @param articleId
+     * @param readCount
+     */
+    void updateArticleReadCount(Long articleId, Long readCount);
 }

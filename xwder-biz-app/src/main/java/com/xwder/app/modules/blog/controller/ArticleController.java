@@ -251,15 +251,15 @@ public class ArticleController {
                               @RequestParam(value = "tag", required = false) Long tag,
                               Model model) {
         Long startTime = System.currentTimeMillis();
-        String templatesUrl = "/blog/article/list";
-        String currentUrl = "/blog/article";
+        String templatesUrl = "blog/article/list";
+        String currentUrl = "blog/article";
         User searchUser = null;
         // 是否有传递用户信息
         if (StrUtil.isNotEmpty(userName)) {
             searchUser = userService.getUserByUserName(userName);
-            currentUrl = currentUrl + "/user/" + userName + ".html";
+            currentUrl = "/" + currentUrl + "/user/" + userName + ".html";
         } else {
-            currentUrl = currentUrl + "/list.html";
+            currentUrl = "/" + currentUrl + "/list.html";
         }
         if (searchUser == null) {
             // 没有传递用户信息 当前登录用户

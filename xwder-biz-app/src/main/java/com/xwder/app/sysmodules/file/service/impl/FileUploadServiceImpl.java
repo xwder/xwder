@@ -14,6 +14,7 @@ import com.xwder.app.utils.SessionUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -49,6 +50,7 @@ public class FileUploadServiceImpl implements FileUploadService {
      * @return ueditor 上传标准响应 文件地址为cdn文件地址
      */
     @Override
+    @Transactional(rollbackFor = {Exception.class})
     public Map ueDitorFileUpload(MultipartFile multipartFile) {
         String fileName = multipartFile.getOriginalFilename();
         // 文件上传目录 服务器上和cos上路径保持一致

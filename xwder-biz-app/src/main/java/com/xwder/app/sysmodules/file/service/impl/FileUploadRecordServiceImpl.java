@@ -8,6 +8,7 @@ import com.xwder.app.sysmodules.file.service.intf.FileUploadRecordService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author xwder
@@ -38,6 +39,7 @@ public class FileUploadRecordServiceImpl implements FileUploadRecordService {
      * @return
      */
     @Override
+    @Transactional(rollbackFor = {Exception.class})
     public FileUploadRecord save(FileUploadRecord fileUploadRecord) {
         return fileUploadRecordRepository.save(fileUploadRecord);
     }

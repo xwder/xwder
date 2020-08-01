@@ -53,8 +53,8 @@ spring:
     show-sql: true
 
   datasource:
+#    url: jdbc:mysql://120.92.164.184:8066/xwder?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai
     url: jdbc:mysql://127.0.0.1:8066/xwder?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai
-#    url: jdbc:mysql://git.xwder.com:8066/xwder?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai
     # slq显示参数值
 #    url: jdbc:log4jdbc:mysql://127.0.0.1:8066/xwder?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai
     username: xwder
@@ -247,9 +247,9 @@ mq:
       chapterUpdate: xwder-wechat-chapterUpdate
 
 upload:
-  saveBaseDir: /usr/local/upload/xwder
-  videoUploadSaveDir:  /usr/local/xwder/upload/video
-  lotterySaveDir:  /usr/local/xwder/upload/lottery
+  saveBaseDir: /usr/local/xwder/upload
+  videoUploadSaveDir: /usr/local/xwder/upload/video
+  lotterySaveDir: /usr/local/xwder/upload/lottery
 
 novel:
   book:

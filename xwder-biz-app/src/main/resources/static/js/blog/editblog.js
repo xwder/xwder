@@ -24,7 +24,10 @@ function uploadPhoto(){
 
                 alert("上传成功");
             } else {
-                alert(JSON.stringify(data));
+                // 移出图片
+                var showImg = $('#showImg');
+                showImg.empty();
+                alert("图片上传失败 " + data.data)
             }
         },
         error:function(data) {
@@ -109,7 +112,7 @@ function saveArticle() {
  * 预览博客文章 不保存
  */
 function previewArticle() {
-    var action = "/blog/article?action=preview";
+    var action = "/blog/edit/article?action=preview";
     var data = getArticleData();
     var validateResult = validateArticleData(data);
     if (!validateResult) {

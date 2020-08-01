@@ -3,9 +3,12 @@ package com.xwder.app.modules.video.controller;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.StrUtil;
 import com.xwder.app.attribute.SysConfigAttribute;
+import com.xwder.app.consts.SysConstant;
+import com.xwder.app.modules.user.entity.User;
 import com.xwder.app.modules.video.service.intf.VideoService;
 import com.xwder.app.sysmodules.file.entity.FileUploadBlock;
 import com.xwder.app.sysmodules.file.service.intf.FileUploadBlockService;
+import com.xwder.app.utils.SessionUtil;
 import com.xwder.cloud.commmon.api.CommonResult;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
@@ -105,7 +108,7 @@ public class VideoController {
     @RequestMapping("/index")
     public String index() {
 
-        return "/video/index";
+        return "video/index";
     }
 
 
@@ -152,15 +155,17 @@ public class VideoController {
         }
         String ext = splits[splits.length - 1];
 
+        User sessionUser = (User) SessionUtil.getSessionAttribute(SysConstant.SESSION_USER);
         // 保存文件的路径
-        String videoUploadSaveDir = sysConfigAttribute.getVideoUploadSaveDir() + File.separator;
+        String videoUploadSaveDir = sysConfigAttribute.getVideoUploadSaveDir() + File.separator
+                + sessionUser.getId() + "-" + sessionUser.getUserName();
         File videoUploadSaveDirFile = new File(videoUploadSaveDir);
         if (!videoUploadSaveDirFile.exists()) {
             videoUploadSaveDirFile.mkdirs();
         }
 
         //分片文件名
-        String saveFilePath = videoUploadSaveDirFile.getAbsolutePath() + File.separator + sourceName + "." + shardIndex;
+        String saveFilePath = videoUploadSaveDir + File.separator + sourceName + "." + shardIndex;
         File saveFile = new File(saveFilePath);
 
         // 判断当前分片是否存在 如果存在比较 文件大小
@@ -168,7 +173,7 @@ public class VideoController {
             Long existsFileSize = FileUtil.size(saveFile);
             if (existsFileSize.equals(shardSize)) {
                 return CommonResult.success(200, "分片已存在");
-            }else {
+            } else {
                 saveFile.delete();
             }
         }
