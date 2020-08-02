@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript" th:src="@{/static/js/video/md5.js}" src="/md5.js"></script>
+<script type="text/javascript" th:src="@{/static/js/video/tool.js}" src="/tool.js"></script>
+<script type="text/javascript" th:src="@{/static/js/video/up.js}" src="/up.js"></script>
+<script type="text/javascript">
+</script>
+<body>
+<table border="1px solid red">
+    <tr>
+        <td>文件1</td>
+        <td>
+            <input name="file" type="file" id="inputfile"/>
+        </td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>
+            <button onclick="check()">提交</button>
+        </td>
+    </tr>
+</table>
+</body>
+</html>
