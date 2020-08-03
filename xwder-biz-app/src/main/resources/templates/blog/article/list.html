@@ -128,12 +128,22 @@
                                                         </li>
 
                                                         <li class="ico-time">
-                                  <span class="nav-link-icon d-md-none d-lg-inline-block">
-                                    <img th:src="@{/static/image/blog/clock.png}">
-                                  </span>
+                                                            <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                                                <img th:src="@{/static/image/blog/clock.png}">
+                                                            </span>
                                                             <span class="nav-link-title" th:text="${article.remark}">
-                                    19小时前
-						          </span>
+                                                            19小时前
+                                                            </span>
+                                                        </li>
+                                                        <li class="ico-time" th:if="${session.sessionUser != null && session.sessionUser.id eq article.userId}">
+                                                            <a th:href="${'/blog/edit/article.html?id='+article.id}" target="_blank">
+                                                                <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                                                    <img th:src="@{/static/image/blog/edit.png}">
+                                                                </span>
+                                                                <span class="nav-link-title">
+                                                                    编辑
+                                                                </span>
+                                                            </a>
                                                         </li>
                                                     </ul>
                                                     <ol class="post-meta meta mar10-t clearfix hidden-xs">

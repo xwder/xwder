@@ -53,12 +53,17 @@ spring:
     show-sql: true
 
   datasource:
-#    url: jdbc:log4jdbc:mysql://120.92.164.184:8066/xwder?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai&useLocalSessionState=true
-#    username: xwder
-#    password: XxwmGls6UCnvziE3
-    url: jdbc:log4jdbc:mysql://120.92.164.184:3306/xwder?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai&useLocalSessionState=true
+    url: jdbc:log4jdbc:mysql://120.92.164.184:8066/xwder?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai&useLocalSessionState=true
     username: xwder
-    password: wvDwERwidZZJhfh2
+    password: XxwmGls6UCnvziE3
+
+#    url: jdbc:log4jdbc:mysql://127.0.0.1:8066/xwder?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai&useLocalSessionState=true
+#    username: root
+#    password: 123456
+
+#    url: jdbc:log4jdbc:mysql://120.92.164.184:3306/xwder?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai&useLocalSessionState=true
+#    username: xwder
+#    password: wvDwERwidZZJhfh2
 
     driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
     platform: mysql
