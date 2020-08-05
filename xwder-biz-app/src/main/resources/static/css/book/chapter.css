@@ -31,7 +31,7 @@
 .marker {
     width: 17px;
     height: 26px;
-    background-image: url(http://rcode.zongheng.com/v2018/images/reader_ico.png);
+    background-image: url(../../image/book/reader_ico.png);
     position: absolute;
     right: 18px;
     top: 0;
@@ -252,7 +252,7 @@ blockquote, body, button, dd, dl, dt, embed, fieldset, form, h1, h2, h3, h4, h5,
     margin: 0 auto;
 }
 .error-html .error-top {
-    background: url(http://rcode.zongheng.com/v2018/images/error/error-bg.png) 60px top no-repeat;
+    background: url(../../image/book/error-bg.png) 60px top no-repeat;
     border-bottom: 10px solid #f7f8fa;
     padding-bottom: 40px;
     min-height: 250px;
@@ -270,7 +270,7 @@ blockquote, body, button, dd, dl, dt, embed, fieldset, form, h1, h2, h3, h4, h5,
     letter-spacing: .78px;
     text-align: center;
     font-weight: 700;
-    background: url(http://rcode.zongheng.com/v2018/images/error/oops.png) center bottom no-repeat;
+    background: url(../../image/book/oops.png) center bottom no-repeat;
     padding-bottom: 75px;
 }
 .error-html .error-top-2 {

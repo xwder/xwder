@@ -6,6 +6,12 @@ package com.xwder.app.consts;
  * @date 2020/07/07
  */
 public class DataBaseConstant {
+
+    public static final String DBTYPE_COMMON = "mysql";
+    public static final String DBTYPE_ORACLE = "oracle";
+    public static final String DBTYPE_MYSQL = "mysql";
+    public static final String DBTYPE_SQLSERVER = "sql_server";
+
     /**
      * 默认的数据库
      */

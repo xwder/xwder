@@ -52,7 +52,7 @@
                                 <a class="list-group-item list-group-item-action d-flex align-items-center"
                                    th:class="${(category != null && categoryMap['id'] eq category )?'list-group-item list-group-item-action d-flex align-items-center active' : 'list-group-item list-group-item-action d-flex align-items-center'}"
                                    th:href="${currentUrl + '?category='+ categoryMap['id'] + (pageNum == null ? '' : ('&pageNum='+pageNum)) +(pageSize == null ? '': ('&pageSize='+pageSize))+ (category==null?'':('&category='+category))}">
-                                    <span th:text="${categoryMap['category_name']}">SpringCloud</span>
+                                    <span th:text="${categoryMap['categoryName']}">SpringCloud</span>
                                     <span class="text-muted ml-auto"
                                           th:text="'( '+${categoryMap['count']}+' )'">24</span>
                                 </a>

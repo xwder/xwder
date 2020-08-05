@@ -2,8 +2,8 @@ package com.xwder.app.utils;
 /**
  * session工具类
  *
- * @Author zhk
- * @Date 2018-1-16
+ * @Author xwder
+ * @Date 2020年8月5日
  **/
 
 import javax.servlet.http.HttpServletRequest;

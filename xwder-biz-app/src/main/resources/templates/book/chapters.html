@@ -31,7 +31,7 @@
 
                     <em class=""></em>
 
-                    <img src="http://static.zongheng.com/upload/cover/d9/10/d910eee9255ca96de144378e478db5dd.jpeg" alt="陆地键仙"
+                    <img src="" alt="陆地键仙"
                          th:if="${bookInfo!=null}"
                          th:src="${bookInfo.getBookImgSource()}"
                          th:alt="${bookInfo.bookName}" width="200" height="264">
@@ -42,7 +42,7 @@
                     </div>
                     <div class="book-label">
                       <a href="#" th:if="${bookInfo!=null}" th:text="${bookInfo.updateStatus}"  class="state" target="_blank" >连载中</a>
-                      <a href="http://www.zongheng.com/store/c1/c0/b0/u0/p1/v9/s9/t0/u0/i0/ALL.html" th:href="${'category.html?category='+bookInfo.category}" th:if="${bookInfo!=null}" th:text="${bookInfo.category}"  class="label" target="_blank" >奇幻玄幻</a>
+                      <a href="" th:href="${'category.html?category='+bookInfo.category}" th:if="${bookInfo!=null}" th:text="${bookInfo.category}"  class="label" target="_blank" >奇幻玄幻</a>
                       <span>
                                 <a href="#" target="_blank" >穿越</a>
                                 <a href="#" target="_blank" >爽文</a>
@@ -94,7 +94,7 @@
                   </div>
                 </div>
                 <div class="app-in clearfix">
-                  <div class="ewm" data-url="http://dl.zongheng.com/src/apk?bookId=1005752&amp;bookName=%E9%99%86%E5%9C%B0%E9%94%AE%E4%BB%99"><img src="http://rcode.zongheng.com/v2018/images/wx_book.png" alt="" width="80" height="79"></div>
+                  <div class="ewm" data-url=""><img th:src="@{/static/image/book/wx_book.png}" src="http://rcode.zongheng.com/v2018/images/wx_book.png" alt="" width="80" height="79"></div>
                   <div class="txt">
                     <h3>手机看小说</h3>
                     <p>新用户免费看7天</p>
@@ -116,7 +116,7 @@
                 </div>
                 <ul class="chapter-list clearfix" >
                   <li class=" col-4" th:if=" ${bookChapterList != null}"  th:each="bookChapter,bookChapterStat : ${bookChapterList}">
-                    <a href="http://book.zongheng.com/chapter/672340/36898237.html" th:href="${bookChapter.bookId+'/'+bookChapter.id+'.html'}" target="_blank"
+                    <a href="" th:href="${bookChapter.bookId+'/'+bookChapter.id+'.html'}" target="_blank"
                        th:title="${bookChapter.chapterName + '&nbsp;字数:'+bookChapter.chapterWordSize+' &nbsp;&nbsp;更新时间:'+#dates.format(bookChapter.updateTime, 'yyyy-MM-dd HH:mm')}"
                        th:text="${bookChapter.chapterName}"
                        title="第一章 惊蛰 字数：2979 更新时间：2017-06-01 18:00 ">第一章 惊蛰</a>

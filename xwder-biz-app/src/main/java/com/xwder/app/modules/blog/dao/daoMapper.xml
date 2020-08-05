@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mapper namespace="https://xwder.com">
+    <!--根据用户id查询category信息,每个分类下博客数量-->
+    <sql id="query_category_count">
+        <common>
+        </common>
+        <oracle>
+        </oracle>
+        <mysql>
+            <![CDATA[
+           SELECT
+                t.id,
+                t.user_id,
+                t.category_name,
+                IFNULL( t1.count, 0 ) count
+           FROM
+                ( SELECT * FROM blog_category WHERE user_id = ? AND is_avaliable = 1 ) t
+                LEFT JOIN
+                ( SELECT category_id, count( category_id ) count FROM blog_article WHERE user_id = 1 AND STATUS = 1 AND is_avaliable = 1 GROUP BY category_id ) t1  ON t.id = t1.category_id
+           ORDER BY
+                t1.count DESC
+            ]]>
+        </mysql>
+    </sql>
+</mapper>

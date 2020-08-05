@@ -5,9 +5,9 @@ server:
   servlet:
     # 项目contextPath
     context-path: /
-  #    session:
-  #      # 链接多出jsessionid的问题
-  #      tracking-modes: cookie
+    session:
+      # 链接多出jsessionid的问题
+      tracking-modes: cookie
   tomcat:
     # tomcat的URI编码
     uri-encoding: UTF-8
@@ -51,19 +51,20 @@ spring:
         # 指出是什么操作生成了该语句
         use_sql_comments: true
     show-sql: true
+    database: mysql
 
   datasource:
-    url: jdbc:log4jdbc:mysql://120.92.164.184:8066/xwder?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai&useLocalSessionState=true
-    username: xwder
-    password: XxwmGls6UCnvziE3
+#    url: jdbc:log4jdbc:mysql://120.92.164.184:8066/xwder?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai&useLocalSessionState=true
+#    username: xwder
+#    password: XxwmGls6UCnvziE3
 
 #    url: jdbc:log4jdbc:mysql://127.0.0.1:8066/xwder?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai&useLocalSessionState=true
 #    username: root
 #    password: 123456
 
-#    url: jdbc:log4jdbc:mysql://120.92.164.184:3306/xwder?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai&useLocalSessionState=true
-#    username: xwder
-#    password: wvDwERwidZZJhfh2
+    url: jdbc:log4jdbc:mysql://120.92.164.184:3306/xwder?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai&useLocalSessionState=true
+    username: xwder
+    password: wvDwERwidZZJhfh2
 
     driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
     platform: mysql

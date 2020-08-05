@@ -153,17 +153,17 @@
                   <div  th:each="bookInfo,bookInfoStat : ${bookInfos}">
                     <div th:class="${bookInfoStat.odd}?'bookbox fl' : 'bookbox fr'" class="bookbox fl">
                       <div class="bookimg">
-                        <a href="http://book.zongheng.com/book/1017644.html" th:href="${bookInfo.id+'.html'}" target="_blank">
-                          <img src="http://static.zongheng.com/upload/cover/f9/d9/f9d90d8aa073d13c7a2dc0e83fecbc55.jpeg" th:src="${bookInfo.bookImgSource}" th:alt="${bookInfo.bookName}" alt="悟道寻真">
+                        <a href="" th:href="${bookInfo.id+'.html'}" target="_blank">
+                          <img src="" th:src="${bookInfo.bookImgSource}" th:alt="${bookInfo.bookName}" alt="悟道寻真">
                         </a>
                       </div>
                       <div class="bookinfo">
                         <div class="bookname">
-                          <a href="http://book.zongheng.com/book/1017644.html"  th:href="${bookInfo.id+'.html'}" target="_blank" th:text="${bookInfo.bookName}">悟道寻真</a>
+                          <a href=""  th:href="${bookInfo.id+'.html'}" target="_blank" th:text="${bookInfo.bookName}">悟道寻真</a>
                         </div>
                         <div class="bookilnk">
-                          <a href="http://home.zongheng.com/show/userInfo/52368118.html" target="_blank" th:href="${'author.html?author='+bookInfo.author}"   th:text="${bookInfo.author}">苏自在</a>|
-                          <a href="http://www.zongheng.com/category/3.html" th:href="${'category.html?category='+bookInfo.category}" target="_blank" th:text="${bookInfo.category}">武侠仙侠</a>|
+                          <a href="" target="_blank" th:href="${'author.html?author='+bookInfo.author}"   th:text="${bookInfo.author}">苏自在</a>|
+                          <a href="" th:href="${'category.html?category='+bookInfo.category}" target="_blank" th:text="${bookInfo.category}">武侠仙侠</a>|
                           <span th:text="${bookInfo.updateStatus}">
 
                                     连载中
@@ -179,7 +179,7 @@
                           不是六月风光好，人红酒香入眼帘。熟读道典三万字，不知白面值几钱。
                           细品万家滋味饭，修的无为道德仙。清滴浊酒还相愿，亦疯亦颠看人间。</div>
                         <div class="bookupdate">
-                          <a href="http://book.zongheng.com/chapter/1017644/61969261.html"  th:href="${'latest.html?id='+bookInfo.id}"  class="fl" th:text="'最新章节：' + ${bookInfo.latestChapter}">最新章节：第三十七章 弃卜修山</a>
+                          <a href=""  th:href="${'latest.html?id='+bookInfo.id}"  class="fl" th:text="'最新章节：' + ${bookInfo.latestChapter}">最新章节：第三十七章 弃卜修山</a>
                           <span class="rank_d_b_time"></span>
                         </div>
                       </div>

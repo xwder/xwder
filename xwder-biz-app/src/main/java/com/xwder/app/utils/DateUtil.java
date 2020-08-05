@@ -3,14 +3,15 @@ package com.xwder.app.utils;
 import cn.hutool.core.date.DateTime;
 import com.github.pagehelper.util.StringUtil;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.TimeZone;
 
 /**
  * 时间工具类
- *
  */
 public class DateUtil {
 
@@ -131,6 +132,53 @@ public class DateUtil {
             }
         }
         return result;
+    }
+
+    /**
+     * @param date 待转换的日期字符串
+     * @return 日期
+     * @throws ParseException
+     * @Description: 字符串转换成DATE
+     * @author linyj
+     */
+    public static Date parseDate(String date) {
+        return parseDate(date, TimeZone.getDefault());
+    }
+
+    /**
+     * @param date 待转换的日期字符串
+     * @return 日期
+     * @throws ParseException
+     * @Description: 字符串转换成DATE
+     * @author linyj
+     */
+    public static Date parseDate(String date, TimeZone desTz) {
+        if (date == null) {
+            return null;
+        }
+
+        try {
+            String parse = date;
+            parse = parse.replaceFirst("^[0-9]{4}([^0-9]?)", "yyyy$1");
+            parse = parse.replaceFirst("^[0-9]{2}([^0-9]?)", "yy$1");
+            parse = parse.replaceFirst("([^0-9]?)[0-9]{1,2}([^0-9]?)", "$1MM$2");
+            parse = parse.replaceFirst("([^0-9]?)[0-9]{1,2}( ?)", "$1dd$2");
+            parse = parse.replaceFirst("( )[0-9]{1,2}([^0-9]?)", "$1HH$2");
+            parse = parse.replaceFirst("([^0-9]?)[0-9]{1,2}([^0-9]?)", "$1mm$2");
+            parse = parse.replaceFirst("([^0-9]?)[0-9]{1,2}([^0-9]?)", "$1ss$2");
+            DateFormat format = new SimpleDateFormat(parse);
+            Date d = format.parse(date);
+            return transTimeZone(d, desTz);
+        } catch (ParseException e) {
+            return null;
+        }
+    }
+
+    public static Date transTimeZone(Date srcDate, TimeZone desTz) {
+        if (srcDate == null) {
+            return null;
+        }
+        return new Date(srcDate.getTime() + desTz.getRawOffset() - TimeZone.getDefault().getRawOffset());
     }
 
     /**

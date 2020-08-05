@@ -11,6 +11,8 @@ import java.util.Set;
 
 /**
  * 更新用工具类(忽略为null的字段)
+ *
+ * @author xwder
  */
 public class UpdateUtil {
 

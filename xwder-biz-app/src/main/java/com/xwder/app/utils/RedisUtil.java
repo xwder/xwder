@@ -6,13 +6,16 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 /**
  * Redis工具类
  *
- * @author ZENG.XIAO.YAN
+ * @author xwder
  * @date 2018年6月7日
  */
 @Component
@@ -109,6 +112,7 @@ public final class RedisUtil {
 
     /**
      * 通配获取 key list
+     *
      * @param key
      * @return
      */

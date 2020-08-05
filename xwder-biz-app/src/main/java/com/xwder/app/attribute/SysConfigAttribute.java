@@ -4,8 +4,6 @@ import lombok.Data;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 
-import java.io.File;
-
 /**
  * @author wande
  * @version 1.0
@@ -71,4 +69,6 @@ public class SysConfigAttribute {
     @Value("${tencent.cdn.prefixurl}")
     private String tencentCdnPreFixUrl;
 
+    @Value("${spring.jpa.database}")
+    private String sysDbType;
 }
