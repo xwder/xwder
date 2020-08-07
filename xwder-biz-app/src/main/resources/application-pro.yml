@@ -51,6 +51,7 @@ spring:
         # 指出是什么操作生成了该语句
         use_sql_comments: true
     show-sql: true
+    database: mysql
 
   datasource:
 #    url: jdbc:mysql://120.92.164.184:8066/xwder?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai
