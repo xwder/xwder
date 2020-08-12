@@ -2,7 +2,7 @@
 <html lang="zh" xmlns:th="http://www.thymeleaf.org">
 <title th:if="${articleMap != null}" th:text="${articleMap['article'].title}">预览</title>
 <link rel="stylesheet" th:href="@{/static/css/blog/article.css}">
-<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.2/styles/default.min.css">
+<link rel="stylesheet" th:href="@{/static/lib/highlight/css/default.min.css}" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.2/styles/default.min.css">
 <head th:include="include :: head"></head>
 <body class="antialiased">
 <div class="page">
@@ -125,7 +125,7 @@
 
 <!-- Libs JS -->
 <script th:src="@{/static/dist/libs/bootstrap/dist/js/bootstrap.bundle.min.js}" src=""></script>
-<script th:src="@{/static/js/blog/highlight.min.js}" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.2/highlight.min.js"></script>
+<script th:src="@{/static/lib/highlight/js/highlight.min.js}" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.2/highlight.min.js"></script>
 
 <script>
     // document.body.style.display = "block";

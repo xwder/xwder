@@ -97,11 +97,12 @@
                                                 <div class="posts-item-img feature_img">
 
                                                     <i class="icon-frame"></i>
-                                                    <div class="overlay"></div>
+                                                    <div class="overlay">
                                                     <img class="lazy thumbnail"
                                                          th:src="${(article.previewImage == null || article.previewImage eq '') ? 'https://www.zktools.cn/storage/thumbnails/_signature/2STGCKQNNKI1R0TDOUQG42U1LM.jpg' : article.previewImage}"
                                                          src="https://www.zktools.cn/storage/thumbnails/_signature/2STGCKQNNKI1R0TDOUQG42U1LM.jpg"
                                                          style="display: inline-block;object-fit: cover;">
+                                                    </div>
                                                 </div>
                                             </a>
                                             <div class="posts-item posts-item-gallery">
@@ -227,7 +228,7 @@
 
 <!-- Libs JS -->
 <script th:src="@{/static/dist/libs/bootstrap/dist/js/bootstrap.bundle.min.js}" src=""></script>
-<script th:src="@{/static/js/blog/highlight.min.js}"
+<script th:src="@{/static/lib/highlight/js/highlight.min.js}"
         src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.2/highlight.min.js"></script>
 
 <script>
