@@ -39,15 +39,16 @@ public class EmailMessageReceiver {
             String to = (String) map.get("to");
             String subject = (String) map.get("subject");
             String content = (String) map.get("content");
+            String filePath = (String) map.get("filePath");
             switch (mailType) {
-                case MailTypeConstant
-                        .SIMPLEMAIL:
+                case MailTypeConstant.SIMPLEMAIL:
                     mailService.sendSimpleMail(to, subject, content);
                     break;
                 case MailTypeConstant.HTMLMAIL:
                     mailService.sendHtmlMail(to, subject, content);
                     break;
-
+                case MailTypeConstant.ATTACHMENTSMAIL:
+                    mailService.sendAttachmentsMail(to, subject, content, filePath);
                 default:
                     mailService.sendSimpleMail(to, subject, content);
             }
