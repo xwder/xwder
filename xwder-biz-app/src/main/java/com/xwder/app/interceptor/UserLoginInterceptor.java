@@ -54,12 +54,11 @@ public class UserLoginInterceptor implements HandlerInterceptor {
                     // session 写入用户信息
                     SessionUtil.setSessionAttribute(SysConstant.SESSION_USER, redisSessionUser);
                 }else {
-                    //request.getRequestDispatcher("/login.html").forward(request, response);
                     response.sendRedirect("/login.html?redirect=" + requestURLSB);
                     return false;
                 }
             }else {
-                //request.getRequestDispatcher("/login.html").forward(request, response);
+                // request.getRequestDispatcher("/login.html").forward(request, response);
                 response.sendRedirect("/login.html?redirect=" + requestURLSB);
                 return false;
             }

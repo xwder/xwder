@@ -103,7 +103,6 @@ public class GlobalInterceptor implements HandlerInterceptor {
         }
 
         // 导航栏 active 样式
-        String requestURL = request.getRequestURL().toString();
         String requestURI = request.getRequestURI().toLowerCase();
 
         String active = "index";

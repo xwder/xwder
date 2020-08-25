@@ -3,6 +3,7 @@ package com.xwder.app.config.web;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.xwder.app.interceptor.GlobalInterceptor;
+import com.xwder.app.interceptor.NovelInterceptor;
 import com.xwder.app.interceptor.UserLoginInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -30,6 +31,9 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
     @Autowired
     private GlobalInterceptor globalInterceptor;
 
+    @Autowired
+    private NovelInterceptor novelInterceptor;
+
     /**
      * 注册类路径下的static和templates文件夹
      * 重写addResourceHandlers方法
@@ -39,12 +43,22 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
     @Override
     protected void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static/");
-        //registry.addResourceHandler("/**").addResourceLocations("classpath:/static/");
         super.addResourceHandlers(registry);
     }
 
+    /**
+     * 注意拦截器的添加顺序 为 执行顺序
+     *
+     * @param registry
+     */
     @Override
     protected void addInterceptors(InterceptorRegistry registry) {
+
+        // 拦截所有的请求 导航栏分类数据
+        registry.addInterceptor(globalInterceptor)
+                .addPathPatterns("/**")
+                .excludePathPatterns("/static/**", "/error");
+
         registry.addInterceptor(userLoginInterceptor)
                 .addPathPatterns(
                         "/user/**",
@@ -56,10 +70,9 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
                         "/doLoginOut",
                         "/user/mail/verifyMail.html");
 
-        // 拦截所有的请求 导航栏分类数据
-        registry.addInterceptor(globalInterceptor)
-                .addPathPatterns("/**")
-                .excludePathPatterns("/static/**","/error");
+        registry.addInterceptor(novelInterceptor)
+                .addPathPatterns("/book/**")
+                .excludePathPatterns();
 
         super.addInterceptors(registry);
     }
