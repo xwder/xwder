@@ -31,7 +31,8 @@
                 <div class="row align-items-center">
                     <div class="col-auto">
                         <h2 class="page-title">
-                            博客归类 -> <a href="#"><span>MySQL数据库</span></a>
+                            <a href="" th:href="${'/blog/article/list.html'}">博客归类 </a>
+                            <a href="#"><span th:if="${categoryInfo != null}" th:text="${'-> ' + categoryInfo.categoryName}">MySQL数据库</span></a>
                         </h2>
                     </div>
                     <div class="col-auto">

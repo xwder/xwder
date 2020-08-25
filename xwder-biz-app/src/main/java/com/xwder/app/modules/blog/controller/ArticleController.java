@@ -285,13 +285,18 @@ public class ArticleController {
         Page<Article> articlePage = null;
         articlePage = articleService.listArticleByUserId(searchUser.getId(), category, tag, pageNum, pageSize);
 
-
         List<Article> articleList = articlePage.getContent();
         for (Article article : articleList) {
             Date gmtModified = article.getGmtModified();
             // 格式化显示时间 几小时之前、几天之前
             String remark = TimeCountUtil.format(gmtModified);
             article.setRemark(remark);
+        }
+
+        // 分类信息
+        if (category != null) {
+            Category categoryInfo = categoryService.getCategoryById(category);
+            model.addAttribute("categoryInfo", categoryInfo);
         }
 
         List<Tag> tags = tagService.listTagByUserId(searchUser.getId());
