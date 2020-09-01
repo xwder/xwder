@@ -34,9 +34,10 @@ public interface ArticleService {
      * 文章阅读数增加
      *
      * @param articleId
+     * @param existReadCount 数据库中存在的阅读量
      * @param addCount
      */
-    Integer addArticleReadCount(Long articleId, Integer addCount);
+    Integer addArticleReadCount(Long articleId, Integer existReadCount, Integer addCount);
 
 
     /**

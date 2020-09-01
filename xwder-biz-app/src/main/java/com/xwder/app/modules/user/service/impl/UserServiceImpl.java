@@ -21,6 +21,7 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -278,6 +279,7 @@ public class UserServiceImpl implements UserService {
      * @param expireTime
      */
     @Override
+    @Async("taskExecutor")
     public void updateRedisUserSessionExpireTime(String token, Integer expireTime) {
         String userSessionRedisKey = SysConstant.USER_SESSION_REDIS_KEY + ":" + token;
         redisUtil.expire(userSessionRedisKey, expireTime);

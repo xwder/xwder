@@ -84,7 +84,7 @@ public class FileUploadServiceImpl implements FileUploadService {
             return resultMap;
         }
         String fileCdnUrl = sysConfigAttribute.getTencentCdnPreFixUrl() + "/" + saveFileDir;
-        log.error("保存文件[{}]到cos成功，cdn访问地址[{}]", serverSaveFile.getName(), fileCdnUrl);
+        log.info("保存文件[{}]到cos成功，cdn访问地址[{}]", serverSaveFile.getName(), fileCdnUrl);
 
         // 保存文件上传记录
         FileUploadRecord fileUploadRecord = new FileUploadRecord();

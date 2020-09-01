@@ -112,10 +112,11 @@ public class ArticleServiceImpl implements ArticleService {
      * 文章阅读数增加
      *
      * @param articleId
+     * @param existReadCount 数据库中存在的阅读量
      * @param addCount
      */
     @Override
-    public Integer addArticleReadCount(Long articleId, Integer addCount) {
+    public Integer addArticleReadCount(Long articleId, Integer existReadCount, Integer addCount) {
         String articleReadCountRedisKey = RedisConstant.BLOG_ARTICLE_READCOUNT + ":" + articleId;
         Integer readCount = (Integer) redisUtil.get(articleReadCountRedisKey);
         if (readCount != null) {

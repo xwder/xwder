@@ -1,8 +1,15 @@
 package com.xwder.app.interceptor;
 
 import cn.hutool.core.collection.CollectionUtil;
+import cn.hutool.core.util.StrUtil;
+import com.xwder.app.attribute.SysConfigAttribute;
+import com.xwder.app.consts.SysConstant;
 import com.xwder.app.modules.blog.service.intf.CategoryService;
+import com.xwder.app.modules.user.entity.User;
+import com.xwder.app.modules.user.service.intf.UserService;
+import com.xwder.app.utils.CookieUtils;
 import com.xwder.app.utils.SessionUtil;
+import com.xwder.app.utils.StringUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -32,6 +39,12 @@ public class GlobalInterceptor implements HandlerInterceptor {
     @Autowired
     private CategoryService categoryService;
 
+    @Autowired
+    private SysConfigAttribute sysConfigAttribute;
+
+    @Autowired
+    private UserService userService;
+
     /**
      * 请求处理前，也就是访问Controller前
      *
@@ -46,6 +59,7 @@ public class GlobalInterceptor implements HandlerInterceptor {
         log.info("全局数据处理拦截器 GoableInterceptor拦截到访问的地址: {}", request.getRequestURL().toString());
         HttpSession session = request.getSession();
         buildPotalData(request, response, handler);
+        refreshRedisSession(request, response, handler);
         return true;
     }
 
@@ -115,6 +129,21 @@ public class GlobalInterceptor implements HandlerInterceptor {
         if (requestURI.startsWith("/book")) {
             active = "book";
         }
-        SessionUtil.setSessionAttribute("active",active);
+        SessionUtil.setSessionAttribute("active", active);
+    }
+
+    /**
+     * 异步花心redis session 会话信息
+     *
+     * @param request
+     * @param response
+     * @param handler
+     */
+    public void refreshRedisSession(HttpServletRequest request, HttpServletResponse response, Object handler) {
+        String userSessionToken = CookieUtils.getCookieValue(request, sysConfigAttribute.getSessionTokenName());
+        if (StrUtil.isNotEmpty(userSessionToken)) {
+            // 更新redis中session时间 可以 使用异步处理
+            userService.updateRedisUserSessionExpireTime(userSessionToken, SysConstant.USER_SESSION_REDIS_TIME);
+        }
     }
 }

@@ -171,7 +171,7 @@ management:
         #exclude: '*'
 
 logging:
-  file: D:/usr/local/xwder/logs/xwder-biz-app/xwder-biz-app.log
+  file: /usr/local/xwder/logs/xwder-biz-app/xwder-biz-app.log
 
 #图形验证码配置
 kaptcha:
@@ -257,3 +257,7 @@ tencent:
     region: ap-chongqing
   cdn:
     prefixurl: https://cdn.xwder.com
+  # 腾讯文档 图片上次cookie
+  docs:
+    imageUploadUrl: https://docs.qq.com/ep/api/attach_local
+    cookie:  uid=144115225640721420;uid_key=5liG1yMPkHarNu21QrPa36c%2FZTuvm7M2sLaFL2yfL6IPOSGJGZy%2FmLOMaja0KrwdQaXJhfFSzrAo8kAz8ATzcLdQarBph%2Bnz;

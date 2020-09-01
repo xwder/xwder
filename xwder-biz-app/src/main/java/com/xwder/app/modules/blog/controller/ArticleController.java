@@ -229,12 +229,13 @@ public class ArticleController {
             List tagList = tagService.listTagById(ids);
             articleMap.put("tagList", tagList);
         }
+
         articleMap.put("article", article);
         model.addAttribute("articleMap", articleMap);
 
         // 文章阅读数+1
-        Integer readCount = articleService.addArticleReadCount(articleId, 1);
-        article.setReadCount(readCount.longValue());
+        Integer readCount = articleService.addArticleReadCount(articleId, Math.toIntExact(article.getReadCount()), 1);
+        article.setReadCount(article.getReadCount() + 1);
         return "blog/article/article";
     }
 

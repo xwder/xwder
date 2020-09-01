@@ -6,6 +6,7 @@ import com.xwder.app.sysmodules.quartz.repository.SysJobRepository;
 import com.xwder.app.sysmodules.quartz.service.intf.SysJobLogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
 import java.util.List;
@@ -34,6 +35,7 @@ public class SysJobLogServiceImpl implements SysJobLogService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void addJobLog(SysJobLog jobLog) {
         sysJobLogRepository.save(jobLog);
     }
