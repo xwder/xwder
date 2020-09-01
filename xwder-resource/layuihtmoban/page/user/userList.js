@@ -116,6 +116,7 @@ layui.use(['form', 'layer', 'table', 'laytpl'], function() {
 					body.find(".userGrade").val(edit.userGrade); //会员等级
 					body.find(".userStatus").val(edit.userStatus); //用户状态
 					body.find(".userDesc").text(edit.userDesc); //用户简介
+					body.find(".user-add-button").text('修改'); //用户简介
 					form.render();
 				}
 				setTimeout(function() {

@@ -141,7 +141,7 @@ spring:
   #  mvc:
   #    static-path-pattern: /static/**
 
-  # 模板引擎
+#  # 模板引擎
   thymeleaf:
     mode: LEGACYHTML5
     encoding: UTF-8

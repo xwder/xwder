@@ -44,7 +44,15 @@
 	 <dataNode name="jdbc_dn1" dataHost="jdbchost" database="db1" />
 	<dataNode	name="jdbc_dn2" dataHost="jdbchost" database="db2" />
 	<dataNode name="jdbc_dn3" 	dataHost="jdbchost" database="db3" /> -->
-	<dataHost name="jdbchost" maxCon="1000" minCon="10" balance="0"
+
+	<!--同datahost分配的最小空闲连接数，初始是平均分配（各50），运行后根据活动情况，mycat会自行调试各数据库连接，如果被调整少了，如第3条，就会出现read-only
+	解决办法，同一个数据库，不同schema，datahost可独立出来，这样独立出来的连接数就不会被共享
+
+	read-only解决办法
+	1、修改schema.xml中的checkSQLschema="true"
+	2、dataHost中最小连接minCon数加大
+	3、后端处理层增加事务-->
+	<dataHost name="jdbchost" maxCon="1000" minCon="50" balance="0"
 			  writeType="0" dbType="mysql" dbDriver="native" switchType="1"  slaveThreshold="100">
 		<heartbeat>select user()</heartbeat>
 		<!-- can have multi write hosts -->
