@@ -16,4 +16,9 @@ public class SysIndexController {
     public String sysIndex(){
         return "sys/index";
     }
+
+    @RequestMapping(value = { "/main"})
+    public String sysMain(){
+        return "sys/main";
+    }
 }

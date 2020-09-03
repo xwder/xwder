@@ -115,21 +115,6 @@ public class GlobalInterceptor implements HandlerInterceptor {
             potalDataMap.put("categoryMapList", categoryMapList);
             session.setAttribute("potalDataMap", potalDataMap);
         }
-
-        // 导航栏 active 样式
-        String requestURI = request.getRequestURI().toLowerCase();
-
-        String active = "index";
-        if (requestURI.startsWith("/index")) {
-            active = "index";
-        }
-        if (requestURI.startsWith("/blog")) {
-            active = "blog";
-        }
-        if (requestURI.startsWith("/book")) {
-            active = "book";
-        }
-        SessionUtil.setSessionAttribute("active", active);
     }
 
     /**

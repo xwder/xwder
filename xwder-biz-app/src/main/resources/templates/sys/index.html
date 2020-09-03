@@ -64,7 +64,7 @@
 					<div class="navBar layui-side-scroll" id="navBar">
 						<ul class="layui-nav layui-nav-tree">
 							<li class="layui-nav-item layui-this">
-								<a href="javascript:;" data-url="page/main.html">
+								<a href="javascript:;" data-url="page/main.html" th:attr="data-url=@{/sys/main.html}">
 									<i class="layui-icon" data-icon=""></i>
 									<cite>首页</cite>
 								</a>
@@ -78,13 +78,13 @@
 						<div class="main_hd with_extra">
 							<h2>首页</h2>
 						</div>
-						<iframe src="page/main.html" frameborder="0" scrolling="no" id="iframe"></iframe>
+						<iframe th:src="@{/sys/main.html}" src="page/main.html" frameborder="0" scrolling="no" id="iframe"></iframe>
 					</div>
 				</div>
 			</div>
 
 			<div class="footer">
-				<p><span>© xwder.com 技术支持</span></p>
+				<p><span>© xwder.com 2020</span></p>
 			</div>
 
 
@@ -101,14 +101,8 @@
 		<div class="back-to-top" title="返回顶部"><i class="layui-icon">&#xe619;</i></div>
 
 
-		<script>
-			var ctxPath = /*[[@{/}]]*/'';
-			console.log("sessionStorage ctxPath" + ctxPath);
-			window.sessionStorage.setItem("ctxPath",ctxPath);
-		</script>
-
 		<script type="text/javascript" th:src="@{/sysstatic/layui/layui.js}" src="layui/layui.js"></script>
-		<script type="text/javascript" th:src="@{/sysstatic/js/index.js}" src="js/index.js"></script>
+		<script type="text/javascript" th:src="@{/sysstatic/js/index.js}" src="../../sysstatic/js/index.js"></script>
 
 	</body>
 </html>

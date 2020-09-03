@@ -1,10 +1,14 @@
-var $, tab, dataStr, layer, cacheStr = window.sessionStorage.getItem("cache"),
-	baseJs = window.ctxPath + "/sysstatic/js/";
+var ctxPath = /*[[@{/}]]*/'';
+// 菜单json 后面换成接口
+var navs = ctxPath + "/sysstatic/json/" + "navs.json";
+var baseJsPath = ctxPath + "/sysstatic/js/";
+
+var $, tab, dataStr, layer, cacheStr = window.sessionStorage.getItem("cache");
 	oneLoginStr = window.sessionStorage.getItem("oneLogin");
 
 
 layui.config({
-	base: baseJs
+	base: baseJsPath
 }).extend({
 	"bodyTab": "bodyTab"
 })
@@ -15,7 +19,7 @@ layui.use(['bodyTab', 'form', 'element', 'layer', 'jquery'], function() {
 	layer = parent.layer === undefined ? layui.layer : top.layer;
 	tab = layui.bodyTab({
 		openTabNum: "50", //最大可打开窗口数量
-		url: "json/navs.json" //获取菜单json地址
+		url: navs //获取菜单json地址
 	});
 
 	//通过顶部菜单获取左侧二三级菜单   注：此处只做演示之用，实际开发中通过接口传参的方式获取导航数据
