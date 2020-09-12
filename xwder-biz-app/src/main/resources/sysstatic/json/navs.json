@@ -15,7 +15,7 @@
       ]
     },
     {
-      "title": "小说管理",
+      "title": "书籍管理",
       "icon": "&#xe770;",
       "href": "",
       "spread": true,
@@ -23,7 +23,13 @@
         {
           "title": "书籍管理",
           "icon": "",
-          "href": "/sys/novel/listPage.html",
+          "href": "/sys/novel/bookListPage.html",
+          "spread": false
+        },
+        {
+          "title": "章节管理",
+          "icon": "",
+          "href": "/sys/novel/chapterListPage.html",
           "spread": false
         }
       ]

@@ -1,6 +1,7 @@
 package com.xwder.app.modules.novel.service.intf;
 
 import com.xwder.app.modules.novel.entity.BookInfo;
+import com.xwder.app.sysmodules.novel.dto.BookInfoDto;
 import com.xwder.cloud.commmon.api.CommonResult;
 import org.springframework.data.domain.Page;
 
@@ -56,6 +57,13 @@ public interface BookInfoService {
      * @return
      */
     Page<BookInfo> listBookInfo(String category, Integer pageNum, Integer pageSize);
+
+    /**
+     * 分页查询书籍信息
+     *
+     * @return
+     */
+    Page<BookInfo> listBookInfo(BookInfoDto bookInfoDto);
 
     /**
      * 分页查询书籍信息

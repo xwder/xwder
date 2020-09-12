@@ -1,6 +1,7 @@
 package com.xwder.app.modules.novel.repository;
 
 
+import com.xwder.app.common.jpa.repository.BaseJpaRepository;
 import com.xwder.app.modules.novel.entity.BookInfo;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -10,7 +11,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface BookInfoRepository extends JpaRepository<BookInfo, Integer> {
+public interface BookInfoRepository extends BaseJpaRepository<BookInfo, Integer> {
 
     /**
      * 根据书名查询书籍信息

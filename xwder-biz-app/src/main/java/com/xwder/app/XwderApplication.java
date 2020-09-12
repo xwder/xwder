@@ -1,5 +1,6 @@
 package com.xwder.app;
 
+import com.xwder.app.common.jpa.bean.BaseJpaRepositoryFactoryBean;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
@@ -7,6 +8,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
@@ -24,6 +26,7 @@ import java.util.TimeZone;
 @EnableTransactionManagement(proxyTargetClass = true)
 @EnableConfigurationProperties
 @SpringBootApplication(exclude={DataSourceAutoConfiguration.class})
+@EnableJpaRepositories(repositoryFactoryBeanClass = BaseJpaRepositoryFactoryBean.class, basePackages = {"com.xwder.app"})
 public class XwderApplication {
 
     public static void main(String[] args) {

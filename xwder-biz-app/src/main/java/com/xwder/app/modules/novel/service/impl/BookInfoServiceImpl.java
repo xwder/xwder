@@ -11,6 +11,7 @@ import com.xwder.app.modules.novel.entity.BookInfo;
 import com.xwder.app.modules.novel.repository.BookChapterRepository;
 import com.xwder.app.modules.novel.repository.BookInfoRepository;
 import com.xwder.app.modules.novel.service.intf.BookInfoService;
+import com.xwder.app.sysmodules.novel.dto.BookInfoDto;
 import com.xwder.app.utils.DateUtil;
 import com.xwder.cloud.commmon.api.CommonResult;
 import com.xwder.cloud.commmon.api.ResultCode;
@@ -73,6 +74,16 @@ public class BookInfoServiceImpl implements BookInfoService {
             pageBookInfo = bookInfoRepository.findByCategory(category, pageable);
         }
         return pageBookInfo;
+    }
+
+    /**
+     * 分页查询书籍信息
+     *
+     * @return
+     */
+    @Override
+    public Page<BookInfo> listBookInfo(BookInfoDto bookInfoDto) {
+        return bookInfoRepository.findAll(bookInfoDto);
     }
 
     /**
