@@ -1,6 +1,6 @@
 package com.xwder.app.modules.video.service.impl;
 
-import com.github.pagehelper.util.StringUtil;
+import cn.hutool.core.util.StrUtil;
 import com.xwder.app.modules.cloud.tencent.cos.service.TencentCosService;
 import com.xwder.app.modules.video.ffmpeg.VideoOperateService;
 import com.xwder.app.modules.video.service.intf.VideoService;
@@ -94,7 +94,7 @@ public class VideoServiceImpl implements VideoService {
     @Override
     public String spiltAndUpCos(File sourceFile, String m3u8Name, int splitTime, String uploadPath, String bucketName, String region) {
         String m3u8FilePath = videoOperateService.splitMp4VideoHls(sourceFile, m3u8Name, splitTime);
-        if (StringUtil.isEmpty(m3u8FilePath) && m3u8FilePath != null ) {
+        if (StrUtil.isEmpty(m3u8FilePath) && m3u8FilePath != null) {
             logger.error("[{}] 直接切割mp4切割hls失败", serviceName);
             return null;
         }

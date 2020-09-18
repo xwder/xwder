@@ -64,12 +64,16 @@ public class SysJobLog implements Serializable {
     @Column(name = "create_time")
     private Date createTime;
 
-    /** 开始时间 */
-    @Transient
+    /**
+     * 开始时间
+     */
+    @Column(name = "start_time")
     private Date startTime;
 
-    /** 结束时间 */
-    @Transient
+    /**
+     * 结束时间
+     */
+    @Column(name = "end_time")
     private Date endTime;
 
     public Long getJobLogId() {

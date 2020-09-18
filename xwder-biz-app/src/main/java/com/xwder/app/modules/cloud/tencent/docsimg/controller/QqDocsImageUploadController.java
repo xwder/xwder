@@ -2,6 +2,7 @@ package com.xwder.app.modules.cloud.tencent.docsimg.controller;
 
 import cn.hutool.core.util.StrUtil;
 import com.xwder.app.modules.cloud.tencent.docsimg.service.QqDocsImageUploadService;
+import com.xwder.app.sysmodules.file.entity.FileUploadRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,7 +36,7 @@ public class QqDocsImageUploadController {
         Integer uploadCos = StrUtil.equals(request.getParameter("uploadCos"), "1") ? 1 : 0;
         MultipartHttpServletRequest multipartHttpServletRequest = (MultipartHttpServletRequest) request;
         MultipartFile multipartFile = multipartHttpServletRequest.getFile("file");
-        Map map = qqDocsImageUploadService.qqDocsImageUpload(saveLocal, uploadCos, uid, uidKey, multipartFile);
-        return map;
+        FileUploadRecord fileUploadRecord = qqDocsImageUploadService.qqDocsImageUpload(saveLocal, uploadCos, uid, uidKey, multipartFile);
+        return fileUploadRecord;
     }
 }

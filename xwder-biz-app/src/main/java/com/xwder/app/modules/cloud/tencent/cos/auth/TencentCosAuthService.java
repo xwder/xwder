@@ -1,6 +1,6 @@
 package com.xwder.app.modules.cloud.tencent.cos.auth;
 
-import com.github.pagehelper.util.StringUtil;
+import cn.hutool.core.util.StrUtil;
 import com.google.common.collect.Maps;
 import com.tencent.cloud.CosStsClient;
 import com.xwder.app.attribute.SysConfigAttribute;
@@ -60,7 +60,7 @@ public class TencentCosAuthService {
         String tmpSecretKey = (String) redisUtil.get(RedisConstant.TENCENT_COS_TMP_SECRET_KEY);
         String sessionToken = (String) redisUtil.get(RedisConstant.TENCENT_COS_TMP_SESSIONTOKEN);
 
-        if (StringUtil.isNotEmpty(tmpSecretId)) {
+        if (StrUtil.isNotEmpty(tmpSecretId)) {
             credMap.put("requestId", null);
             credMap.put("expirationDate", null);
             credMap.put("startTime", null);

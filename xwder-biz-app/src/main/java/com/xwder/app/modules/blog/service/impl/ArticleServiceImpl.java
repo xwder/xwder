@@ -45,7 +45,9 @@ public class ArticleServiceImpl implements ArticleService {
             // 获取readCount
             String articleReadCountRedisKey = RedisConstant.BLOG_ARTICLE_READCOUNT + ":" + article.getId();
             Integer readCount = (Integer) redisUtil.get(articleReadCountRedisKey);
-            article.setReadCount(readCount.longValue());
+            if (readCount != null) {
+                article.setReadCount(readCount.longValue());
+            }
         }
         Article saveArticle = articleRepository.save(article);
         return saveArticle;
@@ -105,7 +107,12 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void updateArticleReadCount(Long articleId, Long readCount) {
-        articleRepository.updateArticleReadCountById(articleId,readCount);
+        Article article = articleRepository.findById(articleId).get();
+        article.setReadCount(readCount);
+        articleRepository.save(article);
+        // 更新redis
+        String articleRedisKey = RedisConstant.BLOG_ARTICLE_ARTICLE + ":" + articleId;
+        redisUtil.set(articleRedisKey, article, -1);
     }
 
     /**
@@ -122,7 +129,7 @@ public class ArticleServiceImpl implements ArticleService {
         if (readCount != null) {
             readCount += addCount;
         } else {
-            readCount = 1;
+            readCount = existReadCount;
         }
         redisUtil.set(articleReadCountRedisKey, readCount);
         return readCount;

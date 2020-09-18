@@ -37,6 +37,12 @@ public class FileUploadRecord implements Serializable {
     private String userName;
 
     /**
+     * 来源
+     */
+    @Column(name = "source")
+    private String source;
+
+    /**
      * 文件类型
      */
     @Column(name = "file_type")
@@ -59,6 +65,12 @@ public class FileUploadRecord implements Serializable {
      */
     @Column(name = "cos_url")
     private String cosUrl;
+
+    /**
+     * qpic_url 访问地址
+     */
+    @Column(name = "qpic_url")
+    private String qpicUrl;
 
     /**
      * 文件组 比如m3u8多个文件 为同一组
@@ -194,5 +206,21 @@ public class FileUploadRecord implements Serializable {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    public String getSource() {
+        return source;
+    }
+
+    public void setSource(String source) {
+        this.source = source;
+    }
+
+    public String getQpicUrl() {
+        return qpicUrl;
+    }
+
+    public void setQpicUrl(String qpicUrl) {
+        this.qpicUrl = qpicUrl;
     }
 }

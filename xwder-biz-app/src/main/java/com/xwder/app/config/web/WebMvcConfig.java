@@ -66,7 +66,8 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
                         "/book/**",
                         "/file/**",
                         "/video/**",
-                        "/blog/edit/**")
+                        "/blog/edit/**",
+                        "/sys/**")
                 .excludePathPatterns("/static/**",
                         "/doLoginOut",
                         "/user/mail/verifyMail.html");

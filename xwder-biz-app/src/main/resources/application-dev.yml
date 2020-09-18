@@ -54,13 +54,13 @@ spring:
     database: mysql
 
   datasource:
-    url: jdbc:log4jdbc:mysql://120.92.164.184:8066/xwder?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai&useLocalSessionState=true
-    username: xwder
-    password: XxwmGls6UCnvziE3
+#    url: jdbc:log4jdbc:mysql://120.92.164.184:8066/xwder?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai&useLocalSessionState=true
+#    username: xwder
+#    password: XxwmGls6UCnvziE3
 
-#    url: jdbc:log4jdbc:mysql://127.0.0.1:8066/xwder?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai&useLocalSessionState=true
-#    username: root
-#    password: 123456
+    url: jdbc:log4jdbc:mysql://127.0.0.1:8066/xwder?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai&useLocalSessionState=true
+    username: root
+    password: 123456
 
 #    url: jdbc:log4jdbc:mysql://120.92.164.184:3306/xwder?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai&useLocalSessionState=true
 #    username: xwder
@@ -101,6 +101,7 @@ spring:
     host: 120.92.164.184
     port: 6379
     password: 9t6U3OB43FRECxxd
+    database: 1
     jedis:
       pool:
         #连接池最大连接数（使用负值表示没有限制）

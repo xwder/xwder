@@ -1,7 +1,18 @@
 package com.xwder.app.common.jpa.domain;
 
+/**
+ * 排序查询接口
+ * @author xwder
+ * @date 2020年9月14日
+ */
 public interface SortableDataQuery extends DataQuery {
+    /**
+     * 升序
+     */
     String DEFAULT_DIRECTION = "ASC";
+    /**
+     *
+      */
     String NORMAL_DIRECTION = "NORMAL";
 
     static SortableDataQuery of(String order) {
@@ -12,11 +23,19 @@ public interface SortableDataQuery extends DataQuery {
         return new SortableDataQuery.DefaultSortableDataQuery(order, direction);
     }
 
+    /**
+     * 排序
+     * @return
+     */
     String getOrder();
 
+    /**
+     *
+     * @return
+     */
     String getDirection();
 
-    public static class DefaultSortableDataQuery implements SortableDataQuery {
+    class DefaultSortableDataQuery implements SortableDataQuery {
         private String order;
         private String direction = "ASC";
 

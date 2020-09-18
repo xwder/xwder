@@ -1,7 +1,12 @@
 package com.xwder.app.common.jpa.domain;
 
+/**
+ * 数据分页排序查询接口
+ * @author xwder
+ * @date 2020年9月14日
+ */
 public interface PageAndSortDataQuery extends PageableDataQuery, SortableDataQuery {
-    public static class DefaultPageAndSortDataQuery extends DefaultPageableDataQuery implements PageAndSortDataQuery {
+    class DefaultPageAndSortDataQuery extends DefaultPageableDataQuery implements PageAndSortDataQuery {
         private String order;
         private String direction = "ASC";
 

@@ -38,6 +38,12 @@ public class Category implements Serializable {
     private String categoryName;
 
     /**
+     * 分类名称
+     */
+    @Column(name = "user_name")
+    private String userName;
+
+    /**
      * 顺序
      */
     @Column(name = "sequence")
@@ -127,4 +133,11 @@ public class Category implements Serializable {
         this.gmtModified = gmtModified;
     }
 
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
 }

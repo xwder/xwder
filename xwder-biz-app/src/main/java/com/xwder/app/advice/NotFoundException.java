@@ -1,6 +1,6 @@
 package com.xwder.app.advice;
 
-import com.xwder.cloud.commmon.api.CommonResult;
+import com.xwder.app.common.result.CommonResult;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

@@ -13,7 +13,7 @@ import lombok.Data;
 @Data
 public class BookInfoDto extends CommonPageQuery.DefaultCommonPageQuery {
 
-    @QueryField(type = QueryType.RIGHT_LIKE,name = "bookName")
+    @QueryField(type = QueryType.FULL_LIKE,name = "bookName")
     private String bookName;
 
 }

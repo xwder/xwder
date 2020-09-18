@@ -1,6 +1,9 @@
 package com.xwder.app.modules.blog.service.intf;
 
 import com.xwder.app.modules.blog.entity.Category;
+import com.xwder.app.sysmodules.blog.dto.CategoryDto;
+import javafx.scene.chart.CategoryAxis;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 import java.util.Map;
@@ -34,5 +37,30 @@ public interface CategoryService {
      * @return
      */
     List<Map> listCategoryArticleCount(Long userId);
+
+
+    /**
+     * 分页查询category
+     *
+     * @param categoryDto
+     * @return
+     */
+    Page listCategoryPageData(CategoryDto categoryDto);
+
+    /**
+     * 保存 category
+     *
+     * @param category
+     * @return
+     */
+    Category saveCategory(Category category);
+
+    /**
+     * 修改 category
+     *
+     * @param category
+     * @return
+     */
+    Category updateCategory(Category category);
 
 }

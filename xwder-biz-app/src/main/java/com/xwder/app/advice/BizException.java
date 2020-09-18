@@ -1,6 +1,6 @@
 package com.xwder.app.advice;
 
-import com.xwder.cloud.commmon.api.ResultCode;
+import com.xwder.app.common.result.ResultCode;
 import lombok.Getter;
 
 /**

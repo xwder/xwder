@@ -2,9 +2,11 @@ package com.xwder.app.modules.novel.service.impl;
 
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.io.FileUtil;
-import com.github.pagehelper.util.StringUtil;
+import cn.hutool.core.util.StrUtil;
 import com.google.common.collect.Maps;
 import com.xwder.app.attribute.SysConfigAttribute;
+import com.xwder.app.common.result.CommonResult;
+import com.xwder.app.common.result.ResultCode;
 import com.xwder.app.consts.OffsetBasedPageRequest;
 import com.xwder.app.modules.novel.entity.BookChapter;
 import com.xwder.app.modules.novel.entity.BookInfo;
@@ -13,8 +15,6 @@ import com.xwder.app.modules.novel.repository.BookInfoRepository;
 import com.xwder.app.modules.novel.service.intf.BookInfoService;
 import com.xwder.app.sysmodules.novel.dto.BookInfoDto;
 import com.xwder.app.utils.DateUtil;
-import com.xwder.cloud.commmon.api.CommonResult;
-import com.xwder.cloud.commmon.api.ResultCode;
 import org.apache.commons.lang.StringEscapeUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -68,7 +68,7 @@ public class BookInfoServiceImpl implements BookInfoService {
         Pageable pageable = PageRequest.of(pageNum - 1, pageSize, sort);
         Page<BookInfo> pageBookInfo;
         // 直接查
-        if (StringUtil.isEmpty(category)) {
+        if (StrUtil.isEmpty(category)) {
             pageBookInfo = bookInfoRepository.findAll(pageable);
         } else {
             pageBookInfo = bookInfoRepository.findByCategory(category, pageable);
@@ -100,7 +100,7 @@ public class BookInfoServiceImpl implements BookInfoService {
         Pageable pageable = PageRequest.of(pageNum - 1, pageSize, sort);
         Page<BookInfo> pageBookInfo;
         // 直接查
-        if (StringUtil.isEmpty(bookName)) {
+        if (StrUtil.isEmpty(bookName)) {
             pageBookInfo = bookInfoRepository.findAll(pageable);
         } else {
             pageBookInfo = bookInfoRepository.findByBookNameContaining(bookName, pageable);
@@ -375,7 +375,7 @@ public class BookInfoServiceImpl implements BookInfoService {
      * @return
      */
     private String htmlConvertTxt(String html) {
-        if (StringUtil.isEmpty(html)) {
+        if (StrUtil.isEmpty(html)) {
             return "";
         }
         Document document = Jsoup.parse(html);

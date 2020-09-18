@@ -57,7 +57,7 @@ public class GlobalInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         log.info("全局数据处理拦截器 GoableInterceptor拦截到访问的地址: {}", request.getRequestURL().toString());
-        HttpSession session = request.getSession();
+        getLoginUser(request,response,handler);
         buildPotalData(request, response, handler);
         refreshRedisSession(request, response, handler);
         return true;
@@ -129,6 +129,28 @@ public class GlobalInterceptor implements HandlerInterceptor {
         if (StrUtil.isNotEmpty(userSessionToken)) {
             // 更新redis中session时间 可以 使用异步处理
             userService.updateRedisUserSessionExpireTime(userSessionToken, SysConstant.USER_SESSION_REDIS_TIME);
+        }
+    }
+
+    /**
+     * 获取用户信息 从cookie的 xwder-token redis获取用户信息写入session
+     *
+     * @param request
+     * @param response
+     * @param handler
+     */
+    public void getLoginUser(HttpServletRequest request, HttpServletResponse response, Object handler) {
+        User sessionUser = (User) SessionUtil.getSessionAttribute(SysConstant.SESSION_USER);
+        if (sessionUser == null) {
+            String userSessionToken = CookieUtils.getCookieValue(request, sysConfigAttribute.getSessionTokenName());
+            if (StrUtil.isNotEmpty(userSessionToken)) {
+                // 从redis中获取
+                User redisSessionUser = userService.getUserSessionFromRedis(userSessionToken);
+                if (redisSessionUser != null) {
+                    // session 写入用户信息
+                    SessionUtil.setSessionAttribute(SysConstant.SESSION_USER, redisSessionUser);
+                }
+            }
         }
     }
 }

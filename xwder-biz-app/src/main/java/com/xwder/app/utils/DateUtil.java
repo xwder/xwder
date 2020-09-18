@@ -1,7 +1,7 @@
 package com.xwder.app.utils;
 
 import cn.hutool.core.date.DateTime;
-import com.github.pagehelper.util.StringUtil;
+import cn.hutool.core.util.StrUtil;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -218,7 +218,7 @@ public class DateUtil {
         if (seconds > 0) {
             result += seconds + "秒";
         }
-        if (StringUtil.isEmpty(result)) {
+        if (StrUtil.isEmpty(result)) {
             result = diff + "毫秒";
         }
         return result;

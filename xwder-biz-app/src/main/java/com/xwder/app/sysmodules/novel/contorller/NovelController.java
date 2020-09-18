@@ -1,5 +1,6 @@
 package com.xwder.app.sysmodules.novel.contorller;
 
+import com.xwder.app.common.result.CommonResult;
 import com.xwder.app.modules.novel.entity.BookChapter;
 import com.xwder.app.modules.novel.entity.BookInfo;
 import com.xwder.app.modules.novel.service.intf.BookChapterService;
@@ -10,13 +11,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @author xwder
@@ -62,16 +59,9 @@ public class NovelController {
     @ResponseBody
     @RequestMapping(value = "/bookList")
     public Object listBookInfo(@Validated BookInfoDto bookInfoDto) {
-        Integer page = bookInfoDto.getPage();
-        Integer limit = bookInfoDto.getLimit();
-//        Page<BookInfo> booksPage = bookInfoService.listBookInfo(null, page, limit);
-        Page<BookInfo> bookInfos = bookInfoService.listBookInfo(bookInfoDto);
-//        Map<String, Object> map = new HashMap<>();
-//        map.put("code", 0);
-//        map.put("count", booksPage.getTotalElements());
-//        map.put("msg", "msg");
-//        map.put("data", booksPage.getContent());
-        return bookInfos;
+        Page<BookInfo> booksPage = bookInfoService.listBookInfo(bookInfoDto);
+        CommonResult<Page<BookInfo>> commonResult = CommonResult.success(booksPage);
+        return commonResult;
     }
 
     /**
@@ -87,11 +77,7 @@ public class NovelController {
     public Object listChapter(@RequestParam(defaultValue = "1", value = "bookId", required = false) Integer bookId,
                               Integer page, Integer limit) {
         Page<BookChapter> bookChapterPage = bookChapterService.listBookChapterByBookId(bookId, page, limit, null);
-        Map<String, Object> map = new HashMap<>();
-        map.put("code", 0);
-        map.put("count", bookChapterPage.getTotalElements());
-        map.put("msg", "msg");
-        map.put("data", bookChapterPage.getContent());
-        return map;
+        CommonResult commonResult = CommonResult.success(bookChapterPage);
+        return commonResult;
     }
 }

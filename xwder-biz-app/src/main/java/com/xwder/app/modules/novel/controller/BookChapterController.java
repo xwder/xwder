@@ -2,14 +2,14 @@ package com.xwder.app.modules.novel.controller;
 
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.StrUtil;
+import com.xwder.app.common.result.CommonResult;
+import com.xwder.app.common.result.Constant;
 import com.xwder.app.consts.SysConstant;
 import com.xwder.app.modules.novel.entity.BookChapter;
 import com.xwder.app.modules.novel.entity.BookInfo;
 import com.xwder.app.modules.novel.service.intf.BookChapterService;
 import com.xwder.app.modules.novel.service.intf.BookInfoService;
 import com.xwder.app.utils.HtmlUtils;
-import com.xwder.cloud.commmon.api.CommonResult;
-import com.xwder.cloud.commmon.constan.Constant;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

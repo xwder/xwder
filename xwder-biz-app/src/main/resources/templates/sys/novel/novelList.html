@@ -1,82 +1,157 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org">
 <head>
-	<meta charset="utf-8">
-	<title>书籍列表</title>
-	<meta name="renderer" content="webkit">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-	<meta name="apple-mobile-web-app-status-bar-style" content="black">
-	<meta name="apple-mobile-web-app-capable" content="yes">
-	<meta name="format-detection" content="telephone=no">
-	<link rel="stylesheet" th:href="@{/sysstatic/layui/css/layui.css}"  href="layui/css/layui.css" />   <!-- layui   css样式表 -->
-	<link rel="stylesheet" type="text/css" th:href="@{/sysstatic/css/public.css}"  href="css/public.css" />  <!-- 公用的css样式表 -->
+    <meta charset="utf-8">
+    <title>书籍列表</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" th:href="@{/sysstatic/layui/css/layui.css}" href="layui/css/layui.css"/>
+    <!-- layui   css样式表 -->
+    <link rel="stylesheet" type="text/css" th:href="@{/sysstatic/css/public.css}" href="css/public.css"/>
+    <!-- 公用的css样式表 -->
 </head>
 <body>
 <form class="layui-form">
-	<blockquote class="layui-elem-quote quoteBox mod_default_box">
-		<form class="layui-form">
-				<div class="layui-inline">
-					<label class="layui-form-label">书籍名称</label>
-					<div class="layui-input-inline">
-						<input type="text" name="bookName" lay-verify="bookName" autocomplete="off" class="layui-input">
-					</div>
-				</div>
-				<div class="layui-inline">
-					<label class="layui-form-label">作者</label>
-					<div class="layui-input-inline">
-						<input type="text" name="email" lay-verify="text" autocomplete="off" class="layui-input">
-					</div>
-				</div>
-				<div class="layui-inline">
-					<label class="layui-form-label">书籍分类</label>
-					<div class="layui-input-inline">
-						<select name="modules" lay-verify="required" lay-search="">
-							<option value="">直接选择或搜索选择</option>
-							<option value="玄幻魔法">玄幻魔法</option>
-							<option value="武侠修真">武侠修真</option>
-							<option value="都市言情">都市言情</option>
-							<option value="历史军事">历史军事</option>
-							<option value="侦探推理">侦探推理</option>
-							<option value="网游动漫">网游动漫</option>
-							<option value="科幻灵异">科幻灵异</option>
-						</select>
-					</div>
-				</div>
-				<div class="layui-inline">
-					<div class="layui-input-block">
-						<button class="layui-btn" lay-submit lay-filter="formDemo">查询</button>
-						<button type="reset" class="layui-btn layui-btn-primary">重置</button>
-					</div>
-				</div>
-		</form>
-	</blockquote>
-	<table id="novelList" lay-filter="novelList" lay-skin="line"></table>
-	<!-- 预览图片 -->
-	<script id="bookImages" type="text/html">
-		{{# var srr=d;
-		for(var i in srr) { srr[i] }}
-		{{# } }}
-		{{#
-		var bookImgSource=d.bookImgSource;
-		var picture = new Array(1);
-		picture[0]=bookImgSource;
-		for(var j in picture) { picture[j] }}
-		<div class="thumbnailImages{{srr.id}}" style="display: inline-block;">
-			<img class="imgtemp" style="width:40px;height:40px;cursor: zoom-in;" src="{{picture[j]}}" />
-		</div>
-		{{# } }}
-	</script>
+    <blockquote class="layui-elem-quote quoteBox mod_default_box">
+        <form class="layui-form">
+            <div class="layui-inline">
+                <label class="layui-form-label">书籍名称</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="bookName" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">作者</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="email" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">书籍分类</label>
+                <div class="layui-input-inline">
+                    <select name="modules" lay-search="">
+                        <option value="">直接选择或搜索选择</option>
+                        <option value="玄幻魔法">玄幻魔法</option>
+                        <option value="武侠修真">武侠修真</option>
+                        <option value="都市言情">都市言情</option>
+                        <option value="历史军事">历史军事</option>
+                        <option value="侦探推理">侦探推理</option>
+                        <option value="网游动漫">网游动漫</option>
+                        <option value="科幻灵异">科幻灵异</option>
+                    </select>
+                </div>
+            </div>
+            <div class="layui-inline">
+                <div class="layui-input-block">
+                    <button class="layui-btn" lay-submit lay-filter="formDemo">查询</button>
+                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                </div>
+            </div>
+        </form>
+    </blockquote>
+    <table id="novelList" lay-filter="novelList" lay-skin="line"></table>
+    <!-- 预览图片 -->
+    <script id="bookImages" type="text/html">
+        {{# var srr=d;
+        for(var i in srr) { srr[i] }}
+        {{# } }}
+        {{#
+        var bookImgSource=d.bookImgSource;
+        var picture = new Array(1);
+        picture[0]=bookImgSource;
+        for(var j in picture) { picture[j] }}
+        <div class="thumbnailImages{{srr.id}}" style="display: inline-block;">
+            <img class="imgtemp" style="width:40px;height:40px;cursor: zoom-in;" src="{{picture[j]}}"/>
+        </div>
+        {{# } }}
+    </script>
 
-	<!--操作-->
-	<script type="text/html" id="novelListBar">
-		<a class="layui-btn  layui-btn-xs" lay-event="sourceSite">源站</a>
-		<a class="layui-btn  layui-btn-xs" lay-event="bookChapter">章节</a>
-		<a class="layui-btn  layui-btn-xs" lay-event="startRead">阅读</a>
-		<a class="layui-btn  layui-btn-xs" lay-event="otherBook">其他书籍</a>
-	</script>
+    <!--操作-->
+    <script type="text/html" id="novelListBar">
+        <a class="layui-btn  layui-btn-xs" lay-event="sourceSite">源站</a>
+        <a class="layui-btn  layui-btn-xs" lay-event="bookChapter">章节</a>
+        <a class="layui-btn  layui-btn-xs" lay-event="startRead">阅读</a>
+        <a class="layui-btn  layui-btn-xs" lay-event="otherBook">其他书籍</a>
+    </script>
 </form>
 <script type="text/javascript" th:src="@{/sysstatic/layui/layui.js}" src="layui/layui.js"></script>
-<script type="text/javascript" th:src="@{/sysstatic/page/novel/novelList.js}" src="novelList.js"></script>
+<script type="text/javascript">
+    layui.use(['form', 'layer', 'table', 'laytpl'], function () {
+        var form = layui.form,
+            layer = parent.layer === undefined ? layui.layer : top.layer,
+            $ = layui.jquery,
+            laytpl = layui.laytpl,
+            table = layui.table;
+
+
+        //书籍列表
+        var tableIns = table.render({
+            elem: '#novelList',
+            url: '/sys/novel/bookList',
+            cellMinWidth: 95,
+            page: true,
+            // height : "full-120",
+            limits: [10, 15, 20, 25],
+            limit: 10,
+            id: "novelListTable",
+            cols: [
+                [
+                    {type: "checkbox", fixed: "left", width: 50},
+                    {field: 'id', title: 'ID', width: 80, align: "center", fixed: "left"},
+                    {field: 'bookName', title: '书籍名称', width: 200},
+                    {field: 'author', title: '作者', width: 150},
+                    {field: 'category', title: '分类', width: 100},
+                    {field: 'updateStatus', title: '连载状态', width: 100},
+                    {field: 'wordSize', title: '字数', width: 100},
+                    {field: 'latestChapter', title: '最新章节', width: 150},
+                    {field: 'lastUpdateTime', title: '更新时间', width: 150},
+                    {field: 'bookImgSource', title: '封面', align: 'center', width: 170, templet: '#bookImages'},
+                    {
+                        title: '操作', minWidth: 250, templet: '#novelListBar', fixed: "right"
+                    }
+                ]
+            ],
+            parseData: function (res) {
+                if (res.code == 200) {
+                    let data = {
+                        "code": 0,
+                        "msg": res.message,
+                        "count": res.data.totalElements,
+                        "data": res.data.content
+                    };
+                    return data;
+                }
+            },
+            done: function (res, curr, count) {
+                //图片放大预览
+                var ids;
+                for (var j in res.data) {
+                    ids = res.data[j].id;
+                    layer.photos({
+                        photos: '.thumbnailImages' + ids
+                    });
+                }
+            }
+        });
+
+
+        //列表操作
+        table.on('tool(novelList)', function (obj) {
+            var layEvent = obj.event,
+                data = obj.data;
+            //查看章节
+            if (layEvent === 'bookChapter') {
+                let url = "/sys/novel/chapterListPage.html?page=1&limit=10&bookId=" + data.id;
+                document.getElementById("iframe").src = "/sys/novel/chapterListPage.html?page=1&limit=10&bookId=" + data.id;
+            }
+        });
+
+    })
+
+</script>
 </body>
 </html>

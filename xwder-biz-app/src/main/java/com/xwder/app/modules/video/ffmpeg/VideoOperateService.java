@@ -1,7 +1,7 @@
 package com.xwder.app.modules.video.ffmpeg;
 
 import cn.hutool.core.io.FileUtil;
-import com.github.pagehelper.util.StringUtil;
+import cn.hutool.core.util.StrUtil;
 import com.xwder.app.modules.cloud.tencent.cos.service.TencentCosService;
 import com.xwder.app.modules.video.ffmpeg.CmdResult;
 import org.slf4j.Logger;
@@ -125,7 +125,7 @@ public class VideoOperateService {
         File newFile = new File(newFilePath);
         String splitResult = splitTsFileToHLS(newFile, m3u8Name, splitTime);
         // 切割文件失败
-        if (StringUtil.isEmpty(splitResult)) {
+        if (StrUtil.isEmpty(splitResult)) {
             // 删除转换的目录
             String name = FileUtil.mainName(sourceFile);
             File newPath = new File(sourceFile.getParent() + File.separator + name);

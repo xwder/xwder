@@ -1,8 +1,8 @@
 package com.xwder.app.modules.novel.service.intf;
 
+import com.xwder.app.common.result.CommonResult;
 import com.xwder.app.modules.novel.entity.BookInfo;
 import com.xwder.app.sysmodules.novel.dto.BookInfoDto;
-import com.xwder.cloud.commmon.api.CommonResult;
 import org.springframework.data.domain.Page;
 
 import java.util.List;

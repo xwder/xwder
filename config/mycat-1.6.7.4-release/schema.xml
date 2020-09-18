@@ -52,14 +52,12 @@
 	1、修改schema.xml中的checkSQLschema="true"
 	2、dataHost中最小连接minCon数加大
 	3、后端处理层增加事务-->
-	<dataHost name="jdbchost" maxCon="1000" minCon="50" balance="0"
-			  writeType="0" dbType="mysql" dbDriver="native" switchType="1"  slaveThreshold="100">
+	<dataHost name="jdbchost" maxCon="1000" minCon="30" balance="0"
+			  writeType="0" dbType="mysql" dbDriver="jdbc" switchType="1"  slaveThreshold="100">
 		<heartbeat>select user()</heartbeat>
-		<!-- can have multi write hosts -->
-		<writeHost host="hostM1" url="127.0.0.1:3306" user="xwder"
+		<writeHost host="hostM1" url="jdbc:mysql://127.0.0.1:3306" user="xwder"
 				   password="wvDwERwidZZJhfh2">
 		</writeHost>
-		<!-- <writeHost host="hostM2" url="localhost:3316" user="root" password="123456"/> -->
 	</dataHost>
 	<!--
 		<dataHost name="sequoiadb1" maxCon="1000" minCon="1" balance="0" dbType="sequoiadb" dbDriver="jdbc">

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>编辑定时任务</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" th:href="@{/sysstatic/layui/css/layui.css}" href="layui/css/layui.css"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/sysstatic/css/public.css}" href="css/public.css"/>
+<!--    <link rel="stylesheet" type="text/css" th:href="@{/sysstatic/css/job/job.css}" href="css/public.css"/>-->
+</head>
+<body class="childrenBody">
+<form class="layui-form" style="width:80%;">
+    <div class="layui-form-item layui-row layui-col-xs12">
+        <div class="layui-input-block"></div>
+        <div class="layui-input-block">
+            <input type="hidden" class="layui-input jobId" name="jobId" placeholder="jobId">
+        </div>
+    </div>
+    <div class="layui-form-item layui-row layui-col-xs12">
+        <label class="layui-form-label">任务名称</label>
+        <div class="layui-input-block">
+            <input type="text" class="layui-input jobName" name="jobName" lay-verify="required" placeholder="请输入任务名称">
+        </div>
+    </div>
+    <div class="layui-form-item layui-row layui-col-xs12">
+        <label class="layui-form-label">任务分组</label>
+        <div class="layui-input-block">
+            <input type="text" class="layui-input jobGroup" name="jobGroup" lay-verify="required" placeholder="请输入任务分组">
+        </div>
+    </div>
+    <div class="layui-form-item layui-row layui-col-xs12">
+        <label class="layui-form-label">目标字符串</label>
+        <div class="layui-input-block">
+            <input type="text" class="layui-input invokeTarget" name="invokeTarget" lay-verify="required" placeholder="请输入调用目标字符串">
+        </div>
+    </div>
+    <div class="layui-form-item layui-row layui-col-xs12">
+        <label class="layui-form-label">cron表达式</label>
+        <div class="layui-input-block">
+            <input type="text" class="layui-input cronExpression" name="cronExpression" lay-verify="required" placeholder="请输入cron表达式">
+        </div>
+    </div>
+    <div class="layui-row">
+        <div class="magb15 layui-col-md4 layui-col-xs12">
+            <label class="layui-form-label">执行策略</label>
+            <div class="layui-input-block misfirePolicy">
+                <input type="radio" name="misfirePolicy" lay-filter="misfirePolicy" value="1" title="立即执行" checked>
+                <input type="radio" name="misfirePolicy" lay-filter="misfirePolicy" value="2" title="执行一次">
+                <input type="radio" name="misfirePolicy" lay-filter="misfirePolicy" value="3" title="放弃执行">
+            </div>
+        </div>
+        <div class="magb15 layui-col-md4 layui-col-xs12">
+            <label class="layui-form-label">并发执行</label>
+            <div class="layui-input-block concurrent">
+                <input type="radio" name="concurrent" value="0" title="允许" checked>
+                <input type="radio" name="concurrent" value="1" title="禁止">
+            </div>
+        </div>
+        <div class="magb15 layui-col-md4 layui-col-xs12">
+            <label class="layui-form-label">状态</label>
+            <div class="layui-input-block status">
+                <input type="radio" name="status" value="0" title="正常" checked>
+                <input type="radio" name="status" value="1" title="暂停">
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item layui-row layui-col-xs12">
+        <label class="layui-form-label">备注</label>
+        <div class="layui-input-block">
+            <textarea placeholder="备注" name="remark" class="layui-textarea remark"></textarea>
+        </div>
+    </div>
+    <div class="layui-form-item layui-row layui-col-xs12">
+        <div class="layui-input-block">
+            <button class="layui-btn user-add-button " lay-submit="" lay-filter="addSysJob">保存</button>
+            <button type="reset" class="layui-btn  layui-btn-primary">取消</button>
+        </div>
+    </div>
+</form>
+<script type="text/javascript" th:src="@{/sysstatic/layui/layui.js}" src="layui/layui.js"></script>
+<script type="text/javascript">
+    layui.use('form', function(){
+        let form = layui.form,
+        $ = layui.jquery;
+        layer = parent.layer === undefined ? layui.layer : top.layer;
+
+        //监听提交
+        form.on('submit(addSysJob)', function(data){
+            let ii = layer.load();
+            // 判断是新增还是修改根据jobId
+            let url = "/sys/job/edit";
+            if (data.field.jobId == '') {
+                url = "/sys/job/add";
+            }
+            $.ajax({
+                url: url,
+                data: data.field,
+                type: "Post",
+                async: false,
+                dataType: "json",
+                success: function (data) {
+                    console.log(data);
+                    //成功获取数据后关闭加载动画
+                    layer.close(ii);
+                    if (data.code == 200) {
+                        layer.msg(data.message, {
+                            icon: 5,
+                            time: 1000
+                        });
+                    } else {
+                        layer.msg(data.message, {
+                            icon: 6,
+                            time: 1000
+                        }, function () {
+                        });
+                    }
+                },
+                error: function (data) {
+                    $.messager.alert('错误', data.message);
+                }
+            });
+            return false;
+        });
+    });
+</script>
+</body>
+</html>

@@ -67,6 +67,7 @@ public abstract class AbstractQuartzJob implements Job {
         threadLocal.remove();
 
         final SysJobLog sysJobLog = new SysJobLog();
+        sysJobLog.setCreateTime(new Date());
         sysJobLog.setJobName(sysJob.getJobName());
         sysJobLog.setJobGroup(sysJob.getJobGroup());
         sysJobLog.setInvokeTarget(sysJob.getInvokeTarget());

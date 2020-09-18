@@ -1,6 +1,6 @@
 package com.xwder.app.utils;
 
-import com.github.pagehelper.util.StringUtil;
+import cn.hutool.core.util.StrUtil;
 import org.apache.commons.lang.StringEscapeUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -19,7 +19,7 @@ public class HtmlUtils {
      * @return
      */
     public static String htmmConvertTxt(String html) {
-        if (StringUtil.isEmpty(html)) {
+        if (StrUtil.isEmpty(html)) {
             return "";
         }
         Document document = Jsoup.parse(html);

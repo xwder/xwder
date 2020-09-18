@@ -1,14 +1,14 @@
 package com.xwder.app.modules.blog.repository;
 
+import com.xwder.app.common.jpa.repository.BaseJpaRepository;
 import com.xwder.app.modules.blog.entity.Category;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
-public interface CategoryRepository extends JpaRepository<Category, Long> {
+public interface CategoryRepository extends BaseJpaRepository<Category, Long> {
 
     /**
      * 根据userId查询博客分类

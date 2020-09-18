@@ -1,11 +1,14 @@
 package com.xwder.app.modules.blog.controller;
 
 import cn.hutool.core.collection.CollectionUtil;
+import cn.hutool.core.math.MathUtil;
+import cn.hutool.core.util.NumberUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import com.google.common.base.Joiner;
+import com.xwder.app.common.result.CommonResult;
 import com.xwder.app.consts.SysConstant;
 import com.xwder.app.modules.blog.entity.Article;
 import com.xwder.app.modules.blog.entity.Category;
@@ -17,7 +20,6 @@ import com.xwder.app.modules.user.entity.User;
 import com.xwder.app.modules.user.service.intf.UserService;
 import com.xwder.app.utils.SessionUtil;
 import com.xwder.app.utils.TimeCountUtil;
-import com.xwder.cloud.commmon.api.CommonResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -235,7 +237,7 @@ public class ArticleController {
 
         // 文章阅读数+1
         Integer readCount = articleService.addArticleReadCount(articleId, Math.toIntExact(article.getReadCount()), 1);
-        article.setReadCount(article.getReadCount() + 1);
+        article.setReadCount(readCount.longValue());
         return "blog/article/article";
     }
 

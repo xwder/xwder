@@ -22,10 +22,7 @@ layui.use(['flow', 'form', 'layer', 'upload'], function() {
 							data[i].thumb + '" alt="' + data[i].alt +
 							'"></div><div class="operate"><div class="check"><input type="checkbox" name="belle" lay-filter="choose" lay-skin="primary" title="' +
 							data[i].alt + '"></div><i class="layui-icon img_del">&#xe640;</i></div></li>');
-						
-
 					}
-					
 
 					next(imgList.join(''), page < (data.length / imgNums));
 					form.render();

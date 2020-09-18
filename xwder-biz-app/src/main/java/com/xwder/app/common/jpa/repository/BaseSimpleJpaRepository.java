@@ -29,6 +29,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * @author xwder
+ */
 @NoRepositoryBean
 public class BaseSimpleJpaRepository<T, ID extends Serializable> extends SimpleJpaRepository<T, ID> implements BaseJpaRepository<T, ID>, JpaSpecificationExecutor<T> {
     private static Logger logger = LoggerFactory.getLogger(BaseSimpleJpaRepository.class);
@@ -113,13 +116,13 @@ public class BaseSimpleJpaRepository<T, ID extends Serializable> extends SimpleJ
     protected Predicate generatePredicate(DataQuery dataQuery, Root<T> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
         List<Predicate> predicates = new ArrayList();
         Field[] fields = dataQuery.getClass().getDeclaredFields();
-        Field[] var7 = fields;
-        int var8 = fields.length;
+        Field[] tempFields = fields;
+        int fieldLength = fields.length;
 
-        for (int var9 = 0; var9 < var8; ++var9) {
-            Field field = var7[var9];
+        for (int i = 0; i < fieldLength; ++i) {
+            Field field = tempFields[i];
             field.setAccessible(true);
-            QueryField annotation = (QueryField) field.getAnnotation(QueryField.class);
+            QueryField annotation = field.getAnnotation(QueryField.class);
             if (annotation != null) {
                 String queryField;
                 if (!StringUtils.isEmpty(annotation.name())) {

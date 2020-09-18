@@ -5,7 +5,6 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.xwder.app.consts.RedisConstant;
 import com.xwder.app.helper.dao.DAOHelper;
-import com.xwder.app.helper.dao.MapResultTransformer;
 import com.xwder.app.helper.dao.NativeSQL;
 import com.xwder.app.modules.blog.dao.CagetoryDaoResourceHandler;
 import com.xwder.app.modules.blog.entity.Category;
@@ -13,16 +12,17 @@ import com.xwder.app.modules.blog.repository.CategoryRepository;
 import com.xwder.app.modules.blog.service.intf.CategoryService;
 import com.xwder.app.modules.user.entity.User;
 import com.xwder.app.modules.user.service.intf.UserService;
+import com.xwder.app.sysmodules.blog.dto.CategoryDto;
 import com.xwder.app.utils.RedisUtil;
+import com.xwder.app.utils.UpdateUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.query.internal.NativeQueryImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 import java.util.*;
 
 /**
@@ -106,5 +106,44 @@ public class CategoryServiceImpl implements CategoryService {
 
         List<Map> rows = NativeSQL.findByNativeSQL(querySql, params, null);
         return rows;
+    }
+
+    /**
+     * 分页查询category
+     *
+     * @param categoryDto
+     * @return
+     */
+    @Override
+    public Page listCategoryPageData(CategoryDto categoryDto) {
+        return categoryRepository.findAll(categoryDto);
+    }
+
+    /**
+     * 保存 category
+     *
+     * @param category
+     * @return
+     */
+    @Override
+    @Transactional(rollbackFor = {Exception.class})
+    public Category saveCategory(Category category) {
+        return categoryRepository.save(category);
+    }
+
+    /**
+     * 修改 category
+     *
+     * @param category
+     * @return
+     */
+    @Override
+    @Transactional(rollbackFor = {Exception.class})
+    public Category updateCategory(Category category) {
+        Optional<Category> categoryOptional = categoryRepository.findById(category.getId());
+        Category existCategory = categoryOptional.get();
+        UpdateUtil.copyNullProperties(category, existCategory);
+        categoryRepository.save(existCategory);
+        return existCategory;
     }
 }

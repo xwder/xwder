@@ -2,7 +2,7 @@ package com.xwder.app.utils;
 
 import cn.hutool.core.util.StrUtil;
 import com.xwder.app.advice.BizException;
-import com.xwder.cloud.commmon.api.ResultCode;
+import com.xwder.app.common.result.ResultCode;
 
 /**
  * 参考 hutool Assert
