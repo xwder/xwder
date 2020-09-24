@@ -11,6 +11,7 @@
     <meta name="format-detection" content="telephone=no">
     <link rel="stylesheet" th:href="@{/sysstatic/layui/css/layui.css}" href="layui/css/layui.css"/>
     <link rel="stylesheet" type="text/css" th:href="@{/sysstatic/css/public.css}" href="css/public.css"/>
+    <script type="text/javascript" th:src="@{/sysstatic/layui/layui.js}" src="layui/layui.js"></script>
 </head>
 <body class="childrenBody">
 <form class="layui-form" onkeydown="if(event.keyCode==13) return false;">
@@ -19,7 +20,7 @@
         <a class="layui-btn  saveArticle">保存</a>　
         <a class="layui-btn  query">查询</a>　
     </blockquote>
-    <table id="blogArticle" lay-filter="blogArticle"></table>
+    <table id="blogArticleList" lay-filter="blogArticleList"></table>
     <!--操作-->
     <script type="text/html" id="articleListBar">
         <a class="layui-btn  layui-btn-xs" lay-event="editArticle">编辑</a>
@@ -27,8 +28,9 @@
         <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="publishArticle">发布</a>
     </script>
 </form>
-<script type="text/javascript" th:src="@{/sysstatic/layui/layui.js}" src="layui/layui.js"></script>
-<script th:src="@{/sysstatic/lib/jquery/jquery.js}" src="https://cdn.bootcdn.net/ajax/libs/jquery/1.10.0/jquery.js"></script>
+
+<script th:src="@{/sysstatic/lib/jquery/jquery.js}"
+        src="https://cdn.bootcdn.net/ajax/libs/jquery/1.10.0/jquery.js"></script>
 <script type="text/javascript">
     layui.use(['form', 'layer', 'table', 'laytpl'], function () {
         let form = layui.form,
@@ -38,8 +40,8 @@
             table = layui.table;
 
         //博客分类列表
-        var tableIns = table.render({
-            elem: '#blogArticle',
+        let tableIns = table.render({
+            elem: '#blogArticleList',
             url: '/sys/blog/articleList',
             cellMinWidth: 95,
             page: true,
@@ -85,7 +87,56 @@
             },
         });
 
+        //列表操作
+        table.on('tool(blogArticleList)', function (obj) {
+            let layEvent = obj.event;
+            let article = obj.data;
+            // 修改博客
+            if (layEvent === 'editArticle') {
+                editArticle(article)
+            }
+        });
 
+        // 查询定时任务
+        $(".query").click(function () {
+            tableIns.reload();
+        });
+
+        // 新增博客
+        $(".addArticle").click(function () {
+            editArticle();
+        });
+
+        function editArticle(article) {
+            if (!(typeof (article) == undefined)) {
+                id = article.id;
+            }
+            let index = layer.open({
+                type: 2,
+                title: '编辑文章',
+                shadeClose: true,
+                shade: false,
+                maxmin: true, //开启最大化最小化按钮
+                area: ['1200px', '800px'],
+                content: '/sys/blog/articleEdit.html?id=' + id,
+                success: function (layero, index) {
+                    var body = layer.getChildFrame('body', index);
+                    if (article) {
+                        body.find(".title").val(article.title);
+                        body.find(".summary").val(article.summary);
+                        body.find(".previewImage").attr("src", article.previewImage);
+
+                        body.find("#news_content").val(edit.content);
+                        body.find(".newsStatus select").val(edit.newsStatus);
+                        body.find(".openness input[name='openness'][title='"+edit.newsLook+"']").prop("checked","checked");
+                        body.find(".newsTop input[name='newsTop']").prop("checked",edit.newsTop);
+                    }
+                    let form = layui.form
+                    form.render();
+                }
+            });
+            layer.full(index);
+        }
     })
 
     let $ = layui.jquery;

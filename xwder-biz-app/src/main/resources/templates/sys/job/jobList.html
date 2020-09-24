@@ -175,7 +175,8 @@
                     layer.msg('操作失败，服务发生错误', {
                         icon: 2,
                         time: 1000
-                    }, function () {});
+                    }, function () {
+                    });
                     layer.close(ii);
                 }
             });
@@ -195,7 +196,7 @@
         //添加编辑定时任务
         function editJOb(job) {
             let jobId = "";
-            if (!typeof (job) == undefined) {
+            if (!(typeof (job) == undefined)) {
                 jobId = job.jobId;
             }
             var index = layui.layer.open({
@@ -264,7 +265,8 @@
                         layer.msg('操作失败，服务发生错误', {
                             icon: 2,
                             time: 1000
-                        }, function () {});
+                        }, function () {
+                        });
                     }
                 });
                 return false;
@@ -296,7 +298,8 @@
                         layer.msg('操作失败，服务发生错误', {
                             icon: 2,
                             time: 1000
-                        }, function () {});
+                        }, function () {
+                        });
                     }
                 });
 
