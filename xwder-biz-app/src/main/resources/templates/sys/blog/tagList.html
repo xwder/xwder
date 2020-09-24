@@ -2,7 +2,7 @@
 <html lang="zh" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
-    <title>博客分类</title>
+    <title>博客标签</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -15,15 +15,15 @@
 <body class="childrenBody">
 <form class="layui-form" onkeydown="if(event.keyCode==13) return false;">
     <blockquote class="layui-elem-quote mod_default_box">
-        <a class="layui-btn  addCategory">新增</a>　
-        <a class="layui-btn  saveCategory">保存</a>　
+        <a class="layui-btn  addTag">新增</a>　
+        <a class="layui-btn  saveTag">保存</a>　
         <a class="layui-btn  query">查询</a>　
     </blockquote>
-    <table id="blogCategory" lay-filter="blogCategory"></table>
+    <table id="blogTag" lay-filter="blogTag"></table>
     <!--操作-->
-    <script type="text/html" id="categoryListBar">
-        <a class="layui-btn  layui-btn-xs" lay-event="updateCategory">更新</a>
-        <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="delCategory">删除</a>
+    <script type="text/html" id="tagListBar">
+        <a class="layui-btn  layui-btn-xs" lay-event="updateTag">更新</a>
+        <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="delTag">删除</a>
     </script>
 </form>
 <script type="text/javascript" th:src="@{/sysstatic/layui/layui.js}" src="layui/layui.js"></script>
@@ -36,10 +36,10 @@
             laytpl = layui.laytpl,
             table = layui.table;
 
-        //博客分类列表
+        //博客标签列表
         var tableIns = table.render({
-            elem: '#blogCategory',
-            url: '/sys/blog/categoryList',
+            elem: '#blogTag',
+            url: '/sys/blog/tagTist',
             cellMinWidth: 95,
             page: true,
             limits: [10, 15, 20, 25],
@@ -48,9 +48,8 @@
             cols: [
                 [
                     {field: 'id', title: 'ID', align: "center", fixed: "left"},
-                    {field: 'userName', title: '用户名'},
-                    {field: 'categoryName', title: '分类名称', edit: 'text'},
-                    {field: 'sequence', title: '顺序', edit: 'text'},
+                    {field: 'userName', title: '用户名', edit: 'text'},
+                    {field: 'tagName', title: '标签名称', edit: 'text'},
                     {field: 'articleCount', title: '文章数量',},
                     {
                         field: 'isAvailable', title: '是否可用', align: 'center',
@@ -59,11 +58,11 @@
                             if (d.isAvailable == 0) {
                                 checkResult = "";
                             }
-                            return '<input type="checkbox" jobId="' + d.jobId + '" name="available" lay-filter="available" lay-skin="switch" lay-text="可用|不可用" ' + checkResult + '>'
+                            return '<input type="checkbox" id="' + d.id + '" name="available" lay-filter="available" lay-skin="switch" lay-text="可用|不可用" ' + checkResult + '>'
                         }
                     },
                     {
-                        title: '操作', minWidth: 200, templet: '#categoryListBar', fixed: "right"
+                        title: '操作', minWidth: 200, templet: '#tagListBar', fixed: "right"
                     }
                 ]
             ],
@@ -81,12 +80,13 @@
         });
 
         //监听单元格编辑
-        table.on('edit(blogCategory)', function (obj) {
-            let value = obj.value //得到修改后的值
+        table.on('edit(blogTag)', function (obj) {
+            var value = obj.value //得到修改后的值
                 , data = obj.data //得到所在行所有键值
                 , field = obj.field; //得到字段
+            // layer.msg('[ID: ' + data.id + '] ' + field + ' 字段更改为：' + value);
             let tr = obj.tr; //获得当前行 tr 的DOM对象
-            $(obj.tr.selector).attr({"style": "background:#bceec1"});//改变当前tr颜色
+            $(obj.tr.selector).attr({"style":"background:#bceec1"});//改变当前tr颜色
         });
 
         //是否可用监听
@@ -98,31 +98,30 @@
             let id = obj.parents('tr').first().find('td').eq(0).text();
             obj.parents('tr').attr({"style": "background:#bceec1"});//改变当前tr颜色
             let isAvailable = data.elem.checked ? 1 : 0;
-            let oldData = table.cache["blogCategory"];
+            let oldData = table.cache["blogTag"];
             for (let i = 0; i < oldData.length; i++) {
-                let category = oldData[i];
-                if (category.id === parseInt(id)) {
-                    category.available = isAvailable;
+                let tag = oldData[i];
+                if (tag.id === parseInt(id)) {
+                    tag.available = isAvailable;
                     // 更新数据
                     let update = {};
                     update.id = id;
                     update.available = isAvailable;
-                    updateCategory(category);
+                    updateTag(tag);
                     break;
                 }
             }
         });
 
         //新增等级
-        $(".addCategory").click(function () {
-            let oldData = table.cache["blogCategory"];
+        $(".addTag").click(function () {
+            let oldData = table.cache["blogTag"];
             var userName = oldData[0].userName;
             var $tr = $(".layui-table-body.layui-table-main tbody tr:last");
             var newHtml = '<tr data-index="' + ($tr.data("index") + 1) + '" >' +
                 '<td data-field="id" data-edit="text" align="center"  ><div class="layui-table-cell laytable-cell-1-id" >' + ($tr.data("index") + 2) + '</div></td>' +
-                '<td data-field="userName" align="center" ><div class="layui-table-cell laytable-cell-1-gradeName">'+userName+'</div></td>' +
-                '<td data-field="categoryName" data-edit="text" align="center" style="background-color:#bceec1"><div class="layui-table-cell laytable-cell-1-gradeName">请输入分类名称</div></td>' +
-                '<td data-field="sequence" data-edit="text" align="center" style="background-color:#bceec1"><div class="layui-table-cell laytable-cell-1-gradeValue">0</div></td>' +
+                '<td data-field="userName" align="center"><div class="layui-table-cell laytable-cell-1-gradeName">'+userName+'</div></td>' +
+                '<td data-field="tagName" data-edit="text" align="center" style="background-color:#bceec1"><div class="layui-table-cell laytable-cell-1-gradeName">请输入标签名称</div></td>' +
                 '<td data-field="articleCount"  align="center"><div class="layui-table-cell laytable-cell-1-gradeValue">0</div></td>' +
                 '<td data-field="available" align="center"><div class="layui-table-cell"> '
                 + '<input type="checkbox"   lay-skin="switch" lay-text="可用|不可用" ' + 'checked' + '>' + '  </div></td>' +
@@ -132,56 +131,51 @@
             $(".layui-table-fixed.layui-table-fixed-l tbody").append('<tr data-index="' + ($tr.data("index") + 1) + '"><td data-field="id" data-edit="text" align="center"><div class="layui-table-cell laytable-cell-1-id">' + ($tr.data("index") + 2) + '</div></td></tr>');
             form.render();
 
-            let category = {};
-            category.categoryName = '';
-            category.sequence = 0;
-            category.available = 1;
-            // 新增数据标识
-            category.isAdd = true;
-
-            oldData.push(category);
-            // table.reload('blogCategory',{data : oldData});
+            let tag = {};
+            tag.tagName = '';
+            tag.available = 1;
+            tag.isAdd = true;
+            oldData.push(tag);
         });
 
         // query
-        $(".query").click(function () {
-            table.reload('blogCategory');
-        });
-
+        $(".query").click(function (){
+            table.reload('blogTag');
+        })
         // 保存添加的数据
-        $(".saveCategory").click(function () {
-            let tableData = table.cache["blogCategory"];
+        $(".saveTag").click(function (){
+            let tableData = table.cache["blogTag"];
             for (let i = 0; i < tableData.length; i++) {
                 if (tableData[i].isAdd) {
                     let save = tableData[i];
-                    saveCategory(save);
+                    saveTag(save);
                 }
             }
         })
 
         //列表操作
-        table.on('tool(blogCategory)', function (obj) {
+        table.on('tool(blogTag)', function (obj) {
             let layEvent = obj.event;
-            // 更新分类
-            if (layEvent === 'updateCategory') {
+            if (layEvent === 'updateTag') {
                 obj.data.available = obj.data.isAvailable;
-                updateCategory(obj.data);
+                updateTag(obj.data);
             }
             // 删除分类
-            if (layEvent === 'delCategory') {
-                deleteCategory(obj.data)
+            if (layEvent === 'delTag') {
+                deleteTag(obj.data)
             }
         });
 
-        // 更新分类
-        function updateCategory(category) {
-            console.log(JSON.stringify(category));
+
+        // 更新标签
+        function updateTag(tag) {
+            console.log(JSON.stringify(tag));
             //此处用layui加载动画
             let ii = layer.load();
             // 修改状态
             $.ajax({
-                url: "/sys/blog/updateCategory",
-                data: category,
+                url: "/sys/blog/updateTag",
+                data: tag,
                 type: "Post",
                 dataType: "json",
                 success: function (data) {
@@ -213,15 +207,15 @@
             return false;
         };
 
-        // 保存分类
-        function saveCategory(category) {
-            console.log(JSON.stringify(category));
+        // 保存标签
+        function saveTag(tag) {
+            console.log(JSON.stringify(tag));
             //此处用layui加载动画
-            var index = layer.msg('修改中，请稍候', {icon: 16, time: false, shade: 0.8});
+            var index = layer.msg('保存中，请稍候', {icon: 16, time: false, shade: 0.8});
             // 修改状态
             $.ajax({
-                url: "/sys/blog/addCategory",
-                data: category,
+                url: "/sys/blog/addTag",
+                data: tag,
                 type: "Post",
                 dataType: "json",
                 success: function (data) {
@@ -252,9 +246,9 @@
             return false;
         }
 
-        // 删除分类
-        function deleteCategory(category) {
-            layer.confirm("是否删除该分类", {
+        // 删除标签
+        function deleteTag(tag) {
+            layer.confirm("是否删除该标签", {
                 icon: 3,
                 title: '立即删除',
                 cancel: function (index) {
@@ -264,7 +258,7 @@
                 //此处用layui加载动画
                 let ii = layer.load();
                 $.ajax({
-                    url: "/sys/blog/deleteCategory?id=" + category.id,
+                    url: "/sys/blog/deleteTag?id=" + tag.id,
                     data: "",
                     type: "Post",
                     async: false,

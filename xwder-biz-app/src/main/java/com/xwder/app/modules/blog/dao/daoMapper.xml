@@ -14,11 +14,90 @@
                 t.category_name,
                 IFNULL( t1.count, 0 ) count
            FROM
-                ( SELECT * FROM blog_category WHERE user_id = ? AND is_avaliable = 1 ) t
+                ( SELECT * FROM blog_category WHERE user_id = ? AND is_available = 1 ) t
                 LEFT JOIN
-                ( SELECT category_id, count( category_id ) count FROM blog_article WHERE user_id = 1 AND STATUS = 1 AND is_avaliable = 1 GROUP BY category_id ) t1  ON t.id = t1.category_id
+                ( SELECT category_id, count( category_id ) count FROM blog_article WHERE user_id = 1 AND STATUS = 1 AND is_available = 1 GROUP BY category_id ) t1  ON t.id = t1.category_id
            ORDER BY
                 t1.count DESC
+            ]]>
+        </mysql>
+    </sql>
+
+    <!--根据用户id查询category信息,每个分类下博客数量-->
+    <sql id="query_category_aritcle_count">
+        <common>
+        </common>
+        <oracle>
+        </oracle>
+        <mysql>
+            <![CDATA[
+            SELECT
+                c.*,IFNULL(t.article_count,0) article_count
+            from (SELECT * from  blog_category c WHERE c.user_id = ?) c
+            LEFT JOIN (
+            SELECT
+                t.category_id,count(*) article_count
+            from
+                blog_article t
+            WHERE
+              t.user_id = ?
+            GROUP BY
+                t.category_id
+            ) t
+            on c.id = t.category_id
+            ]]>
+        </mysql>
+    </sql>
+
+    <!--根据用户id查询 tag 信息,每个分类下博客数量-->
+    <sql id="query_tag_aritcle_count">
+        <common>
+        </common>
+        <oracle>
+        </oracle>
+        <mysql>
+            <![CDATA[
+            SELECT
+                t.*,IFNULL(a.article_count,0) article_count
+            from
+            (select * from blog_tag t WHERE t.user_id = ? ) t
+            LEFT JOIN (
+            SELECT
+                t.tag_id,count(*) article_count
+            from
+                blog_article_tag t
+            WHERE
+              t.user_id = ?
+            GROUP BY
+                t.tag_id
+            ) a
+            on t.id = a.tag_id
+            ]]>
+        </mysql>
+    </sql>
+
+    <!--查询文章列表-->
+    <sql id="query_article_list">
+        <common>
+        </common>
+        <oracle>
+        </oracle>
+        <mysql>
+            <![CDATA[
+            SELECT
+            c.category_name,
+            CASE
+                WHEN t.status=1 THEN
+                    '已发布'
+                ELSE
+                    '未发布'
+            END as status_desc,
+            t.*
+            from
+            blog_article t
+            LEFT JOIN
+            blog_category c
+            on t.category_id = c.id
             ]]>
         </mysql>
     </sql>

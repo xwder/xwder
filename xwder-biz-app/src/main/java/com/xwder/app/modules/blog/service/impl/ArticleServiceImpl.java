@@ -1,9 +1,15 @@
 package com.xwder.app.modules.blog.service.impl;
 
+import com.google.common.collect.Lists;
 import com.xwder.app.consts.RedisConstant;
+import com.xwder.app.helper.dao.DAOHelper;
+import com.xwder.app.helper.dao.NativeSQL;
+import com.xwder.app.modules.blog.dao.BlogDaoResourceHandler;
 import com.xwder.app.modules.blog.entity.Article;
 import com.xwder.app.modules.blog.repository.ArticleRepository;
 import com.xwder.app.modules.blog.service.intf.ArticleService;
+import com.xwder.app.sysmodules.blog.dto.ArticleDto;
+import com.xwder.app.utils.PageUtil;
 import com.xwder.app.utils.RedisUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -12,6 +18,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 文章service impl
@@ -38,7 +48,7 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public Article saveOrUpdateArticle(Article article) {
-        if (article.getId()!=null) {
+        if (article.getId() != null) {
             // 先删除redis
             String articleRedisKey = RedisConstant.BLOG_ARTICLE_ARTICLE + ":" + article.getId();
             redisUtil.del(articleRedisKey);
@@ -91,11 +101,11 @@ public class ArticleServiceImpl implements ArticleService {
         Sort sort = Sort.by(Sort.Direction.DESC, "gmtModified");
         Pageable pageable = PageRequest.of(pageNum - 1, pageSize, sort);
         if (categoryId != null) {
-            return articleRepository.findByUserIdAndCategoryIdAndStatusAndAvaliable(userId, categoryId, 1, 1, pageable);
+            return articleRepository.findByUserIdAndCategoryIdAndStatusAndAvailable(userId, categoryId, 1, 1, pageable);
         } else if (tagId != null) {
 
         }
-        return articleRepository.findByUserIdAndStatusAndAvaliable(userId, 1, 1, pageable);
+        return articleRepository.findByUserIdAndStatusAndAvailable(userId, 1, 1, pageable);
     }
 
     /**
@@ -108,6 +118,10 @@ public class ArticleServiceImpl implements ArticleService {
     @Transactional(rollbackFor = Exception.class)
     public void updateArticleReadCount(Long articleId, Long readCount) {
         Article article = articleRepository.findById(articleId).get();
+        // 如果阅读数没变 return
+        if (article != null && article.getReadCount().equals(readCount)) {
+            return;
+        }
         article.setReadCount(readCount);
         articleRepository.save(article);
         // 更新redis
@@ -135,5 +149,32 @@ public class ArticleServiceImpl implements ArticleService {
         return readCount;
     }
 
+    /**
+     * 根据分类id查询文章数量
+     *
+     * @param categoryId
+     * @returnC
+     */
+    @Override
+    public int countByCategoryId(Long categoryId) {
+        return articleRepository.countByCategoryId(categoryId);
+    }
 
+    /**
+     * 分页查询文章
+     *
+     * @param articleDto
+     * @return
+     */
+    @Override
+    @Transactional(readOnly = true)
+    public Page listArticlePageData(ArticleDto articleDto) {
+        String querySql = DAOHelper.getSQL(BlogDaoResourceHandler.class, "query_article_list");
+        Pageable pageable = PageRequest.of(articleDto.getPage(), articleDto.getLimit(), null);
+        ArrayList paramList = Lists.newArrayList();
+        List<Map> rows = NativeSQL.findByNativeSQLPageable(querySql, paramList, pageable);
+        int count = NativeSQL.countByNativeSQL(querySql, paramList);
+        Page page = PageUtil.page(rows, pageable, count);
+        return page;
+    }
 }

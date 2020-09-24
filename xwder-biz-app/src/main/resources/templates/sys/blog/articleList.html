@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>博客文章</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" th:href="@{/sysstatic/layui/css/layui.css}" href="layui/css/layui.css"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/sysstatic/css/public.css}" href="css/public.css"/>
+</head>
+<body class="childrenBody">
+<form class="layui-form" onkeydown="if(event.keyCode==13) return false;">
+    <blockquote class="layui-elem-quote mod_default_box">
+        <a class="layui-btn  addArticle">新增</a>　
+        <a class="layui-btn  saveArticle">保存</a>　
+        <a class="layui-btn  query">查询</a>　
+    </blockquote>
+    <table id="blogArticle" lay-filter="blogArticle"></table>
+    <!--操作-->
+    <script type="text/html" id="articleListBar">
+        <a class="layui-btn  layui-btn-xs" lay-event="editArticle">编辑</a>
+        <a class="layui-btn  layui-btn-xs" lay-event="previewArticle">编辑</a>
+        <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="publishArticle">发布</a>
+    </script>
+</form>
+<script type="text/javascript" th:src="@{/sysstatic/layui/layui.js}" src="layui/layui.js"></script>
+<script th:src="@{/sysstatic/lib/jquery/jquery.js}" src="https://cdn.bootcdn.net/ajax/libs/jquery/1.10.0/jquery.js"></script>
+<script type="text/javascript">
+    layui.use(['form', 'layer', 'table', 'laytpl'], function () {
+        let form = layui.form,
+            layer = parent.layer === undefined ? layui.layer : top.layer,
+            $ = layui.jquery,
+            laytpl = layui.laytpl,
+            table = layui.table;
+
+        //博客分类列表
+        var tableIns = table.render({
+            elem: '#blogArticle',
+            url: '/sys/blog/articleList',
+            cellMinWidth: 95,
+            page: true,
+            limits: [10, 15, 20, 25],
+            limit: 10,
+            autoSort: true,
+            cols: [
+                [
+                    {field: 'id', title: 'ID', align: "center", fixed: "left"},
+                    {field: 'userName', title: '用户名'},
+                    {field: 'categoryName', title: '分类', minWidth: 150},
+                    {field: 'title', title: '标题', minWidth: 300},
+                    {field: 'summary', title: '摘要'},
+                    {field: 'statusDesc', title: '状态'},
+                    {
+                        field: 'previewImage', title: '预览图',
+                        templet: function (d) {
+                            return '<div ><img src="' + d.previewImage + '" alt="" width="50px" height="50px" onclick="showBigImage(this)"></a></div>';
+                        }
+                    },
+                    {field: 'readCount', title: '阅读数'},
+                    {field: 'comments', title: '评论数'},
+                    {field: 'likes', title: '点赞数'},
+                    {field: 'favors', title: '收藏数',},
+                    {field: 'modifieCount', title: '编辑次数'},
+                    {field: 'articleType', title: '原创转载'},
+                    {field: 'publishTime', title: '发布时间', minWidth: 180},
+                    {
+                        title: '操作', minWidth: 200, templet: '#articleListBar', fixed: "right"
+                    }
+                ]
+            ],
+            parseData: function (res) {
+                if (res.code == 200) {
+                    let data = {
+                        "code": 0,
+                        "msg": res.message,
+                        "count": res.data.totalElements,
+                        "data": res.data.content
+                    };
+                    return data;
+                }
+            },
+        });
+
+
+    })
+
+    let $ = layui.jquery;
+
+    /**
+     * @param e 图片对象
+     */
+    function showBigImage(e) {
+        layer.open({
+            type: 1,
+            title: false,
+            closeBtn: 0,
+            shadeClose: true, //点击阴影关闭
+            area: [$(e).width + 'px', $(e).height + 'px'], //宽高
+            content: "<img src=" + $(e).attr('src') + " />"
+        });
+    }
+</script>
+</body>
+</html>

@@ -18,10 +18,10 @@
     <blockquote class="layui-elem-quote quoteBox mod_default_box">
         <form class="layui-form">
             <div class="layui-inline">
-                <a class="layui-btn addJob">添加定时任务</a>
+                <a class="layui-btn addJob">添加</a>
             </div>
             <div class="layui-inline">
-                <a class="layui-btn  delAll_btn">批量删除</a>
+                <a class="layui-btn  query">查询</a>
             </div>
         </form>
     </blockquote>
@@ -165,19 +165,27 @@
                         });
                     } else {
                         layer.msg(data.message, {
-                            icon: 6,
+                            icon: 2,
                             time: 1000
                         });
                     }
 
                 },
                 error: function (data) {
-                    $.messager.alert('错误', data.message);
+                    layer.msg('操作失败，服务发生错误', {
+                        icon: 2,
+                        time: 1000
+                    }, function () {});
                     layer.close(ii);
                 }
             });
             return false;
         })
+
+        // 查询定时任务
+        $(".query").click(function () {
+            tableIns.reload();
+        });
 
         // 新增定时任务
         $(".addJob").click(function () {
@@ -246,14 +254,17 @@
                             tableIns.reload();
                         } else {
                             layer.msg(data.message, {
-                                icon: 6,
+                                icon: 2,
                                 time: 1000
                             }, function () {
                             });
                         }
                     },
                     error: function (data) {
-                        $.messager.alert('错误', data.message);
+                        layer.msg('操作失败，服务发生错误', {
+                            icon: 2,
+                            time: 1000
+                        }, function () {});
                     }
                 });
                 return false;
@@ -272,7 +283,6 @@
                     layer.close(index);
                 }
             }, function (index) {
-                console.log("立即执行");
                 $.ajax({
                     url: "/sys/job/run",
                     data: {'jobId': job.jobId, 'jobGroup': job.jobGroup},
@@ -283,7 +293,10 @@
                         layer.msg(data.message);
                     },
                     error: function (data) {
-                        $.messager.alert('错误', data.message);
+                        layer.msg('操作失败，服务发生错误', {
+                            icon: 2,
+                            time: 1000
+                        }, function () {});
                     }
                 });
 

@@ -9,5 +9,5 @@ import org.springframework.context.annotation.Configuration;
  * @date 2020/08/05
  */
 @Configuration
-public class CagetoryDaoResourceHandler extends BaseDaoResourceHandler {
+public class BlogDaoResourceHandler extends BaseDaoResourceHandler {
 }

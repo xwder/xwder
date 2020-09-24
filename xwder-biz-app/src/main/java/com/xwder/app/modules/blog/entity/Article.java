@@ -78,6 +78,12 @@ public class Article implements Serializable {
     private Long favors;
 
     /**
+     * 点赞数量
+     */
+    @Column(name = "likes")
+    private Long likes;
+
+    /**
      * 评论数
      */
     @Column(name = "comments")
@@ -122,8 +128,8 @@ public class Article implements Serializable {
     /**
      * 是否可用
      */
-    @Column(name = "is_avaliable")
-    private Integer avaliable;
+    @Column(name = "is_available")
+    private Integer available;
 
     /**
      * 备注
@@ -285,12 +291,12 @@ public class Article implements Serializable {
     }
 
 
-    public Integer getAvaliable() {
-        return avaliable;
+    public Integer getAvailable() {
+        return available;
     }
 
-    public void setAvaliable(Integer isAvaliable) {
-        this.avaliable = isAvaliable;
+    public void setavailable(Integer isAvailable) {
+        this.available = isAvailable;
     }
 
 
@@ -326,5 +332,13 @@ public class Article implements Serializable {
 
     public void setArticleType(String articleType) {
         this.articleType = articleType;
+    }
+
+    public Long getLikes() {
+        return likes;
+    }
+
+    public void setLikes(Long likes) {
+        this.likes = likes;
     }
 }

@@ -81,8 +81,8 @@ public class FileUploadRecord implements Serializable {
     /**
      * 是否已删除默认为删除1 0-删除
      */
-    @Column(name = "is_avaliable")
-    private Integer isAvaliable;
+    @Column(name = "is_available")
+    private Integer isavailable;
 
     /**
      * 备注
@@ -165,12 +165,12 @@ public class FileUploadRecord implements Serializable {
     }
 
 
-    public Integer getIsAvaliable() {
-        return isAvaliable;
+    public Integer getIsavailable() {
+        return isavailable;
     }
 
-    public void setIsAvaliable(Integer isAvaliable) {
-        this.isAvaliable = isAvaliable;
+    public void setIsavailable(Integer isavailable) {
+        this.isavailable = isavailable;
     }
 
 

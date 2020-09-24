@@ -3,13 +3,13 @@ package com.xwder.app.interceptor;
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.StrUtil;
 import com.xwder.app.attribute.SysConfigAttribute;
+import com.xwder.app.config.web.GlobalDataCacheConfig;
 import com.xwder.app.consts.SysConstant;
 import com.xwder.app.modules.blog.service.intf.CategoryService;
 import com.xwder.app.modules.user.entity.User;
 import com.xwder.app.modules.user.service.intf.UserService;
 import com.xwder.app.utils.CookieUtils;
 import com.xwder.app.utils.SessionUtil;
-import com.xwder.app.utils.StringUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -20,8 +20,6 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -57,7 +55,7 @@ public class GlobalInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         log.info("全局数据处理拦截器 GoableInterceptor拦截到访问的地址: {}", request.getRequestURL().toString());
-        getLoginUser(request,response,handler);
+        getLoginUser(request, response, handler);
         buildPotalData(request, response, handler);
         refreshRedisSession(request, response, handler);
         return true;
@@ -101,19 +99,10 @@ public class GlobalInterceptor implements HandlerInterceptor {
      */
     private void buildPotalData(HttpServletRequest request, HttpServletResponse response, Object handler) {
         HttpSession session = request.getSession();
-        Map potalDataMap = (Map) session.getAttribute("potalDataMap");
-        if (CollectionUtil.isNotEmpty(potalDataMap)) {
-            if (CollectionUtil.isEmpty((List) potalDataMap.get("categoryMapList"))) {
-                // 博客归档分类信息
-                List<Map> categoryMapList = categoryService.listCategoryArticleCount(null);
-                potalDataMap.put("categoryMapList", categoryMapList);
-            }
-        } else {
-            potalDataMap = new HashMap();
+        Map portalDataMap = (Map) session.getAttribute("potalDataMap");
+        if (CollectionUtil.isEmpty(portalDataMap)) {
             // 博客归档分类信息
-            List<Map> categoryMapList = categoryService.listCategoryArticleCount(null);
-            potalDataMap.put("categoryMapList", categoryMapList);
-            session.setAttribute("potalDataMap", potalDataMap);
+            session.setAttribute("potalDataMap", GlobalDataCacheConfig.portalDataMap);
         }
     }
 

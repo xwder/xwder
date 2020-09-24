@@ -21,6 +21,15 @@
       ]
     },
     {
+      "title": "用户中心",
+      "icon": "&#xe770;",
+      "href": "",
+      "spread": true,
+      "children": [
+
+      ]
+    },
+    {
       "title": "博客管理",
       "icon": "&#xe642;",
       "href": "",
@@ -29,7 +38,7 @@
         {
           "title": "文章管理",
           "icon": "",
-          "href": "/sys/blog/categoryListPage.html",
+          "href": "/sys/blog/articleListPage.html",
           "spread": false
         },
         {
@@ -41,7 +50,7 @@
         {
           "title": "标签管理",
           "icon": "",
-          "href": "/sys/novel/bookListPage.html",
+          "href": "/sys/blog/tagListPage.html",
           "spread": false
         }
       ]
@@ -78,15 +87,6 @@
           "href": "/sys/novel/bookListPage.html",
           "spread": false
         }
-      ]
-    },
-    {
-      "title": "用户中心",
-      "icon": "&#xe770;",
-      "href": "",
-      "spread": true,
-      "children": [
-
       ]
     }
   ]

@@ -1,9 +1,11 @@
 package com.xwder.app.modules.blog.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.hibernate.annotations.Filter;
 import org.hibernate.annotations.FilterDef;
 import org.hibernate.annotations.FilterDefs;
 import org.hibernate.annotations.Filters;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -52,15 +54,19 @@ public class Category implements Serializable {
     /**
      * 是否可用
      */
-    @Column(name = "is_avaliable")
+    @Column(name = "is_available")
     private Integer available;
 
     @Column(name = "remark")
     private String remark;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Column(name = "gmt_create")
     private Date gmtCreate;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Column(name = "gmt_modified")
     private Date gmtModified;
 
@@ -102,8 +108,8 @@ public class Category implements Serializable {
         return available;
     }
 
-    public void setAvailable(Integer isAvaliable) {
-        this.available = isAvaliable;
+    public void setAvailable(Integer isavailable) {
+        this.available = isavailable;
     }
 
 

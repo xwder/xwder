@@ -121,7 +121,10 @@
                     }
                 },
                 error: function (data) {
-                    $.messager.alert('错误', data.message);
+                    layer.msg('操作失败，服务发生错误', {
+                        icon: 2,
+                        time: 1000
+                    }, function () {});
                 }
             });
             return false;

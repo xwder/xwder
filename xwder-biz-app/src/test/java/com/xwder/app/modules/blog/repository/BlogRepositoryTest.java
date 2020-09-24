@@ -60,9 +60,9 @@ public class BlogRepositoryTest {
         List<Object> articles = articleRepository.listArticleByUserId3(1L);
         List<Map<String, Object>> maps = articleRepository.listArticleByUserId2(1L);
 
-        String sql = "SELECT id,user_id,user_name,category_id,tags,title,summary,preview_image,favors,comments,read_count,article_type,is_avaliable,publish_time\n" +
+        String sql = "SELECT id,user_id,user_name,category_id,tags,title,summary,preview_image,favors,comments,read_count,article_type,is_available,publish_time\n" +
                 "from blog_article \n" +
-                "WHERE status = 1 and is_avaliable = 1 and user_id =  1 " +
+                "WHERE status = 1 and is_available = 1 and user_id =  1 " +
                 "ORDER BY gmt_modified desc ";
         Query query = em.createNativeQuery(sql);
         query.unwrap(SQLQuery.class).setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP);

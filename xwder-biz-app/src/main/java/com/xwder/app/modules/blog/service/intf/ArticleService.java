@@ -1,6 +1,8 @@
 package com.xwder.app.modules.blog.service.intf;
 
 import com.xwder.app.modules.blog.entity.Article;
+import com.xwder.app.sysmodules.blog.dto.ArticleDto;
+import com.xwder.app.sysmodules.blog.dto.CategoryDto;
 import org.springframework.data.domain.Page;
 
 import java.util.List;
@@ -59,4 +61,19 @@ public interface ArticleService {
      * @param readCount
      */
     void updateArticleReadCount(Long articleId, Long readCount);
+
+    /**
+     * 根据分类id查询文章数量
+     * @param categoryId
+     * @returnC
+     */
+    int countByCategoryId(Long categoryId);
+
+    /**
+     * 分页查询文章
+     *
+     * @param articleDto
+     * @return
+     */
+    Page listArticlePageData(ArticleDto articleDto);
 }

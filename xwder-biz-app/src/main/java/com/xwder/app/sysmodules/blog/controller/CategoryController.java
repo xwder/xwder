@@ -7,8 +7,6 @@ import com.xwder.app.modules.blog.entity.Category;
 import com.xwder.app.modules.blog.service.intf.CategoryService;
 import com.xwder.app.modules.user.entity.User;
 import com.xwder.app.sysmodules.blog.dto.CategoryDto;
-import com.xwder.app.sysmodules.quartz.dto.SysJobDto;
-import com.xwder.app.sysmodules.quartz.entity.SysJob;
 import com.xwder.app.utils.SessionUtil;
 import org.quartz.SchedulerException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,12 +33,12 @@ public class CategoryController {
     private CategoryService categoryService;
 
     /**
-     * 定时任务列表页面
+     * 博客分类列表页面
      *
      * @return
      */
     @RequestMapping(value = "/categoryListPage")
-    public String listSysJobPage() {
+    public String listCategoryPage() {
         return "sys/blog/categoryList";
     }
 
@@ -50,17 +48,17 @@ public class CategoryController {
      * @param categoryDto
      * @return
      */
-    @RequestMapping("/list")
+    @RequestMapping("/categoryList")
     @ResponseBody
     public CommonResult listCategory(CategoryDto categoryDto) {
-        Page<Category> categoryPage = categoryService.listCategoryPageData(categoryDto);
+        Page  categoryPage = categoryService.listCategoryArticleCountPageData(categoryDto);
         return CommonResult.success(categoryPage);
     }
 
     /**
      * 新增 Category
      */
-    @PostMapping("/add")
+    @PostMapping("/addCategory")
     @ResponseBody
     public CommonResult addCategory(@Validated Category category) throws SchedulerException, TaskException {
         User sessionUser = (User) SessionUtil.getSessionAttribute(SysConstant.SESSION_USER);
@@ -76,10 +74,20 @@ public class CategoryController {
     /**
      * 修改分类
      */
-    @PostMapping("/update")
+    @PostMapping("/updateCategory")
     @ResponseBody
     public CommonResult updateCategory(@Validated Category category) throws SchedulerException, TaskException {
         Category saveCategory = categoryService.updateCategory(category);
         return CommonResult.success(saveCategory);
+    }
+
+    /**
+     * 删除 分类
+     */
+    @PostMapping("/deleteCategory")
+    @ResponseBody
+    public CommonResult deleteCategory(long id) throws SchedulerException, TaskException {
+        CommonResult commonResult = categoryService.deleteCategoryById(id);
+        return commonResult;
     }
 }
