@@ -14,6 +14,7 @@ import com.xwder.app.modules.blog.entity.Article;
 import com.xwder.app.modules.blog.entity.Category;
 import com.xwder.app.modules.blog.entity.Tag;
 import com.xwder.app.modules.blog.service.intf.ArticleService;
+import com.xwder.app.modules.blog.service.intf.ArticleTagService;
 import com.xwder.app.modules.blog.service.intf.CategoryService;
 import com.xwder.app.modules.blog.service.intf.TagService;
 import com.xwder.app.modules.user.entity.User;
@@ -54,6 +55,9 @@ public class ArticleController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private ArticleTagService articleTagService;
 
 
     /**
@@ -102,7 +106,7 @@ public class ArticleController {
      * @param model
      * @return
      */
-    @RequestMapping(value = "/edit/article/preview")
+    @RequestMapping(value = "/article/preview")
     public String articlePreview(Model model) {
         return "blog/article/proview";
     }
@@ -168,11 +172,15 @@ public class ArticleController {
         article.setArticleType(type);
 
 
+
+
         Map responseData = new HashMap();
         // 保存只给出响应信息 预览和发布调整到新的页面
         if (StrUtil.equalsAnyIgnoreCase(action, "save")) {
             article.setModifieCount(article.getModifieCount() + 1);
             Article saveArticle = articleService.saveOrUpdateArticle(article);
+            // 更新 articleTag 表
+            articleTagService.saveOrUpdateArticleTags(sessionUser.getId(),saveArticle.getId(),tagList);
             responseData.put("id", saveArticle.getId());
             return CommonResult.success(responseData);
         }
@@ -195,6 +203,9 @@ public class ArticleController {
             article.setStatus(1);
             article.setPublishTime(new Date());
             Article saveArticle = articleService.saveOrUpdateArticle(article);
+            // 更新 articleTag 表
+            articleTagService.saveOrUpdateArticleTags(sessionUser.getId(),saveArticle.getId(),tagList);
+
             String redirectUrl = "/blog/article/" + saveArticle.getId() + ".html";
             responseData.put("id", saveArticle.getId());
             responseData.put("redirectUrl", redirectUrl);

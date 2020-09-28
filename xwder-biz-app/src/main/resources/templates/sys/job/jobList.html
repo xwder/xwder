@@ -196,7 +196,7 @@
         //添加编辑定时任务
         function editJOb(job) {
             let jobId = "";
-            if (!(typeof (job) == undefined)) {
+            if (!(typeof (job) == "undefined")) {
                 jobId = job.jobId;
             }
             var index = layui.layer.open({
@@ -220,7 +220,6 @@
                         body.find(".remark").text(job.remark); //用户简介
                         body.find(".user-add-button").text('修改'); //用户简介
                     }
-                    let form = layui.form
                     form.render();
                 }
             })

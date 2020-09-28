@@ -3,7 +3,6 @@ package com.xwder.app.modules.blog.service.intf;
 import com.xwder.app.common.result.CommonResult;
 import com.xwder.app.modules.blog.entity.Category;
 import com.xwder.app.sysmodules.blog.dto.CategoryDto;
-import javafx.scene.chart.CategoryAxis;
 import org.springframework.data.domain.Page;
 
 import java.util.List;
@@ -50,6 +49,7 @@ public interface CategoryService {
 
     /**
      * 分页查询category 每个分类下博文数量
+     *
      * @param categoryDto
      * @return
      */
@@ -73,6 +73,7 @@ public interface CategoryService {
 
     /**
      * 删除 category 根据id
+     *
      * @param id
      * @return
      */

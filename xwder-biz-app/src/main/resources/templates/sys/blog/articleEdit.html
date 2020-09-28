@@ -76,49 +76,29 @@
     </div>
     <div class="layui-col-md3 layui-col-xs12">
         <blockquote class="layui-elem-quote title"><i class="seraph icon-caidan"></i> 分类目录</blockquote>
-        <div class="border category">
-            <div class="">
-                <p><input type="checkbox" name="news" title="新闻" lay-skin="primary" /></p>
-                <p><input type="checkbox" name="goods" title="商品" lay-skin="primary" /></p>
-                <p><input type="checkbox" name="notice" title="公告" lay-skin="primary" /></p>
-                <p><input type="checkbox" name="images" title="图片" lay-skin="primary" /></p>
+        <div class="layui-form-item">
+            <div class="layui-input-block categoryId">
+                <select name="categoryId" lay-verify="required">
+                    <option value="">请选择</option>
+                    <option th:each="c : ${categoryList}" th:value="${c.id}" th:text="${c.categoryName}"></option>
+                </select>
             </div>
         </div>
         <blockquote class="layui-elem-quote title magt10"><i class="layui-icon">&#xe609;</i> 发布</blockquote>
         <div class="border">
             <div class="layui-form-item">
-                <label class="layui-form-label"><i class="layui-icon">&#xe60e;</i> 状　态</label>
-                <div class="layui-input-block newsStatus">
-                    <select name="status" lay-verify="required">
-                        <option value="0">保存草稿</option>
-                        <option value="1">等待审核</option>
-                    </select>
+                <label class="layui-form-label"><i class="layui-icon">&#xe609;</i> 类 　型</label>
+                <div class="layui-input-block articleType">
+                    <input type="radio" name="articleType" title="原创" value="原创" lay-skin="primary" lay-filter="articleType" checked />
+                    <input type="radio" name="articleType" title="转载" value="转载" lay-skin="primary" lay-filter="articleType" />
+                    <input type="radio" name="articleType" title="翻译" value="翻译" lay-skin="primary" lay-filter="articleType" />
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label"><i class="layui-icon">&#xe609;</i> 发　布</label>
-                <div class="layui-input-block">
-                    <input type="radio" name="release" title="立即发布" lay-skin="primary" lay-filter="release" checked />
-                    <input type="radio" name="release" title="定时发布" lay-skin="primary" lay-filter="release" />
-                </div>
-            </div>
-            <div class="layui-form-item layui-hide releaseDate">
-                <label class="layui-form-label"></label>
-                <div class="layui-input-block">
-                    <input type="text" class="layui-input" id="release" placeholder="请选择日期和时间" readonly />
-                </div>
-            </div>
-            <div class="layui-form-item openness">
-                <label class="layui-form-label"><i class="seraph icon-look"></i> 公开度</label>
-                <div class="layui-input-block">
-                    <input type="radio" name="openness" title="开放浏览" lay-skin="primary" checked />
-                    <input type="radio" name="openness" title="私密浏览" lay-skin="primary" />
-                </div>
-            </div>
-            <div class="layui-form-item newsTop">
-                <label class="layui-form-label"><i class="seraph icon-zhiding"></i> 置　顶</label>
-                <div class="layui-input-block">
-                    <input type="checkbox" name="newsTop" lay-skin="switch" lay-text="是|否">
+                <div class="layui-input-block status">
+                    <input type="radio" name="status" title="已发布" value="1" lay-skin="primary" lay-filter="status" checked />
+                    <input type="radio" name="status" title="未发布" value="0" lay-skin="primary" lay-filter="status" />
                 </div>
             </div>
             <hr class="layui-bg-gray" />
