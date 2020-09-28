@@ -14,7 +14,6 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import sun.misc.BASE64Encoder;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
@@ -27,6 +26,9 @@ import java.security.Key;
 import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+
+import java.util.Base64.Encoder;
+import java.util.Base64.Decoder;
 
 /**
  * @Author: xwder
@@ -45,7 +47,12 @@ public class QCloudSMSServiceImpl implements QCloudSMSService {
         Key sKey = new SecretKeySpec(secretKey.getBytes("UTF-8"), mac.getAlgorithm());
         mac.init(sKey);
         byte[] hash = mac.doFinal(signStr.getBytes("UTF-8"));
-        String sig = new BASE64Encoder().encode(hash);
+
+        // jdk11
+        Encoder encoder = Base64.getEncoder();
+        String sig = encoder.encodeToString(hash);
+        // Jdk8
+        //String sig = new BASE64Encoder().encode(hash);
 
         String auth = "hmac id=\"" + secretId + "\", algorithm=\"hmac-sha1\", headers=\"x-date x-source\", signature=\"" + sig + "\"";
         return auth;
