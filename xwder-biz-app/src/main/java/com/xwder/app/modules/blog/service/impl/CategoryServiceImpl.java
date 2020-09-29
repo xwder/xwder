@@ -145,8 +145,8 @@ public class CategoryServiceImpl implements CategoryService {
     @Transactional(readOnly = true)
     public Page listCategoryArticleCountPageData(CategoryDto categoryDto) {
         String querySql = DAOHelper.getSQL(BlogDaoResourceHandler.class, "query_category_aritcle_count");
-        List params = new ArrayList<>();
         User sessionUser = (User) SessionUtil.getSessionAttribute(SysConstant.SESSION_USER);
+        List params = new ArrayList<>();
         params.add(sessionUser.getId());
         params.add(sessionUser.getId());
         Pageable pageable = PageRequest.of(categoryDto.getPage(), categoryDto.getLimit(), null);

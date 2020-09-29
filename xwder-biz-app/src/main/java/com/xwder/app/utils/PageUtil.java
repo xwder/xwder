@@ -4,6 +4,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -25,6 +26,19 @@ public class PageUtil {
      */
     public static Page page(List list, Pageable pageable, long total) {
         Page page = new PageImpl<>(list, pageable, total);
+        return page;
+    }
+
+    /**
+     * 构建分页对象
+     *
+     * @param list
+     * @param pageable
+     * @param total
+     * @return
+     */
+    public static Page noContentPage(Pageable pageable, long total) {
+        Page page = new PageImpl<>(new ArrayList<>(), pageable, total);
         return page;
     }
 }

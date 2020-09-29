@@ -4,6 +4,7 @@ import com.xwder.app.modules.blog.entity.Article;
 import com.xwder.app.sysmodules.blog.dto.ArticleDto;
 import com.xwder.app.sysmodules.blog.dto.CategoryDto;
 import org.springframework.data.domain.Page;
+import org.springframework.ui.Model;
 
 import java.util.List;
 
@@ -76,4 +77,14 @@ public interface ArticleService {
      * @return
      */
     Page listArticlePageData(ArticleDto articleDto);
+
+    /**
+     * 博客分页分类展示页面
+     * @param categoryId
+     * @param tagId
+     * @param pageNum
+     * @param pageSize
+     * @param model
+     */
+    void listArticleCategoryTag(Long categoryId, Long tagId, Integer pageNum, Integer pageSize, Model model);
 }

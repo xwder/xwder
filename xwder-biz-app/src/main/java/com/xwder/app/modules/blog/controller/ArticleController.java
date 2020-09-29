@@ -11,6 +11,7 @@ import com.google.common.base.Joiner;
 import com.xwder.app.common.result.CommonResult;
 import com.xwder.app.consts.SysConstant;
 import com.xwder.app.modules.blog.entity.Article;
+import com.xwder.app.modules.blog.entity.ArticleTag;
 import com.xwder.app.modules.blog.entity.Category;
 import com.xwder.app.modules.blog.entity.Tag;
 import com.xwder.app.modules.blog.service.intf.ArticleService;
@@ -58,7 +59,6 @@ public class ArticleController {
 
     @Autowired
     private ArticleTagService articleTagService;
-
 
     /**
      * 从查看博客文章页面点击修改博客
@@ -172,15 +172,13 @@ public class ArticleController {
         article.setArticleType(type);
 
 
-
-
         Map responseData = new HashMap();
         // 保存只给出响应信息 预览和发布调整到新的页面
         if (StrUtil.equalsAnyIgnoreCase(action, "save")) {
             article.setModifieCount(article.getModifieCount() + 1);
             Article saveArticle = articleService.saveOrUpdateArticle(article);
             // 更新 articleTag 表
-            articleTagService.saveOrUpdateArticleTags(sessionUser.getId(),saveArticle.getId(),tagList);
+            articleTagService.saveOrUpdateArticleTags(sessionUser.getId(), saveArticle.getId(), tagList);
             responseData.put("id", saveArticle.getId());
             return CommonResult.success(responseData);
         }
@@ -204,7 +202,7 @@ public class ArticleController {
             article.setPublishTime(new Date());
             Article saveArticle = articleService.saveOrUpdateArticle(article);
             // 更新 articleTag 表
-            articleTagService.saveOrUpdateArticleTags(sessionUser.getId(),saveArticle.getId(),tagList);
+            articleTagService.saveOrUpdateArticleTags(sessionUser.getId(), saveArticle.getId(), tagList);
 
             String redirectUrl = "/blog/article/" + saveArticle.getId() + ".html";
             responseData.put("id", saveArticle.getId());
@@ -232,20 +230,16 @@ public class ArticleController {
         Category category = categoryService.getCategoryById(article.getCategoryId());
         Map articleMap = new HashMap();
         articleMap.put("category", category);
-        String tags = article.getTags();
-        if (StrUtil.isNotEmpty(tags)) {
-            String[] splits = tags.split("-");
-            List ids = new ArrayList();
-            for (String split : splits) {
-                ids.add(Long.parseLong(split));
-            }
-            List tagList = tagService.listTagById(ids);
+
+        // 查询该文章的标签
+        List<ArticleTag> articleTagList = articleTagService.listArticleTagByArticleId(articleId);
+        List<Long> tagIds = articleTagList.stream().map(ArticleTag::getTagId).collect(Collectors.toList());
+        if (tagIds != null && !tagIds.isEmpty()) {
+            List tagList = tagService.listTagById(tagIds);
             articleMap.put("tagList", tagList);
         }
-
         articleMap.put("article", article);
         model.addAttribute("articleMap", articleMap);
-
         // 文章阅读数+1
         Integer readCount = articleService.addArticleReadCount(articleId, Math.toIntExact(article.getReadCount()), 1);
         article.setReadCount(readCount.longValue());
@@ -257,89 +251,14 @@ public class ArticleController {
      *
      * @return
      */
-    @RequestMapping(value = {"/article/list", "/article/user/{userName}"})
-    public String articleList(@PathVariable(required = false) String userName, HttpServletRequest request,
+    @RequestMapping(value = {"/article/list"})
+    public String articleList(HttpServletRequest request,
                               @RequestParam(value = "pageNum", required = false, defaultValue = "1") @Min(1) @Max(10000) Integer pageNum,
                               @RequestParam(value = "pageSize", required = false, defaultValue = "6") @Min(1) @Max(10) Integer pageSize,
-                              @RequestParam(value = "category", required = false) Long category,
-                              @RequestParam(value = "tag", required = false) Long tag,
+                              @RequestParam(value = "categoryId", required = false) Long categoryId,
+                              @RequestParam(value = "tagId", required = false) Long tagId,
                               Model model) {
-        Long startTime = System.currentTimeMillis();
-        String templatesUrl = "blog/article/list";
-        String currentUrl = "blog/article";
-        User searchUser = null;
-        // 是否有传递用户信息
-        if (StrUtil.isNotEmpty(userName)) {
-            searchUser = userService.getUserByUserName(userName);
-            currentUrl = "/" + currentUrl + "/user/" + userName + ".html";
-        } else {
-            currentUrl = "/" + currentUrl + "/list.html";
-        }
-        if (searchUser == null) {
-            // 没有传递用户信息 当前登录用户
-            User sessionUser = (User) SessionUtil.getSessionAttribute(SysConstant.SESSION_USER);
-            if (searchUser != null) {
-                searchUser = sessionUser;
-            } else {
-                List<User> users = userService.listManagerUser();
-                if (CollectionUtil.isNotEmpty(users)) {
-                    searchUser = users.get(0);
-                } else {
-                    // 没有用户信息
-                    model.addAttribute("articleListError", 0);
-                    return templatesUrl;
-                }
-            }
-        }
-        searchUser.setPassword(null);
-        searchUser.setEmail(null);
-        searchUser.setSalt(null);
-
-        List<Map> categoryMapList = categoryService.listCategoryArticleCount(searchUser.getId());
-        Page<Article> articlePage = null;
-        articlePage = articleService.listArticleByUserId(searchUser.getId(), category, tag, pageNum, pageSize);
-
-        List<Article> articleList = articlePage.getContent();
-        for (Article article : articleList) {
-            Date gmtModified = article.getGmtModified();
-            // 格式化显示时间 几小时之前、几天之前
-            String remark = TimeCountUtil.format(gmtModified);
-            article.setRemark(remark);
-        }
-
-        // 分类信息
-        if (category != null) {
-            Category categoryInfo = categoryService.getCategoryById(category);
-            model.addAttribute("categoryInfo", categoryInfo);
-        }
-
-        List<Tag> tags = tagService.listTagByUserId(searchUser.getId());
-        model.addAttribute("currentPage", pageNum);
-        model.addAttribute("pageSize", pageSize);
-
-        model.addAttribute("articlePage", articlePage);
-        model.addAttribute("articles", articleList);
-        model.addAttribute("categoryMapList", categoryMapList);
-        model.addAttribute("category", category);
-
-        model.addAttribute("currentUser", searchUser);
-        model.addAttribute("currentUrl", currentUrl);
-
-        model.addAttribute("tags", tags);
-        model.addAttribute("tag", tag);
-
-        int totalArticles = 0;
-        // 计算所有个文章总数
-        for (Map map : categoryMapList) {
-            int count = Integer.parseInt(map.get("count").toString());
-            totalArticles = totalArticles + count;
-        }
-        model.addAttribute("totalArticles", totalArticles);
-
-        double endTime = System.currentTimeMillis() - startTime;
-        double useTime = endTime / 1000;
-        model.addAttribute("useTime", useTime);
-
-        return templatesUrl;
+        articleService.listArticleCategoryTag(categoryId, tagId, pageNum, pageSize, model);
+        return "blog/article/list";
     }
 }

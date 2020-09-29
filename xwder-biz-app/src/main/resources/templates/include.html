@@ -142,7 +142,7 @@
 						<ul id="showBlogCategoryUl" class="dropdown-menu dropdown-menu-columns  dropdown-menu-columns-2" >
 							<li th:if="${session['potalDataMap'] != null && session['potalDataMap']['categoryMapList'] != null}"
 								th:each="categoryMap,categoryStat : ${session.potalDataMap['categoryMapList']}">
-								<a target="_blank" class="dropdown-item" th:text="${categoryMap['categoryName']}" th:href="${'/blog/article/list.html?category='+categoryMap['id']}" href="#" >
+								<a target="_blank" class="dropdown-item" th:text="${categoryMap['categoryName']}" th:href="${'/blog/article/list.html?categoryName='+categoryMap['categoryName']+'&categoryId='+categoryMap['id']}" href="#" >
 									JavaEE
 								</a>
 							</li>

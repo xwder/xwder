@@ -5,6 +5,8 @@ import com.xwder.app.modules.blog.entity.Tag;
 import com.xwder.app.modules.blog.repository.ArticleTagRepository;
 import com.xwder.app.modules.blog.service.intf.ArticleTagService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -50,5 +52,31 @@ public class ArticleTagServiceImpl implements ArticleTagService {
             articleTagList.add(saveArticle);
         }
         return articleTagList;
+    }
+
+    /**
+     * 根据文章id查询 articleTag
+     *
+     * @param articleId
+     * @return
+     */
+    @Override
+    public List<ArticleTag> listArticleTagByArticleId(Long articleId) {
+        List<ArticleTag> articleTags = articleTagRepository.findAllByArticleId(articleId);
+        return articleTags;
+    }
+
+    /**
+     * 根据用户id和tagId查询 articleTag list
+     *
+     * @param userId
+     * @param tagId
+     * @param pageable
+     * @return
+     */
+    @Override
+    public Page<ArticleTag> listArticleTagByUserIdAndArticleId(Long userId, Long tagId, Pageable pageable) {
+        Page<ArticleTag> articleTagsPage = articleTagRepository.findByUserIdAndTagId(userId, tagId, pageable);
+        return articleTagsPage;
     }
 }

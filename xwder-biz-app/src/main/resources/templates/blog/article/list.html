@@ -32,7 +32,8 @@
                     <div class="col-auto">
                         <h2 class="page-title">
                             <a href="" th:href="${'/blog/article/list.html'}">博客归类 </a>
-                            <a href="#"><span th:if="${categoryInfo != null}" th:text="${'-> ' + categoryInfo.categoryName}">MySQL数据库</span></a>
+                            <a href="#"><span th:if="${categoryInfo != null}"
+                                              th:text="${'-> ' + categoryInfo.categoryName}">MySQL数据库</span></a>
                         </h2>
                     </div>
                     <div class="col-auto">
@@ -51,8 +52,8 @@
                             <div th:if="${categoryMapList != null}"
                                  th:each="categoryMap,categoryStat : ${categoryMapList}">
                                 <a class="list-group-item list-group-item-action d-flex align-items-center"
-                                   th:class="${(category != null && categoryMap['id'] eq category )?'list-group-item list-group-item-action d-flex align-items-center active' : 'list-group-item list-group-item-action d-flex align-items-center'}"
-                                   th:href="${currentUrl + '?category='+ categoryMap['id'] + (pageNum == null ? '' : ('&pageNum='+pageNum)) +(pageSize == null ? '': ('&pageSize='+pageSize))+ (category==null?'':('&category='+category))}">
+                                   th:class="${(categoryId != null && categoryMap['id'] eq categoryId )?'list-group-item list-group-item-action d-flex align-items-center active' : 'list-group-item list-group-item-action d-flex align-items-center'}"
+                                   th:href="${'/blog/article/list.html?categoryName=' + categoryMap['categoryName'] + '&categoryId='+ categoryMap['id']+  (pageNum == null ? '' : ('&pageNum='+pageNum)) +(pageSize == null ? '': ('&pageSize='+pageSize))}">
                                     <span th:text="${categoryMap['categoryName']}">SpringCloud</span>
                                     <span class="text-muted ml-auto"
                                           th:text="'( '+${categoryMap['count']}+' )'">24</span>
@@ -61,7 +62,7 @@
                             <div>
                                 <a class="list-group-item list-group-item-action d-flex align-items-center <!--active-->"
                                    href="#"
-                                   th:href="${currentUrl + (pageNum == null ? '' : ('?pageNum='+pageNum)) +(pageSize == null ? '': ('&pageSize='+pageSize))}">
+                                   th:href="${'/blog/article/list.html' + (pageNum == null ? '' : ('?pageNum='+pageNum)) +(pageSize == null ? '': ('&pageSize='+pageSize))}">
                                     <span>所有文章</span>
                                     <span class="text-muted ml-auto" th:text="'( '+${totalArticles}+' )'">( 24 )</span>
                                 </a>
@@ -72,9 +73,11 @@
                             <div class="form-selectgroup form-selectgroup-pills">
                     <span th:if="${tags != null}"
                           th:each="tag,tagStat : ${tags}">
-                      <a th:href="${currentUrl+'?tag='+tag.id+ (pageNum == null ? '' : ('&pageNum='+pageNum)) +(pageSize == null ? '': ('&pageSize='+pageSize))}">
+                      <a th:href="${'/blog/article/list.html'+'?tagId='+tag.id + '&tagName='+ tag.tagName +(pageNum == null ? '' : ('&pageNum='+pageNum)) +(pageSize == null ? '': ('&pageSize='+pageSize))}">
                         <label class="form-selectgroup-item">
-                         <span class="form-selectgroup-label" th:text="${tag.tagName}">HTML</span>
+                         <span class="form-selectgroup-label"
+                               th:style="${(tag.id eq tagId) ? 'color: #206bc4;background: rgba(32,107,196,.04);border-color: #206bc4;' :''}"
+                               th:text="${tag.tagName}">HTML</span>
                         </label>
                       </a>
                     </span>
@@ -99,10 +102,10 @@
 
                                                     <i class="icon-frame"></i>
                                                     <div class="overlay">
-                                                    <img class="lazy thumbnail"
-                                                         th:src="${(article.previewImage == null || article.previewImage eq '') ? 'https://www.zktools.cn/storage/thumbnails/_signature/2STGCKQNNKI1R0TDOUQG42U1LM.jpg' : article.previewImage}"
-                                                         src="https://www.zktools.cn/storage/thumbnails/_signature/2STGCKQNNKI1R0TDOUQG42U1LM.jpg"
-                                                         style="display: inline-block;object-fit: cover;">
+                                                        <img class="lazy thumbnail"
+                                                             th:src="${(article.previewImage == null || article.previewImage eq '') ? 'https://www.zktools.cn/storage/thumbnails/_signature/2STGCKQNNKI1R0TDOUQG42U1LM.jpg' : article.previewImage}"
+                                                             src="https://www.zktools.cn/storage/thumbnails/_signature/2STGCKQNNKI1R0TDOUQG42U1LM.jpg"
+                                                             style="display: inline-block;object-fit: cover;">
                                                     </div>
                                                 </div>
                                             </a>
@@ -137,8 +140,10 @@
                                                             19小时前
                                                             </span>
                                                         </li>
-                                                        <li class="ico-time" th:if="${session.sessionUser != null && session.sessionUser.id eq article.userId}">
-                                                            <a th:href="${'/blog/edit/article.html?id='+article.id}" target="_blank">
+                                                        <li class="ico-time"
+                                                            th:if="${session.sessionUser != null && session.sessionUser.id eq article.userId}">
+                                                            <a th:href="${'/blog/edit/article.html?id='+article.id}"
+                                                               target="_blank">
                                                                 <span class="nav-link-icon d-md-none d-lg-inline-block">
                                                                     <img th:src="@{/static/image/blog/edit.png}">
                                                                 </span>
@@ -173,14 +178,14 @@
 
                             <!-- 首页 -->
                             <li class="page-item pageItem"><a class="page-link" href="#"
-                                                              th:href="${currentUrl + '?pageNum=1'+(pageSize == null ? '': ('&pageSize='+pageSize))+ (category==null?'':('&category='+category)) + (tag==null?'':('&tag='+tag)) }">首页</a>
+                                                              th:href="${'/blog/article/list.html' + '?pageNum=1'+(pageSize == null ? '': ('&pageSize='+pageSize))+ (categoryId==null?'':('&categoryId='+category)) + (tag==null?'':('&tag='+tag)) }">首页</a>
                             </li>
 
                             <!-- 上一页 -->
                             <li class="page-item pageItem disabled" th:if="${articlePage.hasPrevious()}"
                                 th:class="${articlePage.hasPrevious()?'page-item pageItem':'page-item pageItem disabled'}">
                                 <a class="page-link" href="#"
-                                   th:href="${currentUrl + '?pageNum=' + (articlePage.previousPageable().getPageNumber()+1)+(pageSize == null ? '': ('&pageSize='+pageSize))+(category==null?'':('&category='+category)) + (tag==null?'':('&tag='+tag))}"
+                                   th:href="${'/blog/article/list.html' + '?pageNum=' + (articlePage.previousPageable().getPageNumber()+1)+(pageSize == null ? '': ('&pageSize='+pageSize))+(categoryId==null?'':('&categoryId='+category)) + (tag==null?'':('&tag='+tag))}"
                                    tabindex="-1">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
                                          viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
@@ -197,7 +202,7 @@
                         th:class="${pageNum==currentPage} ? 'page-item pageItem active' : 'page-item pageItem'"
                         th:if="${((pageNum le articlePage.getTotalPages()) && (pageNum gt 0)) && (pageNum le articlePage.getTotalPages())}">
                       <a class="page-link"
-                         th:href="${currentUrl + '?pageNum=' + pageNum+(pageSize == null ? '': ('&pageSize='+pageSize))+(category==null?'':('&category='+category)) + (tag==null?'':('&tag='+tag))}"
+                         th:href="${'/blog/article/list.html' + '?pageNum=' + pageNum+(pageSize == null ? '': ('&pageSize='+pageSize))+(categoryId==null?'':('&categoryId='+category)) + (tag==null?'':('&tag='+tag))}"
                          th:text="${pageNum}" href="#">2</a>
                     </li>
                   </span>
@@ -207,12 +212,12 @@
                             <!-- 下一页 -->
                             <li class="page-item pageItem"><a class="page-link" href="#"
                                                               th:if="${articlePage.hasNext()}"
-                                                              th:href="${currentUrl + '?pageNum=' + (articlePage.nextPageable().getPageNumber()+1)+(pageSize == null ? '': ('&pageSize='+pageSize))+(category==null?'':('&category='+category)) + (tag==null?'':('&tag='+tag))}"
+                                                              th:href="${'/blog/article/list.html' + '?pageNum=' + (articlePage.nextPageable().getPageNumber()+1)+(pageSize == null ? '': ('&pageSize='+pageSize))+(categoryId==null?'':('&categoryId='+category)) + (tag==null?'':('&tag='+tag))}"
                                                               th:text="下一页">3</a></li>
 
                             <!-- 尾页 -->
                             <li class="page-item pageItem"><a class="page-link" href="#"
-                                                              th:href="${currentUrl + '?pageNum=' + articlePage.getTotalPages()+(pageSize == null ? '': ('&pageSize='+pageSize))+(category==null?'':('&category='+category)) + (tag==null?'':('&tag='+tag))}">尾页</a>
+                                                              th:href="${'/blog/article/list.html' + '?pageNum=' + articlePage.getTotalPages()+(pageSize == null ? '': ('&pageSize='+pageSize))+(categoryId==null?'':('&categoryId='+category)) + (tag==null?'':('&tag='+tag))}">尾页</a>
                             </li>
 
                         </ul>

@@ -1,27 +1,40 @@
 package com.xwder.app.modules.blog.service.impl;
 
+import cn.hutool.core.collection.CollectionUtil;
+import cn.hutool.core.util.StrUtil;
 import com.google.common.collect.Lists;
 import com.xwder.app.consts.RedisConstant;
+import com.xwder.app.consts.SysConstant;
 import com.xwder.app.helper.dao.DAOHelper;
 import com.xwder.app.helper.dao.NativeSQL;
 import com.xwder.app.modules.blog.dao.BlogDaoResourceHandler;
 import com.xwder.app.modules.blog.entity.Article;
+import com.xwder.app.modules.blog.entity.ArticleTag;
+import com.xwder.app.modules.blog.entity.Category;
+import com.xwder.app.modules.blog.entity.Tag;
 import com.xwder.app.modules.blog.repository.ArticleRepository;
 import com.xwder.app.modules.blog.service.intf.ArticleService;
+import com.xwder.app.modules.blog.service.intf.ArticleTagService;
+import com.xwder.app.modules.blog.service.intf.CategoryService;
+import com.xwder.app.modules.blog.service.intf.TagService;
+import com.xwder.app.modules.user.entity.User;
+import com.xwder.app.modules.user.service.intf.UserService;
 import com.xwder.app.sysmodules.blog.dto.ArticleDto;
 import com.xwder.app.utils.PageUtil;
 import com.xwder.app.utils.RedisUtil;
+import com.xwder.app.utils.SessionUtil;
+import com.xwder.app.utils.TimeCountUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * 文章service impl
@@ -38,6 +51,18 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Autowired
     private RedisUtil redisUtil;
+
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private TagService tagService;
+
+    @Autowired
+    private CategoryService categoryService;
+
+    @Autowired
+    private ArticleTagService articleTagService;
 
     /**
      * 根据是否有主键修改或者更新文章
@@ -97,14 +122,25 @@ public class ArticleServiceImpl implements ArticleService {
      * @return
      */
     @Override
+    @Transactional(readOnly = true)
     public Page<Article> listArticleByUserId(Long userId, Long categoryId, Long tagId, Integer pageNum, Integer pageSize) {
-        Sort sort = Sort.by(Sort.Direction.DESC, "gmtModified");
+        Sort sort = Sort.by(Sort.Direction.DESC, "id");
         Pageable pageable = PageRequest.of(pageNum - 1, pageSize, sort);
         if (categoryId != null) {
+            // 根据 用户ID和文章分类 查询文章列表
             return articleRepository.findByUserIdAndCategoryIdAndStatusAndAvailable(userId, categoryId, 1, 1, pageable);
         } else if (tagId != null) {
-
+            // 根据 用户ID和标签 查询文章列表
+            Page<ArticleTag> articleTagPage = articleTagService.listArticleTagByUserIdAndArticleId(userId, tagId, pageable);
+            List<Long> articleIds = articleTagPage.getContent().stream().map(ArticleTag::getArticleId).collect(Collectors.toList());
+            if (articleIds.isEmpty()) {
+                return PageUtil.noContentPage(pageable, articleTagPage.getTotalElements());
+            }
+            List<Article> articleList = articleRepository.listArticleByIds(articleIds);
+            Page page = PageUtil.page(articleList, pageable, articleTagPage.getTotalElements());
+            return page;
         }
+
         return articleRepository.findByUserIdAndStatusAndAvailable(userId, 1, 1, pageable);
     }
 
@@ -176,5 +212,104 @@ public class ArticleServiceImpl implements ArticleService {
         int count = NativeSQL.countByNativeSQL(querySql, paramList);
         Page page = PageUtil.page(rows, pageable, count);
         return page;
+    }
+
+    /**
+     * 博客分页分类展示页面
+     *
+     * @param categoryId
+     * @param tagId
+     * @param pageNum
+     * @param pageSize
+     * @param model
+     */
+    @Override
+    public void listArticleCategoryTag(Long categoryId, Long tagId, Integer pageNum, Integer pageSize, Model model) {
+        Long startTime = System.currentTimeMillis();
+        String templatesUrl = "blog/article/list";
+        String currentUrl = "blog/article";
+        User searchUser = null;
+        // 没有传递用户信息 当前登录用户
+        User sessionUser = (User) SessionUtil.getSessionAttribute(SysConstant.SESSION_USER);
+        if (searchUser != null) {
+            searchUser = sessionUser;
+        } else {
+            List<User> users = userService.listManagerUser();
+            if (CollectionUtil.isNotEmpty(users)) {
+                searchUser = users.get(0);
+            } else {
+                // 没有用户信息
+                model.addAttribute("articleListError", 0);
+            }
+        }
+        searchUser.setPassword(null);
+        searchUser.setEmail(null);
+        searchUser.setSalt(null);
+
+        // 文章分页内容
+        List<Map> categoryMapList = categoryService.listCategoryArticleCount(searchUser.getId());
+        List<Tag> tags = tagService.listTagByUserId(searchUser.getId());
+
+        Page<Article> articlePage = null;
+        Category category = null;
+        Tag tag = null;
+
+        // 默认无分类也无标签
+        if (categoryId == null && tagId == null) {
+            articlePage = listArticleByUserId(searchUser.getId(), categoryId, tagId, pageNum, pageSize);
+        }
+        // 有分类无标签
+        if (categoryId != null && tagId == null) {
+            articlePage = listArticleByUserId(searchUser.getId(), categoryId, tagId, pageNum, pageSize);
+            // 分类信息
+            category = categoryService.getCategoryById(categoryId);
+        }
+
+        // 有标签无分类
+        // 无分类有标签
+        if (categoryId == null && tagId != null) {
+            articlePage = listArticleByUserId(searchUser.getId(), categoryId, tagId, pageNum, pageSize);
+        }
+
+        // 显示内容处理
+        List<Article> articleList = articlePage.getContent();
+        for (Article article : articleList) {
+            Date gmtModified = article.getGmtModified();
+            // 格式化显示时间 几小时之前、几天之前
+            String remark = TimeCountUtil.format(gmtModified);
+            article.setRemark(remark);
+        }
+
+        model.addAttribute("pageSize", pageSize);
+        model.addAttribute("pageNum", pageNum);
+
+
+        model.addAttribute("categoryId", categoryId);
+        model.addAttribute("tagId", tagId);
+
+        model.addAttribute("currentPage", pageNum);
+        model.addAttribute("articlePage", articlePage);
+        model.addAttribute("articles", articleList);
+        model.addAttribute("categoryMapList", categoryMapList);
+        model.addAttribute("category", category);
+
+        model.addAttribute("currentUser", searchUser);
+        model.addAttribute("currentUrl", currentUrl);
+
+        model.addAttribute("tags", tags);
+        model.addAttribute("tag", tag);
+
+        int totalArticles = 0;
+        // 计算所有个文章总数
+        for (Map map : categoryMapList) {
+            int count = Integer.parseInt(map.get("count").toString());
+            totalArticles = totalArticles + count;
+        }
+        model.addAttribute("totalArticles", totalArticles);
+
+
+        double endTime = System.currentTimeMillis() - startTime;
+        double useTime = endTime / 1000;
+        model.addAttribute("useTime", useTime);
     }
 }

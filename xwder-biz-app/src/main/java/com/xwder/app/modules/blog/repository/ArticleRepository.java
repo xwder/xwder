@@ -2,6 +2,7 @@ package com.xwder.app.modules.blog.repository;
 
 import com.xwder.app.common.jpa.repository.BaseJpaRepository;
 import com.xwder.app.modules.blog.entity.Article;
+import com.xwder.app.modules.blog.entity.Tag;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Modifying;
@@ -86,4 +87,13 @@ public interface ArticleRepository extends BaseJpaRepository<Article, Long> {
      * @returnC
      */
     int countByCategoryId(Long categoryId);
+
+    /**
+     * 根据id查询 文章
+     *
+     * @param ids
+     * @return
+     */
+    @Query(value = "SELECT * FROM blog_article WHERE id IN (:ids)", nativeQuery = true)
+    List<Article> listArticleByIds(@Param("ids") List<Long> ids);
 }
