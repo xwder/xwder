@@ -24,7 +24,7 @@ import javax.servlet.http.HttpServletResponse;
 @Component
 public class NovelInterceptor implements HandlerInterceptor {
 
-    private String novelUserName = "Joe";
+    private String novelUserName = "xwder";
 
     @Autowired
     private SysConfigAttribute sysConfigAttribute;

@@ -15,6 +15,7 @@ public class RedisConstant {
      * 百度 ocr 缓存key 25分钟
      */
     public static final String BAIDU_ACCESS_TOKEN_OCR = "xwder:baidu:ocr-token";
+
     /**
      * 百度 ocr 缓存时间
      */
@@ -29,10 +30,12 @@ public class RedisConstant {
      * 腾讯cos临时 SECRET_ID
      */
     public static final String TENCENT_COS_TMP_SECRET_ID = "xwder:tencent:cos-tmp-secretid";
+
     /**
      * 腾讯cos临时 SECRET_KEY
      */
     public static final String TENCENT_COS_TMP_SECRET_KEY = "xwder:tencent:cos-tmp-secretkey";
+
     /**
      * 腾讯cos临时 SESSIONTOKEN
      */
@@ -62,6 +65,6 @@ public class RedisConstant {
     /**
      * 博客文章阅读数  xwder:blog:article:article:id
      */
-    public static final String BLOG_ARTICLE_READCOUNT = "xwder:blog:article:read";
+    public static final String BLOG_ARTICLE_READ_COUNT = "xwder:blog:article:read";
 
 }

@@ -1,7 +1,6 @@
 package com.xwder.app.modules.blog.service.impl;
 
 import cn.hutool.core.collection.CollectionUtil;
-import cn.hutool.core.util.StrUtil;
 import com.google.common.collect.Lists;
 import com.xwder.app.consts.RedisConstant;
 import com.xwder.app.consts.SysConstant;
@@ -78,7 +77,7 @@ public class ArticleServiceImpl implements ArticleService {
             String articleRedisKey = RedisConstant.BLOG_ARTICLE_ARTICLE + ":" + article.getId();
             redisUtil.del(articleRedisKey);
             // 获取readCount
-            String articleReadCountRedisKey = RedisConstant.BLOG_ARTICLE_READCOUNT + ":" + article.getId();
+            String articleReadCountRedisKey = RedisConstant.BLOG_ARTICLE_READ_COUNT + ":" + article.getId();
             Integer readCount = (Integer) redisUtil.get(articleReadCountRedisKey);
             if (readCount != null) {
                 article.setReadCount(readCount.longValue());
@@ -174,7 +173,7 @@ public class ArticleServiceImpl implements ArticleService {
      */
     @Override
     public Integer addArticleReadCount(Long articleId, Integer existReadCount, Integer addCount) {
-        String articleReadCountRedisKey = RedisConstant.BLOG_ARTICLE_READCOUNT + ":" + articleId;
+        String articleReadCountRedisKey = RedisConstant.BLOG_ARTICLE_READ_COUNT + ":" + articleId;
         Integer readCount = (Integer) redisUtil.get(articleReadCountRedisKey);
         if (readCount != null) {
             readCount += addCount;
@@ -246,10 +245,11 @@ public class ArticleServiceImpl implements ArticleService {
         searchUser.setEmail(null);
         searchUser.setSalt(null);
 
-        // 文章分页内容
+
         List<Map> categoryMapList = categoryService.listCategoryArticleCount(searchUser.getId());
         List<Tag> tags = tagService.listTagByUserId(searchUser.getId());
 
+        // 文章分页内容
         Page<Article> articlePage = null;
         Category category = null;
         Tag tag = null;

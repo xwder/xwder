@@ -31,7 +31,7 @@ public class ArticleTask {
      */
     public void articleDataSyncService() {
         // 通配 key
-        String articleReadCountRedisKey = RedisConstant.BLOG_ARTICLE_READCOUNT + ":*";
+        String articleReadCountRedisKey = RedisConstant.BLOG_ARTICLE_READ_COUNT + ":*";
         List<String> list = redisUtil.getKeyList(articleReadCountRedisKey);
         for (String key : list) {
             Integer count = (Integer) redisUtil.get(key);

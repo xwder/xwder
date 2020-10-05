@@ -120,7 +120,7 @@ public class FileUploadServiceImpl implements FileUploadService {
         String fileSuffix = splits.length >= 2 ? splits[splits.length-1] : "";
         String fileType = getFileType(fileName);
         // 服务器保存地址 baseDir + 文件类型 + 用户主键-用户名 + 用户主键-当前时间 + 文件后缀
-        String saveDir = fileType + File.separator + sessionUser.getId() + "-" + sessionUser.getUserName()
+        String saveDir = fileType + File.separator + "blog" + File.separator + sessionUser.getUserName()
                 + File.separator + sessionUser.getId() + "-" + DateUtil.formatDate(new Date(), DateUtil.format_yyyyMMddHHmmssSSS) + "." + fileSuffix;
         return saveDir;
     }

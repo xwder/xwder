@@ -211,6 +211,10 @@ public class CategoryServiceImpl implements CategoryService {
         // 更新redis 分类缓存
         String categoryRedisKey = RedisConstant.BLOG_ARTICLE_CATEGORY + ":" + existCategory.getId();
         redisUtil.del(categoryRedisKey);
+
+        // 更新首页分类缓存
+        globalDataCacheConfig.initPortalData();
+
         return CommonResult.success(ResultCode.SUCCESS, "删除成功");
     }
 }
