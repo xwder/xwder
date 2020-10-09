@@ -200,7 +200,7 @@ public class ArticleController {
         // 预览不保存只查看预览
         if (StrUtil.equalsIgnoreCase(action, "preview")) {
             SessionUtil.setSessionAttribute("previewMap", articleMap);
-            String redirectUrl = "/blog/preview.html";
+            String redirectUrl = "/blog/article/preview.html";
             return CommonResult.success(redirectUrl);
         }
 
@@ -213,7 +213,7 @@ public class ArticleController {
             // 更新 articleTag 表
             articleTagService.saveOrUpdateArticleTags(sessionUser.getId(), saveArticle.getId(), tagList);
 
-            String redirectUrl = "/blog/" + saveArticle.getId() + ".html";
+            String redirectUrl = "/blog/article/" + saveArticle.getId() + ".html";
             responseData.put("id", saveArticle.getId());
             responseData.put("redirectUrl", redirectUrl);
             return CommonResult.success(responseData);

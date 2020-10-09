@@ -98,6 +98,7 @@ public class FileUploadServiceImpl implements FileUploadService {
         Date date = new Date();
         fileUploadRecord.setGmtCreate(date);
         fileUploadRecord.setGmtModified(date);
+        fileUploadRecord.setSource("blog");
         fileUploadRecordService.save(fileUploadRecord);
 
         resultMap.put("state", "SUCCESS");

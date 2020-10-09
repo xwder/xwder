@@ -103,8 +103,8 @@
                                                     <i class="icon-frame"></i>
                                                     <div class="overlay">
                                                         <img class="lazy thumbnail"
-                                                             th:src="${(article.previewImage == null || article.previewImage eq '') ? 'https://www.zktools.cn/storage/thumbnails/_signature/2STGCKQNNKI1R0TDOUQG42U1LM.jpg' : article.previewImage}"
-                                                             src="https://www.zktools.cn/storage/thumbnails/_signature/2STGCKQNNKI1R0TDOUQG42U1LM.jpg"
+                                                             th:src="${(article.previewImage == null || article.previewImage eq '') ? 'https://cdn.xwder.com/image/blog/xwder/1-20200930133425343.jpg' : article.previewImage}"
+                                                             src="https://cdn.xwder.com/image/blog/xwder/1-20200930133425343.jpg"
                                                              style="display: inline-block;object-fit: cover;">
                                                     </div>
                                                 </div>
@@ -178,14 +178,14 @@
 
                             <!-- 首页 -->
                             <li class="page-item pageItem"><a class="page-link" href="#"
-                                                              th:href="${'/blog/article/list.html' + '?pageNum=1'+(pageSize == null ? '': ('&pageSize='+pageSize))+ (categoryId==null?'':('&categoryId='+category)) + (tag==null?'':('&tag='+tag)) }">首页</a>
+                                                              th:href="${'/blog/article/list.html' + '?pageNum=1'+(pageSize == null ? '': ('&pageSize='+pageSize))+ (categoryId==null?'':('&categoryId='+categoryId)) + (tag==null?'':('&tag='+tag)) }">首页</a>
                             </li>
 
                             <!-- 上一页 -->
                             <li class="page-item pageItem disabled" th:if="${articlePage.hasPrevious()}"
                                 th:class="${articlePage.hasPrevious()?'page-item pageItem':'page-item pageItem disabled'}">
                                 <a class="page-link" href="#"
-                                   th:href="${'/blog/article/list.html' + '?pageNum=' + (articlePage.previousPageable().getPageNumber()+1)+(pageSize == null ? '': ('&pageSize='+pageSize))+(categoryId==null?'':('&categoryId='+category)) + (tag==null?'':('&tag='+tag))}"
+                                   th:href="${'/blog/article/list.html' + '?pageNum=' + (articlePage.previousPageable().getPageNumber()+1)+(pageSize == null ? '': ('&pageSize='+pageSize))+(categoryId==null?'':('&categoryId='+categoryId)) + (tag==null?'':('&tag='+tag))}"
                                    tabindex="-1">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
                                          viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
@@ -202,7 +202,7 @@
                         th:class="${pageNum==currentPage} ? 'page-item pageItem active' : 'page-item pageItem'"
                         th:if="${((pageNum le articlePage.getTotalPages()) && (pageNum gt 0)) && (pageNum le articlePage.getTotalPages())}">
                       <a class="page-link"
-                         th:href="${'/blog/article/list.html' + '?pageNum=' + pageNum+(pageSize == null ? '': ('&pageSize='+pageSize))+(categoryId==null?'':('&categoryId='+category)) + (tag==null?'':('&tag='+tag))}"
+                         th:href="${'/blog/article/list.html' + '?pageNum=' + pageNum+(pageSize == null ? '': ('&pageSize='+pageSize))+(categoryId==null?'':('&categoryId='+categoryId)) + (tag==null?'':('&tag='+tag))}"
                          th:text="${pageNum}" href="#">2</a>
                     </li>
                   </span>
@@ -212,12 +212,12 @@
                             <!-- 下一页 -->
                             <li class="page-item pageItem"><a class="page-link" href="#"
                                                               th:if="${articlePage.hasNext()}"
-                                                              th:href="${'/blog/article/list.html' + '?pageNum=' + (articlePage.nextPageable().getPageNumber()+1)+(pageSize == null ? '': ('&pageSize='+pageSize))+(categoryId==null?'':('&categoryId='+category)) + (tag==null?'':('&tag='+tag))}"
+                                                              th:href="${'/blog/article/list.html' + '?pageNum=' + (articlePage.nextPageable().getPageNumber()+1)+(pageSize == null ? '': ('&pageSize='+pageSize))+(categoryId==null?'':('&categoryId='+categoryId)) + (tag==null?'':('&tag='+tag))}"
                                                               th:text="下一页">3</a></li>
 
                             <!-- 尾页 -->
                             <li class="page-item pageItem"><a class="page-link" href="#"
-                                                              th:href="${'/blog/article/list.html' + '?pageNum=' + articlePage.getTotalPages()+(pageSize == null ? '': ('&pageSize='+pageSize))+(categoryId==null?'':('&categoryId='+category)) + (tag==null?'':('&tag='+tag))}">尾页</a>
+                                                              th:href="${'/blog/article/list.html' + '?pageNum=' + articlePage.getTotalPages()+(pageSize == null ? '': ('&pageSize='+pageSize))+(categoryId==null?'':('&categoryId='+categoryId)) + (tag==null?'':('&tag='+tag))}">尾页</a>
                             </li>
 
                         </ul>
