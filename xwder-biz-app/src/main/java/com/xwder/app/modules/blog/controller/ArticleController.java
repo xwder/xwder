@@ -256,6 +256,7 @@ public class ArticleController {
     }
 
     /**
+     * TODO @Min(1) @Max(10000) 未生效
      * 博客文章列表
      *
      * @return
@@ -267,6 +268,9 @@ public class ArticleController {
                               @RequestParam(value = "categoryId", required = false) Long categoryId,
                               @RequestParam(value = "tagId", required = false) Long tagId,
                               Model model) {
+        pageNum = pageNum > 0 ? pageNum : 1;
+        pageSize = pageSize > 0 ? pageSize : 4;
+        pageSize = pageSize > 1000 ? 1000 : pageSize;
         articleService.listArticleCategoryTag(categoryId, tagId, pageNum, pageSize, model);
         return "blog/list";
     }

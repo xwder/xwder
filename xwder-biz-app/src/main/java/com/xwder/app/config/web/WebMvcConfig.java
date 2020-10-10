@@ -62,6 +62,8 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
 
         registry.addInterceptor(userLoginInterceptor)
                 .addPathPatterns(
+                        // 测试接口使用
+                        "/test/**",
                         "/user/**",
                         "/book/**",
                         "/file/**",

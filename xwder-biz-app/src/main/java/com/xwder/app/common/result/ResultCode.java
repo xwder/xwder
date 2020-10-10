@@ -8,6 +8,7 @@ package com.xwder.app.common.result;
  * @date 2019/12/25
  */
 public enum ResultCode implements IErrorCode {
+    ERROR(500,"服务器发生错误"),
     SUCCESS(200, "操作成功"),
     FAILED(500, "操作失败"),
     VALIDATE_FAILED(404, "服务器找不到请求"),

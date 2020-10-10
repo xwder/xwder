@@ -3,6 +3,7 @@ package com.xwder.app.modules.test;
 import com.xwder.app.modules.cloud.baidu.ocr.auth.BaiduAuthService;
 import com.xwder.app.modules.cloud.baidu.ocr.auth.BaiduCommonTextOCRService;
 import com.xwder.app.modules.cloud.tencent.cos.auth.TencentCosAuthService;
+import com.xwder.app.modules.cloud.tencent.cos.service.TencentCosService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,11 +31,14 @@ public class TestController {
     @Autowired
     private TencentCosAuthService tencentCosAuthService;
 
+    @Autowired
+    private TencentCosService tencentCosService;
+
     @RequestMapping("")
-    public Object test(@RequestParam("serviceType") String serviceTyep) {
-        logger.info("serviceType [{}]",serviceTyep);
+    public Object test(@RequestParam("serviceType") String serviceType) {
+        logger.info("serviceType [{}]", serviceType);
         Object object = new Object();
-        switch (serviceTyep) {
+        switch (serviceType) {
             case "baiduAccessToken":
                 String accessToke = baiduAuthService.getApiAuth();
                 object = accessToke;
@@ -45,6 +49,9 @@ public class TestController {
                 break;
             case "tencentCosAuth":
                 object = tencentCosAuthService.getTmpCosSecret();
+                break;
+            case "cosBucketFileList":
+                object = tencentCosService.getBucketFileList(null, null, null, 1000);
                 break;
             default:
         }
