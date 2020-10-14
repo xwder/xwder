@@ -9,16 +9,16 @@ function choosePhoto() {
     $("#previewImageUp").click();
 }
 
-function uploadPhoto(){
+function uploadPhoto() {
     var formData = new FormData();
     formData.append('file', document.getElementById('previewImageUp').files[0]);
     $.ajax({
-        url:"/file/up/ue?action=uploadimage",
-        type:"post",
+        url: "/file/up/ue?action=uploadimage",
+        type: "post",
         data: formData,
         contentType: false,
         processData: false,
-        success: function(data) {
+        success: function (data) {
             if (data.code == 200) {
                 $("#preview_photo").attr("src", data.original);
 
@@ -30,7 +30,7 @@ function uploadPhoto(){
                 alert("图片上传失败 " + data.data)
             }
         },
-        error:function(data) {
+        error: function (data) {
             alert("上传失败")
         }
     });
@@ -39,7 +39,7 @@ function uploadPhoto(){
 /**
  * 选择文件后展示图片
  */
-$("#previewImageUp").change(function() {
+$("#previewImageUp").change(function () {
 
     //获取input file的files文件数组;
     //$('#filed')获取的是jQuery对象，.get(0)转为原生对象;
@@ -61,10 +61,10 @@ $("#previewImageUp").change(function() {
         //的base64编码格式的地址
         // $('#preview_photo').src = e.target.result;
         var img = new Image();
-        img.id="preview_photo";
-        img.src=e.target.result;
-        img.width=200;
-        img.height=200;
+        img.id = "preview_photo";
+        img.src = e.target.result;
+        img.width = 200;
+        img.height = 200;
         var showImg = document.getElementById("showImg");
         showImg.appendChild(img);
     }
@@ -75,8 +75,29 @@ $("#previewImageUp").change(function() {
  * 清除图片
  */
 function removePhoto() {
-    var showImg = $('#showImg');
-    showImg.empty();
+    // 清除图片同时删除cos图片
+    let imageUrl = $("#preview_photo")[0].src;
+    $.ajax({
+        url: "/file/deleteCosFile?fileKey=" + imageUrl,
+        type: "post",
+        data: [],
+        contentType: false,
+        processData: false,
+        success: function (data) {
+            if (data.code == 200) {
+                let showImg = $('#showImg');
+                showImg.empty();
+                alert("删除图片成功");
+            } else {
+                let showImg = $('#showImg');
+                showImg.empty();
+                alert("删除图片失败 " + data.data)
+            }
+        },
+        error: function (data) {
+            alert("操作失败")
+        }
+    });
 }
 
 
@@ -138,7 +159,7 @@ function articleOperat(action, data) {
                 console.log("操作成功" + data.data);
             } else {
                 console.log("操作失败" + data.message);
-                alert("操作失败,错误信息: "+ data.code + " " + data.message);
+                alert("操作失败,错误信息: " + data.code + " " + data.message);
             }
             resultData = data;
         }
@@ -169,7 +190,7 @@ function getArticleData() {
     var category = $("input:checkbox[name='articleCategory']:checked").val();
 
     var previewImgUrl = '';
-    if( $("#preview_photo").length != 0 ){
+    if ($("#preview_photo").length != 0) {
         previewImgUrl = $("#preview_photo")[0].src;
     }
 
@@ -218,7 +239,7 @@ function validateArticleData(data) {
         return false;
     }
     // category
-    if (typeof(data.category) == "undefined") {
+    if (typeof (data.category) == "undefined") {
         alert("请选择文章分类");
         return false;
     }

@@ -1,5 +1,6 @@
 package com.xwder.app.sysmodules.file.service.impl;
 
+import cn.hutool.core.collection.CollectionUtil;
 import com.xwder.app.attribute.SysConfigAttribute;
 import com.xwder.app.modules.cloud.tencent.cos.service.TencentCosService;
 import com.xwder.app.sysmodules.file.entity.FileUploadRecord;
@@ -9,6 +10,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 /**
  * @author xwder
@@ -40,9 +43,22 @@ public class FileUploadRecordServiceImpl implements FileUploadRecordService {
      */
     @Override
     @Transactional(rollbackFor = {Exception.class})
-    public FileUploadRecord save(FileUploadRecord fileUploadRecord) {
+    public FileUploadRecord saveOrUpdate(FileUploadRecord fileUploadRecord) {
         return fileUploadRecordRepository.save(fileUploadRecord);
     }
 
-
+    /**
+     * 根据 userId 和cosUrl查询 FileUploadRecord
+     * @param userId
+     * @param cosUrl
+     * @return
+     */
+    @Override
+    public FileUploadRecord getFileUploadRecordByUserIdAndCosUrl(Long userId, String cosUrl) {
+        List<FileUploadRecord> fileUploadRecordList = fileUploadRecordRepository.findByUserIdAndCosUrl(userId, cosUrl);
+        if (CollectionUtil.isNotEmpty(fileUploadRecordList)) {
+            return fileUploadRecordList.get(0);
+        }
+        return null;
+    }
 }

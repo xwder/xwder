@@ -275,6 +275,8 @@ tencent:
   cos:
     bucketName: cdn-1256177279
     region: ap-chongqing
+    # 博客文章上传路径 https://cdn.xwder.com/image/blog/xwder/1-20201010094334764.png xwder 为用户名 1- 为用户id
+    blogImageDir: /image/blog/
   cdn:
     prefixurl: https://cdn.xwder.com
   # 腾讯文档 图片上次cookie

@@ -15,5 +15,13 @@ public interface FileUploadRecordService {
      * @param fileUploadRecord
      * @return
      */
-    FileUploadRecord save(FileUploadRecord fileUploadRecord);
+    FileUploadRecord saveOrUpdate(FileUploadRecord fileUploadRecord);
+
+    /**
+     * 根据 userId 和cosUrl查询 FileUploadRecord
+     * @param userId
+     * @param cosUrl
+     * @return
+     */
+    FileUploadRecord getFileUploadRecordByUserIdAndCosUrl(Long userId, String cosUrl);
 }

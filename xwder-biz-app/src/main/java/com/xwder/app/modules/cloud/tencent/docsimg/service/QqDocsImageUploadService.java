@@ -4,7 +4,6 @@ import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.http.*;
 import cn.hutool.json.JSONUtil;
-import com.google.common.collect.Maps;
 import com.xwder.app.attribute.SysConfigAttribute;
 import com.xwder.app.consts.SysConstant;
 import com.xwder.app.modules.cloud.tencent.cos.service.TencentCosService;
@@ -163,7 +162,7 @@ public class QqDocsImageUploadService {
         }
 
         // 保存 fileUploadRecord
-        FileUploadRecord record = fileUploadRecordService.save(fileUploadRecord);
+        FileUploadRecord record = fileUploadRecordService.saveOrUpdate(fileUploadRecord);
 
         return record;
     }

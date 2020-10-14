@@ -266,7 +266,12 @@
     };
 
     // 编辑的时候 设置值
-    var content = $('#articleContent:first').html();
+    let content = $('#articleContent:first').html();
+    // 根据文章title判断文章是否是心中还是编辑
+    if ($("#articleTitle").val() == "") {
+        console.log("title null");
+        content = '';
+    }
 
     ue.ready(function () {
         ue.execCommand('insertHtml', content);

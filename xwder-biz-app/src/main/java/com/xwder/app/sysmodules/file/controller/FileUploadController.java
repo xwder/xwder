@@ -1,6 +1,7 @@
 package com.xwder.app.sysmodules.file.controller;
 
 import cn.hutool.core.util.StrUtil;
+import com.xwder.app.common.result.CommonResult;
 import com.xwder.app.sysmodules.file.service.intf.FileUploadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,18 +27,38 @@ public class FileUploadController {
     @Autowired
     private FileUploadService fileUploadService;
 
+    /**
+     * udeitor 编辑器博客文章图片上传接口
+     *
+     * @param request
+     * @param action
+     * @return
+     */
     @RequestMapping("/up/ue")
     @ResponseBody
-    public Map ueditorFileUpload(HttpServletRequest request, String action) {
+    public Map ueditorBlogImageFileUpload(HttpServletRequest request, String action) {
 
         Map<String, Object> resultMap = new HashMap<>();
+        // ueditor 博客文章编辑图片上传
         if (StrUtil.equalsAnyIgnoreCase(action, "uploadimage", "uploadscrawl")) {
             MultipartHttpServletRequest multipartHttpServletRequest = (MultipartHttpServletRequest) request;
             MultipartFile multipartFile = multipartHttpServletRequest.getFile("file");
-            resultMap = fileUploadService.ueDitorFileUpload(multipartFile);
+            resultMap = fileUploadService.ueditorBlogImageFileUpload(multipartFile);
         }
         return resultMap;
     }
 
-
+    /**
+     * cos文件删除接口
+     *
+     * @param request
+     * @param fileKey
+     * @return
+     */
+    @RequestMapping("/deleteCosFile")
+    @ResponseBody
+    public CommonResult deleteCosFile(HttpServletRequest request, String fileKey) {
+        CommonResult commonResult = fileUploadService.deleteCosFile(fileKey);
+        return commonResult;
+    }
 }

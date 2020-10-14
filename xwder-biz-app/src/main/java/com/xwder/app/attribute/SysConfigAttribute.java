@@ -69,6 +69,11 @@ public class SysConfigAttribute {
     @Value("${tencent.cdn.prefixurl}")
     private String tencentCdnPreFixUrl;
 
+    @Value("${tencent.cos.blogImageDir}")
+    private String blogImageDir;
+
     @Value("${spring.jpa.database}")
     private String sysDbType;
+
+
 }
