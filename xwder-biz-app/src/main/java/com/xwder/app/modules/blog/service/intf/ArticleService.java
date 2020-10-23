@@ -42,6 +42,15 @@ public interface ArticleService {
      */
     Integer addArticleReadCount(Long articleId, Integer existReadCount, Integer addCount);
 
+    /**
+     * 修改文章的评论数
+     *
+     * @param articleId
+     * @param addCount
+     * @return
+     */
+    Integer addArticleCommentCount(Long articleId, Integer addCount);
+
 
     /**
      * 根据用户id查询文章列表
@@ -65,6 +74,7 @@ public interface ArticleService {
 
     /**
      * 根据分类id查询文章数量
+     *
      * @param categoryId
      * @returnC
      */
@@ -80,6 +90,7 @@ public interface ArticleService {
 
     /**
      * 博客分页分类展示页面
+     *
      * @param categoryId
      * @param tagId
      * @param pageNum
@@ -87,4 +98,6 @@ public interface ArticleService {
      * @param model
      */
     void listArticleCategoryTag(Long categoryId, Long tagId, Integer pageNum, Integer pageSize, Model model);
+
+
 }

@@ -88,7 +88,7 @@ public class FileUploadServiceImpl implements FileUploadService {
             resultMap.put("state", "上传对象存储失败");
             return resultMap;
         }
-        String fileCdnUrl = sysConfigAttribute.getTencentCdnPreFixUrl() + "/" + uploadCosFile;
+        String fileCdnUrl = sysConfigAttribute.getTencentCdnPreFixUrl() + uploadCosFile;
         log.info("保存文件[{}]到cos成功，cdn访问地址[{}]", serverSaveFile.getName(), fileCdnUrl);
 
         // 保存文件上传记录

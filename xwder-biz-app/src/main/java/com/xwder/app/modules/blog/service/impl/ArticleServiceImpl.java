@@ -185,6 +185,26 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     /**
+     * 修改文章的评论数
+     *
+     * @param articleId
+     * @param addCount
+     * @return
+     */
+    @Override
+    public Integer addArticleCommentCount(Long articleId, Integer addCount) {
+        // 先从redis中取
+        String articleRedisKey = RedisConstant.BLOG_ARTICLE_ARTICLE + ":" + articleId;
+        Article article = (Article) redisUtil.get(articleRedisKey);
+        if (article != null) {
+            article.setComments(article.getComments() + addCount);
+            redisUtil.set(articleRedisKey, article, -1);
+            return article.getComments().intValue();
+        }
+        return null;
+    }
+
+    /**
      * 根据分类id查询文章数量
      *
      * @param categoryId

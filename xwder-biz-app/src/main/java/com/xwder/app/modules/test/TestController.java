@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 /**
  * @author wande
  * @version 1.0
@@ -53,6 +56,11 @@ public class TestController {
             case "cosBucketFileList":
                 object = tencentCosService.getBucketFileList(null, null, null, 1000);
                 break;
+
+            case "comment":
+                ArrayList<Object> list = new ArrayList<>();
+                list.add(new HashMap<>());
+                object = list;
             default:
         }
         logger.info("测试返回结果 [{}]", object.toString());

@@ -18,6 +18,8 @@ import com.xwder.app.modules.blog.service.intf.ArticleService;
 import com.xwder.app.modules.blog.service.intf.ArticleTagService;
 import com.xwder.app.modules.blog.service.intf.CategoryService;
 import com.xwder.app.modules.blog.service.intf.TagService;
+import com.xwder.app.modules.comment.entity.CommentInfo;
+import com.xwder.app.modules.comment.service.intf.CommentInfoService;
 import com.xwder.app.modules.user.entity.User;
 import com.xwder.app.modules.user.service.intf.UserService;
 import com.xwder.app.utils.AssertUtil;
@@ -60,6 +62,9 @@ public class ArticleController {
 
     @Autowired
     private ArticleTagService articleTagService;
+
+    @Autowired
+    private CommentInfoService commentInfoService;
 
     /**
      * 从查看博客文章页面点击修改博客
@@ -252,6 +257,10 @@ public class ArticleController {
         // 文章阅读数+1
         Integer readCount = articleService.addArticleReadCount(articleId, Math.toIntExact(article.getReadCount()), 1);
         article.setReadCount(readCount.longValue());
+
+        // 查询文章评论
+        List<CommentInfo> commentInfos = commentInfoService.listCommentInfoByTypeAndSubjectId(SysConstant.COMMENT_TYPE_BLOG, articleId);
+
         return "blog/article";
     }
 

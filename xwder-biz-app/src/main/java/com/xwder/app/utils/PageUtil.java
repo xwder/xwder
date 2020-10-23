@@ -32,7 +32,6 @@ public class PageUtil {
     /**
      * 构建分页对象
      *
-     * @param list
      * @param pageable
      * @param total
      * @return

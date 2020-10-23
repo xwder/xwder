@@ -7,6 +7,7 @@ import com.baomidou.kaptcha.exception.KaptchaTimeoutException;
 import com.xwder.app.common.result.CommonResult;
 import com.xwder.app.common.result.ResultCode;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -82,4 +83,15 @@ public class ExceptionAdvice {
         return CommonResult.failed(ResultCode.PARAM_VALIDATE_FAILD.getCode(), errMsg);
     }
 
+    /**
+     * 方法参数校验
+     * @param e
+     * @return
+     */
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public CommonResult handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
+        log.error(e.getMessage(), e);
+        CommonResult<Object> commonResult = CommonResult.failed(e.getBindingResult().getFieldError().getDefaultMessage());
+        return commonResult;
+    }
 }

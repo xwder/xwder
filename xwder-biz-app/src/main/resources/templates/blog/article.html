@@ -2,6 +2,9 @@
 <html lang="zh" xmlns:th="http://www.thymeleaf.org">
 <title th:if="${articleMap != null}" th:text="${articleMap['article'].title}">预览</title>
 <link rel="stylesheet" th:href="@{/static/css/blog/article.css}">
+<!--评论模块css-->
+<link rel="stylesheet" th:href="@{/static/comment/css/style.css}" href="comment/css/style.css">
+<link rel="stylesheet" th:href="@{/static/comment/css/comment.css}" href="comment/css/comment.css">
 <link rel="stylesheet" th:href="@{/static/lib/highlight/css/default.min.css}" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.2/styles/default.min.css">
 <head th:include="include :: head"></head>
 <body class="antialiased">
@@ -38,6 +41,8 @@
                                 </div>
                                 <div class="article-info-box">
                                     <div class="article-bar-top">
+                                        <input type="hidden" id="blogId" th:value="${articleMap['article'].id}">
+                                        <input type="hidden" id="blogUserId" th:value="${articleMap['article'].userId}">
                                         <!--文章类型-->
                                         <!--原创-->
                                         <img class="article-type-img"
@@ -119,9 +124,45 @@
                             </div>
                         </div>
                     </div>
+                    <!--博客文章评论模块-->
+                    <div id="blogComment" class="commentAll col-lg-12">
+
+                        <div class="reviewArea clearfix">
+                            <textarea class="content comment-input" placeholder="Please enter a comment&hellip;" onkeyup="keyUP(this)"></textarea>
+                            <a href="javascript:;" class="plBtn">评论</a>
+                        </div>
+
+
+                        <div class="comment-show">
+                            <div class="comment-show-con clearfix">
+                                <div class="comment-show-con-img pull-left"><img src="images/header-img-comment_03.png" th:src="@{/static/comment/images/header-img-comment_03.png}" alt=""></div>
+                                <div class="comment-show-con-list pull-left clearfix">
+                                    <div class="pl-text clearfix">
+                                        <a href="#" class="comment-size-name">OneDay : </a>
+                                        <span class="my-pl-con">&nbsp;来啊 造作啊!</span>
+                                    </div>
+                                    <div class="date-dz">
+                                        <span class="date-dz-left pull-left comment-time">2017-5-2 11:11:39</span>
+                                        <div class="date-dz-right pull-right comment-pl-block">
+                                            <a href="javascript:;" class="removeBlock">删除</a>
+                                            <a href="javascript:;" class="date-dz-pl pl-hf hf-con-block pull-left">回复</a>
+                                            <span class="pull-left date-dz-line">|</span>
+                                            <a href="javascript:;" class="date-dz-z pull-left"><i class="date-dz-z-click-red"></i>赞 (<i class="z-num">666</i>)</a>
+                                        </div>
+                                    </div>
+                                    <div class="hf-list-con"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
                 </div>
             </div>
         </div>
+
+
+
+
         <footer th:replace="include :: footer" class="footer footer-transparent"></footer>
     </div>
 </div>
@@ -171,6 +212,9 @@
     });
 
 </script>
+<!--评论模块js-->
+<script type="text/javascript" th:src="@{/static/comment/js/jquery.flexText.js}" src="js/jquery.flexText.js"></script>
+<script type="text/javascript" th:src="@{/static/comment/js/comment.js}" src="js/jquery.flexText.js"></script>
 </body>
 <style>
     /*显示文章内容页面右下角显示导航按钮*/

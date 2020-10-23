@@ -58,8 +58,14 @@ spring:
     url: jdbc:mysql://127.0.0.1:8066/xwder?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai
     # slq显示参数值
 #    url: jdbc:log4jdbc:mysql://127.0.0.1:8066/xwder?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai
+#    url: jdbc:mysql://127.0.0.1:3306/xwder?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai&useLocalSessionState=true
+
     username: xwder
     password: XxwmGls6UCnvziE3
+
+#    username: xwder
+#    password: wvDwERwidZZJhfh2
+
     driver-class-name: com.mysql.cj.jdbc.Driver
     platform: mysql
     type: com.alibaba.druid.pool.DruidDataSource
@@ -273,7 +279,7 @@ tencent:
     bucketName: cdn-1256177279
     region: ap-chongqing
     # 博客文章上传路径 https://cdn.xwder.com/image/blog/xwder/1-20201010094334764.png xwder 为用户名 1- 为用户id
-    blogImageDir: /image/blog/
+    blogImageDir: /image/blog
   cdn:
     prefixurl: https://cdn.xwder.com
   # 腾讯文档 图片上次cookie

@@ -41,4 +41,9 @@ public class SysConstant {
      * 通用失败标识
      */
     public static final String FAIL = "1";
+
+    /**
+     * 评论类型 博客
+     */
+    public static final int COMMENT_TYPE_BLOG = 1;
 }

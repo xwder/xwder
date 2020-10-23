@@ -17,7 +17,7 @@ ruoyi:
 # 开发环境配置
 server:
   # 服务器的HTTP端口，默认为80
-  port: 8080
+  port: 8081
   servlet:
     # 应用的访问路径
     context-path: /
@@ -171,6 +171,9 @@ eureka:
     lease-renewal-interval-in-seconds: 5
     # 表示Eureka Server至上一次收到client的心跳之后，等待下一次心跳的超时时间，在这个时间内若没收到下一次心跳，则移除该Instance。
     lease-expiration-duration-in-seconds: 5
+
+  register-with-eureka: false
+
 
 
 # MyBatis
