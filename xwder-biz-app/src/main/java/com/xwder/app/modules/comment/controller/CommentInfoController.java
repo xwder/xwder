@@ -4,8 +4,11 @@ import com.xwder.app.common.result.CommonResult;
 import com.xwder.app.consts.SysConstant;
 import com.xwder.app.modules.blog.service.intf.ArticleService;
 import com.xwder.app.modules.comment.dto.CommentInfoDto;
+import com.xwder.app.modules.comment.dto.CommentReplyDto;
 import com.xwder.app.modules.comment.entity.CommentInfo;
+import com.xwder.app.modules.comment.entity.CommentReply;
 import com.xwder.app.modules.comment.service.intf.CommentInfoService;
+import com.xwder.app.modules.comment.service.intf.CommentReplyService;
 import com.xwder.app.modules.user.entity.User;
 import com.xwder.app.utils.BeanUtils;
 import com.xwder.app.utils.SessionUtil;
@@ -26,9 +29,19 @@ public class CommentInfoController {
     private CommentInfoService commentInfoService;
 
     @Autowired
+    private CommentReplyService commentReplyService;
+
+    @Autowired
     private ArticleService articleService;
 
 
+    /**
+     * 对博客文章进行评论
+     *
+     * @param commentInfoDto
+     * @param request
+     * @return
+     */
     @ResponseBody
     @RequestMapping(value = {"/blog/commit"})
     public CommonResult commitComment(@Validated CommentInfoDto commentInfoDto, HttpServletRequest request) {
@@ -55,4 +68,35 @@ public class CommentInfoController {
         return CommonResult.success(commentInfo);
     }
 
+    /**
+     * 对评论进行回复
+     *
+     * @param commentReplyDto
+     * @param request
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = {"/blog/reply/commit"})
+    public CommonResult commitCommentReply(@Validated CommentReplyDto commentReplyDto, HttpServletRequest request) {
+        User sessionUser = (User) SessionUtil.getSessionAttribute(SysConstant.SESSION_USER);
+        if (sessionUser == null) {
+            return CommonResult.failed("请登录后发表评论");
+        }
+        CommentReply commentReply = new CommentReply();
+        BeanUtils.copyBeanProp(commentReply, commentReplyDto);
+        commentReply.setFromId(sessionUser.getId());
+        commentReply.setCommentTime(new Date());
+        commentReply.setAvailable(1);
+        commentReply.setLikeNum(0L);
+        commentReplyService.saveOrUpdateCommentReply(commentReply);
+
+        commentReply.setToName(commentReplyDto.getToName());
+        commentReply.setFromName(sessionUser.getUserName());
+        commentReply.setFromAvatar(sessionUser.getAvatar());
+
+        // 评论表对应的评论主体评论数加1
+        commentReplyService.updateCommentCountByCommentId(commentReply.getCommentId(), 1);
+
+        return CommonResult.success(commentReply);
+    }
 }

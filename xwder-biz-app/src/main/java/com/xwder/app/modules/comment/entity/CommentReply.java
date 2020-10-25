@@ -1,6 +1,8 @@
 package com.xwder.app.modules.comment.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -27,6 +29,7 @@ public class CommentReply implements Serializable {
     /**
      * 评论主表id
      */
+    @NotNull(message = "被回复评论id不能为空")
     @Column(name = "comment_id")
     private Long commentId;
 
@@ -51,6 +54,7 @@ public class CommentReply implements Serializable {
     /**
      * 被评论者id
      */
+    @NotNull(message = "被回复者的id不能为空")
     @Column(name = "to_id")
     private Long toId;
 
@@ -70,11 +74,19 @@ public class CommentReply implements Serializable {
      * 评论时间
      */
     @Column(name = "comment_time")
-    private Date commentTIme;
+    private Date commentTime;
+
+    /**
+     * 点赞的数量
+     */
+    @Column(name = "like_num")
+    private Long likeNum;
 
     /**
      * 评论内容
      */
+    @NotBlank(message = "回复评论内容不能为空")
+    @NotNull(message = "回复评论内容不能为空")
     @Column(name = "content")
     private String content;
 
@@ -164,12 +176,20 @@ public class CommentReply implements Serializable {
         this.toAvatar = toAvatar;
     }
 
-    public Date getCommentTIme() {
-        return commentTIme;
+    public Date getCommentTime() {
+        return commentTime;
     }
 
-    public void setCommentTIme(Date commentTIme) {
-        this.commentTIme = commentTIme;
+    public void setCommentTime(Date commentTime) {
+        this.commentTime = commentTime;
+    }
+
+    public Long getLikeNum() {
+        return likeNum;
+    }
+
+    public void setLikeNum(Long likeNum) {
+        this.likeNum = likeNum;
     }
 
     public String getContent() {

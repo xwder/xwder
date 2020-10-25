@@ -52,7 +52,7 @@ public class CommentInfo implements Serializable {
      */
     @NotNull(message = "被评论对象编号不能为空")
     @Column(name = "owner_id")
-    private String ownerId;
+    private Long ownerId;
 
     /**
      * 评论者id
@@ -64,12 +64,14 @@ public class CommentInfo implements Serializable {
      * 评论者名称
      */
     @Transient
+//    @Column(name = "from_name")
     private String fromName;
 
     /**
      * 评论者头像地址
      */
     @Transient
+//    @Column(name = "from_avatar")
     private String fromAvatar;
 
     /**
@@ -146,11 +148,11 @@ public class CommentInfo implements Serializable {
     }
 
 
-    public String getOwnerId() {
+    public Long getOwnerId() {
         return ownerId;
     }
 
-    public void setOwnerId(String ownerId) {
+    public void setOwnerId(Long ownerId) {
         this.ownerId = ownerId;
     }
 

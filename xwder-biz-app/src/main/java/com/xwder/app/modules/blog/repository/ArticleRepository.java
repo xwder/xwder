@@ -81,6 +81,16 @@ public interface ArticleRepository extends BaseJpaRepository<Article, Long> {
     void updateArticleReadCountById(Long id, Long readCount);
 
     /**
+     * 评论数加
+     *
+     * @param id
+     * @param commentCount
+     */
+    @Modifying
+    @Query(value = "update blog_article t set t.comments = t.comments + ?2 where t.id = ?1", nativeQuery = true)
+    void updateArticleCommentCountById(Long id, Integer commentCount);
+
+    /**
      * 根据分类id查询文章数量
      *
      * @param categoryId

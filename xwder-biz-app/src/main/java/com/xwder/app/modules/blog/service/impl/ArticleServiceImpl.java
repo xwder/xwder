@@ -192,7 +192,12 @@ public class ArticleServiceImpl implements ArticleService {
      * @return
      */
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public Integer addArticleCommentCount(Long articleId, Integer addCount) {
+
+        //评论数自增1
+        articleRepository.updateArticleCommentCountById(articleId, addCount);
+
         // 先从redis中取
         String articleRedisKey = RedisConstant.BLOG_ARTICLE_ARTICLE + ":" + articleId;
         Article article = (Article) redisUtil.get(articleRedisKey);

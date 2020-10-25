@@ -1,5 +1,6 @@
 package com.xwder.app.modules.user.service.impl;
 
+import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.json.JSONUtil;
 import com.google.common.collect.Maps;
@@ -119,10 +120,20 @@ public class UserServiceImpl implements UserService {
             user.setStatus(UserStatusEnum.UN_VERIFY.getCode());
             // 设置未删除状态
             user.setAvailable(1);
-            user = userRepositry.save(user);
+            // 设置不是管理员
+            user.setManager(0);
+            // 性别未知
+            user.setSex(2);
+            // 设置默认头像
+            user.setAvatar("https://cdn.xwder.com/image/blog/xwder/1-20201005231659443.gif");
+            // 设置默认会员名称
+            user.setNickname("新会员");
+            // 设置默认地址
+            user.setAddress("中国");
+            userRepositry.save(user);
             log.info("保存新注册用户[{}]成功", user.getUserName());
-            user.setSalt(null);
-            user.setPassword(null);
+            /*user.setSalt(null);
+            user.setPassword(null);*/
             // 发送激活账户邮件
             sendVerifyEmail(user);
         } else {
@@ -134,17 +145,18 @@ public class UserServiceImpl implements UserService {
             }
             User sourceUser = userList.get(0);
             // 忽略掉密码相关信息
-            sourceUser.setPassword(null);
-            sourceUser.setSalt(null);
+            /*sourceUser.setPassword(null);
+            sourceUser.setSalt(null);*/
             UpdateUtil.copyNullProperties(user, sourceUser);
             userRepositry.save(sourceUser);
             log.info("更新用户[{}]信息成功", sourceUser.getUserName());
             user = sourceUser;
         }
-
-        user.setSalt(null);
-        user.setPassword(null);
-        return user;
+        User returnUser = new User();
+        BeanUtil.copyProperties(user,returnUser);
+        returnUser.setSalt(null);
+        returnUser.setPassword(null);
+        return returnUser;
     }
 
     /**

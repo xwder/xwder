@@ -21,9 +21,18 @@ public interface CommentInfoService {
 
     /**
      * 根据type和subjectId查询评论列表
-     * @param type 评论内容分类
+     *
+     * @param type      评论内容分类
      * @param subjectId 评论内容id
      * @return
      */
-    List<CommentInfo> listCommentInfoByTypeAndSubjectId(Integer type,Long subjectId);
+    List<CommentInfo> listCommentInfoByTypeAndSubjectId(Integer type, Long subjectId);
+
+    /**
+     * 根据id查询commentInfo
+     *
+     * @param commentId
+     * @return
+     */
+    CommentInfo getCommentInfoById(long commentId);
 }

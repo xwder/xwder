@@ -8,6 +8,8 @@ import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import com.google.common.base.Joiner;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.xwder.app.common.result.CommonResult;
 import com.xwder.app.consts.SysConstant;
 import com.xwder.app.modules.blog.entity.Article;
@@ -19,7 +21,9 @@ import com.xwder.app.modules.blog.service.intf.ArticleTagService;
 import com.xwder.app.modules.blog.service.intf.CategoryService;
 import com.xwder.app.modules.blog.service.intf.TagService;
 import com.xwder.app.modules.comment.entity.CommentInfo;
+import com.xwder.app.modules.comment.entity.CommentReply;
 import com.xwder.app.modules.comment.service.intf.CommentInfoService;
+import com.xwder.app.modules.comment.service.intf.CommentReplyService;
 import com.xwder.app.modules.user.entity.User;
 import com.xwder.app.modules.user.service.intf.UserService;
 import com.xwder.app.utils.AssertUtil;
@@ -65,6 +69,9 @@ public class ArticleController {
 
     @Autowired
     private CommentInfoService commentInfoService;
+
+    @Autowired
+    private CommentReplyService commentReplyService;
 
     /**
      * 从查看博客文章页面点击修改博客
@@ -130,18 +137,18 @@ public class ArticleController {
         String paramData = request.getParameter("paramData");
         JSONObject jsonObject = JSONUtil.parseObj(paramData);
         String title = (String) jsonObject.get("title");
-        AssertUtil.paramIsNotNull(title,"标题不能为空");
+        AssertUtil.paramIsNotNull(title, "标题不能为空");
         String summary = (String) jsonObject.get("summary");
-        AssertUtil.paramIsNotNull(summary,"摘要不能为空");
+        AssertUtil.paramIsNotNull(summary, "摘要不能为空");
         String content = (String) jsonObject.get("content");
-        AssertUtil.paramIsNotNull(content,"内容不能为空");
+        AssertUtil.paramIsNotNull(content, "内容不能为空");
         String previewImgUrl = (String) jsonObject.get("previewImgUrl");
         String type = (String) jsonObject.get("type");
-        AssertUtil.paramIsNotNull(type,"文章类型不能为空");
+        AssertUtil.paramIsNotNull(type, "文章类型不能为空");
         // 博客文章id 根据博客文章id判断时新增还是修改
         String idStr = (String) jsonObject.get("id");
         String categoryId = (String) jsonObject.get("category");
-        AssertUtil.paramIsNotNull(categoryId,"文章分类不能为空");
+        AssertUtil.paramIsNotNull(categoryId, "文章分类不能为空");
 
         Category category = categoryService.getCategoryById(Long.parseLong(categoryId));
         JSONArray jsonArray = (JSONArray) jsonObject.get("tags");
@@ -260,7 +267,46 @@ public class ArticleController {
 
         // 查询文章评论
         List<CommentInfo> commentInfos = commentInfoService.listCommentInfoByTypeAndSubjectId(SysConstant.COMMENT_TYPE_BLOG, articleId);
+        if (CollectionUtil.isNotEmpty(commentInfos)) {
+            List<Long> commentIds = commentInfos.stream().map(commentInfo -> commentInfo.getId()).collect(Collectors.toList());
+            List<CommentReply> commentReplyList = commentReplyService.listCommentReplyByCommentIds(commentIds);
+            // 根据评论id 分类回复的评论
+            List<Map> commentList = new ArrayList<>();
+            for (CommentInfo commentInfo : commentInfos) {
+                ArrayList<CommentReply> replyCommentList = Lists.newArrayList();
+                for (CommentReply commentReply : commentReplyList) {
+                    if (commentInfo.getId().equals(commentReply.getCommentId())) {
+                        replyCommentList.add(commentReply);
+                    }
+                }
+                // 一个评论 和 对应评论的回复信息
+                HashMap<String, Object> completeCommentMap = Maps.newHashMap();
+                completeCommentMap.put("comment", commentInfo);
+                // 排序
+                Collections.sort(replyCommentList, new Comparator<CommentReply>() {
+                    @Override
+                    public int compare(CommentReply o1, CommentReply o2) {
+                        return o1.getId() > o2.getId() ? -1 : 1;
+                    }
+                });
+                completeCommentMap.put("commentReplys", replyCommentList);
+                commentList.add(completeCommentMap);
+            }
+            // 排序
+            Collections.sort(commentList, new Comparator<Map>() {
+                @Override
+                public int compare(Map o1, Map o2) {
+                    CommentInfo commentInfo1 = (CommentInfo) o1.get("comment");
+                    CommentInfo commentInfo2 = (CommentInfo) o2.get("comment");
+                    return commentInfo1.getId() > commentInfo2.getId() ? -1 : 1;
+                }
+            });
+            model.addAttribute("commentList", commentList);
+        }
 
+
+        User sessionUser = (User) SessionUtil.getSessionAttribute(SysConstant.SESSION_USER);
+        model.addAttribute("sessionUser", sessionUser);
         return "blog/article";
     }
 
