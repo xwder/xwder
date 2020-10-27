@@ -48,7 +48,8 @@ textarea, .flex-text-wrap {
 
 .pre2 {
     display: block;
-    visibility: hidden
+    /*visibility: hidden;*/
+    display: none;
 }
 
 .flex-text-wrap, textarea {

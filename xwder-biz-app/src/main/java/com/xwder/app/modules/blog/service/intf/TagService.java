@@ -61,4 +61,12 @@ public interface TagService {
      * @return
      */
     CommonResult deleteTagById(Long id);
+
+    /**
+     * 根据id查询tag
+     *
+     * @param id
+     * @return
+     */
+    Tag findTagById(Long id);
 }

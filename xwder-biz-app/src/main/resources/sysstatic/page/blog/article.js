@@ -32,7 +32,7 @@ layui.use(['form', 'layer', 'table', 'laytpl'], function () {
                 {field: 'comments', title: '评论数'},
                 {field: 'likes', title: '点赞数'},
                 {field: 'favors', title: '收藏数',},
-                {field: 'modifieCount', title: '编辑次数'},
+                {field: 'modifyCount', title: '编辑次数'},
                 {field: 'articleType', title: '原创转载'},
                 {field: 'publishTime', title: '发布时间', minWidth: 180},
                 {

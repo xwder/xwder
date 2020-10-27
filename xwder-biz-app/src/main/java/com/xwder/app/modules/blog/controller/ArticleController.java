@@ -1,8 +1,6 @@
 package com.xwder.app.modules.blog.controller;
 
 import cn.hutool.core.collection.CollectionUtil;
-import cn.hutool.core.math.MathUtil;
-import cn.hutool.core.util.NumberUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONObject;
@@ -28,9 +26,7 @@ import com.xwder.app.modules.user.entity.User;
 import com.xwder.app.modules.user.service.intf.UserService;
 import com.xwder.app.utils.AssertUtil;
 import com.xwder.app.utils.SessionUtil;
-import com.xwder.app.utils.TimeCountUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -169,7 +165,7 @@ public class ArticleController {
             }
         } else {
             article = new Article();
-            article.setModifieCount(1);
+            article.setModifyCount(1);
             Date date = new Date();
             article.setGmtCreate(date);
             article.setGmtModified(date);
@@ -196,7 +192,7 @@ public class ArticleController {
         Map responseData = new HashMap();
         // 保存只给出响应信息 预览和发布调整到新的页面
         if (StrUtil.equalsAnyIgnoreCase(action, "save")) {
-            article.setModifieCount(article.getModifieCount() + 1);
+            article.setModifyCount(article.getModifyCount() + 1);
             Article saveArticle = articleService.saveOrUpdateArticle(article);
             // 更新 articleTag 表
             articleTagService.saveOrUpdateArticleTags(sessionUser.getId(), saveArticle.getId(), tagList);
@@ -218,7 +214,7 @@ public class ArticleController {
 
         // 发布博客文章 先保存再调整至发布的博客文章页面
         if (StrUtil.equalsIgnoreCase(action, "publish")) {
-            article.setModifieCount(article.getModifieCount() + 1);
+            article.setModifyCount(article.getModifyCount() + 1);
             article.setStatus(1);
             article.setPublishTime(new Date());
             Article saveArticle = articleService.saveOrUpdateArticle(article);

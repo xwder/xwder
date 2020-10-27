@@ -7,6 +7,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface TagRepository extends JpaRepository<Tag, Long> {
@@ -26,7 +27,15 @@ public interface TagRepository extends JpaRepository<Tag, Long> {
      * @param ids
      * @return
      */
-    @Query(value = "SELECT * FROM blog_tag WHERE id IN (:ids)",nativeQuery = true)
+    @Query(value = "SELECT * FROM blog_tag WHERE id IN (:ids)", nativeQuery = true)
     List<Tag> listTagByUserId(@Param("ids") List<Long> ids);
 
+    /**
+     * 根据id查询tag
+     *
+     * @param id
+     * @return
+     */
+    @Override
+    Optional<Tag> findById(Long id);
 }

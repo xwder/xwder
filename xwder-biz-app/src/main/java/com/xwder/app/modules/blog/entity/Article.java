@@ -110,8 +110,14 @@ public class Article implements Serializable {
     /**
      * 文章编辑次数
      */
-    @Column(name = "modifie_count")
-    private Integer modifieCount;
+    @Column(name = "modify_count")
+    private Integer modifyCount;
+
+    /**
+     * 发布时间
+     */
+    @Column(name = "last_modify_time")
+    private Date lastModifyTime;
 
     /**
      * 发布时间
@@ -264,14 +270,21 @@ public class Article implements Serializable {
     }
 
 
-    public Integer getModifieCount() {
-        return modifieCount;
+    public Integer getModifyCount() {
+        return modifyCount;
     }
 
-    public void setModifieCount(Integer modifieCount) {
-        this.modifieCount = modifieCount;
+    public void setModifyCount(Integer modifieCount) {
+        this.modifyCount = modifieCount;
     }
 
+    public Date getLastModifyTime() {
+        return lastModifyTime;
+    }
+
+    public void setLastModifyTime(Date lastModifyTime) {
+        this.lastModifyTime = lastModifyTime;
+    }
 
     public Date getPublishTime() {
         return publishTime;

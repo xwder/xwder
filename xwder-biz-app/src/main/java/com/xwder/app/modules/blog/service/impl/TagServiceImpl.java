@@ -129,4 +129,16 @@ public class TagServiceImpl implements TagService {
         tagRepository.deleteById(id);
         return CommonResult.success(ResultCode.SUCCESS, "删除成功");
     }
+
+    /**
+     * 根据id查询tag
+     *
+     * @param id
+     * @return
+     */
+    @Override
+    public Tag findTagById(Long id) {
+        Optional<Tag> optionalTag = tagRepository.findById(id);
+        return optionalTag.get();
+    }
 }

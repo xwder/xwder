@@ -83,6 +83,7 @@ public class ArticleServiceImpl implements ArticleService {
                 article.setReadCount(readCount.longValue());
             }
         }
+        article.setLastModifyTime(new Date());
         Article saveArticle = articleRepository.save(article);
         return saveArticle;
     }
@@ -294,14 +295,14 @@ public class ArticleServiceImpl implements ArticleService {
         // 无分类有标签
         if (categoryId == null && tagId != null) {
             articlePage = listArticleByUserId(searchUser.getId(), categoryId, tagId, pageNum, pageSize);
+            tag= tagService.findTagById(tagId);
         }
 
         // 显示内容处理
         List<Article> articleList = articlePage.getContent();
         for (Article article : articleList) {
-            Date gmtModified = article.getGmtModified();
             // 格式化显示时间 几小时之前、几天之前
-            String remark = TimeCountUtil.format(gmtModified);
+            String remark = TimeCountUtil.format(article.getLastModifyTime());
             article.setRemark(remark);
         }
 
