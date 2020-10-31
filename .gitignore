@@ -132,3 +132,5 @@ xwder-cloud-common/target/
 
 /xwder-biz-app/src/main/resources/rebel-remote.xml
 /xwder-biz-app/src/main/resources/rebel.xml
+/rebel.xml
+/rebel-remote.xml

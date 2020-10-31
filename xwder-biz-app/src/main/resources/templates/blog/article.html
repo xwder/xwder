@@ -5,7 +5,9 @@
 <!--评论模块css-->
 <link rel="stylesheet" th:href="@{/static/comment/css/style.css}" href="comment/css/style.css">
 <link rel="stylesheet" th:href="@{/static/comment/css/comment.css}" href="comment/css/comment.css">
-<link rel="stylesheet" th:href="@{/static/lib/highlight/css/default.min.css}" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.2/styles/default.min.css">
+<link rel="stylesheet" th:href="@{/static/lib/highlight/css/default.min.css}" href="comment/css/comment.css">
+<!--点击图片放大css-->
+<link rel="stylesheet" th:href="@{/static/lib/imgenlarge/js/zoomify.min.css}" href="comment/css/comment.css">
 <head th:include="include :: head"></head>
 <body class="antialiased">
 <div class="page">
@@ -119,7 +121,7 @@
                 <div class="col-lg-9">
                     <div class="card card-lg">
                         <div class="card-body" style="padding: 0.5rem;" >
-                            <div class="markdown">
+                            <div class="markdown" id="blog-content">
                                 <div th:if="${articleMap != null}" th:utext="${articleMap['article'].content}" class="content" id="contentCardBody"></div>
                             </div>
                         </div>
@@ -190,9 +192,13 @@
 
 <!-- Libs JS -->
 <script th:src="@{/static/dist/libs/bootstrap/dist/js/bootstrap.bundle.min.js}" src=""></script>
-<script th:src="@{/static/lib/highlight/js/highlight.min.js}" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.2/highlight.min.js"></script>
-
+<script th:src="@{/static/lib/highlight/js/highlight.min.js}"></script>
+<!--点击图片放大 博客文章中的的图片-->
+<script th:src="@{/static/lib/imgenlarge/js/zoomify.min.js}"></script>
 <script>
+    // 点击图片放大
+    $('#blog-content img').zoomify();
+
     // document.body.style.display = "block";
     // 实现代码高亮的函数。
     hljs.initHighlightingOnLoad();
