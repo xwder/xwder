@@ -72,7 +72,8 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
                         "/sys/**")
                 .excludePathPatterns("/static/**",
                         "/doLoginOut",
-                        "/user/mail/verifyMail.html");
+                        "/user/mail/verifyMail.html",
+                        "/login/**");
 
         registry.addInterceptor(novelInterceptor)
                 .addPathPatterns("/book/**")

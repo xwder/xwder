@@ -4,6 +4,8 @@ import cn.hutool.core.io.FileUtil;
 import com.google.common.base.Joiner;
 
 import java.io.File;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -42,5 +44,14 @@ public class Test {
         list.add(3);
         String join = Joiner.on("-").join(list);
         System.out.println("join: " + join);
+    }
+
+    @org.junit.Test
+    public void urlEncode(){
+        try {
+            System.out.println(URLEncoder.encode("http://9di2ey.natappfree.cc/login/qq/getauthcode","UTF-8"));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
     }
 }

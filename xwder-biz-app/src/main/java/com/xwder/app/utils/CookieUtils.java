@@ -144,7 +144,9 @@ public final class CookieUtils {
             }
             if (null != request)// 设置域名的cookie
             {
-                cookie.setDomain(getDomainName(request));
+                // 获取顶级域名
+                String domainName = URLUtil.getDomainName(request.getRequestURL().toString());
+                cookie.setDomain(domainName);
             }
             cookie.setPath("/");
             response.addCookie(cookie);

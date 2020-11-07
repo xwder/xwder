@@ -2,7 +2,6 @@ package com.xwder.app.modules.user.controller;
 
 import cn.hutool.core.lang.Validator;
 import cn.hutool.core.util.RandomUtil;
-import cn.hutool.core.util.StrUtil;
 import com.baomidou.kaptcha.Kaptcha;
 import com.xwder.app.attribute.SysConfigAttribute;
 import com.xwder.app.common.result.CommonResult;
@@ -10,14 +9,15 @@ import com.xwder.app.common.result.ResultCode;
 import com.xwder.app.consts.SysConstant;
 import com.xwder.app.modules.user.entity.User;
 import com.xwder.app.modules.user.service.intf.UserService;
+import com.xwder.app.modules.user.service.login.QQLoginService;
 import com.xwder.app.utils.AssertUtil;
 import com.xwder.app.utils.CookieUtils;
 import com.xwder.app.utils.SessionUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -43,13 +43,22 @@ public class LoginRegisterController {
     @Autowired
     private SysConfigAttribute sysConfigAttribute;
 
+    @Autowired
+    private QQLoginService qqLoginService;
+
     /**
      * 登录页面
      *
      * @return
      */
     @RequestMapping("/login")
-    public String toLong() {
+    public String toLong(HttpServletRequest request, Model model) {
+        // 获取当前登录域名设置 QQ登录的请求地址 因为可能会部署多个域名
+        StringBuffer url = request.getRequestURL();
+        String tempContextUrl = url.delete(url.length() - request.getRequestURI().length(), url.length()).append("/").toString();
+        String qqLoginUrl = qqLoginService.getQQLoginUrl(tempContextUrl);
+        model.addAttribute("qqLoginUrl", qqLoginUrl);
+
         return "login";
     }
 

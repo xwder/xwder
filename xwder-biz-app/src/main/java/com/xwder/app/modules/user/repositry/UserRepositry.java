@@ -38,5 +38,11 @@ public interface UserRepositry extends JpaRepository<User, Integer> {
      */
     List<User> findAllByManager(Integer isManager);
 
-
+    /**
+     * 根据openid查找QQ用户信息
+     *
+     * @param openId
+     * @return
+     */
+    User findByOpenId(String openId);
 }

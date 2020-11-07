@@ -28,6 +28,12 @@ public class User implements Serializable {
     private Long id;
 
     /**
+     * QQ用户表openid
+     */
+    @Column(name = "open_id")
+    private String openId;
+
+    /**
      * 用户名
      */
     @Column(name = "user_name")
@@ -145,7 +151,13 @@ public class User implements Serializable {
         this.id = id;
     }
 
+    public String getOpenId() {
+        return openId;
+    }
 
+    public void setOpenId(String openId) {
+        this.openId = openId;
+    }
 
     public String getNickname() {
         return nickname;

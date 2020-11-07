@@ -65,8 +65,21 @@
                                     <span class="custom-control-label">记住我</span>
                                 </label>
                             </div>
-                            <div class="form-footer">
+                            <div class="form-footer" style="margin-top: 10px;">
                                 <button type="button" id="loginButton" class="btn btn-primary btn-block">登录</button>
+                            </div>
+                            <div class="form-group" style="margin-top: 10px;text-align: center;">
+                                <a th:href="${qqLoginUrl}">
+                                    <img style="width: 80px;" th:src="@{/static/image/otherlogin/qqlogin.png}">
+                                </a>
+                                <a>
+                                    <img style="width: 80px;" th:src="@{/static/image/otherlogin/githublogin.png}">
+                                </a>
+                                <a>
+                                    <img style="width: 80px;" th:src="@{/static/image/otherlogin/weibo.jpg}">
+                                </a>
+                            </div>
+                            <div>
                             </div>
                         </div>
                     </form>

@@ -12,6 +12,7 @@ import com.xwder.app.consts.UserStatusEnum;
 import com.xwder.app.config.mq.MQProducerMessage;
 import com.xwder.app.config.mq.RabbitConfig;
 import com.xwder.app.modules.user.entity.User;
+import com.xwder.app.modules.user.entity.UserQQ;
 import com.xwder.app.modules.user.repositry.UserRepositry;
 import com.xwder.app.modules.user.service.intf.UserService;
 import com.xwder.app.utils.RedisUtil;
@@ -312,5 +313,40 @@ public class UserServiceImpl implements UserService {
             user.setPhone(null);
         });*/
         return managerUserList;
+    }
+
+    /**
+     * 根据openid查找QQ用户信息
+     *
+     * @param openId
+     * @return
+     */
+    @Override
+    public User findByOpenId(String openId) {
+        return userRepositry.findByOpenId(openId);
+    }
+
+    /**
+     * 根据userQQ 创建用户信息 用户名和密码和盐设置为null
+     * @param userQQ
+     * @return
+     */
+    @Override
+    public User createUserByUserQQ(UserQQ userQQ) {
+        User user = new User();
+        user.setOpenId(userQQ.getOpenId());
+        user.setNickname(userQQ.getNickname());
+        user.setManager(0);
+        user.setSex(2);
+        user.setRegisterTime(new Date());
+        user.setLastLoginTime(new Date());
+        user.setStatus(3);
+        user.setAvatar(userQQ.getFigureurl());
+        user.setLastLoginTime(new Date());
+        user.setAvailable(1);
+        user.setGmtCreate(new Date());
+        user.setGmtModified(new Date());
+        userRepositry.save(user);
+        return user;
     }
 }
