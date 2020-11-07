@@ -17,10 +17,15 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * @author xwder
@@ -55,6 +60,7 @@ public class GlobalInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         log.info("全局数据处理拦截器 GoableInterceptor拦截到访问的地址: {}", request.getRequestURL().toString());
+        checkUserInfo(request, response);
         getLoginUser(request, response, handler);
         buildPotalData(request, response, handler);
         refreshRedisSession(request, response, handler);
@@ -87,6 +93,38 @@ public class GlobalInterceptor implements HandlerInterceptor {
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
 
+    }
+
+    /**
+     * 处理用户信息
+     *
+     * @param request
+     * @param response
+     */
+    private void checkUserInfo(HttpServletRequest request, HttpServletResponse response) {
+        // 如果只存在userSessionToken redis中不存在用户信息
+        // userSessionToken不能为null登录后
+        String userSessionToken = CookieUtils.getCookieValue(request, sysConfigAttribute.getSessionTokenName());
+        if (StrUtil.isNotEmpty(userSessionToken)) {
+            // 判断redis中用户是否存在
+            User userSessionFromRedis = userService.getUserSessionFromRedis(userSessionToken);
+            if (userSessionFromRedis == null) {
+                // 先情况session中的user信息，可能不存在
+                SessionUtil.removeSessionAttribute(SysConstant.SESSION_USER);
+                // 删除request中的userSessionToken
+                Cookie[] cookies = request.getCookies();
+                //List<Cookie> filterCookieList = Arrays.stream(cookies).filter(cookie -> !StrUtil.equals(cookie.getName(), sysConfigAttribute.getSessionTokenName())).collect(Collectors.toList());
+                for (Cookie cookie : request.getCookies()) {
+                    if (StrUtil.equals(cookie.getName(), sysConfigAttribute.getSessionTokenName())) {
+                        cookie.setValue(null);
+                        break;
+                    }
+                }
+            } else {
+                // session 写入用户信息
+                SessionUtil.setSessionAttribute(SysConstant.SESSION_USER, userSessionFromRedis);
+            }
+        }
     }
 
 

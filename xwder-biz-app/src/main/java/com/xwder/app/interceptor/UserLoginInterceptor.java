@@ -46,23 +46,6 @@ public class UserLoginInterceptor implements HandlerInterceptor {
         StringBuffer requestURLSB = request.getRequestURL();
         log.info("用户登录拦截器获取到用户访问的地址: {}", requestURLSB.toString());
         String userSessionToken = CookieUtils.getCookieValue(request, sysConfigAttribute.getSessionTokenName());
-        // userSessionToken不能为null登录后
-        if (StrUtil.isEmpty(userSessionToken)) {
-            response.sendRedirect("/login.html?redirect=" + requestURLSB);
-            return false;
-        }else {
-            // 判断redis中用户是否存在
-            User userSessionFromRedis = userService.getUserSessionFromRedis(userSessionToken);
-            if (userSessionFromRedis == null) {
-                // 先情况session中的user信息，可能不存在
-                SessionUtil.removeSessionAttribute(SysConstant.SESSION_USER);
-            }else{
-                // session 写入用户信息
-                SessionUtil.setSessionAttribute(SysConstant.SESSION_USER, userSessionFromRedis);
-                return true;
-            }
-        }
-
         User sessionUser = (User) SessionUtil.getSessionAttribute(SysConstant.SESSION_USER);
         if (sessionUser == null) {
             if (StrUtil.isNotEmpty(userSessionToken)) {
