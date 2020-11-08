@@ -10,6 +10,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigInteger;
 import java.util.List;
 import java.util.Map;
 
@@ -106,4 +107,11 @@ public interface ArticleRepository extends BaseJpaRepository<Article, Long> {
      */
     @Query(value = "SELECT * FROM blog_article WHERE id IN (:ids)", nativeQuery = true)
     List<Article> listArticleByIds(@Param("ids") List<Long> ids);
+
+    /**
+     * 获取所有博客 id
+     * @return
+     */
+    @Query(value = "SELECT id FROM blog_article t where t.status = 1 and t.is_available = 1 ", nativeQuery = true)
+    List<BigInteger> listAllBlogArticleId();
 }

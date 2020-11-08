@@ -9,9 +9,11 @@ import com.xwder.app.common.result.ResultCode;
 import com.xwder.app.consts.SysConstant;
 import com.xwder.app.modules.user.entity.User;
 import com.xwder.app.modules.user.service.intf.UserService;
+import com.xwder.app.modules.user.service.login.GitHubLoginService;
 import com.xwder.app.modules.user.service.login.QQLoginService;
 import com.xwder.app.utils.AssertUtil;
 import com.xwder.app.utils.CookieUtils;
+import com.xwder.app.utils.HttpServletRequestUtil;
 import com.xwder.app.utils.SessionUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +48,9 @@ public class LoginRegisterController {
     @Autowired
     private QQLoginService qqLoginService;
 
+    @Autowired
+    private GitHubLoginService gitHubLoginService;
+
     /**
      * 登录页面
      *
@@ -54,11 +59,10 @@ public class LoginRegisterController {
     @RequestMapping("/login")
     public String toLong(HttpServletRequest request, Model model) {
         // 获取当前登录域名设置 QQ登录的请求地址 因为可能会部署多个域名
-        StringBuffer url = request.getRequestURL();
-        String tempContextUrl = url.delete(url.length() - request.getRequestURI().length(), url.length()).append("/").toString();
+        String tempContextUrl = HttpServletRequestUtil.getDomain(request);
         String qqLoginUrl = qqLoginService.getQQLoginUrl(tempContextUrl);
         model.addAttribute("qqLoginUrl", qqLoginUrl);
-
+        model.addAttribute("githubLoginUrl", gitHubLoginService.getGitHubLoginUrl());
         return "login";
     }
 

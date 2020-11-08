@@ -29,6 +29,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -337,5 +338,14 @@ public class ArticleServiceImpl implements ArticleService {
         double endTime = System.currentTimeMillis() - startTime;
         double useTime = endTime / 1000;
         model.addAttribute("useTime", useTime);
+    }
+
+    /**
+     * 获取所有博客 id
+     * @return
+     */
+    @Override
+    public List<BigInteger> listAllBlogArticleId() {
+        return articleRepository.listAllBlogArticleId();
     }
 }

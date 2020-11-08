@@ -1,6 +1,7 @@
 package com.xwder.app.modules.user.service.intf;
 
 import com.xwder.app.modules.user.entity.User;
+import com.xwder.app.modules.user.entity.UserGithub;
 import com.xwder.app.modules.user.entity.UserQQ;
 
 import java.util.List;
@@ -96,7 +97,7 @@ public interface UserService {
     List<User> listManagerUser();
 
     /**
-     * 根据openid查找QQ用户信息
+     * 根据openid查找用户信息
      *
      * @param openId
      * @return
@@ -109,4 +110,18 @@ public interface UserService {
      * @return
      */
     User createUserByUserQQ(UserQQ userQQ);
+
+    /**
+     * 根据 githubUserName 查找用户信息
+     * @param githubUserName
+     * @return
+     */
+    User findByGithubUserName(String githubUserName);
+
+    /**
+     * 根据 userGithub 创建用户信息 用户名和密码和盐设置为null
+     * @param userGithub
+     * @return
+     */
+    User createUserByUserGithub(UserGithub userGithub);
 }

@@ -12,6 +12,7 @@ import com.xwder.app.consts.UserStatusEnum;
 import com.xwder.app.config.mq.MQProducerMessage;
 import com.xwder.app.config.mq.RabbitConfig;
 import com.xwder.app.modules.user.entity.User;
+import com.xwder.app.modules.user.entity.UserGithub;
 import com.xwder.app.modules.user.entity.UserQQ;
 import com.xwder.app.modules.user.repositry.UserRepositry;
 import com.xwder.app.modules.user.service.intf.UserService;
@@ -332,6 +333,7 @@ public class UserServiceImpl implements UserService {
      * @return
      */
     @Override
+    @Transactional(rollbackFor = {Exception.class})
     public User createUserByUserQQ(UserQQ userQQ) {
         User user = new User();
         user.setOpenId(userQQ.getOpenId());
@@ -340,8 +342,45 @@ public class UserServiceImpl implements UserService {
         user.setSex(2);
         user.setRegisterTime(new Date());
         user.setLastLoginTime(new Date());
+        user.setLastUpdateTime(new Date());
         user.setStatus(3);
         user.setAvatar(userQQ.getFigureurl());
+        user.setLastLoginTime(new Date());
+        user.setAvailable(1);
+        user.setGmtCreate(new Date());
+        user.setGmtModified(new Date());
+        userRepositry.save(user);
+        return user;
+    }
+
+    /**
+     * 根据 githubUserName 查找用户信息
+     * @param githubUserName
+     * @return
+     */
+    @Override
+    public User findByGithubUserName(String githubUserName) {
+        return userRepositry.findByGithubUserName(githubUserName);
+    }
+
+    /**
+     * 根据 userGithub 创建用户信息 用户名和密码和盐设置为null
+     * @param userGithub
+     * @return
+     */
+    @Override
+    @Transactional(rollbackFor = {Exception.class})
+    public User createUserByUserGithub(UserGithub userGithub) {
+        User user = new User();
+        user.setGithubUserName(userGithub.getLogin());
+        user.setNickname(userGithub.getLogin());
+        user.setManager(0);
+        user.setSex(2);
+        user.setRegisterTime(new Date());
+        user.setLastLoginTime(new Date());
+        user.setLastUpdateTime(new Date());
+        user.setStatus(3);
+        user.setAvatar(userGithub.getAvatarUrl());
         user.setLastLoginTime(new Date());
         user.setAvailable(1);
         user.setGmtCreate(new Date());

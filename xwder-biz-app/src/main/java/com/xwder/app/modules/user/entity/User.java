@@ -34,6 +34,12 @@ public class User implements Serializable {
     private String openId;
 
     /**
+     * github用户表登录用户名 对应 login字段
+     */
+    @Column(name = "github_user_name")
+    private String githubUserName;
+
+    /**
      * 用户名
      */
     @Column(name = "user_name")
@@ -157,6 +163,14 @@ public class User implements Serializable {
 
     public void setOpenId(String openId) {
         this.openId = openId;
+    }
+
+    public String getGithubUserName() {
+        return githubUserName;
+    }
+
+    public void setGithubUserName(String githubUserName) {
+        this.githubUserName = githubUserName;
     }
 
     public String getNickname() {

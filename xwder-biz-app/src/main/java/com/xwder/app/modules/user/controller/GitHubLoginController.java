@@ -7,9 +7,10 @@ import cn.hutool.core.util.StrUtil;
 import com.xwder.app.attribute.SysConfigAttribute;
 import com.xwder.app.consts.SysConstant;
 import com.xwder.app.modules.user.entity.User;
+import com.xwder.app.modules.user.entity.UserGithub;
 import com.xwder.app.modules.user.entity.UserQQ;
 import com.xwder.app.modules.user.service.intf.UserService;
-import com.xwder.app.modules.user.service.login.QQLoginService;
+import com.xwder.app.modules.user.service.login.GitHubLoginService;
 import com.xwder.app.utils.CookieUtils;
 import com.xwder.app.utils.HttpServletRequestUtil;
 import com.xwder.app.utils.SessionUtil;
@@ -22,28 +23,26 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
 
-
 /**
- * QQ第三方登录认证
+ * github第三方登录认证
  *
  * @author xwder
  * @version 1.0
- * @date 2020-11-06 19:28
+ * @date 2020-11-08 14:55
  */
 @Slf4j
-@RequestMapping(value = {"/login/qq"})
+@RequestMapping(value = {"/login/github"})
 @Controller
-public class QQLoginController {
+public class GitHubLoginController {
 
     @Autowired
     private SysConfigAttribute sysConfigAttribute;
 
     @Autowired
-    private QQLoginService qqLoginService;
+    private GitHubLoginService gitHubLoginService;
 
     @Autowired
     private UserService userService;
-
 
     /**
      * QQ获取授权回调接口 /login/qq/getauthcode
@@ -51,46 +50,42 @@ public class QQLoginController {
      * @param code
      * @return
      */
+    //@ResponseBody
     @RequestMapping("/getauthcode")
     public Object getAuthCode(String code, HttpServletRequest request, HttpServletResponse response) {
         if (StrUtil.isEmpty(code)) {
             return "redirect:/index.html";
         }
-        // 获取当前登录域名设置 QQ登录的请求地址 因为可能会部署多个域名
-        String tempContextUrl = HttpServletRequestUtil.getDomain(request);
-        log.info("获取到QQ getauthcode 回调参数 code:{}", code);
-        // 获取accessToken
-        String accessToken = qqLoginService.getAccessToken(code,tempContextUrl);
+        String domain = HttpServletRequestUtil.getDomain(request);
+        String accessToken = gitHubLoginService.getAccessToken(code, domain);
         if (StrUtil.isEmpty(accessToken)) {
             return "redirect:/index.html";
         }
-        // 获取用户OpenId
-        String openID = qqLoginService.getOpenID(accessToken);
-        UserQQ userQQ = qqLoginService.getUserInfo(accessToken, openID);
-        if (userQQ == null || StrUtil.isEmpty(userQQ.getOpenId())) {
-            log.error("获取QQ用户信息失败");
+        UserGithub userGithub = gitHubLoginService.getUserInfo(accessToken);
+        if (userGithub == null) {
             return "redirect:/index.html";
         }
-        // 根据openId查询qq用户信息表 查到更新没查到创建
-        UserQQ existUserQQ = qqLoginService.findByOpenId(userQQ.getOpenId());
-        if (existUserQQ == null) {
-            existUserQQ = qqLoginService.saveOrUpdateUserQQ(userQQ);
+        // 根据 login githu用户名字段 查询 github用户信息表 查到更新没查到创建
+        UserGithub existUserGithub = gitHubLoginService.findByGithubName(userGithub.getLogin());
+        if (existUserGithub == null) {
+            gitHubLoginService.saveOrUpdateUserGithub(userGithub);
         } else {
             // 忽略null字段和错误字段
-            BeanUtil.copyProperties(userQQ, existUserQQ, CopyOptions.create().setIgnoreNullValue(true).setIgnoreError(true));
-            qqLoginService.saveOrUpdateUserQQ(existUserQQ);
+            BeanUtil.copyProperties(userGithub, existUserGithub, CopyOptions.create().setIgnoreNullValue(true).setIgnoreError(true));
+            gitHubLoginService.saveOrUpdateUserGithub(existUserGithub);
         }
-        // 根据QQ用户信息openId查询用户表
-        User user = userService.findByOpenId(existUserQQ.getOpenId());
+        // 根据 github_user_name 查询qq用户信息表 查到更新没查到创建
+        User user = userService.findByGithubUserName(existUserGithub.getLogin());
+
         if (user == null) {
             // 用户不存在
-            user = userService.createUserByUserQQ(userQQ);
+            user = userService.createUserByUserGithub(existUserGithub);
         } else {
             user.setLastLoginTime(new Date());
             userService.saveOrUpdateUser(user);
             user.setPassword(null);
             user.setSalt(null);
-            user.setAvatar(existUserQQ.getFigureurlQq());
+            user.setAvatar(existUserGithub.getAvatarUrl());
         }
         String xwderToken = RandomUtil.randomString(32);
         // session 写入用户信息
@@ -103,6 +98,4 @@ public class QQLoginController {
         // 获取用户信息后跳转到对应页面
         return "redirect:/index.html";
     }
-
-
 }

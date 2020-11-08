@@ -45,4 +45,11 @@ public interface UserRepositry extends JpaRepository<User, Integer> {
      * @return
      */
     User findByOpenId(String openId);
+
+    /**
+     * 根据 githubUserName 查找用户信息
+     * @param githubUserName
+     * @return
+     */
+    User findByGithubUserName(String githubUserName);
 }

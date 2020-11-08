@@ -9,6 +9,7 @@ import com.xwder.app.modules.user.repositry.UserQQRepositry;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -164,6 +165,7 @@ public class QQLoginService {
      * @param userQQ
      * @return
      */
+    @Transactional(rollbackFor = {Exception.class})
     public UserQQ saveOrUpdateUserQQ(UserQQ userQQ) {
         return userQQRepositry.save(userQQ);
     }

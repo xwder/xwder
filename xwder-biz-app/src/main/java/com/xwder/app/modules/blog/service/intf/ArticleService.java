@@ -6,6 +6,7 @@ import com.xwder.app.sysmodules.blog.dto.CategoryDto;
 import org.springframework.data.domain.Page;
 import org.springframework.ui.Model;
 
+import java.math.BigInteger;
 import java.util.List;
 
 /**
@@ -100,4 +101,9 @@ public interface ArticleService {
     void listArticleCategoryTag(Long categoryId, Long tagId, Integer pageNum, Integer pageSize, Model model);
 
 
+    /**
+     * 获取所有博客 id
+     * @return
+     */
+    List<BigInteger> listAllBlogArticleId();
 }
