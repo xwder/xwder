@@ -76,7 +76,7 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
                         "/login/**");
 
         registry.addInterceptor(novelInterceptor)
-                .addPathPatterns("/book/**")
+                .addPathPatterns("/book/**","/sys/**")
                 .excludePathPatterns();
 
         super.addInterceptors(registry);
