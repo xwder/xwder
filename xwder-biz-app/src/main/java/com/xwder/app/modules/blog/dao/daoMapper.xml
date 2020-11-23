@@ -8,17 +8,19 @@
         </oracle>
         <mysql>
             <![CDATA[
-           SELECT
-                t.id,
-                t.user_id,
-                t.category_name,
-                IFNULL( t1.count, 0 ) count
-           FROM
-                ( SELECT * FROM blog_category WHERE user_id = ? AND is_available = 1 ) t
-                LEFT JOIN
-                ( SELECT category_id, count( category_id ) count FROM blog_article WHERE user_id = 1 AND STATUS = 1 AND is_available = 1 GROUP BY category_id ) t1  ON t.id = t1.category_id
-           ORDER BY
-                t1.count DESC
+                select * from (
+                   SELECT
+                        t.id,
+                        t.user_id,
+                        t.category_name,
+                        IFNULL( t1.count, 0 ) count
+                   FROM
+                        ( SELECT * FROM blog_category WHERE user_id = ? AND is_available = 1 ) t
+                        LEFT JOIN
+                        ( SELECT category_id, count( category_id ) count FROM blog_article WHERE user_id = 1 AND STATUS = 1 AND is_available = 1 GROUP BY category_id ) t1  ON t.id = t1.category_id
+                   ORDER BY
+                        t1.count DESC
+                ) t where t.count > 0
             ]]>
         </mysql>
     </sql>
