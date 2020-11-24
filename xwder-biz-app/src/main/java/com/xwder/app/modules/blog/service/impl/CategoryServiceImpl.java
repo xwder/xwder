@@ -24,7 +24,6 @@ import com.xwder.app.utils.SessionUtil;
 import com.xwder.app.utils.UpdateUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.DependsOn;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -65,14 +64,13 @@ public class CategoryServiceImpl implements CategoryService {
     /**
      * 根据id查询分类信息
      *
-     * @param id
-     * @return
+     * @param id 分类id
+     * @return 分类信息
      */
     @Override
     public Category getCategoryById(Long id) {
-        Category category = null;
         String categoryRedisKey = RedisConstant.BLOG_ARTICLE_CATEGORY + ":" + id;
-        category = (Category) redisUtil.get(categoryRedisKey);
+        Category category = (Category) redisUtil.get(categoryRedisKey);
         if (category == null) {
             Optional<Category> categoryOptional = categoryRepository.findById(id);
             if (categoryOptional.isPresent()) {
@@ -86,8 +84,8 @@ public class CategoryServiceImpl implements CategoryService {
     /**
      * 根据用户id查询分类信息
      *
-     * @param userId
-     * @return
+     * @param userId 用户id
+     * @return 分类列表
      */
     @Override
     public List listCategoryByUserId(Long userId) {
@@ -99,8 +97,8 @@ public class CategoryServiceImpl implements CategoryService {
      * https://blog.csdn.net/ctwy291314/article/details/105437682/
      * 根据用户id查询分类信息
      *
-     * @param userId
-     * @return
+     * @param userId 用户id
+     * @return 用户分类数量信息
      */
     @Override
     @Transactional(readOnly = true)
@@ -121,14 +119,16 @@ public class CategoryServiceImpl implements CategoryService {
         params.add(userId);
 
         List<Map> rows = NativeSQL.findByNativeSQL(querySql, params);
+//        List<Map> rows = categoryRepository.listCagetroyCount(userId);
         return rows;
+
     }
 
     /**
      * 分页查询category
      *
-     * @param categoryDto
-     * @return
+     * @param categoryDto 分类dto
+     * @return 分类分页对象
      */
     @Override
     public Page listCategoryPageData(CategoryDto categoryDto) {
@@ -138,8 +138,8 @@ public class CategoryServiceImpl implements CategoryService {
     /**
      * 分页查询category 每个分类下博文数量
      *
-     * @param categoryDto
-     * @return
+     * @param categoryDto 分页dto
+     * @return 分页对象
      */
     @Override
     @Transactional(readOnly = true)
@@ -159,8 +159,8 @@ public class CategoryServiceImpl implements CategoryService {
     /**
      * 保存 category
      *
-     * @param category
-     * @return
+     * @param category 分类信息
+     * @return 保存后的分类信息
      */
     @Override
     @Transactional(rollbackFor = {Exception.class})
@@ -173,8 +173,8 @@ public class CategoryServiceImpl implements CategoryService {
     /**
      * 修改 category
      *
-     * @param category
-     * @return
+     * @param category 分类信息
+     * @return 更新后的分类信息
      */
     @Override
     @Transactional(rollbackFor = {Exception.class})
@@ -195,8 +195,8 @@ public class CategoryServiceImpl implements CategoryService {
     /**
      * 删除分类 如果该分类下存在博文 不允许删除
      *
-     * @param id
-     * @return
+     * @param id 分类id
+     * @return 删除响应信息
      */
     @Override
     @Transactional(rollbackFor = {Exception.class})

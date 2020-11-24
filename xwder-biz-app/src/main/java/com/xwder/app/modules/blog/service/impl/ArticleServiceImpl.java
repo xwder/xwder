@@ -24,7 +24,10 @@ import com.xwder.app.utils.RedisUtil;
 import com.xwder.app.utils.SessionUtil;
 import com.xwder.app.utils.TimeCountUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -67,8 +70,8 @@ public class ArticleServiceImpl implements ArticleService {
     /**
      * 根据是否有主键修改或者更新文章
      *
-     * @param article
-     * @return
+     * @param article 文章
+     * @return 保存后的文章
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -85,22 +88,20 @@ public class ArticleServiceImpl implements ArticleService {
             }
         }
         article.setLastModifyTime(new Date());
-        Article saveArticle = articleRepository.save(article);
-        return saveArticle;
+        return articleRepository.save(article);
     }
 
     /**
      * 根据id查询文章信息
      *
-     * @param articleId
-     * @return
+     * @param articleId 文章id
+     * @return 文章
      */
     @Override
     public Article getArticleById(Long articleId) {
-        Article article = null;
         // 先从redis中取
         String articleRedisKey = RedisConstant.BLOG_ARTICLE_ARTICLE + ":" + articleId;
-        article = (Article) redisUtil.get(articleRedisKey);
+        Article article = (Article) redisUtil.get(articleRedisKey);
         if (article == null) {
             article = articleRepository.findById(articleId).orElse(null);
             if (article != null) {
@@ -115,12 +116,12 @@ public class ArticleServiceImpl implements ArticleService {
     /**
      * 根据用户id、分类 查询文章列表
      *
-     * @param userId
-     * @param categoryId
-     * @param tagId
-     * @param pageNum
-     * @param pageSize
-     * @return
+     * @param userId     用户id
+     * @param categoryId 分类id
+     * @param tagId      标签id
+     * @param pageNum    页码
+     * @param pageSize   分页大小
+     * @return 分页文章
      */
     @Override
     @Transactional(readOnly = true)
@@ -138,8 +139,7 @@ public class ArticleServiceImpl implements ArticleService {
                 return PageUtil.noContentPage(pageable, articleTagPage.getTotalElements());
             }
             List<Article> articleList = articleRepository.listArticleByIds(articleIds);
-            Page page = PageUtil.page(articleList, pageable, articleTagPage.getTotalElements());
-            return page;
+            return PageUtil.page(articleList, pageable, articleTagPage.getTotalElements());
         }
 
         return articleRepository.findByUserIdAndStatusAndAvailable(userId, 1, 1, pageable);
@@ -148,8 +148,8 @@ public class ArticleServiceImpl implements ArticleService {
     /**
      * 修改article的阅读数
      *
-     * @param articleId
-     * @param readCount
+     * @param articleId 文章id
+     * @param readCount 增加的阅读数据
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -169,9 +169,10 @@ public class ArticleServiceImpl implements ArticleService {
     /**
      * 文章阅读数增加
      *
-     * @param articleId
+     * @param articleId      文章id
      * @param existReadCount 数据库中存在的阅读量
-     * @param addCount
+     * @param addCount       新增加的阅读数
+     * @return 新的阅读数
      */
     @Override
     public Integer addArticleReadCount(Long articleId, Integer existReadCount, Integer addCount) {
@@ -189,9 +190,9 @@ public class ArticleServiceImpl implements ArticleService {
     /**
      * 修改文章的评论数
      *
-     * @param articleId
-     * @param addCount
-     * @return
+     * @param articleId 文章id
+     * @param addCount  增加的评论数
+     * @return 新的文章评论数
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -214,8 +215,8 @@ public class ArticleServiceImpl implements ArticleService {
     /**
      * 根据分类id查询文章数量
      *
-     * @param categoryId
-     * @returnC
+     * @param categoryId 分类id
+     * @return 该分类下的文章数量
      */
     @Override
     public int countByCategoryId(Long categoryId) {
@@ -225,8 +226,8 @@ public class ArticleServiceImpl implements ArticleService {
     /**
      * 分页查询文章
      *
-     * @param articleDto
-     * @return
+     * @param articleDto 文章dto
+     * @return 博客文章分页
      */
     @Override
     @Transactional(readOnly = true)
@@ -236,18 +237,17 @@ public class ArticleServiceImpl implements ArticleService {
         ArrayList paramList = Lists.newArrayList();
         List<Map> rows = NativeSQL.findByNativeSQLPageable(querySql, paramList, pageable);
         int count = NativeSQL.countByNativeSQL(querySql, paramList);
-        Page page = PageUtil.page(rows, pageable, count);
-        return page;
+        return PageUtil.page(rows, pageable, count);
     }
 
     /**
      * 博客分页分类展示页面
      *
-     * @param categoryId
-     * @param tagId
-     * @param pageNum
-     * @param pageSize
-     * @param model
+     * @param categoryId 分类id
+     * @param tagId      标签id
+     * @param pageNum    页码
+     * @param pageSize   分页大小
+     * @param model      model
      */
     @Override
     public void listArticleCategoryTag(Long categoryId, Long tagId, Integer pageNum, Integer pageSize, Model model) {
@@ -266,8 +266,10 @@ public class ArticleServiceImpl implements ArticleService {
             } else {
                 // 没有用户信息
                 model.addAttribute("articleListError", 0);
+                return;
             }
         }
+        assert searchUser != null;
         searchUser.setPassword(null);
         searchUser.setEmail(null);
         searchUser.setSalt(null);
@@ -296,10 +298,11 @@ public class ArticleServiceImpl implements ArticleService {
         // 无分类有标签
         if (categoryId == null && tagId != null) {
             articlePage = listArticleByUserId(searchUser.getId(), categoryId, tagId, pageNum, pageSize);
-            tag= tagService.findTagById(tagId);
+            tag = tagService.findTagById(tagId);
         }
 
         // 显示内容处理
+        assert articlePage != null;
         List<Article> articleList = articlePage.getContent();
         for (Article article : articleList) {
             // 格式化显示时间 几小时之前、几天之前
@@ -342,7 +345,8 @@ public class ArticleServiceImpl implements ArticleService {
 
     /**
      * 获取所有博客 id
-     * @return
+     *
+     * @return 所有博客文章id
      */
     @Override
     public List<BigInteger> listAllBlogArticleId() {

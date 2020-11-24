@@ -26,7 +26,7 @@ import java.util.TimeZone;
 @EnableTransactionManagement(proxyTargetClass = true)
 @EnableConfigurationProperties
 @SpringBootApplication(exclude={DataSourceAutoConfiguration.class})
-@EnableJpaRepositories(repositoryFactoryBeanClass = BaseJpaRepositoryFactoryBean.class, basePackages = {"com.xwder.app"})
+@EnableJpaRepositories(repositoryFactoryBeanClass = BaseJpaRepositoryFactoryBean.class, basePackages = {"com.xwder.app"}, enableDefaultTransactions = false)
 public class XwderApplication {
 
     public static void main(String[] args) {
