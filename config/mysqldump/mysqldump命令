@@ -1,0 +1,14 @@
+mysqldump -h 127.0.0.1 -P 3306 -t xwder -uxwder -pwvDwERwidZZJhfh2 --tables app_user app_user_qq  >/usr/local/sqlbak/bak.sql;
+
+mysqldump -h 127.0.0.1 -P 3306 -t xwder -uroot -p5J3hjcKTp47nFCSa --tables app_user app_user_qq  >/usr/local/sqlbak/bak2.sql;
+
+SHOW TABLES;
+
+SELECT
+    *
+FROM
+    information_schema.TABLES
+WHERE
+    TABLE_SCHEMA = 'xwder'
+ORDER BY
+		table_name;
