@@ -39,7 +39,7 @@
 		<!--fetchStoreNodeByJdbc 启用ER表使用JDBC方式获取DataNode-->
 		<table name="book_chapter" primaryKey="id" dataNode="dn1" 
 		rule="book-chapter" autoIncrement="true" fetchStoreNodeByJdbc="true"
-		subTables="book_chapter_$1-96"  splitTableNames ="true">
+		subTables="book_chapter_$0-96"  splitTableNames ="true">
 			 
 		</table>
 		<!-- <table name="oc_call" primaryKey="ID" dataNode="dn1$0-743" rule="latest-month-calldate"

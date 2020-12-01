@@ -18,7 +18,6 @@
 	<function name="rang-long"
 			  class="io.mycat.route.function.AutoPartitionByLong">
 		<property name="mapFile">bookchapter-autopartition-long.txt</property>
-		<property name="defaultNode">1</property>
 	</function>
 
 </mycat:rule>
