@@ -47,6 +47,15 @@
 </head>
 
 <!--头部右边 是否登录还是显示用户头像-->
+<div th:fragment="logoImage">
+	<a th:href="@{/index.html}" href="../.."
+	   class="navbar-brand navbar-brand-autodark d-none-navbar-horizontal pr-0 pr-md-3">
+		<img th:src="${'/static/image/funny/'+ #numbers.formatDecimal(T(java.lang.Math).floor(T(java.lang.Math).random()*100%15),1,0) + '.gif'}" src="../static/images/logo/logo.svg" alt="Tabler"
+			 class="navbar-brand-image">
+	</a>
+</div>
+
+<!--头部右边 是否登录还是显示用户头像-->
 <div th:fragment="navigationBar">
 	<div class="navbar-nav flex-row order-md-last"  th:style="${session.sessionUser==null}?'':'display:none;'">
 		<div class="nav-item dropdown">
