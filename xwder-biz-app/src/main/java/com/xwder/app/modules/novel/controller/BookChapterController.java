@@ -13,6 +13,7 @@ import com.xwder.app.utils.HtmlUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
@@ -28,6 +29,7 @@ import java.util.List;
  * @version 1.0
  * @date 2020/07/07
  */
+@EnableAsync
 @Validated
 @RequestMapping(value = "/book")
 @Controller
@@ -124,14 +126,8 @@ public class BookChapterController {
         if (currentChapter == null) {
             return "book/chapter";
         }
-
-        // 章节内容
-        String localChapterContent = bookInfoService.getLocalChapterContent(bookId, chapterId);
-        if (StrUtil.isEmpty(localChapterContent)) {
-            bookChapterService.spiderChapterContent(currentChapter);
-        }else {
-            currentChapter.setChapterContent(localChapterContent);
-        }
+        // 替换缓存后续章节
+        bookChapterService.cacheBookChapter(bookId,chapterId+1);
 
         model.addAttribute("currentChapter",currentChapter);
         BookInfo bookInfo = bookInfoService.getBookInfoById(bookId);

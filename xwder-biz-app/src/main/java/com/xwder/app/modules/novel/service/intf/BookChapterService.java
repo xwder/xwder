@@ -48,4 +48,13 @@ public interface BookChapterService {
      * @return
      */
     BookChapter spiderChapterContent(BookChapter bookChapter);
+
+    /**
+     * 根据书籍编号和章节编号 缓存后续章节 加快章节读取速度 缓存后续5章
+     *
+     * @param bookId
+     * @param chapterId
+     * @return
+     */
+    void cacheBookChapter(Integer bookId, Integer chapterId);
 }
