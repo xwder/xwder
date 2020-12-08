@@ -250,6 +250,14 @@
                     <addResources>true</addResources>
                 </configuration>
             </plugin>
+            <!--打包的时候跳过测试-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <skipTests>true</skipTests>
+                </configuration>
+            </plugin>
         </plugins>
         <resources>
             <resource>
