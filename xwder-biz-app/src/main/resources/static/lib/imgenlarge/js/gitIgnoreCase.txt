@@ -1,0 +1,3 @@
+git设置不忽略大小写-gitIgnoreCase
+项目路径下
+git config core.ignorecase false
