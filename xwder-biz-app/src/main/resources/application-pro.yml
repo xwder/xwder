@@ -130,10 +130,10 @@ spring:
     config: classpath:log4j2.yml
 
   rabbitmq:
-    host: 114.67.85.146
+    host: 120.92.164.184
     port: 5672
     username: admin
-    password: q77ZA9NxKQHIDV7c
+    password: q7DZA9NxKQHIDV7c
     #虚拟host 可以不设置,使用server默认host
     virtual-host: xwder
     #消息确认配置项
