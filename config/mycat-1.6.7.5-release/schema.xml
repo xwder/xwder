@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <!DOCTYPE mycat:schema SYSTEM "schema.dtd">
 <mycat:schema xmlns:mycat="http://io.mycat/">
-
-
 	<schema name="xwder" checkSQLschema="true" sqlMaxLimit="100" randomDataNode="dn1">
+		<table name="mycat_sequence" primaryKey="name" dataNode="dn1"/>
+
 		<table name="book_info" dataNode="dn1"  />
 		<table name="app_user" dataNode="dn1"  />
 		<table name="app_user_github" dataNode="dn1"  />

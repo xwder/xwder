@@ -1,0 +1,85 @@
+参考：
+    https://my.oschina.net/u/4258260/blog/4748809
+    https://segmentfault.com/a/1190000012527832
+
+主键自增：
+    1、修改server.xml
+    	<!--1为数据库方式配置序列，0为文本方式-->
+    	<property name="sequnceHandlerType">1</property>
+
+    2、sequence_db_conf.properties.properties 添加
+        BOOK_CHAPTER=dn1
+
+    3、schema.xml
+        <table name="mycat_sequence" primaryKey="name" dataNode="dn1"/>
+        <table name="book_chapter" primaryKey="id" dataNode="dn1"
+        		rule="book-chapter" autoIncrement="true" fetchStoreNodeByJdbc="true"
+        		subTables="book_chapter_$0-96"  splitTableNames ="true">
+    4、建表
+        ①
+        #创建 MYCAT_SEQUENCE 表 如果有则直接插入数据
+        #name sequence 名称
+        #current_value 当前 value
+        #increment 增长步长!
+        #mycat在数据库中一次读取多少个sequence
+
+        DROP TABLE IF EXISTS MYCAT_SEQUENCE;
+        CREATE TABLE MYCAT_SEQUENCE (
+          `name` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '名称',
+          `current_value` int(11) NOT NULL COMMENT '当前值',
+          `increment` int(11) NOT NULL DEFAULT 1 COMMENT '步长',
+          PRIMARY KEY (`name`) USING BTREE
+        ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+        ②
+        插入自增起始时间和对应表
+        #插入一条 sequence
+        INSERT INTO MYCAT_SEQUENCE(name,current_value,increment) VALUES ('',
+        1000000, 100);
+
+        ③
+        创建相关 function 可能需要root用户权限
+        #获取当前 sequence 的值 (返回当前值,增量)
+        DROP FUNCTION IF EXISTS mycat_seq_currval;
+        DELIMITER ;;
+        CREATE DEFINER=`root`@`%` FUNCTION `mycat_seq_currval`(seq_name VARCHAR(50))
+          RETURNS VARCHAR(64) charset utf8
+        DETERMINISTIC
+          BEGIN
+            DECLARE retval VARCHAR(64);
+            SET retval="-999999999,null";
+            SELECT CONCAT(CAST(current_value AS CHAR),",",CAST(increment AS
+                                                               CHAR) ) INTO retval
+            FROM MYCAT_SEQUENCE WHERE NAME = seq_name;
+            RETURN retval ;
+          END
+        ;;
+        DELIMITER ;
+
+
+        #设置 sequence 值
+        DROP FUNCTION IF EXISTS mycat_seq_setval;
+        DELIMITER ;;
+        CREATE DEFINER=`root`@`%` FUNCTION mycat_seq_setval(seq_name VARCHAR(50),value INTEGER)
+          RETURNS varchar(64) CHARSET utf8
+        DETERMINISTIC
+          BEGIN
+            UPDATE MYCAT_SEQUENCE
+            SET current_value = value
+            WHERE name = seq_name;
+            RETURN mycat_seq_currval(seq_name);
+          END ;;
+        DELIMITER ;
+
+        #获取下一个 sequence 值
+        DROP FUNCTION IF EXISTS `mycat_seq_nextval`;
+        DELIMITER ;;
+        CREATE DEFINER=`root`@`%` FUNCTION `mycat_seq_nextval`(seq_name VARCHAR(50))
+          RETURNS VARCHAR(64)CHARSET utf8
+        DETERMINISTIC
+          BEGIN
+            UPDATE MYCAT_SEQUENCE SET current_value = current_value + increment
+            WHERE NAME = seq_name;
+            RETURN mycat_seq_currval(seq_name);
+          END;;
+        DELIMITER ;
