@@ -69,6 +69,7 @@ spring:
 #    password: wvDwERwidZZJhfh2
 
     driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+#    driver-class-name: com.mysql.cj.jdbc.Driver
     platform: mysql
     type: com.alibaba.druid.pool.DruidDataSource
     druid:
@@ -260,7 +261,7 @@ upload:
 novel:
   book:
     # 书籍章节本地存放目录
-    dir: I:\\novel
+    dir: /Users/xwder/xwderWorkspace/xwder/book
 
 video:
   # video切割文件时间长度

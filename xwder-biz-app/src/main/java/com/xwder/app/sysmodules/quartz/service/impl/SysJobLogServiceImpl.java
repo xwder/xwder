@@ -2,13 +2,11 @@ package com.xwder.app.sysmodules.quartz.service.impl;
 
 import com.xwder.app.sysmodules.quartz.entity.SysJobLog;
 import com.xwder.app.sysmodules.quartz.repository.SysJobLogRepository;
-import com.xwder.app.sysmodules.quartz.repository.SysJobRepository;
 import com.xwder.app.sysmodules.quartz.service.intf.SysJobLogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,7 +29,7 @@ public class SysJobLogServiceImpl implements SysJobLogService {
     @Override
     public SysJobLog selectJobLogById(Long jobLogId) {
         Optional<SysJobLog> sysJobLogOptional = sysJobLogRepository.findById(jobLogId);
-        return sysJobLogOptional.get();
+        return sysJobLogOptional.orElse(null);
     }
 
     @Override

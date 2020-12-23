@@ -44,7 +44,7 @@ public interface BookChapterService {
     /**
      * 爬取章节内容详情
      *
-     * @param bookChapter
+     * @param bookChapter 章节信息
      * @return
      */
     BookChapter spiderChapterContent(BookChapter bookChapter);
@@ -52,9 +52,15 @@ public interface BookChapterService {
     /**
      * 根据书籍编号和章节编号 缓存后续章节 加快章节读取速度 缓存后续5章
      *
-     * @param bookId
-     * @param chapterId
-     * @return
+     * @param bookId 书籍id
+     * @param chapterId 章节id
      */
     void cacheBookChapter(Integer bookId, Integer chapterId);
+
+    /** 根据书籍id更新数据最新章节信息
+     * @param bookId 书籍id
+     * @Description: 根据书籍id更新数据最新章节信息
+     * @return 更新状态成功失败
+     */
+    boolean updateBookChapterByBookId(Integer bookId);
 }

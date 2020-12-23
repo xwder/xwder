@@ -2,8 +2,6 @@ package com.xwder.app.modules.novel.service.impl;
 
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.StrUtil;
-import cn.hutool.http.HttpUtil;
-import com.xwder.app.advice.BizException;
 import com.xwder.app.consts.SpiderConstant;
 import com.xwder.app.consts.SysConstant;
 import com.xwder.app.modules.novel.entity.BookChapter;
@@ -12,6 +10,7 @@ import com.xwder.app.modules.novel.repository.BookChapterRepository;
 import com.xwder.app.modules.novel.repository.BookInfoRepository;
 import com.xwder.app.modules.novel.service.intf.BookChapterService;
 import com.xwder.app.modules.novel.service.intf.BookInfoService;
+import com.xwder.app.modules.novel.service.intf.SpiderBookChapterService;
 import com.xwder.app.utils.DateUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringEscapeUtils;
@@ -60,6 +59,9 @@ public class BookChapterServiceImpl implements BookChapterService {
 
     @Autowired
     private BookInfoService bookInfoService;
+
+    @Autowired
+    private SpiderBookChapterService spiderBookChapterService;
 
     /**
      * 根据bookId分页查询章节信息
@@ -142,6 +144,11 @@ public class BookChapterServiceImpl implements BookChapterService {
     @Override
     public BookChapter spiderChapterContent(BookChapter bookChapter) {
         Long startTime = System.currentTimeMillis();
+
+        if (StrUtil.isNotEmpty(bookChapter.getChapterContent())) {
+            return bookChapter;
+        }
+
         String sourceUrl = bookChapter.getSourceUrl();
 
         log.info("爬取章节[{}]信息开始", sourceUrl);
@@ -206,5 +213,61 @@ public class BookChapterServiceImpl implements BookChapterService {
                 cacheBookChapterMap.remove(cacheChapterKey);
             }
         }
+    }
+
+    /**
+     * 根据书籍id更新数据最新章节信息
+     *
+     * @param bookId 书籍id
+     * @return 更新状态成功失败
+     * @Description: 根据书籍id更新数据最新章节信息
+     */
+    @Override
+    @Transactional(rollbackFor = {Exception.class})
+    public boolean updateBookChapterByBookId(Integer bookId) {
+        BookInfo bookInfo = bookInfoService.getBookInfoById(bookId);
+        if (bookInfo == null) {
+            log.error("更新书籍章节失败 书籍编号[{}]不存在", bookId);
+            return false;
+        }
+        List<BookChapter> spiderBookChapterList = spiderBookChapterService.spiderBookChapterByBookUrl(bookInfo.getBookUrl());
+        if (CollectionUtil.isEmpty(spiderBookChapterList)) {
+            log.error("更新书籍章节失败 书籍编号[{}] 爬取章节列表失败", bookId);
+            return false;
+        }
+
+        List<BookChapter> allDbExistBookChapterList = bookChapterRepository.findAllByBookId(bookId);
+        // 章节序号
+        int lastChapterNo = CollectionUtil.isEmpty(allDbExistBookChapterList)?1
+                :(allDbExistBookChapterList.stream().map(x->x.getChapterNo()).reduce(Integer::max).orElse(1));
+        for (BookChapter spiderBookChapter : spiderBookChapterList) {
+            boolean existFlag = false;
+            BookChapter lastChapter = null;
+
+            if (CollectionUtil.isNotEmpty(allDbExistBookChapterList)) {
+                for (BookChapter bookChapter : allDbExistBookChapterList) {
+                    if (StrUtil.equals(spiderBookChapter.getChapterName().trim(), bookChapter.getChapterName().trim())
+                            && StrUtil.equals(spiderBookChapter.getSourceUrl(), bookChapter.getSourceUrl())) {
+                        existFlag = true;
+                        lastChapter = bookChapter;
+                        break;
+                    }
+                }
+            }
+
+            if (!existFlag) {
+                Date date = new Date();
+                spiderBookChapter.setBookId(bookId);
+                spiderBookChapter.setBookName(bookInfo.getBookName());
+                spiderBookChapter.setAuthor(bookInfo.getAuthor());
+                spiderBookChapter.setUpdateTime(date);
+                spiderBookChapter.setChapterNo(lastChapterNo + 1);
+                spiderBookChapter.setGmtCreate(date);
+                spiderBookChapter.setGmtModified(date);
+                bookChapterRepository.save(spiderBookChapter);
+                lastChapterNo = lastChapterNo + 1;
+            }
+        }
+        return true;
     }
 }

@@ -5,14 +5,13 @@ import com.xwder.app.common.result.CommonResult;
 import com.xwder.app.common.result.Constant;
 import com.xwder.app.common.result.ResultCode;
 import com.xwder.app.modules.novel.entity.BookInfo;
+import com.xwder.app.modules.novel.service.intf.BookChapterService;
 import com.xwder.app.modules.novel.service.intf.BookInfoService;
+import com.xwder.app.utils.FileUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
@@ -20,15 +19,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -50,6 +45,9 @@ public class BookInfoController {
     @Autowired
     private BookInfoService bookInfoService;
 
+    @Autowired
+    private BookChapterService bookChapterService;
+
     @ResponseBody
     @RequestMapping(value = "")
     public CommonResult getBookInfoByBookName(@RequestParam("bookName") String bookName) {
@@ -57,9 +55,8 @@ public class BookInfoController {
         return CommonResult.success(bookInfoList);
     }
 
-    @ResponseBody
     @RequestMapping(value = "/down")
-    public Object downBook(
+    public void downBook(
             @RequestParam(value = "bookName", required = false) String bookName,
             @RequestParam(value = "bookId", required = false) @Min(1) @Max(200000) Integer bookId,
             HttpServletResponse response) throws Exception {
@@ -86,11 +83,13 @@ public class BookInfoController {
             byte[] data = Files.readAllBytes(path);
             ByteArrayResource resource = new ByteArrayResource(data);
 
-            return ResponseEntity.ok()
+            FileUtil.downloadFile(response,bookNameFile,file.getAbsolutePath());
+
+            /*return ResponseEntity.ok()
                     .header(HttpHeaders.CONTENT_DISPOSITION,
                             "attachment;filename=" + path.getFileName().toString())
                     .contentType(MediaType.APPLICATION_OCTET_STREAM).contentLength(data.length)
-                    .body(resource);
+                    .body(resource);*/
 
 //            //通知浏览器以attachment（下载方式）打开文件
 //            headers.setContentDispositionFormData("attachment", downLoadFileName);
@@ -99,7 +98,7 @@ public class BookInfoController {
 //            //返回状态码：201 HttpStatus.CREATED :请求已经被实现，而且有一个新的资源已经依据请求的需要而建立，且其 URI 已经随Location 头信息返回
 //            return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(file), headers, HttpStatus.CREATED);
         }
-        return commonResult;
+        //return commonResult;
     }
 
     /**
@@ -133,5 +132,22 @@ public class BookInfoController {
         model.addAttribute("category", category);
         return "book/index";
     }
+
+    /**
+     * 跟新章节信息
+     *
+     * @param bookId
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/updateChapter/{bookId}")
+    public CommonResult updateBookChapterByBookId(@PathVariable @Min(1) @Max(100000) Integer bookId) {
+        boolean updateResult = bookChapterService.updateBookChapterByBookId(bookId);
+        if (updateResult) {
+            return CommonResult.success();
+        }
+        return CommonResult.failed();
+    }
+
 
 }

@@ -47,6 +47,14 @@ public interface BookInfoService {
      */
     BookInfo getBookInfoById(Integer id);
 
+    /**
+     * 根据bookUrl获取书籍
+     *
+     * @param bookUrl 书籍url
+     * @return 书籍信息
+     */
+    BookInfo getBookInfoByBookUrl(String bookUrl);
+
 
     /**
      * 分页查询书籍信息

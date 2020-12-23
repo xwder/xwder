@@ -57,6 +57,7 @@
                     <div class="btn-group">
                       <a class="btn read-btn btn-danger" target="_blank" href="" th:if="${startChapter!=null}" th:href="${startChapter.bookId+'/'+startChapter.id+'.html'}"  >开始阅读</a>
                       <a class="btn read-btn btn-danger" target="_blank" href="" th:if="${bookInfo!=null}" th:href="${'down.html?bookId='+bookInfo.id}" >下载</a>
+                      <div class="btn store-btn" id = "updateChapter" th:attr="bookId=${bookInfo.id}">更新章节</div>
                       <div class="btn store-btn Jaddshelf" >加入书架</div>
                       <div class="fr link-group">
                         <a class="all-catalog" target="_blank" href="" ><em></em>全部目录</a>
@@ -137,6 +138,22 @@
       $(function() {
         // 隐藏全局搜索框
         $("#totalSearchDiv").attr("style","display:none;");
+      });
+
+      $('#updateChapter').click(function (e) {
+        let bookId = $('#updateChapter').attr("bookId");
+        $.ajax({
+          type: "get",
+          url: "/book/updateChapter/"+bookId,
+          success: function (data) {
+            if (data.code == 200) {
+                alert("更新章节成功")
+                window.location.reload()
+            } else {
+              alert("更新章节失败")
+            }
+          }
+        });
       });
     </script>
 

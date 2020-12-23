@@ -12,6 +12,7 @@ import com.xwder.app.modules.novel.entity.BookChapter;
 import com.xwder.app.modules.novel.entity.BookInfo;
 import com.xwder.app.modules.novel.repository.BookChapterRepository;
 import com.xwder.app.modules.novel.repository.BookInfoRepository;
+import com.xwder.app.modules.novel.service.intf.BookChapterService;
 import com.xwder.app.modules.novel.service.intf.BookInfoService;
 import com.xwder.app.sysmodules.novel.dto.BookInfoDto;
 import com.xwder.app.utils.DateUtil;
@@ -30,6 +31,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.util.*;
+import java.util.concurrent.*;
 
 /**
  * bookservice service
@@ -53,6 +55,15 @@ public class BookInfoServiceImpl implements BookInfoService {
 
     @Autowired
     private BookInfoRepository bookInfoRepository;
+
+    @Autowired
+    private BookChapterService bookChapterService;
+
+    protected ExecutorService executorService =
+            new ThreadPoolExecutor(20,
+                    25, 20L,
+                    TimeUnit.SECONDS,
+                    new LinkedBlockingQueue<>(4000));
 
     /**
      * 分页查询书籍信息
@@ -109,27 +120,63 @@ public class BookInfoServiceImpl implements BookInfoService {
     }
 
     /**
+     * 根据书名获取书籍
+     *
+     * @param bookName
+     * @return
+     */
+    @Override
+    public List<BookInfo> listBookInfoByBookName(String bookName) {
+        List<BookInfo> bookInfoList = bookInfoRepository.findAllByBookName(bookName);
+        return bookInfoList;
+    }
+
+    /**
      * 根据author查询所有书籍
      *
      * @param author
      * @return
      */
     @Override
-    public List<BookInfo> listBookInfoByAuthor(String author){
+    public List<BookInfo> listBookInfoByAuthor(String author) {
         List<BookInfo> bookInfoList = bookInfoRepository.findAllByAuthor(author);
         return bookInfoList;
     }
 
     /**
+     * 根据id获取书籍信息
+     *
+     * @param id
+     * @return
+     */
+    @Override
+    public BookInfo getBookInfoById(Integer id) {
+        Optional<BookInfo> optional = bookInfoRepository.findById(id);
+        return optional.orElse(null);
+    }
+
+    /**
+     * 根据bookUrl获取书籍
+     *
+     * @param bookUrl 书籍url
+     * @return 书籍信息
+     */
+    @Override
+    public BookInfo getBookInfoByBookUrl(String bookUrl) {
+        return bookInfoRepository.findByBookUrl(bookUrl);
+    }
+
+    /**
      * 从本地获取章节内容
+     *
      * @param bookId
      * @param chapterId
      * @return
      */
     @Override
-    public String getLocalChapterContent(Integer bookId, Integer chapterId){
+    public String getLocalChapterContent(Integer bookId, Integer chapterId) {
         String bookSaveDir = getBookSaveDir(bookId);
-        String chapterPath = bookSaveDir+File.separator+chapterId+".html";
+        String chapterPath = bookSaveDir + File.separator + chapterId + ".html";
         File chapterFile = new File(chapterPath);
         if (!chapterFile.exists()) {
             return null;
@@ -164,29 +211,6 @@ public class BookInfoServiceImpl implements BookInfoService {
         return downBook(bookInfoList.get(0));
     }
 
-    /**
-     * 根据id获取书籍信息
-     *
-     * @param id
-     * @return
-     */
-    @Override
-    public BookInfo getBookInfoById(Integer id) {
-        Optional<BookInfo> optional = bookInfoRepository.findById(id);
-        return optional.get();
-    }
-
-    /**
-     * 根据书名获取书籍
-     *
-     * @param bookName
-     * @return
-     */
-    @Override
-    public List<BookInfo> listBookInfoByBookName(String bookName) {
-        List<BookInfo> bookInfoList = bookInfoRepository.findAllByBookName(bookName);
-        return bookInfoList;
-    }
 
     /**
      * 下载书籍服务
@@ -261,7 +285,6 @@ public class BookInfoServiceImpl implements BookInfoService {
         File existTxtFile = getExistTxtFile(bookSaveDir);
 
         // 查询需要打包的章节信息
-
         int limit = 10000;
         int offset = existPackageChapterCount;
         Pageable pageable = new OffsetBasedPageRequest(offset, limit);
@@ -274,30 +297,62 @@ public class BookInfoServiceImpl implements BookInfoService {
             }
             // 遍历需要添加的章节信息
             int index = 1;
+
+            // 过滤一遍所有章节 查看本地是否有章节文件
             for (BookChapter bookChapter : bookChapters) {
                 String chapterDir = bookSaveDir + File.separator + bookChapter.getId() + ".html";
-                File ChapterFile = new File(chapterDir);
-                if (ChapterFile.exists() && ChapterFile.isFile()) {
-                    String chapterName = bookChapter.getChapterName();
-                    if (!(chapterName.contains("第") || chapterName.contains("章"))) {
-                        chapterName = "第" + index + "章 " + chapterName;
-                    }
-                    FileUtil.appendUtf8Lines(Arrays.asList(chapterName), existTxtFile);
-
-                    String htmlContent = FileUtil.readUtf8String(ChapterFile);
-                    String strChapterContent = htmlConvertTxt(htmlContent);
-                    FileUtil.appendUtf8String(strChapterContent, existTxtFile);
-
-                    // 修改文件名称
-                    existPackageChapterCount = existPackageChapterCount + 1;
-                    String newFileName = existTxtFile.getParentFile().getAbsolutePath() + File.separator +
-                            bookChapter.getBookId() + "__" + existPackageChapterCount + ".txt";
-                    File newExistTxtFile = new File(newFileName);
-                    existTxtFile.renameTo(newExistTxtFile);
-                    existTxtFile = newExistTxtFile;
-
-                    FileUtil.appendUtf8Lines(Arrays.asList(""), existTxtFile);
+                File chapterFile = new File(chapterDir);
+                if (chapterFile.exists()) {
+                    String htmlContent = FileUtil.readUtf8String(chapterFile);
+                    bookChapter.setChapterContent(htmlContent);
                 }
+            }
+
+            // 线程池爬取章节内容
+            CompletableFuture<Void> all = null;
+            for (BookChapter bookChapter : bookChapters) {
+                // 定义任务
+                CompletableFuture<BookChapter> cf = CompletableFuture.supplyAsync(() -> {
+                    try {
+                        // 爬取内容保存数据
+                        bookChapterService.spiderChapterContent(bookChapter);
+                        // 保存文件
+                        String chapterDir = bookSaveDir + File.separator + bookChapter.getId() + ".html";
+                        File bookSaveDirFile = new File(bookSaveDir);
+                        if (!bookSaveDirFile.exists()) {
+                            bookSaveDirFile.mkdirs();
+                        }
+                        File file = new File(chapterDir);
+                        if ((!file.exists()) && StrUtil.isNotEmpty(bookChapter.getChapterContent())) {
+
+                            FileUtil.writeBytes(bookChapter.getChapterContent().getBytes(), file);
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        logger.error("获取章节详情失败，章节id[{}],sourceUrl [{}],错误信息[{}]", bookChapter.getId(), bookChapter.getSourceUrl(), e);
+                    }
+                    return bookChapter;
+                }, executorService);
+
+                all = CompletableFuture.allOf(cf);
+            }
+            // 开始等待所有任务执行完成
+            all.join();
+
+            for (BookChapter bookChapter : bookChapters) {
+                String strChapterContent = htmlConvertTxt(bookChapter.getChapterContent());
+                FileUtil.appendUtf8String(strChapterContent, existTxtFile);
+
+                // 修改文件名称
+                existPackageChapterCount = existPackageChapterCount + 1;
+                String newFileName = existTxtFile.getParentFile().getAbsolutePath() + File.separator +
+                        bookChapter.getBookId() + "__" + existPackageChapterCount + ".txt";
+                File newExistTxtFile = new File(newFileName);
+                existTxtFile.renameTo(newExistTxtFile);
+                existTxtFile = newExistTxtFile;
+
+                FileUtil.appendUtf8Lines(Arrays.asList(""), existTxtFile);
+
             }
             return existTxtFile;
         }

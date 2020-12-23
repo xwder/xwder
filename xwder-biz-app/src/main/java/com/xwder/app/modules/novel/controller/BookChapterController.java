@@ -1,7 +1,6 @@
 package com.xwder.app.modules.novel.controller;
 
 import cn.hutool.core.collection.CollectionUtil;
-import cn.hutool.core.util.StrUtil;
 import com.xwder.app.common.result.CommonResult;
 import com.xwder.app.common.result.Constant;
 import com.xwder.app.consts.SysConstant;
@@ -21,7 +20,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
-import java.time.Year;
 import java.util.List;
 
 /**
@@ -127,15 +125,17 @@ public class BookChapterController {
             return "book/chapter";
         }
         // 替换缓存后续章节
-        bookChapterService.cacheBookChapter(bookId,chapterId+1);
+        bookChapterService.cacheBookChapter(bookId, chapterId + 1);
 
-        model.addAttribute("currentChapter",currentChapter);
+        model.addAttribute("currentChapter", currentChapter);
         BookInfo bookInfo = bookInfoService.getBookInfoById(bookId);
-        model.addAttribute("bookInfo",bookInfo);
-        BookChapter frontChapter = bookChapterService.getBookChapterByBookIdAndChapterId(bookId, chapterId-1);
-        BookChapter nextChapter = bookChapterService.getBookChapterByBookIdAndChapterId(bookId, chapterId+1);
-        model.addAttribute("frontChapter",frontChapter);
-        model.addAttribute("nextChapter",nextChapter);
+        model.addAttribute("bookInfo", bookInfo);
+        BookChapter frontChapter = bookChapterService.getBookChapterByBookIdAndChapterId(bookId, chapterId - 1);
+        BookChapter nextChapter = bookChapterService.getBookChapterByBookIdAndChapterId(bookId, chapterId + 1);
+        model.addAttribute("frontChapter", frontChapter);
+        model.addAttribute("nextChapter", nextChapter);
         return "book/chapter";
     }
+
+
 }

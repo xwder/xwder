@@ -47,4 +47,12 @@ public interface BookInfoRepository extends BaseJpaRepository<BookInfo, Integer>
      * @return
      */
     Page<BookInfo> findByBookNameContaining(String bookName, Pageable pageable);
+
+    /**
+     * 根据bookUrl获取书籍
+     *
+     * @param bookUrl 书籍url
+     * @return 书籍信息
+     */
+    BookInfo findByBookUrl(String bookUrl);
 }

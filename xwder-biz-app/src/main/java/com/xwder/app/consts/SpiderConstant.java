@@ -13,10 +13,10 @@ public class SpiderConstant {
     /**
      * shuquge.com headers
      */
-    public static final Map SQG_SPIDER_HEADER_MAP;
+    public static final Map<String, String> SQG_SPIDER_HEADER_MAP;
 
     static {
-        SQG_SPIDER_HEADER_MAP = new HashMap();
+        SQG_SPIDER_HEADER_MAP = new HashMap<String, String>();
         SQG_SPIDER_HEADER_MAP.put("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9");
         SQG_SPIDER_HEADER_MAP.put("Accept-Language", "zh-cn,zh;q=0.5");
         SQG_SPIDER_HEADER_MAP.put("Accept-Charset", "  GB2312,utf-8;q=0.7,*;q=0.7");

@@ -262,7 +262,7 @@ upload:
 novel:
   book:
     # 书籍章节本地存放目录
-    dir: I:\\novel
+    dir: /usr/local/xwder/book
 
 video:
   # video切割文件时间长度

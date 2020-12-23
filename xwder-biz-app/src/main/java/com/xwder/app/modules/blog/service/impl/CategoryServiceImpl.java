@@ -3,6 +3,7 @@ package com.xwder.app.modules.blog.service.impl;
 import cn.hutool.core.collection.CollectionUtil;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.xwder.app.advice.BizException;
 import com.xwder.app.common.result.CommonResult;
 import com.xwder.app.common.result.ResultCode;
 import com.xwder.app.config.web.GlobalDataCacheConfig;
@@ -180,7 +181,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Transactional(rollbackFor = {Exception.class})
     public Category updateCategory(Category category) {
         Optional<Category> categoryOptional = categoryRepository.findById(category.getId());
-        Category existCategory = categoryOptional.get();
+        Category existCategory = categoryOptional.orElse(new Category());
         UpdateUtil.copyNullProperties(category, existCategory);
         categoryRepository.save(existCategory);
         // 更新首页分类缓存
@@ -202,7 +203,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Transactional(rollbackFor = {Exception.class})
     public CommonResult deleteCategoryById(long id) {
         Optional<Category> categoryOptional = categoryRepository.findById(id);
-        Category existCategory = categoryOptional.get();
+        Category existCategory = categoryOptional.orElseThrow(() -> new BizException(ResultCode.ERROR));
         int count = articleService.countByCategoryId(existCategory.getId());
         if (count > 0) {
             return CommonResult.failed("删除失败,该分类下存在博客文章不能删除");
