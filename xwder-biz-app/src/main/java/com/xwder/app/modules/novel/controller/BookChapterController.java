@@ -3,7 +3,7 @@ package com.xwder.app.modules.novel.controller;
 import cn.hutool.core.collection.CollectionUtil;
 import com.xwder.app.common.result.CommonResult;
 import com.xwder.app.common.result.Constant;
-import com.xwder.app.consts.SysConstant;
+import com.xwder.app.consts.SysConfigConstants;
 import com.xwder.app.modules.novel.entity.BookChapter;
 import com.xwder.app.modules.novel.entity.BookInfo;
 import com.xwder.app.modules.novel.service.intf.BookChapterService;
@@ -94,7 +94,7 @@ public class BookChapterController {
         }
         model.addAttribute("totalWords", totalWords / 10000);
 
-        Page<BookChapter> bookChapterPage = bookChapterService.listBookChapterByBookId(bookId, 1, 2000, SysConstant.order_asc);
+        Page<BookChapter> bookChapterPage = bookChapterService.listBookChapterByBookId(bookId, 1, 2000, SysConfigConstants.order_asc);
         List<BookChapter> bookChapterList = bookChapterPage.getContent();
         model.addAttribute("bookChapterList", bookChapterList);
         if (CollectionUtil.isNotEmpty(bookChapterList)) {

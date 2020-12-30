@@ -1,7 +1,7 @@
 package com.xwder.app.sysmodules.quartz.util;
 
 import com.xwder.app.consts.ScheduleConstants;
-import com.xwder.app.consts.SysConstant;
+import com.xwder.app.consts.SysConfigConstants;
 import com.xwder.app.sysmodules.quartz.entity.SysJob;
 import com.xwder.app.sysmodules.quartz.entity.SysJobLog;
 import com.xwder.app.sysmodules.quartz.service.intf.SysJobLogService;
@@ -76,11 +76,11 @@ public abstract class AbstractQuartzJob implements Job {
         long runMs = sysJobLog.getEndTime().getTime() - sysJobLog.getStartTime().getTime();
         sysJobLog.setJobMessage(sysJobLog.getJobName() + " 总共耗时：" + runMs + "毫秒");
         if (e != null) {
-            sysJobLog.setStatus(SysConstant.FAIL);
+            sysJobLog.setStatus(SysConfigConstants.FAIL);
             String errorMsg = StringUtils.substring(ExceptionUtil.getExceptionMessage(e), 0, 2000);
             sysJobLog.setExceptionInfo(errorMsg);
         } else {
-            sysJobLog.setStatus(SysConstant.SUCCESS);
+            sysJobLog.setStatus(SysConfigConstants.SUCCESS);
         }
 
         //  写入数据库当中

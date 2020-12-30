@@ -2,7 +2,7 @@ package com.xwder.app.sysmodules.blog.controller;
 
 import com.xwder.app.advice.TaskException;
 import com.xwder.app.common.result.CommonResult;
-import com.xwder.app.consts.SysConstant;
+import com.xwder.app.consts.SysConfigConstants;
 import com.xwder.app.modules.blog.entity.Category;
 import com.xwder.app.modules.blog.service.intf.CategoryService;
 import com.xwder.app.modules.user.entity.User;
@@ -61,7 +61,7 @@ public class CategoryController {
     @PostMapping("/addCategory")
     @ResponseBody
     public CommonResult addCategory(@Validated Category category) throws SchedulerException, TaskException {
-        User sessionUser = (User) SessionUtil.getSessionAttribute(SysConstant.SESSION_USER);
+        User sessionUser = (User) SessionUtil.getSessionAttribute(SysConfigConstants.SESSION_USER);
         category.setAvailable(1);
         category.setUserId(sessionUser.getId());
         category.setUserName(sessionUser.getUserName());

@@ -5,7 +5,7 @@ package com.xwder.app.consts;
  * @version 1.0
  * @date 2020/07/07
  */
-public class DataBaseConstant {
+public class DataBaseConstants {
 
     public static final String DBTYPE_COMMON = "mysql";
     public static final String DBTYPE_ORACLE = "oracle";

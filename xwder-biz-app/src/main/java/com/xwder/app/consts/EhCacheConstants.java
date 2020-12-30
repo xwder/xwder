@@ -7,7 +7,7 @@ package com.xwder.app.consts;
  * @version 1.0
  * @date 2020/07/02
  */
-public class EhCacheConstant {
+public class EhCacheConstants {
 
     /**
      * 百度  cache name

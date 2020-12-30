@@ -7,8 +7,8 @@ import com.xwder.app.advice.BizException;
 import com.xwder.app.common.result.CommonResult;
 import com.xwder.app.common.result.ResultCode;
 import com.xwder.app.config.web.GlobalDataCacheConfig;
-import com.xwder.app.consts.RedisConstant;
-import com.xwder.app.consts.SysConstant;
+import com.xwder.app.consts.RedisConstants;
+import com.xwder.app.consts.SysConfigConstants;
 import com.xwder.app.helper.dao.DAOHelper;
 import com.xwder.app.helper.dao.NativeSQL;
 import com.xwder.app.modules.blog.dao.BlogDaoResourceHandler;
@@ -70,7 +70,7 @@ public class CategoryServiceImpl implements CategoryService {
      */
     @Override
     public Category getCategoryById(Long id) {
-        String categoryRedisKey = RedisConstant.BLOG_ARTICLE_CATEGORY + ":" + id;
+        String categoryRedisKey = RedisConstants.BLOG_ARTICLE_CATEGORY + ":" + id;
         Category category = (Category) redisUtil.get(categoryRedisKey);
         if (category == null) {
             Optional<Category> categoryOptional = categoryRepository.findById(id);
@@ -146,7 +146,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Transactional(readOnly = true)
     public Page listCategoryArticleCountPageData(CategoryDto categoryDto) {
         String querySql = DAOHelper.getSQL(BlogDaoResourceHandler.class, "query_category_aritcle_count");
-        User sessionUser = (User) SessionUtil.getSessionAttribute(SysConstant.SESSION_USER);
+        User sessionUser = (User) SessionUtil.getSessionAttribute(SysConfigConstants.SESSION_USER);
         List params = new ArrayList<>();
         params.add(sessionUser.getId());
         params.add(sessionUser.getId());
@@ -187,7 +187,7 @@ public class CategoryServiceImpl implements CategoryService {
         // 更新首页分类缓存
         globalDataCacheConfig.initPortalData();
         // 更新redis 分类缓存
-        String categoryRedisKey = RedisConstant.BLOG_ARTICLE_CATEGORY + ":" + existCategory.getId();
+        String categoryRedisKey = RedisConstants.BLOG_ARTICLE_CATEGORY + ":" + existCategory.getId();
         redisUtil.del(categoryRedisKey);
 
         return existCategory;
@@ -210,7 +210,7 @@ public class CategoryServiceImpl implements CategoryService {
         }
         categoryRepository.deleteById(id);
         // 更新redis 分类缓存
-        String categoryRedisKey = RedisConstant.BLOG_ARTICLE_CATEGORY + ":" + existCategory.getId();
+        String categoryRedisKey = RedisConstants.BLOG_ARTICLE_CATEGORY + ":" + existCategory.getId();
         redisUtil.del(categoryRedisKey);
 
         // 更新首页分类缓存

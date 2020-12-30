@@ -1,7 +1,7 @@
 package com.xwder.app.helper.dao;
 
 import cn.hutool.core.collection.CollectionUtil;
-import com.xwder.app.consts.DataBaseConstant;
+import com.xwder.app.consts.DataBaseConstants;
 import com.xwder.app.utils.ObjectUtil;
 import com.xwder.app.utils.XMLUtil;
 import org.dom4j.Document;
@@ -37,17 +37,17 @@ public class BaseDaoResourceHandler implements InitializingBean {
 
                 String sqlId = element.attribute("id").getValue();
 
-                Element commonElement = element.element(DataBaseConstant.DBTYPE_COMMON);
-                Element oracleElement = element.element(DataBaseConstant.DBTYPE_ORACLE);
-                Element mysqlElement = element.element(DataBaseConstant.DBTYPE_MYSQL);
+                Element commonElement = element.element(DataBaseConstants.DBTYPE_COMMON);
+                Element oracleElement = element.element(DataBaseConstants.DBTYPE_ORACLE);
+                Element mysqlElement = element.element(DataBaseConstants.DBTYPE_MYSQL);
 
                 String commonStr = (commonElement != null) ? commonElement.getTextTrim() : "";
                 String oracleStr = (oracleElement != null) ? oracleElement.getTextTrim() : "";
                 String mysqlStr = (mysqlElement != null) ? mysqlElement.getTextTrim() : "";
 
-                DAOHelper.putSQL(this.getClass(), sqlId, DataBaseConstant.DBTYPE_COMMON, commonStr);
-                DAOHelper.putSQL(this.getClass(), sqlId, DataBaseConstant.DBTYPE_ORACLE, oracleStr);
-                DAOHelper.putSQL(this.getClass(), sqlId, DataBaseConstant.DBTYPE_MYSQL, mysqlStr);
+                DAOHelper.putSQL(this.getClass(), sqlId, DataBaseConstants.DBTYPE_COMMON, commonStr);
+                DAOHelper.putSQL(this.getClass(), sqlId, DataBaseConstants.DBTYPE_ORACLE, oracleStr);
+                DAOHelper.putSQL(this.getClass(), sqlId, DataBaseConstants.DBTYPE_MYSQL, mysqlStr);
             }
         }
     }

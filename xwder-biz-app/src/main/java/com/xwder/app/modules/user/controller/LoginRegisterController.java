@@ -6,7 +6,7 @@ import com.baomidou.kaptcha.Kaptcha;
 import com.xwder.app.attribute.SysConfigAttribute;
 import com.xwder.app.common.result.CommonResult;
 import com.xwder.app.common.result.ResultCode;
-import com.xwder.app.consts.SysConstant;
+import com.xwder.app.consts.SysConfigConstants;
 import com.xwder.app.modules.user.entity.User;
 import com.xwder.app.modules.user.service.intf.UserService;
 import com.xwder.app.modules.user.service.login.GitHubLoginService;
@@ -161,11 +161,11 @@ public class LoginRegisterController {
 
         String xwderToken = RandomUtil.randomString(32);
         // session 写入用户信息
-        SessionUtil.setSessionAttribute(SysConstant.SESSION_USER, resultUser);
+        SessionUtil.setSessionAttribute(SysConfigConstants.SESSION_USER, resultUser);
         // cookie 写人 认证 xwder-token
         CookieUtils.setCookie(request, response, sysConfigAttribute.getSessionTokenName(), xwderToken);
         // 写入redis session
-        userService.saveUserSessionToRedis(xwderToken, resultUser, SysConstant.USER_SESSION_REDIS_TIME);
+        userService.saveUserSessionToRedis(xwderToken, resultUser, SysConfigConstants.USER_SESSION_REDIS_TIME);
 
         CommonResult<User> commonResult = CommonResult.success(resultUser);
         return commonResult;
@@ -182,7 +182,7 @@ public class LoginRegisterController {
     public String loginOut(HttpServletRequest request, HttpServletResponse response) {
         String xwderToken = CookieUtils.getCookieValue(request, sysConfigAttribute.getSessionTokenName());
         // session 删除 用户信息
-        SessionUtil.removeSessionAttribute(SysConstant.SESSION_USER);
+        SessionUtil.removeSessionAttribute(SysConfigConstants.SESSION_USER);
         // cookie 删除 认证 xwder-token
         CookieUtils.deleteCookie(request, response, xwderToken);
         // 删除 redis 用户信息

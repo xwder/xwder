@@ -4,7 +4,7 @@ import cn.hutool.core.util.StrUtil;
 import com.google.common.collect.Maps;
 import com.tencent.cloud.CosStsClient;
 import com.xwder.app.attribute.SysConfigAttribute;
-import com.xwder.app.consts.RedisConstant;
+import com.xwder.app.consts.RedisConstants;
 import com.xwder.app.utils.DateUtil;
 import com.xwder.app.utils.RedisUtil;
 import org.json.JSONObject;
@@ -56,9 +56,9 @@ public class TencentCosAuthService {
 
         HashMap<String, Object> credMap = Maps.newHashMap();
         // 先从缓存里面读取
-        String tmpSecretId = (String) redisUtil.get(RedisConstant.TENCENT_COS_TMP_SECRET_ID);
-        String tmpSecretKey = (String) redisUtil.get(RedisConstant.TENCENT_COS_TMP_SECRET_KEY);
-        String sessionToken = (String) redisUtil.get(RedisConstant.TENCENT_COS_TMP_SESSIONTOKEN);
+        String tmpSecretId = (String) redisUtil.get(RedisConstants.TENCENT_COS_TMP_SECRET_ID);
+        String tmpSecretKey = (String) redisUtil.get(RedisConstants.TENCENT_COS_TMP_SECRET_KEY);
+        String sessionToken = (String) redisUtil.get(RedisConstants.TENCENT_COS_TMP_SESSIONTOKEN);
 
         if (StrUtil.isNotEmpty(tmpSecretId)) {
             credMap.put("requestId", null);
@@ -149,9 +149,9 @@ public class TencentCosAuthService {
             System.out.println(credential.toString(4));
 
             // 先从缓存里面读取
-            redisUtil.set(RedisConstant.TENCENT_COS_TMP_SECRET_ID,tmpSecretId,RedisConstant.TENCENT_COS_TMP_CACHETIME);
-            redisUtil.set(RedisConstant.TENCENT_COS_TMP_SECRET_KEY,tmpSecretKey,RedisConstant.TENCENT_COS_TMP_CACHETIME);
-            redisUtil.set(RedisConstant.TENCENT_COS_TMP_SESSIONTOKEN,sessionToken,RedisConstant.TENCENT_COS_TMP_CACHETIME);
+            redisUtil.set(RedisConstants.TENCENT_COS_TMP_SECRET_ID,tmpSecretId, RedisConstants.TENCENT_COS_TMP_CACHETIME);
+            redisUtil.set(RedisConstants.TENCENT_COS_TMP_SECRET_KEY,tmpSecretKey, RedisConstants.TENCENT_COS_TMP_CACHETIME);
+            redisUtil.set(RedisConstants.TENCENT_COS_TMP_SESSIONTOKEN,sessionToken, RedisConstants.TENCENT_COS_TMP_CACHETIME);
 
             logger.info("[{}]获取cos临时凭据成功,并设置缓存结束,耗时[{}]", serviceName, DateUtil.diffTime(logStartTime, System.currentTimeMillis()));
             return credMap;

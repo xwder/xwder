@@ -4,7 +4,7 @@ import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.StrUtil;
 import com.xwder.app.attribute.SysConfigAttribute;
 import com.xwder.app.common.result.CommonResult;
-import com.xwder.app.consts.SysConstant;
+import com.xwder.app.consts.SysConfigConstants;
 import com.xwder.app.modules.user.entity.User;
 import com.xwder.app.modules.video.service.intf.VideoService;
 import com.xwder.app.sysmodules.file.entity.FileUploadBlock;
@@ -155,7 +155,7 @@ public class VideoController {
         }
         String ext = splits[splits.length - 1];
 
-        User sessionUser = (User) SessionUtil.getSessionAttribute(SysConstant.SESSION_USER);
+        User sessionUser = (User) SessionUtil.getSessionAttribute(SysConfigConstants.SESSION_USER);
         // 保存文件的路径
         String videoUploadSaveDir = sysConfigAttribute.getVideoUploadSaveDir() + File.separator
                 + sessionUser.getId() + "-" + sessionUser.getUserName();

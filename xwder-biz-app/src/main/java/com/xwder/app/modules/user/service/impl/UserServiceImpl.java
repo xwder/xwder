@@ -6,8 +6,8 @@ import cn.hutool.json.JSONUtil;
 import com.google.common.collect.Maps;
 import com.xwder.app.attribute.SysConfigAttribute;
 import com.xwder.app.common.result.MailTypeConstant;
-import com.xwder.app.consts.RedisConstant;
-import com.xwder.app.consts.SysConstant;
+import com.xwder.app.consts.RedisConstants;
+import com.xwder.app.consts.SysConfigConstants;
 import com.xwder.app.consts.UserStatusEnum;
 import com.xwder.app.config.mq.MQProducerMessage;
 import com.xwder.app.config.mq.RabbitConfig;
@@ -208,8 +208,8 @@ public class UserServiceImpl implements UserService {
         log.info("用户[{}]发送邮箱验证成功", user.getUserName());
 
         // ehcache缓存 key 和 用户userName
-        String redisKey = RedisConstant.EMAIL_VERIFY_KEY + ":" + key;
-        redisUtil.set(redisKey, user, RedisConstant.EMAIL_VERIFY_KEY_CACHETIME);
+        String redisKey = RedisConstants.EMAIL_VERIFY_KEY + ":" + key;
+        redisUtil.set(redisKey, user, RedisConstants.EMAIL_VERIFY_KEY_CACHETIME);
 
         // 发送消息给管理员由用户注册了
         if (sysConfigAttribute.getNewUserReigsterWeChatNoticeAdmin()) {
@@ -235,7 +235,7 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional(rollbackFor = {Exception.class})
     public User verifyEmail(String verifyKey) {
-        String redisKey = RedisConstant.EMAIL_VERIFY_KEY + ":" + verifyKey;
+        String redisKey = RedisConstants.EMAIL_VERIFY_KEY + ":" + verifyKey;
         User user = (User) redisUtil.get(redisKey);
 
         if (user == null) {
@@ -257,7 +257,7 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public User getUserSessionFromRedis(String token) {
-        String userSessionRedisKey = SysConstant.USER_SESSION_REDIS_KEY + ":" + token;
+        String userSessionRedisKey = SysConfigConstants.USER_SESSION_REDIS_KEY + ":" + token;
         User user = (User) redisUtil.get(userSessionRedisKey);
         return user;
     }
@@ -271,7 +271,7 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public void saveUserSessionToRedis(String token, User user, Integer sessionTime) {
-        String userSessionRedisKey = SysConstant.USER_SESSION_REDIS_KEY + ":" + token;
+        String userSessionRedisKey = SysConfigConstants.USER_SESSION_REDIS_KEY + ":" + token;
         redisUtil.set(userSessionRedisKey, user, sessionTime);
     }
 
@@ -282,7 +282,7 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public void deleteRedisUserSession(String token) {
-        String userSessionRedisKey = SysConstant.USER_SESSION_REDIS_KEY + ":" + token;
+        String userSessionRedisKey = SysConfigConstants.USER_SESSION_REDIS_KEY + ":" + token;
         redisUtil.del(userSessionRedisKey);
     }
 
@@ -295,7 +295,7 @@ public class UserServiceImpl implements UserService {
     @Override
     @Async("taskExecutor")
     public void updateRedisUserSessionExpireTime(String token, Integer expireTime) {
-        String userSessionRedisKey = SysConstant.USER_SESSION_REDIS_KEY + ":" + token;
+        String userSessionRedisKey = SysConfigConstants.USER_SESSION_REDIS_KEY + ":" + token;
         redisUtil.expire(userSessionRedisKey, expireTime);
     }
 

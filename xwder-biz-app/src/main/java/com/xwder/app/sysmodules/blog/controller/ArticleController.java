@@ -1,7 +1,7 @@
 package com.xwder.app.sysmodules.blog.controller;
 
 import com.xwder.app.common.result.CommonResult;
-import com.xwder.app.consts.SysConstant;
+import com.xwder.app.consts.SysConfigConstants;
 import com.xwder.app.modules.blog.entity.Article;
 import com.xwder.app.modules.blog.service.intf.ArticleService;
 import com.xwder.app.modules.blog.service.intf.CategoryService;
@@ -58,7 +58,7 @@ public class ArticleController {
             Article article = articleService.getArticleById(id);
             model.addAttribute("article", article);
         }
-        User sessionUser = (User) SessionUtil.getSessionAttribute(SysConstant.SESSION_USER);
+        User sessionUser = (User) SessionUtil.getSessionAttribute(SysConfigConstants.SESSION_USER);
         // 查询用户所有的博客分类
         List categoryList = categoryService.listCategoryByUserId(sessionUser.getId());
         model.addAttribute("categoryList", categoryList);

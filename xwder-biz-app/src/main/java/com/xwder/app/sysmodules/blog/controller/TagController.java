@@ -2,7 +2,7 @@ package com.xwder.app.sysmodules.blog.controller;
 
 import com.xwder.app.advice.TaskException;
 import com.xwder.app.common.result.CommonResult;
-import com.xwder.app.consts.SysConstant;
+import com.xwder.app.consts.SysConfigConstants;
 import com.xwder.app.modules.blog.entity.Tag;
 import com.xwder.app.modules.blog.service.intf.TagService;
 import com.xwder.app.modules.user.entity.User;
@@ -60,7 +60,7 @@ public class TagController {
     @PostMapping("/addTag")
     @ResponseBody
     public CommonResult addTag(@Validated Tag tag) throws SchedulerException, TaskException {
-        User sessionUser = (User) SessionUtil.getSessionAttribute(SysConstant.SESSION_USER);
+        User sessionUser = (User) SessionUtil.getSessionAttribute(SysConfigConstants.SESSION_USER);
         tag.setUserId(sessionUser.getId());
         tag.setUserName(sessionUser.getUserName());
         tag.setAvailable(1);

@@ -3,7 +3,7 @@ package com.xwder.app.modules.novel.service.impl;
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.StrUtil;
 import com.google.common.collect.Lists;
-import com.xwder.app.consts.SpiderConstant;
+import com.xwder.app.consts.SpiderConstants;
 import com.xwder.app.modules.novel.entity.BookInfo;
 import com.xwder.app.modules.novel.service.intf.SpiderBookService;
 import com.xwder.app.utils.DateUtil;
@@ -72,7 +72,7 @@ public class SpiderBookServiceImpl implements SpiderBookService {
         long startTime = System.currentTimeMillis();
 
         Map<String, String> header = new HashMap<>(16);
-        header.putAll(SpiderConstant.SQG_SPIDER_HEADER_MAP);
+        header.putAll(SpiderConstants.SQG_SPIDER_HEADER_MAP);
         //bookUrl = "http://www.shuquge.com/txt/117367/index.html";
         header.put("referer", bookPageUrl);
 

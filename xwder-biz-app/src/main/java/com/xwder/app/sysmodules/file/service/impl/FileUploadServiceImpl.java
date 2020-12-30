@@ -4,7 +4,7 @@ import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.StrUtil;
 import com.xwder.app.attribute.SysConfigAttribute;
 import com.xwder.app.common.result.CommonResult;
-import com.xwder.app.consts.SysConstant;
+import com.xwder.app.consts.SysConfigConstants;
 import com.xwder.app.modules.cloud.tencent.cos.service.TencentCosService;
 import com.xwder.app.modules.user.entity.User;
 import com.xwder.app.sysmodules.file.entity.FileUploadRecord;
@@ -53,7 +53,7 @@ public class FileUploadServiceImpl implements FileUploadService {
     @Override
     @Transactional(rollbackFor = {Exception.class})
     public Map ueditorBlogImageFileUpload(MultipartFile multipartFile) {
-        User sessionUser = (User) SessionUtil.getSessionAttribute(SysConstant.SESSION_USER);
+        User sessionUser = (User) SessionUtil.getSessionAttribute(SysConfigConstants.SESSION_USER);
         String fileName = multipartFile.getOriginalFilename();
         // 文件上传目录 服务器上和cos上路径保持一致
         String uploadCosFile = sysConfigAttribute.getBlogImageDir() + File.separator + sessionUser.getUserName() +
@@ -137,7 +137,7 @@ public class FileUploadServiceImpl implements FileUploadService {
     @Transactional(rollbackFor = {Exception.class})
     public CommonResult deleteCosFile(String fileKey) {
         // 删除之前先查询 fileRecord
-        User sessionUser = (User) SessionUtil.getSessionAttribute(SysConstant.SESSION_USER);
+        User sessionUser = (User) SessionUtil.getSessionAttribute(SysConfigConstants.SESSION_USER);
         FileUploadRecord fileUploadRecord = fileUploadRecordService.getFileUploadRecordByUserIdAndCosUrl(sessionUser.getId(), fileKey);
         if (fileUploadRecord == null) {
             return CommonResult.failed("文件不存在");
@@ -161,7 +161,7 @@ public class FileUploadServiceImpl implements FileUploadService {
     private String buildUploadFileName(String fileName) {
         String[] splits = fileName.split("\\.");
         String fileSuffix = splits.length >= 2 ? splits[splits.length - 1] : "";
-        User sessionUser = (User) SessionUtil.getSessionAttribute(SysConstant.SESSION_USER);
+        User sessionUser = (User) SessionUtil.getSessionAttribute(SysConfigConstants.SESSION_USER);
         String uploadFileName = sessionUser.getId() + "-" + DateUtil.formatDate(new Date(), DateUtil.format_yyyyMMddHHmmssSSS) + "." + fileSuffix;
         return uploadFileName;
     }

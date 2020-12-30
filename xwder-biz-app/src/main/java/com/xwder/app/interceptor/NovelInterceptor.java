@@ -1,9 +1,8 @@
 package com.xwder.app.interceptor;
 
 import com.xwder.app.attribute.SysConfigAttribute;
-import com.xwder.app.consts.SysConstant;
+import com.xwder.app.consts.SysConfigConstants;
 import com.xwder.app.modules.user.entity.User;
-import com.xwder.app.utils.CookieUtils;
 import com.xwder.app.utils.SessionUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +30,7 @@ public class NovelInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        User sessionUser = (User) SessionUtil.getSessionAttribute(SysConstant.SESSION_USER);
+        User sessionUser = (User) SessionUtil.getSessionAttribute(SysConfigConstants.SESSION_USER);
         StringBuffer requestURLSB = request.getRequestURL();
         log.info("novel登录拦截器获取到用户访问的地址: {}", requestURLSB.toString());
         if (sessionUser == null) {

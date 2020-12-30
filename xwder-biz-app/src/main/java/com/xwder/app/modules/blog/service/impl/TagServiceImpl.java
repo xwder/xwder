@@ -4,7 +4,7 @@ import com.google.common.collect.Lists;
 import com.xwder.app.advice.BizException;
 import com.xwder.app.common.result.CommonResult;
 import com.xwder.app.common.result.ResultCode;
-import com.xwder.app.consts.SysConstant;
+import com.xwder.app.consts.SysConfigConstants;
 import com.xwder.app.helper.dao.DAOHelper;
 import com.xwder.app.helper.dao.NativeSQL;
 import com.xwder.app.modules.blog.dao.BlogDaoResourceHandler;
@@ -72,7 +72,7 @@ public class TagServiceImpl implements TagService {
     public Page listTagArticleCountPageData(TagDto tagDto) {
         String querySql = DAOHelper.getSQL(BlogDaoResourceHandler.class, "query_tag_aritcle_count");
         List params = new ArrayList<>();
-        User sessionUser = (User) SessionUtil.getSessionAttribute(SysConstant.SESSION_USER);
+        User sessionUser = (User) SessionUtil.getSessionAttribute(SysConfigConstants.SESSION_USER);
         params.add(sessionUser.getId());
         params.add(sessionUser.getId());
         Pageable pageable = PageRequest.of(tagDto.getPage(), tagDto.getLimit(), null);

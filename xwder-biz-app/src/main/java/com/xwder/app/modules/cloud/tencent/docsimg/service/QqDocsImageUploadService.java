@@ -5,7 +5,7 @@ import cn.hutool.core.util.StrUtil;
 import cn.hutool.http.*;
 import cn.hutool.json.JSONUtil;
 import com.xwder.app.attribute.SysConfigAttribute;
-import com.xwder.app.consts.SysConstant;
+import com.xwder.app.consts.SysConfigConstants;
 import com.xwder.app.modules.cloud.tencent.cos.service.TencentCosService;
 import com.xwder.app.modules.user.entity.User;
 import com.xwder.app.sysmodules.file.entity.FileUploadRecord;
@@ -69,7 +69,7 @@ public class QqDocsImageUploadService {
         FileUploadRecord fileUploadRecord = new FileUploadRecord();
         fileUploadRecord.setRemark("上传图片到腾讯文档");
         fileUploadRecord.setGmtCreate(new Date());
-        User sessionUser = (User) SessionUtil.getSessionAttribute(SysConstant.SESSION_USER);
+        User sessionUser = (User) SessionUtil.getSessionAttribute(SysConfigConstants.SESSION_USER);
         // 如果用户未登录 则不保存到服务器和cdn 只上传到 qpic
         if (sessionUser == null) {
             saveLocal = 2;

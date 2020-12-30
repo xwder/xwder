@@ -2,8 +2,8 @@ package com.xwder.app.modules.novel.service.impl;
 
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.StrUtil;
-import com.xwder.app.consts.SpiderConstant;
-import com.xwder.app.consts.SysConstant;
+import com.xwder.app.consts.SpiderConstants;
+import com.xwder.app.consts.SysConfigConstants;
 import com.xwder.app.modules.novel.entity.BookChapter;
 import com.xwder.app.modules.novel.entity.BookInfo;
 import com.xwder.app.modules.novel.repository.BookChapterRepository;
@@ -75,7 +75,7 @@ public class BookChapterServiceImpl implements BookChapterService {
     @Transactional(readOnly = true)
     public Page<BookChapter> listBookChapterByBookId(Integer bookId, Integer pageNum, Integer pageSize, String order) {
         Sort.Direction direction = Sort.Direction.ASC;
-        if (StrUtil.equalsIgnoreCase(SysConstant.order_desc, order)) {
+        if (StrUtil.equalsIgnoreCase(SysConfigConstants.order_desc, order)) {
             direction = Sort.Direction.DESC;
         }
         Sort sort = Sort.by(direction, "id");
@@ -153,7 +153,7 @@ public class BookChapterServiceImpl implements BookChapterService {
 
         log.info("爬取章节[{}]信息开始", sourceUrl);
         Map<String, String> header = new HashMap<String, String>();
-        header.putAll(SpiderConstant.SQG_SPIDER_HEADER_MAP);
+        header.putAll(SpiderConstants.SQG_SPIDER_HEADER_MAP);
         header.put("referer", sourceUrl);
 
         Document document = null;

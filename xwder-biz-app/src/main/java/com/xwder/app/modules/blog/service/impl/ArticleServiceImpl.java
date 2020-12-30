@@ -2,8 +2,8 @@ package com.xwder.app.modules.blog.service.impl;
 
 import cn.hutool.core.collection.CollectionUtil;
 import com.google.common.collect.Lists;
-import com.xwder.app.consts.RedisConstant;
-import com.xwder.app.consts.SysConstant;
+import com.xwder.app.consts.RedisConstants;
+import com.xwder.app.consts.SysConfigConstants;
 import com.xwder.app.helper.dao.DAOHelper;
 import com.xwder.app.helper.dao.NativeSQL;
 import com.xwder.app.modules.blog.dao.BlogDaoResourceHandler;
@@ -78,10 +78,10 @@ public class ArticleServiceImpl implements ArticleService {
     public Article saveOrUpdateArticle(Article article) {
         if (article.getId() != null) {
             // 先删除redis
-            String articleRedisKey = RedisConstant.BLOG_ARTICLE_ARTICLE + ":" + article.getId();
+            String articleRedisKey = RedisConstants.BLOG_ARTICLE_ARTICLE + ":" + article.getId();
             redisUtil.del(articleRedisKey);
             // 获取readCount
-            String articleReadCountRedisKey = RedisConstant.BLOG_ARTICLE_READ_COUNT + ":" + article.getId();
+            String articleReadCountRedisKey = RedisConstants.BLOG_ARTICLE_READ_COUNT + ":" + article.getId();
             Integer readCount = (Integer) redisUtil.get(articleReadCountRedisKey);
             if (readCount != null) {
                 article.setReadCount(readCount.longValue());
@@ -100,7 +100,7 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public Article getArticleById(Long articleId) {
         // 先从redis中取
-        String articleRedisKey = RedisConstant.BLOG_ARTICLE_ARTICLE + ":" + articleId;
+        String articleRedisKey = RedisConstants.BLOG_ARTICLE_ARTICLE + ":" + articleId;
         Article article = (Article) redisUtil.get(articleRedisKey);
         if (article == null) {
             article = articleRepository.findById(articleId).orElse(null);
@@ -162,7 +162,7 @@ public class ArticleServiceImpl implements ArticleService {
         article.setReadCount(readCount);
         articleRepository.save(article);
         // 更新redis
-        String articleRedisKey = RedisConstant.BLOG_ARTICLE_ARTICLE + ":" + articleId;
+        String articleRedisKey = RedisConstants.BLOG_ARTICLE_ARTICLE + ":" + articleId;
         redisUtil.set(articleRedisKey, article, -1);
     }
 
@@ -176,7 +176,7 @@ public class ArticleServiceImpl implements ArticleService {
      */
     @Override
     public Integer addArticleReadCount(Long articleId, Integer existReadCount, Integer addCount) {
-        String articleReadCountRedisKey = RedisConstant.BLOG_ARTICLE_READ_COUNT + ":" + articleId;
+        String articleReadCountRedisKey = RedisConstants.BLOG_ARTICLE_READ_COUNT + ":" + articleId;
         Integer readCount = (Integer) redisUtil.get(articleReadCountRedisKey);
         if (readCount != null) {
             readCount += addCount;
@@ -202,7 +202,7 @@ public class ArticleServiceImpl implements ArticleService {
         articleRepository.updateArticleCommentCountById(articleId, addCount);
 
         // 先从redis中取
-        String articleRedisKey = RedisConstant.BLOG_ARTICLE_ARTICLE + ":" + articleId;
+        String articleRedisKey = RedisConstants.BLOG_ARTICLE_ARTICLE + ":" + articleId;
         Article article = (Article) redisUtil.get(articleRedisKey);
         if (article != null) {
             article.setComments(article.getComments() + addCount);
@@ -256,7 +256,7 @@ public class ArticleServiceImpl implements ArticleService {
         String currentUrl = "blog/article";
         User searchUser = null;
         // 没有传递用户信息 当前登录用户
-        User sessionUser = (User) SessionUtil.getSessionAttribute(SysConstant.SESSION_USER);
+        User sessionUser = (User) SessionUtil.getSessionAttribute(SysConfigConstants.SESSION_USER);
         if (searchUser != null) {
             searchUser = sessionUser;
         } else {

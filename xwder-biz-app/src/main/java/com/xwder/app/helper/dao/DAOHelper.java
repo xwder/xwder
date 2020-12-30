@@ -6,7 +6,7 @@ package com.xwder.app.helper.dao;
  * @date 2020/08/05
  */
 import com.xwder.app.attribute.SysConfigAttribute;
-import com.xwder.app.consts.DataBaseConstant;
+import com.xwder.app.consts.DataBaseConstants;
 import com.xwder.app.utils.ObjectUtil;
 import com.xwder.app.utils.SpringUtils;
 import com.xwder.app.utils.StringUtils;
@@ -52,7 +52,7 @@ public class DAOHelper {
         String strSql = DAOHelper.getCache().get(buildCacheKey(classPath, sqlId, dbType));
 
         if (StringUtils.isEmpty(strSql)) {
-            strSql = DAOHelper.getCache().get(buildCacheKey(classPath, sqlId, DataBaseConstant.DBTYPE_COMMON));
+            strSql = DAOHelper.getCache().get(buildCacheKey(classPath, sqlId, DataBaseConstants.DBTYPE_COMMON));
         }
 
         return strSql;

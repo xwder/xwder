@@ -1,6 +1,6 @@
 package com.xwder.app.modules.blog.task;
 
-import com.xwder.app.consts.RedisConstant;
+import com.xwder.app.consts.RedisConstants;
 import com.xwder.app.modules.blog.service.intf.ArticleService;
 import com.xwder.app.utils.RedisUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +31,7 @@ public class ArticleTask {
      */
     public void articleDataSyncService() {
         // 通配 key
-        String articleReadCountRedisKey = RedisConstant.BLOG_ARTICLE_READ_COUNT + ":*";
+        String articleReadCountRedisKey = RedisConstants.BLOG_ARTICLE_READ_COUNT + ":*";
         List<String> list = redisUtil.getKeyList(articleReadCountRedisKey);
         for (String key : list) {
             Integer count = (Integer) redisUtil.get(key);

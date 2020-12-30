@@ -1,7 +1,7 @@
 package com.xwder.app.modules.comment.controller;
 
 import com.xwder.app.common.result.CommonResult;
-import com.xwder.app.consts.SysConstant;
+import com.xwder.app.consts.SysConfigConstants;
 import com.xwder.app.modules.blog.service.intf.ArticleService;
 import com.xwder.app.modules.comment.dto.CommentInfoDto;
 import com.xwder.app.modules.comment.dto.CommentReplyDto;
@@ -45,14 +45,14 @@ public class CommentInfoController {
     @ResponseBody
     @RequestMapping(value = {"/blog/commit"})
     public CommonResult commitComment(@Validated CommentInfoDto commentInfoDto, HttpServletRequest request) {
-        User sessionUser = (User) SessionUtil.getSessionAttribute(SysConstant.SESSION_USER);
+        User sessionUser = (User) SessionUtil.getSessionAttribute(SysConfigConstants.SESSION_USER);
         if (sessionUser == null) {
             return CommonResult.failed("请登录后发表评论");
         }
         CommentInfo commentInfo = new CommentInfo();
         BeanUtils.copyBeanProp(commentInfo, commentInfoDto);
         // 设置评论类型
-        commentInfo.setType(SysConstant.COMMENT_TYPE_BLOG);
+        commentInfo.setType(SysConfigConstants.COMMENT_TYPE_BLOG);
         commentInfo.setFromId(sessionUser.getId());
         commentInfo.setCommentTime(new Date());
         commentInfo.setLikeNum(0L);
@@ -78,7 +78,7 @@ public class CommentInfoController {
     @ResponseBody
     @RequestMapping(value = {"/blog/reply/commit"})
     public CommonResult commitCommentReply(@Validated CommentReplyDto commentReplyDto, HttpServletRequest request) {
-        User sessionUser = (User) SessionUtil.getSessionAttribute(SysConstant.SESSION_USER);
+        User sessionUser = (User) SessionUtil.getSessionAttribute(SysConfigConstants.SESSION_USER);
         if (sessionUser == null) {
             return CommonResult.failed("请登录后发表评论");
         }

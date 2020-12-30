@@ -2,7 +2,7 @@ package com.xwder.app.interceptor;
 
 import cn.hutool.core.util.StrUtil;
 import com.xwder.app.attribute.SysConfigAttribute;
-import com.xwder.app.consts.SysConstant;
+import com.xwder.app.consts.SysConfigConstants;
 import com.xwder.app.modules.user.entity.User;
 import com.xwder.app.modules.user.service.intf.UserService;
 import com.xwder.app.utils.CookieUtils;
@@ -46,14 +46,14 @@ public class UserLoginInterceptor implements HandlerInterceptor {
         StringBuffer requestURLSB = request.getRequestURL();
         log.info("用户登录拦截器获取到用户访问的地址: {}", requestURLSB.toString());
         String userSessionToken = CookieUtils.getCookieValue(request, sysConfigAttribute.getSessionTokenName());
-        User sessionUser = (User) SessionUtil.getSessionAttribute(SysConstant.SESSION_USER);
+        User sessionUser = (User) SessionUtil.getSessionAttribute(SysConfigConstants.SESSION_USER);
         if (sessionUser == null) {
             if (StrUtil.isNotEmpty(userSessionToken)) {
                 // 从redis中获取
                 User redisSessionUser = userService.getUserSessionFromRedis(userSessionToken);
                 if (redisSessionUser != null) {
                     // session 写入用户信息
-                    SessionUtil.setSessionAttribute(SysConstant.SESSION_USER, redisSessionUser);
+                    SessionUtil.setSessionAttribute(SysConfigConstants.SESSION_USER, redisSessionUser);
                 }else {
                     response.sendRedirect("/login.html?redirect=" + requestURLSB);
                     return false;
@@ -66,7 +66,7 @@ public class UserLoginInterceptor implements HandlerInterceptor {
         }
 
         // 更新redis中session时间 可以考虑使用异步处理
-        userService.updateRedisUserSessionExpireTime(userSessionToken,SysConstant.USER_SESSION_REDIS_TIME);
+        userService.updateRedisUserSessionExpireTime(userSessionToken, SysConfigConstants.USER_SESSION_REDIS_TIME);
         return true;
     }
 

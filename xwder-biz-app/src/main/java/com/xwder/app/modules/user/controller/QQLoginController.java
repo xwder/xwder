@@ -5,7 +5,7 @@ import cn.hutool.core.bean.copier.CopyOptions;
 import cn.hutool.core.util.RandomUtil;
 import cn.hutool.core.util.StrUtil;
 import com.xwder.app.attribute.SysConfigAttribute;
-import com.xwder.app.consts.SysConstant;
+import com.xwder.app.consts.SysConfigConstants;
 import com.xwder.app.modules.user.entity.User;
 import com.xwder.app.modules.user.entity.UserQQ;
 import com.xwder.app.modules.user.service.intf.UserService;
@@ -94,11 +94,11 @@ public class QQLoginController {
         }
         String xwderToken = RandomUtil.randomString(32);
         // session 写入用户信息
-        SessionUtil.setSessionAttribute(SysConstant.SESSION_USER, user);
+        SessionUtil.setSessionAttribute(SysConfigConstants.SESSION_USER, user);
         // cookie 写人 认证 xwder-token
         CookieUtils.setCookie(request, response, sysConfigAttribute.getSessionTokenName(), xwderToken);
         // 写入redis session
-        userService.saveUserSessionToRedis(xwderToken, user, SysConstant.USER_SESSION_REDIS_TIME);
+        userService.saveUserSessionToRedis(xwderToken, user, SysConfigConstants.USER_SESSION_REDIS_TIME);
 
         // 获取用户信息后跳转到对应页面
         return "redirect:/index.html";

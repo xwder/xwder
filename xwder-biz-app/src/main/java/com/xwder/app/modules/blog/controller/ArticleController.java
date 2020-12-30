@@ -9,7 +9,7 @@ import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.xwder.app.common.result.CommonResult;
-import com.xwder.app.consts.SysConstant;
+import com.xwder.app.consts.SysConfigConstants;
 import com.xwder.app.modules.blog.entity.Article;
 import com.xwder.app.modules.blog.entity.ArticleTag;
 import com.xwder.app.modules.blog.entity.Category;
@@ -80,7 +80,7 @@ public class ArticleController {
     @RequestMapping("/edit/article")
     public String articleEdit(@RequestParam(value = "id", required = false) Long id, Model model) {
         String templateUrl = "blog/edit";
-        User sessionUser = (User) SessionUtil.getSessionAttribute(SysConstant.SESSION_USER);
+        User sessionUser = (User) SessionUtil.getSessionAttribute(SysConfigConstants.SESSION_USER);
         // 获取用户所有的 category 和 tags
         List<Tag> allTags = tagService.listTagByUserId(sessionUser.getId());
         List<Category> allCategorys = categoryService.listCategoryByUserId(sessionUser.getId());
@@ -155,7 +155,7 @@ public class ArticleController {
         }
         List<Long> tagIds = tagList.size() == 0 ? new ArrayList<>() : tagList.stream().map(Tag::getId).collect(Collectors.toList());
 
-        User sessionUser = (User) SessionUtil.getSessionAttribute(SysConstant.SESSION_USER);
+        User sessionUser = (User) SessionUtil.getSessionAttribute(SysConfigConstants.SESSION_USER);
         // 构造保存或者更新的article实体
         Article article;
         if (StrUtil.isNotBlank(idStr)) {
@@ -262,7 +262,7 @@ public class ArticleController {
         article.setReadCount(readCount.longValue());
 
         // 查询文章评论
-        List<CommentInfo> commentInfos = commentInfoService.listCommentInfoByTypeAndSubjectId(SysConstant.COMMENT_TYPE_BLOG, articleId);
+        List<CommentInfo> commentInfos = commentInfoService.listCommentInfoByTypeAndSubjectId(SysConfigConstants.COMMENT_TYPE_BLOG, articleId);
         if (CollectionUtil.isNotEmpty(commentInfos)) {
             List<Long> commentIds = commentInfos.stream().map(commentInfo -> commentInfo.getId()).collect(Collectors.toList());
             List<CommentReply> commentReplyList = commentReplyService.listCommentReplyByCommentIds(commentIds);
@@ -301,7 +301,7 @@ public class ArticleController {
         }
 
 
-        User sessionUser = (User) SessionUtil.getSessionAttribute(SysConstant.SESSION_USER);
+        User sessionUser = (User) SessionUtil.getSessionAttribute(SysConfigConstants.SESSION_USER);
         model.addAttribute("sessionUser", sessionUser);
         return "blog/article";
     }

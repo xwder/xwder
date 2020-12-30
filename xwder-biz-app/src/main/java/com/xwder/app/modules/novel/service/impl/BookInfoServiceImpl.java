@@ -7,7 +7,7 @@ import com.google.common.collect.Maps;
 import com.xwder.app.attribute.SysConfigAttribute;
 import com.xwder.app.common.result.CommonResult;
 import com.xwder.app.common.result.ResultCode;
-import com.xwder.app.consts.OffsetBasedPageRequest;
+import com.xwder.app.common.jpa.domain.OffsetBasedPageRequest;
 import com.xwder.app.modules.novel.entity.BookChapter;
 import com.xwder.app.modules.novel.entity.BookInfo;
 import com.xwder.app.modules.novel.repository.BookChapterRepository;

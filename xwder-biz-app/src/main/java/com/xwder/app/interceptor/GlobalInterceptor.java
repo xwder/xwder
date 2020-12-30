@@ -4,7 +4,7 @@ import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.StrUtil;
 import com.xwder.app.attribute.SysConfigAttribute;
 import com.xwder.app.config.web.GlobalDataCacheConfig;
-import com.xwder.app.consts.SysConstant;
+import com.xwder.app.consts.SysConfigConstants;
 import com.xwder.app.modules.blog.service.intf.CategoryService;
 import com.xwder.app.modules.user.entity.User;
 import com.xwder.app.modules.user.service.intf.UserService;
@@ -21,11 +21,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * @author xwder
@@ -110,7 +106,7 @@ public class GlobalInterceptor implements HandlerInterceptor {
             User userSessionFromRedis = userService.getUserSessionFromRedis(userSessionToken);
             if (userSessionFromRedis == null) {
                 // 先情况session中的user信息，可能不存在
-                SessionUtil.removeSessionAttribute(SysConstant.SESSION_USER);
+                SessionUtil.removeSessionAttribute(SysConfigConstants.SESSION_USER);
                 // 删除request中的userSessionToken
                 Cookie[] cookies = request.getCookies();
                 //List<Cookie> filterCookieList = Arrays.stream(cookies).filter(cookie -> !StrUtil.equals(cookie.getName(), sysConfigAttribute.getSessionTokenName())).collect(Collectors.toList());
@@ -122,7 +118,7 @@ public class GlobalInterceptor implements HandlerInterceptor {
                 }
             } else {
                 // session 写入用户信息
-                SessionUtil.setSessionAttribute(SysConstant.SESSION_USER, userSessionFromRedis);
+                SessionUtil.setSessionAttribute(SysConfigConstants.SESSION_USER, userSessionFromRedis);
             }
         }
     }
@@ -155,7 +151,7 @@ public class GlobalInterceptor implements HandlerInterceptor {
         String userSessionToken = CookieUtils.getCookieValue(request, sysConfigAttribute.getSessionTokenName());
         if (StrUtil.isNotEmpty(userSessionToken)) {
             // 更新redis中session时间 可以 使用异步处理
-            userService.updateRedisUserSessionExpireTime(userSessionToken, SysConstant.USER_SESSION_REDIS_TIME);
+            userService.updateRedisUserSessionExpireTime(userSessionToken, SysConfigConstants.USER_SESSION_REDIS_TIME);
         }
     }
 
@@ -167,7 +163,7 @@ public class GlobalInterceptor implements HandlerInterceptor {
      * @param handler
      */
     public void getLoginUser(HttpServletRequest request, HttpServletResponse response, Object handler) {
-        User sessionUser = (User) SessionUtil.getSessionAttribute(SysConstant.SESSION_USER);
+        User sessionUser = (User) SessionUtil.getSessionAttribute(SysConfigConstants.SESSION_USER);
         if (sessionUser == null) {
             String userSessionToken = CookieUtils.getCookieValue(request, sysConfigAttribute.getSessionTokenName());
             if (StrUtil.isNotEmpty(userSessionToken)) {
@@ -175,7 +171,7 @@ public class GlobalInterceptor implements HandlerInterceptor {
                 User redisSessionUser = userService.getUserSessionFromRedis(userSessionToken);
                 if (redisSessionUser != null) {
                     // session 写入用户信息
-                    SessionUtil.setSessionAttribute(SysConstant.SESSION_USER, redisSessionUser);
+                    SessionUtil.setSessionAttribute(SysConfigConstants.SESSION_USER, redisSessionUser);
                 }
             }
         }

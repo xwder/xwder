@@ -8,7 +8,7 @@ import java.util.Map;
  * @Description: 爬虫类常量
  * @date 2020/7/16 21:35
  */
-public class SpiderConstant {
+public class SpiderConstants {
 
     /**
      * shuquge.com headers
