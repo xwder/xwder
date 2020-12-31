@@ -2,12 +2,9 @@
 <html lang="zh" xmlns:th="http://www.thymeleaf.org">
 <title>文章编辑</title>
 <head th:include="include :: head"></head>
-<link th:href="@{/static/dist/libs/selectize/dist/css/selectize.css}" href="./dist/libs/selectize/dist/css/selectize.css"
-      rel="stylesheet"/>
-<link th:href="@{/static/dist/libs/flatpickr/dist/flatpickr.min.css}" href="./dist/libs/flatpickr/dist/flatpickr.min.css"
-      rel="stylesheet"/>
-<link th:href="@{/static/dist/libs/nouislider/distribute/nouislider.min.css}"
-      href="./dist/libs/nouislider/distribute/nouislider.min.css" rel="stylesheet"/>
+<link th:href="@{/static/dist/libs/selectize/dist/css/selectize.css}" href="./dist/libs/selectize/dist/css/selectize.css" rel="stylesheet"/>
+<link th:href="@{/static/dist/libs/flatpickr/dist/flatpickr.min.css}" href="./dist/libs/flatpickr/dist/flatpickr.min.css" rel="stylesheet"/>
+<link th:href="@{/static/dist/libs/nouislider/distribute/nouislider.min.css}" href="./dist/libs/nouislider/distribute/nouislider.min.css" rel="stylesheet"/>
 <body class="antialiased">
 <div class="page">
     <!--<div id="currentUrl" style="display: none" th:text="${#httpServletRequest.getRequestURL()}"></div>-->
@@ -214,30 +211,20 @@
 </div>
 
 <!-- Libs JS -->
-<script th:src="@{/static/dist/libs/bootstrap/dist/js/bootstrap.bundle.min.js}"
-        src="../static/dist/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script th:src="@{/static/dist/libs/bootstrap/dist/js/bootstrap.bundle.min.js}" src="../static/dist/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <!--<script th:src="@{/static/dist/libs/jquery/dist/jquery.slim.min.js}" src="./dist/libs/jquery/dist/jquery.slim.min.js"></script>-->
 <script th:src="@{/static/dist/libs/autosize/dist/autosize.min.js}" src="./dist/libs/autosize/dist/autosize.min.js"></script>
 <script th:src="@{/static/dist/libs/imask/dist/imask.min.js}" src="./dist/libs/imask/dist/imask.min.js"></script>
-<script th:src="@{/static/dist/libs/selectize/dist/js/standalone/selectize.min.js}"
-        src="./dist/libs/selectize/dist/js/standalone/selectize.min.js"></script>
-<script th:src="@{/static/dist/libs/flatpickr/dist/flatpickr.min.js}"
-        src="./dist/libs/flatpickr/dist/flatpickr.min.js"></script>
-<script th:src="@{/static/dist/libs/flatpickr/dist/plugins/rangePlugin.js}"
-        src="./dist/libs/flatpickr/dist/plugins/rangePlugin.js"></script>
-<script th:src="@{/static/dist/libs/nouislider/distribute/nouislider.min.js}"
-        src="./dist/libs/nouislider/distribute/nouislider.min.js"></script>
+<script th:src="@{/static/dist/libs/selectize/dist/js/standalone/selectize.min.js}" src="./dist/libs/selectize/dist/js/standalone/selectize.min.js"></script>
+<script th:src="@{/static/dist/libs/flatpickr/dist/flatpickr.min.js}" src="./dist/libs/flatpickr/dist/flatpickr.min.js"></script>
+<script th:src="@{/static/dist/libs/flatpickr/dist/plugins/rangePlugin.js}" src="./dist/libs/flatpickr/dist/plugins/rangePlugin.js"></script>
+<script th:src="@{/static/dist/libs/nouislider/distribute/nouislider.min.js}" src="./dist/libs/nouislider/distribute/nouislider.min.js"></script>
 
 <script type="text/javascript" th:src="@{/static/ueditor/ueditor.config.js}" charset="utf-8" src="ueditor.config.js"></script>
 <script type="text/javascript" th:src="@{/static/ueditor/ueditor.all.min.js}" charset="utf-8" src="ueditor.all.min.js"></script>
 <!--建议手动加在语言，避免在ie下有时因为加载语言失败导致编辑器加载失败-->
 <!--这里加载的语言文件会覆盖你在配置项目里添加的语言类型，比如你在配置项目里配置的是英文，这里加载的中文，那最后就是中文-->
 <script type="text/javascript" th:src="@{/static/ueditor/lang/zh-cn/zh-cn.js}" charset="utf-8" src="lang/zh-cn/zh-cn.js"></script>
-
-
-<link rel="stylesheet"   href="http://www.jq22.com/demo/fileUpload201709120034/css/fileUpload.css">
-<script type="text/javascript" th:src="@{/static/js/blog/fileUpload.js}" src="http://www.jq22.com/demo/fileUpload201709120034/js/fileUpload.js"></script>
-
 
 <script>
     /*document.body.style.display = "block";*/

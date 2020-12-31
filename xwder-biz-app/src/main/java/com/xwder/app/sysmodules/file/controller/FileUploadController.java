@@ -49,6 +49,27 @@ public class FileUploadController {
     }
 
     /**
+     * udeitor 编辑器博客文章图片上传接口
+     *
+     * @param request
+     * @param type 来源 blog
+     * @return
+     */
+    @RequestMapping("/up/editormd")
+    @ResponseBody
+    public Map editormdBlogImageFileUpload(HttpServletRequest request, String type) {
+
+        Map<String, Object> resultMap = new HashMap<>();
+        // ueditor 博客文章编辑图片上传
+        if (StrUtil.equalsAnyIgnoreCase(type, "blog")) {
+            MultipartHttpServletRequest multipartHttpServletRequest = (MultipartHttpServletRequest) request;
+            MultipartFile multipartFile = multipartHttpServletRequest.getFile("editormd-image-file");
+            resultMap = fileUploadService.editormdBlogImageFileUpload(multipartFile);
+        }
+        return resultMap;
+    }
+
+    /**
      * cos文件删除接口
      *
      * @param request

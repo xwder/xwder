@@ -24,6 +24,14 @@ public interface FileUploadService {
     Map ueditorBlogImageFileUpload(MultipartFile multipartFile);
 
     /**
+     * ueditormd 博客文章图片上传文件 保存到服务 然后上传 cos
+     *
+     * @param multipartFile
+     * @return ueditormd 上传标准响应 文件地址为cdn文件地址
+     */
+    Map editormdBlogImageFileUpload(MultipartFile multipartFile);
+
+    /**
      * 上传文件 到cos
      * 例如 https://cdn.xwder.com/image/blog/xwder/1-20201010094334764.png
      * @param multipartFile 上传文件

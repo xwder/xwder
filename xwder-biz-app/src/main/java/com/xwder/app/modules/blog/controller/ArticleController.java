@@ -110,6 +110,46 @@ public class ArticleController {
     }
 
     /**
+     * 从查看博客文章页面点击修改博客
+     * 新增、编辑博客文章
+     *
+     * @param id
+     * @param model
+     * @return
+     */
+    @RequestMapping("/editmd/article")
+    public String articleEditMd(@RequestParam(value = "id", required = false) Long id, Model model) {
+        String templateUrl = "blog/md";
+        User sessionUser = (User) SessionUtil.getSessionAttribute(SysConfigConstants.SESSION_USER);
+        // 获取用户所有的 category 和 tags
+        List<Tag> allTags = tagService.listTagByUserId(sessionUser.getId());
+        List<Category> allCategorys = categoryService.listCategoryByUserId(sessionUser.getId());
+        model.addAttribute("allTags", allTags);
+        model.addAttribute("allCategorys", allCategorys);
+
+        if (id != null) {
+            Article article = articleService.getArticleById(id);
+            if (article == null) {
+                return templateUrl;
+            }
+            String tagIdsStr = article.getTags();
+            String[] splits = tagIdsStr.split("-");
+            // 选中的tags id
+            List<Long> tagIds = new ArrayList<>();
+            for (String split : splits) {
+                if (StrUtil.isNotEmpty(split)) {
+                    tagIds.add(Long.parseLong(split));
+                }
+            }
+            Category currentCategory = categoryService.getCategoryById(article.getCategoryId());
+            model.addAttribute("article", article);
+            model.addAttribute("currentCategory", currentCategory);
+            model.addAttribute("tagIds", tagIds);
+        }
+        return templateUrl;
+    }
+
+    /**
      * 新增博客文章
      *
      * @param model

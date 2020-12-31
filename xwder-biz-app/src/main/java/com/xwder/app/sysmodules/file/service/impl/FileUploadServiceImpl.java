@@ -116,6 +116,74 @@ public class FileUploadServiceImpl implements FileUploadService {
     }
 
     /**
+     * editormd 上传文件 保存到服务 然后上传 cos
+     *
+     * @param multipartFile
+     * @return editormd 上传标准响应 文件地址为cdn文件地址
+     */
+    @Override
+    @Transactional(rollbackFor = {Exception.class})
+    public Map editormdBlogImageFileUpload(MultipartFile multipartFile) {
+        User sessionUser = (User) SessionUtil.getSessionAttribute(SysConfigConstants.SESSION_USER);
+        String fileName = multipartFile.getOriginalFilename();
+        // 文件上传目录 服务器上和cos上路径保持一致
+        String uploadCosFile = sysConfigAttribute.getBlogImageDir() + File.separator + sessionUser.getUserName() +
+                File.separator + buildUploadFileName(fileName);
+        // 磁盘保存文件的完整路径
+        String serverSaveCompleteDir = sysConfigAttribute.getUploadSaveBaseDir() + File.separator + uploadCosFile;
+        File serverSaveFile = new File(serverSaveCompleteDir);
+        File parentFile = serverSaveFile.getParentFile();
+        if (!parentFile.exists()) {
+            parentFile.mkdirs();
+        }
+
+        Map<String, Object> resultMap = new HashMap<>();
+        resultMap.put("message ", "上传失败");
+        resultMap.put("url", null);
+        resultMap.put("success ", 0);
+        try {
+            multipartFile.transferTo(serverSaveFile);
+        } catch (IOException e) {
+            log.error("保存文件失败", e);
+            return resultMap;
+        }
+        log.info("保存文件[{}]到磁盘成功", serverSaveFile.getName());
+        uploadCosFile = uploadCosFile.replaceAll("\\\\", "/");
+        String cosUploadResult = tencentCosService.uploadTenCos(serverSaveFile, uploadCosFile,
+                sysConfigAttribute.getTencentCosBucketName(), sysConfigAttribute.getTencentCosRegion());
+        if (StrUtil.isEmpty(cosUploadResult)) {
+            log.error("保存文件[{}]到cos失败", serverSaveFile.getName());
+            // 删除磁盘文件
+            FileUtil.del(serverSaveFile);
+            resultMap.put("message", "上传对象存储失败");
+            return resultMap;
+        }
+        String fileCdnUrl = sysConfigAttribute.getTencentCdnPreFixUrl() + uploadCosFile;
+        log.info("保存文件[{}]到cos成功，cdn访问地址[{}]", serverSaveFile.getName(), fileCdnUrl);
+
+        // 保存文件上传记录
+        FileUploadRecord fileUploadRecord = new FileUploadRecord();
+
+        fileUploadRecord.setUserId(sessionUser.getId());
+        fileUploadRecord.setUserName(sessionUser.getUserName());
+        fileUploadRecord.setFileType(getFileType(fileName));
+        fileUploadRecord.setFileSize(FileUtil.size(serverSaveFile));
+        fileUploadRecord.setLocalUrl(serverSaveCompleteDir);
+        fileUploadRecord.setCosUrl(fileCdnUrl);
+        Date date = new Date();
+        fileUploadRecord.setGmtCreate(date);
+        fileUploadRecord.setGmtModified(date);
+        fileUploadRecord.setSource("blog");
+        fileUploadRecord.setIsavailable(1);
+        fileUploadRecordService.saveOrUpdate(fileUploadRecord);
+
+        resultMap.put("message", "上传成功");
+        resultMap.put("url", fileCdnUrl);
+        resultMap.put("success", 1);
+        return resultMap;
+    }
+
+    /**
      * @param multipartFile 上传文件
      * @param uploadDir     /image/blog/xwder
      * @param fileName      1-20201010094334764.png
