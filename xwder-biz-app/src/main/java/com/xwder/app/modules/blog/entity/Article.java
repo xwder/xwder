@@ -60,6 +60,12 @@ public class Article implements Serializable {
     private String content;
 
     /**
+     * markdown文章内容
+     */
+    @Column(name = "md_content")
+    private String mdContent;
+
+    /**
      * 摘要
      */
     @Column(name = "summary")
@@ -215,6 +221,13 @@ public class Article implements Serializable {
         this.content = content;
     }
 
+    public String getMdContent() {
+        return mdContent;
+    }
+
+    public void setMdContent(String mdContent) {
+        this.mdContent = mdContent;
+    }
 
     public String getSummary() {
         return summary;

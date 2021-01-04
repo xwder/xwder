@@ -178,6 +178,7 @@ public class ArticleController {
         AssertUtil.paramIsNotNull(summary, "摘要不能为空");
         String content = (String) jsonObject.get("content");
         AssertUtil.paramIsNotNull(content, "内容不能为空");
+        String mdContent = (String) jsonObject.get("mdContent");
         String previewImgUrl = (String) jsonObject.get("previewImgUrl");
         String type = (String) jsonObject.get("type");
         AssertUtil.paramIsNotNull(type, "文章类型不能为空");
@@ -227,6 +228,7 @@ public class ArticleController {
         article.setSummary(summary);
         article.setContent(content);
         article.setArticleType(type);
+        article.setMdContent(mdContent);
 
 
         Map responseData = new HashMap();
