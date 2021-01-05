@@ -194,12 +194,14 @@ function getArticleData() {
     var title = $("#articleTitle").val();
     var summary = $("#articleSummary").val();
     var content;
-    var mdContent='';
-    // 如果有editor编辑器则获取编辑器内容 没有则获取ue编辑器内容
-    if (CheckIsNullOrEmpty(blogEditor)) {
-        content =  blogEditor.getHTML();
-        mdContent = blogEditor.getMarkdown();
-    }else {
+    var mdContent = '';
+    // 是不是editor编辑器
+    try {
+        if (CheckIsNullOrEmpty(blogEditor)) {
+            content = blogEditor.getHTML();
+            mdContent = blogEditor.getMarkdown();
+        }
+    } catch (e) {
         content = UE.getEditor('editor').getContent();
     }
 

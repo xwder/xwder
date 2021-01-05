@@ -16,6 +16,11 @@ server:
     # Tomcat启动初始化的线程数，默认值25
     min-spare-threads: 30
 
+  # gzip 压缩
+  compression:
+    enabled: true
+    mime-types: application/javascript,text/css,application/json,application/xml,text/html,text/xml,text/plain
+
 system:
   # 系统名称
   chineseName: xwder
