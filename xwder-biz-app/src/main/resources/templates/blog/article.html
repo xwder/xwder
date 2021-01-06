@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org">
 <title th:if="${articleMap != null}" th:text="${articleMap['article'].title}">预览</title>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+
 <link rel="stylesheet" th:href="@{/static/css/blog/article.css}">
 <!--评论模块css-->
 <link rel="stylesheet" th:href="@{/static/comment/css/style.css}" href="comment/css/style.css">
@@ -241,6 +244,8 @@
 <!--评论模块js-->
 <script type="text/javascript" th:src="@{/static/comment/js/jquery.flexText.js}" src="js/jquery.flexText.js"></script>
 <script type="text/javascript" th:src="@{/static/comment/js/comment.js}" src="js/jquery.flexText.js"></script>
+
+<script src="../autoload.js" th:src="@{/static/lib/live2d-widget/autoload.js}"></script>
 </body>
 <style>
     /*显示文章内容页面右下角显示导航按钮*/
