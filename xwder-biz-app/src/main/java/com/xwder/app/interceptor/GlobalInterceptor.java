@@ -60,6 +60,7 @@ public class GlobalInterceptor implements HandlerInterceptor {
         getLoginUser(request, response, handler);
         buildPotalData(request, response, handler);
         refreshRedisSession(request, response, handler);
+        initStaticResourcePath(request, response, handler);
         return true;
     }
 
@@ -175,5 +176,26 @@ public class GlobalInterceptor implements HandlerInterceptor {
                 }
             }
         }
+    }
+
+    /**
+     * 初始化静态资源访问地址
+     * @param request
+     * @param response
+     * @param handler
+     */
+    public void initStaticResourcePath(HttpServletRequest request, HttpServletResponse response, Object handler) {
+        HttpSession session = request.getSession();
+        String staticResourcePath = (String) session.getAttribute("staticResourcePath");
+        if (StrUtil.isEmpty(staticResourcePath)) {{
+            if (StrUtil.equals("local", sysConfigAttribute.getStaticResourcePath())) {
+                // 博客归档分类信息
+                session.setAttribute("staticResourcePath", "");
+            }
+            if (StrUtil.equals("cdn", sysConfigAttribute.getStaticResourcePath())) {
+                // 博客归档分类信息
+                session.setAttribute("staticResourcePath", sysConfigAttribute.getStaticResourceCdnPath());
+            }
+        }}
     }
 }

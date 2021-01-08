@@ -20,15 +20,15 @@
 	<meta name="baidu-site-verification" content="r8pYZxcweW" />
 	<!--谷歌站长-->
 	<meta name="google-site-verification" content="EN28GwBFoQjQz36Z6k3PZKfedtv2nAbCvKCwQkVXPew" />
-	<link rel="icon" th:href="@{/static/favicon.ico}"  href="../favicon.ico" type="image/x-icon"/>
-	<link rel="shortcut icon" th:href="@{/static/favicon.ico}"  href="../favicon.ico" type="image/x-icon"/>
+	<link rel="icon" th:href="${session.staticResourcePath +'/static/favicon.ico'}" type="image/x-icon"/>
+	<link rel="shortcut icon" th:href="${session.staticResourcePath +'/static/favicon.ico'}" type="image/x-icon"/>
 	<!-- CSS files -->
-	<link th:href="@{/static/dist/libs/jqvmap/dist/jqvmap.min.css}" href="../static/dist/libs/jqvmap/dist/jqvmap.min.css" rel="stylesheet"/>
-	<link th:href="@{/static/dist/css/tabler.min.css}" href="../static/dist/css/tabler.min.css" rel="stylesheet"/>
-	<link th:href="@{/static/dist/css/demo.min.css}" href="../static/dist/css/demo.min.css" rel="stylesheet"/>
+	<link th:href="${session.staticResourcePath +'/static/dist/libs/jqvmap/dist/jqvmap.min.css'}"rel="stylesheet"/>
+	<link th:href="${session.staticResourcePath +'/static/dist/css/tabler.min.css'}" rel="stylesheet"/>
+	<link th:href="${session.staticResourcePath +'/static/dist/css/demo.min.css'}" rel="stylesheet"/>
 	<!-- JS files -->
-	<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-	<script th:src="@{/static/js/common.js}" src="../static/login/js/require.min.js"></script>
+	<script th:src="${session.staticResourcePath +'/static/lib/jquery/3.2.1/jquery.min.js'}"></script>
+	<script th:src="${session.staticResourcePath +'/static/js/common.js'}"></script>
 	<!-- 百度统计-->
 	<script>
 		var _hmt = _hmt || [];
@@ -43,9 +43,9 @@
 
 <!--头部右边 是否登录还是显示用户头像-->
 <div th:fragment="logoImage">
-	<a th:href="@{/index.html}" href="../.."
+	<a th:href="@{/index.html}"
 	   class="navbar-brand navbar-brand-autodark d-none-navbar-horizontal pr-0 pr-md-3">
-		<img th:src="${'/static/image/funny/'+ #numbers.formatDecimal(T(java.lang.Math).floor(T(java.lang.Math).random()*100%15),1,0) + '.gif'}" src="../static/images/logo/logo.svg" alt="Tabler"
+		<img th:src="${session.staticResourcePath + '/static/image/funny/'+ #numbers.formatDecimal(T(java.lang.Math).floor(T(java.lang.Math).random()*100%15),1,0) + '.gif'}" alt="Tabler"
 			 class="navbar-brand-image">
 	</a>
 </div>
@@ -65,7 +65,7 @@
 		</div>
 		<div class="nav-item dropdown">
 			<a th:href="@{index}" href="#" id="" class="nav-link d-flex lh-1 text-reset p-0" data-toggle="dropdown">
-				<span class="avatar" style="background-image: url(https://gss3.bdstatic.com/84oSdTum2Q5BphGlnYG/timg?wapp&quality=80&size=b150_150&subsize=20480&cut_x=0&cut_w=0&cut_y=0&cut_h=0&sec=1369815402&srctrace&di=025a2098797ebd8640060bcc4663cb9e&wh_rate=null&src=http%3A%2F%2Fimgsrc.baidu.com%2Fforum%2Fpic%2Fitem%2F562c11dfa9ec8a13424f9c95fc03918fa0ecc06a.jpg)"></span>
+				<span class="avatar" th:style="${'background-image: url(' + session.staticResourcePath+'/static/image/user/user.jpg)'}"></span>
 				<div class="d-none d-xl-block pl-2">
 					<div>OneDay</div>
 					<div class="mt-1 small text-muted">Java Engineer</div>
@@ -103,7 +103,7 @@
 		</div>
 		<div class="nav-item dropdown" id="showUserDropdown">
 			<a th:href="@{index}" href="#" id="userMenuDropdown" class="nav-link d-flex lh-1 text-reset p-0" data-toggle="dropdown">
-				<span class="avatar" style="background-image: url(https://gss3.bdstatic.com/84oSdTum2Q5BphGlnYG/timg?wapp&quality=80&size=b150_150&subsize=20480&cut_x=0&cut_w=0&cut_y=0&cut_h=0&sec=1369815402&srctrace&di=025a2098797ebd8640060bcc4663cb9e&wh_rate=null&src=http%3A%2F%2Fimgsrc.baidu.com%2Fforum%2Fpic%2Fitem%2F562c11dfa9ec8a13424f9c95fc03918fa0ecc06a.jpg)"></span>
+				<span class="avatar" th:style="${'background-image: url(' + session.staticResourcePath+'/static/image/user/user.jpg)'}"></span>
 				<div class="d-none d-xl-block pl-2">
 					<div th:text="${session.sessionUser != null ? session.sessionUser.userName : 'OneDay'}">Paweł Kuna</div>
 					<div th:text="${session.sessionUser != null ? session.sessionUser.nickname : 'Java Engineer'}"  class="mt-1 small text-muted">UI Designer</div>
@@ -138,7 +138,7 @@
 			<div class="container-xl">
 				<ul class="navbar-nav">
 					<li class="nav-item active" th:class="${(active != null && active eq 'index') ? 'nav-item active' : 'nav-item'}">
-						<a target="_blank" class="nav-link" th:href="@{/index.html}" href="../index.html" >
+						<a target="_blank" class="nav-link" th:href="@{/index.html}">
 						<span class="nav-link-icon d-md-none d-lg-inline-block"><svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><polyline points="5 12 3 12 12 3 21 12 19 12" /><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" /><path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" /></svg>
 						</span>
 							<span class="nav-link-title">

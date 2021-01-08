@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html  lang="zh" xmlns:th="http://www.thymeleaf.org">
 <title>小说阅读</title>
-<link th:href="@{/static/css/book/book.css}" href="http://v.xwder.com/xwder/book/book.css" rel="stylesheet"/>
+<link th:href="${session.staticResourcePath +'/static/css/book/book.css'}" rel="stylesheet"/>
 <head th:include="include :: head"></head>
 
 <body class="antialiased" style="background-color: #FFFFFF;">
@@ -236,7 +236,7 @@
       </div>
     </div>
     <!-- Libs JS -->
-    <script th:src="@{/static/dist/libs/bootstrap/dist/js/bootstrap.bundle.min.js}" src="../../static/dist/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script th:src="${session.staticResourcePath +'/static/dist/libs/bootstrap/dist/js/bootstrap.bundle.min.js'}"></script>
     <script>
       /*document.body.style.display = "block";*/
 

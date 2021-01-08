@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html  lang="zh" xmlns:th="http://www.thymeleaf.org">
 <title th:text="${bookInfo.bookName}">小说阅读</title>
-<link th:href="@{/static/css/book/chapters.css}" href="../static/css/index.css" rel="stylesheet"/>
+<link th:href="${session.staticResourcePath +'/static/css/book/chapters.css'}" href="../static/css/index.css" rel="stylesheet"/>
 <head th:include="include :: head"></head>
 
 <body class="antialiased" style="background-color: #FFFFFF;">
@@ -94,7 +94,7 @@
                   </div>
                 </div>
                 <div class="app-in clearfix">
-                  <div class="ewm" data-url=""><img th:src="@{/static/image/book/wx_book.png}" src="http://rcode.zongheng.com/v2018/images/wx_book.png" alt="" width="80" height="79"></div>
+                  <div class="ewm" data-url=""><img th:src="${session.staticResourcePath +'/static/image/book/wx_book.png'}" alt="" width="80" height="79"></div>
                   <div class="txt">
                     <h3>手机看小说</h3>
                     <p>新用户免费看7天</p>
@@ -131,7 +131,7 @@
       </div>
     </div>
     <!-- Libs JS -->
-    <script th:src="@{/static/dist/libs/bootstrap/dist/js/bootstrap.bundle.min.js}" src="../../static/dist/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script th:src="${session.staticResourcePath +'/static/dist/libs/bootstrap/dist/js/bootstrap.bundle.min.js'}"></script>
     <script>
       /*document.body.style.display = "block";*/
 

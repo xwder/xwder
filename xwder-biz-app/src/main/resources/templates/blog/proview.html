@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org">
 <title th:if="${session.previewMap != null}" th:text="${session.previewMap['article'].title}">预览</title>
-<link rel="stylesheet" th:href="@{/static/css/blog/article.css}">
+<link rel="stylesheet" th:href="${session.staticResourcePath +'/static/css/blog/article.css'}">
 <!--评论模块css-->
-<link rel="stylesheet" th:href="@{/static/comment/css/style.css}" href="comment/css/style.css">
-<link rel="stylesheet" th:href="@{/static/comment/css/comment.css}" href="comment/css/comment.css">
-<link rel="stylesheet" th:href="@{/static/lib/highlight/css/default.min.css}" href="comment/css/comment.css">
+<link rel="stylesheet" th:href="${session.staticResourcePath +'/static/comment/css/style.css'}" href="comment/css/style.css">
+<link rel="stylesheet" th:href="${session.staticResourcePath +'/static/comment/css/comment.css'}" href="comment/css/comment.css">
+<link rel="stylesheet" th:href="${session.staticResourcePath +'/static/lib/highlight/css/default.min.css'}" href="comment/css/comment.css">
 <!--点击图片放大css-->
-<link rel="stylesheet" th:href="@{/static/lib/imgenlarge/js/zoomify.min.css}" href="comment/css/comment.css">
+<link rel="stylesheet" th:href="${session.staticResourcePath +'/static/lib/imgenlarge/js/zoomify.min.css'}" href="comment/css/comment.css">
 <head th:include="include :: head"></head>
 <body class="antialiased">
 <div class="page">
@@ -57,22 +57,19 @@
                                             <span class="time" th:if="${session.previewMap != null}"
                                                   th:text="${#dates.format(session.previewMap['article'].publishTime, 'yyyy-MM-dd HH:mm')}">2017-04-06 14:19:56</span>
                                             <img class="article-read-img article-heard-img"
-                                                 th:src="@{/static/image/blog/articleReadEyes.png}"
-                                                 src="https://csdnimg.cn/release/phoenix/template/new_img/articleReadEyes.png"
+                                                 th:src="${session.staticResourcePath +'/static/image/blog/articleReadEyes.png'}"
                                                  alt="">
                                             <span class="read-count" th:if="${session.previewMap != null}"
                                                   th:text="${session.previewMap['article'].readCount}">3960</span>
                                             <a id="blog_detail_zk_collection" class="un-collection"
                                                data-report-click="{&quot;mod&quot;:&quot;popu_823&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4232&quot;,&quot;ab&quot;:&quot;new&quot;}">
                                                 <img class="article-collect-img article-heard-img un-collect-status"
-                                                     th:src="@{/static/image/blog/tobarCollect.png}"
+                                                     th:src="${session.staticResourcePath +'/static/image/blog/tobarCollect.png'}"
                                                      style="display:inline-block"
-                                                     src="https://csdnimg.cn/release/phoenix/template/new_img/tobarCollect.png"
                                                      alt="">
                                                 <img class="article-collect-img article-heard-img collect-status"
                                                      style="display:none"
-                                                     th:src="@{/static/image/blog/tobarCollectionActive.png}"
-                                                     src="https://csdnimg.cn/release/phoenix/template/new_img/tobarCollectionActive.png"
+                                                     th:src="${session.staticResourcePath +'/static/image/blog/tobarCollectionActive.png'}"
                                                      alt="">
                                                 <span class="name">收藏</span>
                                                 <span class="get-collection">
@@ -183,10 +180,10 @@
 </div>
 
 <!-- Libs JS -->
-<script th:src="@{/static/dist/libs/bootstrap/dist/js/bootstrap.bundle.min.js}" src=""></script>
-<script th:src="@{/static/lib/highlight/js/highlight.min.js}"></script>
+<script th:src="${session.staticResourcePath +'/static/dist/libs/bootstrap/dist/js/bootstrap.bundle.min.js'}" src=""></script>
+<script th:src="${session.staticResourcePath +'/static/lib/highlight/js/highlight.min.js'}"></script>
 <!--点击图片放大 博客文章中的的图片-->
-<script th:src="@{/static/lib/imgenlarge/js/zoomify.min.js}"></script>
+<script th:src="${session.staticResourcePath +'/static/lib/imgenlarge/js/zoomify.min.js'}"></script>
 <script>
     // 点击图片放大
     $('#blog-content img').zoomify();
@@ -232,28 +229,10 @@
 
 </script>
 <!--评论模块js-->
-<script type="text/javascript" th:src="@{/static/comment/js/jquery.flexText.js}" src="js/jquery.flexText.js"></script>
-<script type="text/javascript" th:src="@{/static/comment/js/comment.js}" src="js/jquery.flexText.js"></script>
+<script type="text/javascript" th:src="${session.staticResourcePath +'/static/comment/js/jquery.flexText.js'}" src="js/jquery.flexText.js"></script>
+<script type="text/javascript" th:src="${session.staticResourcePath +'/static/comment/js/comment.js'}" src="js/jquery.flexText.js"></script>
 </body>
 <style>
-    /*显示文章内容页面右下角显示导航按钮*/
-    .showtitle {
-        cursor: pointer;
-        position: fixed;
-        right: 25px;
-        bottom: 135px;
-        z-index: 99999;
-        display: block;
-        width: 50px;
-        height: 50px;
-        background: url(../images/backpre.png) no-repeat 0 0;
-        opacity: 0.5;
-        filter: alpha(opacity=50);
-    }
-    .showtitle:hover {
-        background: url(../images/backpre.png) no-repeat 0 -52px;
-    }
-
     /*显示文章内容页面右方导航列表样式*/
     .article_navigation{
         /*width:300px;

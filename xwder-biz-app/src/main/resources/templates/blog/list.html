@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org">
 <title>博客文章列表</title>
-<link rel="stylesheet" th:href="@{/static/css/blog/article.list.css}">
-<link th:href="@{/static/css/book/book.css}" href="http://v.xwder.com/xwder/book/book.css" rel="stylesheet"/>
+<link rel="stylesheet" th:href="${session.staticResourcePath +'/static/css/blog/article.list.css'}">
+<link th:href="${session.staticResourcePath +'/static/css/book/book.css'}" rel="stylesheet"/>
 <head th:include="include :: head"></head>
 <body class="antialiased">
 <div class="page">
@@ -131,7 +131,7 @@
 
                                                         <li class="ico-time">
                                                             <span class="nav-link-icon d-md-none d-lg-inline-block">
-                                                                <img th:src="@{/static/image/blog/clock.png}">
+                                                                <img th:src="${session.staticResourcePath +'/static/image/blog/clock.png'}">
                                                             </span>
                                                             <span class="nav-link-title" th:text="${article.remark}">
                                                             19小时前
@@ -143,7 +143,7 @@
                                                                 ?'/blog/edit/article.html?id='+article.id : '/blog/editmd/article.html?id='+article.id}"
                                                                target="_blank">
                                                                 <span class="nav-link-icon d-md-none d-lg-inline-block">
-                                                                    <img th:src="@{/static/image/blog/edit.png}">
+                                                                    <img th:src="${session.staticResourcePath +'/static/image/blog/edit.png'}">
                                                                 </span>
                                                                 <span class="nav-link-title">
                                                                     编辑
@@ -152,13 +152,13 @@
                                                         </li>
                                                     </ul>
                                                     <ol class="post-meta meta mar10-t clearfix hidden-xs">
-                                                        <img th:src="@{/static/image/blog/liulan.png}"
+                                                        <img th:src="${session.staticResourcePath +'/static/image/blog/liulan.png'}"
                                                              style="margin-left: 5px;margin-right: 4px;"><span
                                                             th:text="${article.readCount}">5</span>
-                                                        <img th:src="@{/static/image/blog/commits.png}"
+                                                        <img th:src="${session.staticResourcePath +'/static/image/blog/commits.png'}"
                                                              style="margin-left: 8px;margin-right: 4px;"><span
                                                             th:text="${article.comments}">5</span>
-                                                        <img th:src="@{/static/image/blog/sc.png}"
+                                                        <img th:src="${session.staticResourcePath +'/static/image/blog/sc.png'}"
                                                              style="margin-left: 8px;margin-right: 4px;"><span
                                                             th:text="${article.favors}">5</span>
                                                     </ol>
@@ -228,7 +228,7 @@
 </div>
 </div>
 <!-- Libs JS -->
-<script th:src="@{/static/dist/libs/bootstrap/dist/js/bootstrap.bundle.min.js}" src=""></script>
-<script th:src="@{/static/lib/highlight/js/highlight.min.js}" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.2/highlight.min.js"></script>
+<script th:src="${session.staticResourcePath +'/static/dist/libs/bootstrap/dist/js/bootstrap.bundle.min.js'}" src=""></script>
+<script th:src="${session.staticResourcePath +'/static/lib/highlight/js/highlight.min.js'}"></script>
 </body>
 </html>

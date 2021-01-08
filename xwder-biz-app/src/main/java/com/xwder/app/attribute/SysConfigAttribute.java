@@ -31,6 +31,12 @@ public class SysConfigAttribute {
     @Value("${system.adminWxPusherUid}")
     private String adminWxPusherUid;
 
+    @Value("${system.staticResourcePath}")
+    private String staticResourcePath;
+
+    @Value("${system.staticResourceCdnPath}")
+    private String staticResourceCdnPath;
+
     @Value("${novel.book.dir}")
     private String novelBookDir;
 

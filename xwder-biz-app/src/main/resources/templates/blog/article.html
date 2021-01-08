@@ -2,15 +2,15 @@
 <html lang="zh" xmlns:th="http://www.thymeleaf.org">
 <title th:if="${articleMap != null}" th:text="${articleMap['article'].title}">预览</title>
 
-<link rel="stylesheet" th:href="@{/static/lib/live2d-widget/font-awesome.min.css}" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" th:href="${session.staticResourcePath +'/static/lib/live2d-widget/font-awesome.min.css'}">
 
-<link rel="stylesheet" th:href="@{/static/css/blog/article.css}">
+<link rel="stylesheet" th:href="${session.staticResourcePath + '/static/css/blog/article.css'}">
 <!--评论模块css-->
-<link rel="stylesheet" th:href="@{/static/comment/css/style.css}" href="comment/css/style.css">
-<link rel="stylesheet" th:href="@{/static/comment/css/comment.css}" href="comment/css/comment.css">
-<link rel="stylesheet" th:href="@{/static/lib/highlight/css/default.min.css}" href="comment/css/comment.css">
+<link rel="stylesheet" th:href="${session.staticResourcePath + '/static/comment/css/style.css'}">
+<link rel="stylesheet" th:href="${session.staticResourcePath + '/static/comment/css/comment.css'}">
+<link rel="stylesheet" th:href="${session.staticResourcePath + '/static/lib/highlight/css/default.min.css'}">
 <!--点击图片放大css-->
-<link rel="stylesheet" th:href="@{/static/lib/imgenlarge/js/zoomify.min.css}" href="comment/css/comment.css">
+<link rel="stylesheet" th:href="${session.staticResourcePath + '/static/lib/imgenlarge/js/zoomify.min.css'}">
 <head th:include="include :: head"></head>
 <body class="antialiased">
 <div class="page">
@@ -48,7 +48,7 @@
                                         <!--文章类型-->
                                         <!--原创-->
                                         <img class="article-type-img"
-                                             th:src="${articleMap['article'].articleType eq '原创' ? '/static/image/blog/original.png' : (articleMap['article'].articleType eq '转载' ? '/static/image/blog/reprint.png' : '/static/image/blog/translate.png')}"
+                                             th:src="${session.staticResourcePath + (articleMap['article'].articleType eq '原创' ? '/static/image/blog/original.png' : (articleMap['article'].articleType eq '转载' ? '/static/image/blog/reprint.png' : '/static/image/blog/translate.png'))}"
                                              src="https://csdnimg.cn/release/phoenix/template/new_img/original.png"
                                              alt="">
                                         <!--翻译-->
@@ -60,7 +60,7 @@
                                             <span class="time" th:if="${articleMap != null}"
                                                   th:text="${#dates.format(articleMap['article'].publishTime, 'yyyy-MM-dd HH:mm')}">2017-04-06 14:19:56</span>
                                             <img class="article-read-img article-heard-img"
-                                                 th:src="@{/static/image/blog/articleReadEyes.png}"
+                                                 th:src="${session.staticResourcePath + '/static/image/blog/articleReadEyes.png'}"
                                                  src="https://csdnimg.cn/release/phoenix/template/new_img/articleReadEyes.png"
                                                  alt="">
                                             <span class="read-count" th:if="${articleMap != null}"
@@ -68,13 +68,13 @@
                                             <a id="blog_detail_zk_collection" class="un-collection"
                                                data-report-click="{&quot;mod&quot;:&quot;popu_823&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4232&quot;,&quot;ab&quot;:&quot;new&quot;}">
                                                 <img class="article-collect-img article-heard-img un-collect-status"
-                                                     th:src="@{/static/image/blog/tobarCollect.png}"
+                                                     th:src="${session.staticResourcePath + '/static/image/blog/tobarCollect.png'}"
                                                      style="display:inline-block"
                                                      src="https://csdnimg.cn/release/phoenix/template/new_img/tobarCollect.png"
                                                      alt="">
                                                 <img class="article-collect-img article-heard-img collect-status"
                                                      style="display:none"
-                                                     th:src="@{/static/image/blog/tobarCollectionActive.png}"
+                                                     th:src="${session.staticResourcePath + '/static/image/blog/tobarCollectionActive.png'}"
                                                      src="https://csdnimg.cn/release/phoenix/template/new_img/tobarCollectionActive.png"
                                                      alt="">
                                                 <span class="name">收藏</span>
@@ -121,9 +121,10 @@
                 </div>
                 <div class="col-lg-9">
                     <div class="card card-lg">
-                        <div class="card-body" style="padding: 0.5rem;" >
+                        <div class="card-body" style="padding: 0.5rem;">
                             <div class="markdown" id="blog-content">
-                                <div th:if="${articleMap != null}" th:utext="${articleMap['article'].content}" class="content" id="contentCardBody"></div>
+                                <div th:if="${articleMap != null}" th:utext="${articleMap['article'].content}"
+                                     class="content" id="contentCardBody"></div>
                             </div>
                         </div>
                     </div>
@@ -131,45 +132,62 @@
                     <div id="blogComment" class="commentAll col-lg-12">
 
                         <div class="reviewArea clearfix">
-                            <textarea class="content comment-input" placeholder="发表评论可以通知文章作者尽快回复哦&hellip;" onkeyup="keyUP(this)"></textarea>
-                           <a href="javascript:;" class="plBtn">评论</a>
+                            <textarea class="content comment-input" placeholder="发表评论可以通知文章作者尽快回复哦&hellip;"
+                                      onkeyup="keyUP(this)"></textarea>
+                            <a href="javascript:;" class="plBtn">评论</a>
                         </div>
 
 
                         <div class="comment-show">
                             <!--评论信息-->
-                            <div class="comment-show-con clearfix" th:if="${commentList != null}"  th:each="completeCommentMap,completeCommentMapStat : ${commentList}" >
+                            <div class="comment-show-con clearfix" th:if="${commentList != null}"
+                                 th:each="completeCommentMap,completeCommentMapStat : ${commentList}">
                                 <div class="comment-show-con-img pull-left">
-                                    <img src="images/header-img-comment_03.png" th:src="${completeCommentMap['comment'].fromAvatar}" alt="">
+                                    <img src="images/header-img-comment_03.png"
+                                         th:src="${completeCommentMap['comment'].fromAvatar}" alt="">
                                 </div>
                                 <div class="comment-show-con-list pull-left clearfix">
                                     <div class="pl-text clearfix">
-                                        <a href="#" class="comment-size-name" th:text="${completeCommentMap['comment'].fromName+' : '}" >OneDay : </a>
-                                        <span class="my-pl-con"  th:text="${completeCommentMap['comment'].content}">&nbsp;来啊 造作啊!</span>
+                                        <a href="#" class="comment-size-name"
+                                           th:text="${completeCommentMap['comment'].fromName+' : '}">OneDay : </a>
+                                        <span class="my-pl-con" th:text="${completeCommentMap['comment'].content}">&nbsp;来啊 造作啊!</span>
                                     </div>
                                     <div class="date-dz">
-                                        <span class="date-dz-left pull-left comment-time" th:text="${completeCommentMap['comment'].commentTime}">2017-5-2 11:11:39</span>
+                                        <span class="date-dz-left pull-left comment-time"
+                                              th:text="${completeCommentMap['comment'].commentTime}">2017-5-2 11:11:39</span>
                                         <div class="date-dz-right pull-right comment-pl-block">
-                                            <a href="javascript:;" class="removeBlock" th:if="${sessionUser != null && sessionUser.id eq completeCommentMap['comment'].fromId}">删除</a>
+                                            <a href="javascript:;" class="removeBlock"
+                                               th:if="${sessionUser != null && sessionUser.id eq completeCommentMap['comment'].fromId}">删除</a>
                                             <a href="javascript:;" class="date-dz-pl pl-hf hf-con-block pull-left"
                                                th:attr="commentId=${completeCommentMap['comment'].id},fromId=${completeCommentMap['comment'].fromId}">回复</a>
                                             <span class="pull-left date-dz-line">|</span>
-                                            <a href="javascript:;" class="date-dz-z pull-left"><i class="date-dz-z-click-red"></i>赞 (<i class="z-num" th:text="${completeCommentMap['comment'].likeNum}">666</i>)</a>
+                                            <a href="javascript:;" class="date-dz-z pull-left"><i
+                                                    class="date-dz-z-click-red"></i>赞 (<i class="z-num"
+                                                                                          th:text="${completeCommentMap['comment'].likeNum}">666</i>)</a>
                                         </div>
                                     </div>
                                     <!--评论回复列表-->
                                     <div class="hf-list-con">
-                                        <div class="all-pl-con" th:if="${completeCommentMap['commentReplys'].size()>0}" th:each="commentReply,commentReplyStat : ${completeCommentMap['commentReplys']}">
+                                        <div class="all-pl-con" th:if="${completeCommentMap['commentReplys'].size()>0}"
+                                             th:each="commentReply,commentReplyStat : ${completeCommentMap['commentReplys']}">
                                             <div class="pl-text hfpl-text clearfix">
-                                                <a href="#" class="comment-size-name" th:text="${commentReply.fromName+' :'}">xwder : </a>
-                                                <span class="my-pl-con">回复<a href="#" class="atName" th:text="${'@'+commentReply.toName}">@xwder</a> :      <sapn th:text="${'@'+commentReply.content}" >回复内容</sapn></span>
+                                                <a href="#" class="comment-size-name"
+                                                   th:text="${commentReply.fromName+' :'}">xwder : </a>
+                                                <span class="my-pl-con">回复<a href="#" class="atName"
+                                                                             th:text="${'@'+commentReply.toName}">@xwder</a> :      <sapn
+                                                        th:text="${'@'+commentReply.content}">回复内容</sapn></span>
                                             </div>
-                                            <div class="date-dz"> <span class="date-dz-left pull-left comment-time">2020-10-24 00:09:48</span>
+                                            <div class="date-dz"><span class="date-dz-left pull-left comment-time">2020-10-24 00:09:48</span>
                                                 <div class="date-dz-right pull-right comment-pl-block">
-                                                    <a href="javascript:;" class="removeBlock" th:if="${sessionUser != null && sessionUser.id eq commentReply.fromId}">删除</a>
-                                                    <a href="javascript:;" class="date-dz-pl pl-hf hf-con-block pull-left" th:attr="commentId=${completeCommentMap['comment'].id},toId=${commentReply.toId},fromId=${commentReply.fromId}">回复</a>
+                                                    <a href="javascript:;" class="removeBlock"
+                                                       th:if="${sessionUser != null && sessionUser.id eq commentReply.fromId}">删除</a>
+                                                    <a href="javascript:;"
+                                                       class="date-dz-pl pl-hf hf-con-block pull-left"
+                                                       th:attr="commentId=${completeCommentMap['comment'].id},toId=${commentReply.toId},fromId=${commentReply.fromId}">回复</a>
                                                     <span class="pull-left date-dz-line">|</span>
-                                                    <a href="javascript:;" class="date-dz-z pull-left"><i class="date-dz-z-click-red"></i>赞 (<i class="z-num" th:text="${commentReply.likeNum}">0</i>)</a>
+                                                    <a href="javascript:;" class="date-dz-z pull-left"><i
+                                                            class="date-dz-z-click-red"></i>赞 (<i class="z-num"
+                                                                                                  th:text="${commentReply.likeNum}">0</i>)</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -187,10 +205,10 @@
 </div>
 
 <!-- Libs JS -->
-<script th:src="@{/static/dist/libs/bootstrap/dist/js/bootstrap.bundle.min.js}" src=""></script>
-<script th:src="@{/static/lib/highlight/js/highlight.min.js}"></script>
+<script th:src="${session.staticResourcePath + '/static/dist/libs/bootstrap/dist/js/bootstrap.bundle.min.js'}"></script>
+<script th:src="${session.staticResourcePath + '/static/lib/highlight/js/highlight.min.js'}"></script>
 <!--点击图片放大 博客文章中的的图片-->
-<script th:src="@{/static/lib/imgenlarge/js/zoomify.min.js}"></script>
+<script th:src="${session.staticResourcePath + '/static/lib/imgenlarge/js/zoomify.min.js'}"></script>
 <script>
     // 点击图片放大
     $('#blog-content img').zoomify();
@@ -206,65 +224,67 @@
     }
     // 右侧文章目录
     $(document).ready(function () {
-        $("#contentCardBody").children().each(function(index, element) {
-            var tagName=$(this).get(0).tagName;
-            if(tagName.substr(0,1).toUpperCase() === "H"){
-                var contentH=$(this).html();//获取内容
+        $("#contentCardBody").children().each(function (index, element) {
+            var tagName = $(this).get(0).tagName;
+            if (tagName.substr(0, 1).toUpperCase() === "H") {
+                var contentH = $(this).html();//获取内容
                 contentH = repalceHtml(contentH);
-                var markid="mark-"+tagName+"-"+index.toString();
-                $(this).attr("id",markid);//为当前h标签设置id
-                let spaceNum =  "";
+                var markid = "mark-" + tagName + "-" + index.toString();
+                $(this).attr("id", markid);//为当前h标签设置id
+                let spaceNum = "";
                 if (tagName === 'H1') {
-                    spaceNum =  "";
+                    spaceNum = "";
                 } else if (tagName === 'H2') {
-                    spaceNum =  "";
-                }  else if (tagName === 'H3') {
-                    spaceNum =  "1.5";
+                    spaceNum = "";
+                } else if (tagName === 'H3') {
+                    spaceNum = "1.5";
                 } else if (tagName === 'H4') {
-                    spaceNum =  "3";
+                    spaceNum = "3";
                 } else if (tagName === 'H5') {
-                    spaceNum =  "4.5";
+                    spaceNum = "4.5";
                 } else if (tagName === 'H6') {
-                    spaceNum =  "6";
+                    spaceNum = "6";
                 }
                 $("#article_navigation").append("<a href='#" + markid + "'" + " style='text-indent: " + spaceNum + "em'" + ">" + contentH + "</a>");//在目标DIV中添加内容
             }
         });
     });
+
     // 过滤html标签
-    function repalceHtml(str){
-        var dd=str.replace(/<\/?.+?>/g,"");
-        var dds=dd.replace(/ /g,"");//dds为得到后的内容
+    function repalceHtml(str) {
+        var dd = str.replace(/<\/?.+?>/g, "");
+        var dds = dd.replace(/ /g, "");//dds为得到后的内容
         return dds;
     }
 </script>
 <!--评论模块js-->
-<script type="text/javascript" th:src="@{/static/comment/js/jquery.flexText.js}" src="js/jquery.flexText.js"></script>
-<script type="text/javascript" th:src="@{/static/comment/js/comment.js}" src="js/jquery.flexText.js"></script>
+<script type="text/javascript" th:src="${session.staticResourcePath + '/static/comment/js/jquery.flexText.js'}" src="js/jquery.flexText.js"></script>
+<script type="text/javascript" th:src="${session.staticResourcePath + '/static/comment/js/comment.js'}" src="js/jquery.flexText.js"></script>
 
-<script src="../autoload.js" th:src="@{/static/lib/live2d-widget/autoload.js}"></script>
+<script src="../autoload.js" th:src="${session.staticResourcePath + '/static/lib/live2d-widget/autoload.js'}"></script>
 </body>
 <style>
     /*显示文章内容页面右方导航列表样式*/
-    .article_navigation{
+    .article_navigation {
         /*width:300px;
         background:#fff;
         border:1px #32c6c6 solid;
         border-radius:4px;*/
         /*position:fixed;*/
-        right:0;
-        padding:0 6px;
+        right: 0;
+        padding: 0 6px;
         /*margin-top: 200px;*/
-        z-index:9999;
+        z-index: 9999;
         overflow: auto;
         max-height: 800px;
         /*display: block;*/
     }
-    .article_navigation a{
-        width:100%;
-        height:1px;
-        line-height:30px;
-        display:inline-block;
+
+    .article_navigation a {
+        width: 100%;
+        height: 1px;
+        line-height: 30px;
+        display: inline-block;
         color: #6e7582;
     }
 </style>

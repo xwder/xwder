@@ -29,7 +29,11 @@ system:
   newUserReigsterWeChatNoticeAdmin: true
   # 管理员微信通知 wxPusher UID
   adminWxPusherUid: UID_3izJBf0A7BG2CsQ8bdaBjnm4JKho
-
+  # 静态资源使用本地还是cdn
+  #  staticResourcePath: local
+  staticResourcePath: cdn
+  # 静态资源使用本地还是cdn
+  staticResourceCdnPath: https://cdn.xwder.com/xwder
 
 spring:
   devtools:
