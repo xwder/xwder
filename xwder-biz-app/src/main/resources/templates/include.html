@@ -39,11 +39,6 @@
 			s.parentNode.insertBefore(hm, s);
 		})();
 	</script>
-	<!--<style>
-		body {
-			display: none;
-		}
-	</style>-->
 </head>
 
 <!--头部右边 是否登录还是显示用户头像-->
@@ -173,6 +168,16 @@
 							</li>
 						</ul>
 					</li>
+					<li class="nav-item" th:class="${(active != null && active eq 'book') ? 'nav-item active' : 'nav-item'}">
+						<a target="_blank" class="nav-link" th:href="@{/book/index.html}" href="video/video.html" >
+						<span class="nav-link-icon d-md-none d-lg-inline-block">
+							<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-md" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M3 19a9 9 0 0 1 9 0a9 9 0 0 1 9 0" /><path d="M3 6a9 9 0 0 1 9 0a9 9 0 0 1 9 0" /><line x1="3" y1="6" x2="3" y2="19" /><line x1="12" y1="6" x2="12" y2="19" /><line x1="21" y1="6" x2="21" y2="19" /></svg>
+						</span>
+							<span class="nav-link-title">
+						  小说
+						</span>
+						</a>
+					</li>
 					<li class="nav-item" th:class="${(active != null && active eq 'video') ? 'nav-item dropdown active' : 'nav-item dropdown'}">
 						<a target="_blank" class="nav-link" th:href="@{/video/index.html}" href="video/video.html" >
 						<span class="nav-link-icon d-md-none d-lg-inline-block">
@@ -188,16 +193,6 @@
 						</span>
 						</a>
 					</li>
-					<li class="nav-item" th:class="${(active != null && active eq 'book') ? 'nav-item active' : 'nav-item'}">
-						<a target="_blank" class="nav-link" th:href="@{/book/index.html}" href="video/video.html" >
-						<span class="nav-link-icon d-md-none d-lg-inline-block">
-							<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-md" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M3 19a9 9 0 0 1 9 0a9 9 0 0 1 9 0" /><path d="M3 6a9 9 0 0 1 9 0a9 9 0 0 1 9 0" /><line x1="3" y1="6" x2="3" y2="19" /><line x1="12" y1="6" x2="12" y2="19" /><line x1="21" y1="6" x2="21" y2="19" /></svg>
-						</span>
-							<span class="nav-link-title">
-						  小说
-						</span>
-						</a>
-					</li>
 					<li class="nav-item">
 						<a target="_blank" class="nav-link" th:href="@{/sys/index.html}" href="sys/index.html" >
 						<span class="nav-link-icon d-md-none d-lg-inline-block">
@@ -205,6 +200,16 @@
 						</span>
 							<span class="nav-link-title">
 						  后台管理
+						</span>
+						</a>
+					</li>
+					<li class="nav-item">
+						<a target="_blank" class="nav-link"  href="#" >
+						<span class="nav-link-icon d-md-none d-lg-inline-block">
+							<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M14 3v4a1 1 0 0 0 1 1h4"></path><path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z"></path><line x1="9" y1="9" x2="10" y2="9"></line><line x1="9" y1="13" x2="15" y2="13"></line><line x1="9" y1="17" x2="15" y2="17"></line></svg>
+						</span>
+							<span class="nav-link-title">
+						  关于
 						</span>
 						</a>
 					</li>

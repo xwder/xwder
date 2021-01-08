@@ -198,7 +198,7 @@
                             <span th:each="pageNum:${#numbers.sequence((currentPage+-2), (currentPage+2))}">
                     <li class="page-item active"
                         th:class="${pageNum==currentPage} ? 'page-item pageItem active' : 'page-item pageItem'"
-                        th:if="${((pageNum le articlePage.getTotalPages()) && (pageNum gt 0)) && (pageNum le articlePage.getTotalPages())}">
+                        th:if="${((pageNum le articlePage.getTotalPages()) && (pageNum gt 0))}">
                       <a class="page-link"
                          th:href="${'/blog/article/list.html' + '?pageNum=' + pageNum+(pageSize == null ? '': ('&pageSize='+pageSize))+ (category==null?'':('&categoryId='+categoryId)+'&categoryName='+category.categoryName) + (tag==null?'':('&tagName='+tag.tagName)+'&tagId='+tag.id)}"
                          th:text="${pageNum}" href="#">2</a>
@@ -226,17 +226,9 @@
     </div>
     <footer th:replace="include :: footer" class="footer footer-transparent"></footer>
 </div>
-
 </div>
-
-
 <!-- Libs JS -->
 <script th:src="@{/static/dist/libs/bootstrap/dist/js/bootstrap.bundle.min.js}" src=""></script>
-<script th:src="@{/static/lib/highlight/js/highlight.min.js}"
-        src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.2/highlight.min.js"></script>
-
-<script>
-    /*document.body.style.display = "block"*/
-</script>
+<script th:src="@{/static/lib/highlight/js/highlight.min.js}" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.2/highlight.min.js"></script>
 </body>
 </html>

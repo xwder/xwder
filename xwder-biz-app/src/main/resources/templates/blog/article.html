@@ -2,7 +2,7 @@
 <html lang="zh" xmlns:th="http://www.thymeleaf.org">
 <title th:if="${articleMap != null}" th:text="${articleMap['article'].title}">预览</title>
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" th:href="@{/static/lib/live2d-widget/font-awesome.min.css}" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
 
 <link rel="stylesheet" th:href="@{/static/css/blog/article.css}">
 <!--评论模块css-->
@@ -195,7 +195,6 @@
     // 点击图片放大
     $('#blog-content img').zoomify();
 
-    // document.body.style.display = "block";
     // 实现代码高亮的函数。
     hljs.initHighlightingOnLoad();
     // 由于UEditor的代码中都是<pre>标签包裹的代码，所以执行下面的操作为其添加<code>标签。
@@ -205,12 +204,11 @@
         var mycode = document.getElementsByTagName("pre")[i].innerHTML;
         onepre.innerHTML = '<code id="mycode">' + mycode + '</code>';
     }
-
+    // 右侧文章目录
     $(document).ready(function () {
         $("#contentCardBody").children().each(function(index, element) {
             var tagName=$(this).get(0).tagName;
             if(tagName.substr(0,1).toUpperCase() === "H"){
-                console.log(tagName);
                 var contentH=$(this).html();//获取内容
                 contentH = repalceHtml(contentH);
                 var markid="mark-"+tagName+"-"+index.toString();
@@ -232,9 +230,8 @@
                 $("#article_navigation").append("<a href='#" + markid + "'" + " style='text-indent: " + spaceNum + "em'" + ">" + contentH + "</a>");//在目标DIV中添加内容
             }
         });
-        console.log("标题导航锚点完成！");
     });
-
+    // 过滤html标签
     function repalceHtml(str){
         var dd=str.replace(/<\/?.+?>/g,"");
         var dds=dd.replace(/ /g,"");//dds为得到后的内容
@@ -248,24 +245,6 @@
 <script src="../autoload.js" th:src="@{/static/lib/live2d-widget/autoload.js}"></script>
 </body>
 <style>
-    /*显示文章内容页面右下角显示导航按钮*/
-    .showtitle {
-        cursor: pointer;
-        position: fixed;
-        right: 25px;
-        bottom: 135px;
-        z-index: 99999;
-        display: block;
-        width: 50px;
-        height: 50px;
-        background: url(../images/backpre.png) no-repeat 0 0;
-        opacity: 0.5;
-        filter: alpha(opacity=50);
-    }
-    .showtitle:hover {
-        background: url(../images/backpre.png) no-repeat 0 -52px;
-    }
-
     /*显示文章内容页面右方导航列表样式*/
     .article_navigation{
         /*width:300px;
