@@ -238,7 +238,6 @@
     <!-- Libs JS -->
     <script th:src="${session.staticResourcePath +'/static/dist/libs/bootstrap/dist/js/bootstrap.bundle.min.js'}"></script>
     <script>
-      /*document.body.style.display = "block";*/
 
       $(function() {
         // 隐藏全局搜索框
@@ -247,7 +246,9 @@
 
       // 书籍搜索框
       $('#searchBook').bind('keypress',function(event){
-        if(event.keyCode == 13){
+        console.log("敲击键盘");
+        if(event.keyCode == "13"){
+          console.log("敲击回车键");
           var bookName = $('#searchBook').val();
           console.log(bookName);
           if (bookName.length < 1 || bookName.length > 20) {

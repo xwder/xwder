@@ -276,7 +276,7 @@ public class ArticleServiceImpl implements ArticleService {
 
 
         List<Map> categoryMapList = categoryService.listCategoryArticleCount(searchUser.getId());
-        List<Tag> tags = tagService.listTagByUserId(searchUser.getId());
+        List<Map> tagMaps = tagService.listTagCountByUserId(searchUser.getId());
 
         // 文章分页内容
         Page<Article> articlePage = null;
@@ -326,7 +326,7 @@ public class ArticleServiceImpl implements ArticleService {
         model.addAttribute("currentUser", searchUser);
         model.addAttribute("currentUrl", currentUrl);
 
-        model.addAttribute("tags", tags);
+        model.addAttribute("tagMaps", tagMaps);
         model.addAttribute("tag", tag);
 
         int totalArticles = 0;

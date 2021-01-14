@@ -63,6 +63,18 @@ public class TagServiceImpl implements TagService {
     @Override
     @Transactional(readOnly = true)
     public List<Tag> listTagByUserId(Long userId) {
+        return tagRepository.findByUserIdAndAvailable(userId, 1);
+    }
+
+    /**
+     * 根据userId查询 tag 和 文章数量
+     *
+     * @param userId
+     * @return
+     */
+    @Override
+    @Transactional(readOnly = true)
+    public List<Map> listTagCountByUserId(Long userId) {
         String querySql = DAOHelper.getSQL(BlogDaoResourceHandler.class, "query_tag_aritcle_count");
         List params = new ArrayList<>();
         User sessionUser = (User) SessionUtil.getSessionAttribute(SysConfigConstants.SESSION_USER);
@@ -70,16 +82,7 @@ public class TagServiceImpl implements TagService {
         params.add(sessionUser.getId());
         params.add(sessionUser.getId());
         List<Map> tagMaps = NativeSQL.findByNativeSQL(querySql, params, null);
-        tagMaps.stream().forEach(x->x.put("tagName",x.get("tagName")+(" (")+x.get("articleCount")+")"));
-        List tagList = new ArrayList();
-        tagMaps.stream().forEach(x->{
-            Tag tag = new Tag();
-            tag.setId(Long.parseLong(x.get("id").toString()));
-            tag.setTagName((String) x.get("tagName"));
-            tag.setUserId(Long.parseLong(x.get("userId").toString()));
-            tagList.add(tag);
-        });
-        return tagList;
+        return tagMaps;
     }
 
     /**

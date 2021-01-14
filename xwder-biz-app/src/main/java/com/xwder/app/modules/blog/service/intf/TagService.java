@@ -2,11 +2,11 @@ package com.xwder.app.modules.blog.service.intf;
 
 import com.xwder.app.common.result.CommonResult;
 import com.xwder.app.modules.blog.entity.Tag;
-import com.xwder.app.sysmodules.blog.dto.CategoryDto;
 import com.xwder.app.sysmodules.blog.dto.TagDto;
 import org.springframework.data.domain.Page;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 标签service
@@ -29,6 +29,14 @@ public interface TagService {
      * @return
      */
     List<Tag> listTagByUserId(Long userId);
+
+    /**
+     * 根据userId查询 tag 和 文章数量
+     *
+     * @param userId
+     * @return
+     */
+    List<Map> listTagCountByUserId(Long userId);
 
     /**
      * 分页查询 tag 每个分类下博文数量
