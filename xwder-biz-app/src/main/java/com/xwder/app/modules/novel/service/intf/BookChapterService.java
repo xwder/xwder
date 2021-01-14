@@ -2,6 +2,9 @@ package com.xwder.app.modules.novel.service.intf;
 
 import com.xwder.app.modules.novel.entity.BookChapter;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
+import java.util.List;
 
 /**
  * 章节 service
@@ -9,6 +12,21 @@ import org.springframework.data.domain.Page;
  * @author xwder
  */
 public interface BookChapterService {
+
+    /**
+     * 根据bookId查询所有章节信息
+     * @param bookId 书籍id
+     * @return 所有章节信息
+     */
+    List<BookChapter> findAllByBookId(Integer bookId);
+
+    /**
+     * 根据bookId查询章节信息
+     * @param bookId 书籍id
+     * @param pageable 分页信息
+     * @return 章节信息
+     */
+    List<BookChapter> findAllByBookIdPageable(Integer bookId, Pageable pageable);
 
     /**
      * 根据bookId分页查询章节信息

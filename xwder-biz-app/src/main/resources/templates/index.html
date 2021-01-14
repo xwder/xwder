@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org">
 <title>OneDay</title>
-<link type="text/css" href="https://cdn.xwder.com/xwder/static/css/index/fanstyle.css" rel="stylesheet" />
+<link type="text/css" th:href="${session.staticResourcePath +'/static/css/index/fanstyle.css'}" rel="stylesheet" />
 <head th:include="include :: head"></head>
 <body class="antialiased">
     <div class="page">
@@ -57,9 +57,6 @@
         </div>
     </div>
 <!-- Libs JS -->
-<script src="https://cdn.xwder.com/xwder/static/dist/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-<script>
-   /* document.body.style.display = "block"*/
-</script>
+<script th:src="${session.staticResourcePath +'/static/dist/libs/bootstrap/dist/js/bootstrap.bundle.min.js'}"></script>
 </body>
 </html>

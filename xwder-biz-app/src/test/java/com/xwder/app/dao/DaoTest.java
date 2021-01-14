@@ -1,9 +1,11 @@
 package com.xwder.app.dao;
 
+import com.google.common.collect.Lists;
 import com.xwder.app.XwderApplication;
 import com.xwder.app.helper.dao.NativeSQL;
 import com.xwder.app.modules.blog.entity.Category;
 import com.xwder.app.modules.blog.repository.CategoryRepository;
+import com.xwder.app.sysmodules.dbbak.task.DbBakTask;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,9 @@ public class DaoTest {
 
     @Autowired
     private CategoryRepository categoryRepository;
+
+    @Autowired
+    private DbBakTask dbBakTask;
 
     @Test
     @Transactional
@@ -50,6 +55,21 @@ public class DaoTest {
         List<Map> maps = categoryRepository.listCagetroyCount(1L);
 
         System.out.println(mapList);
+    }
+
+    /**
+     * schema 测试
+     */
+    @Test
+    public void dbSchemaTest() {
+        String queryTableNameSql = "SELECT table_name FROM information_schema.TABLES " +
+                "WHERE table_schema = 'xwder' and table_name not like 'book_chapter%' and table_name != 'sys_job_log'";
+        List<String> tableNames = NativeSQL.queryForList(queryTableNameSql, String.class, null);
+    }
+
+    @Test
+    public void dbBakTest() {
+        dbBakTask.dbBakAndSendMailServiceEntry();
     }
 
 }

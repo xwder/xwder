@@ -15,6 +15,13 @@ import java.util.List;
 public interface BookInfoService {
 
     /**
+     * 根据书籍名称查询所有书记
+     * @param bookName 书籍名称
+     * @return 书籍列表
+     */
+    List<BookInfo> findAllByBookName(String bookName);
+
+    /**
      * 根据书籍名称下载txt
      *
      * @param bookName

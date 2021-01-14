@@ -55,13 +55,31 @@ public class BookChapterServiceImpl implements BookChapterService {
     private BookChapterRepository bookChapterRepository;
 
     @Autowired
-    private BookInfoRepository bookInfoRepository;
-
-    @Autowired
     private BookInfoService bookInfoService;
 
     @Autowired
     private SpiderBookChapterService spiderBookChapterService;
+
+    /**
+     * 根据bookId查询所有章节信息
+     * @param bookId 书籍id
+     * @return 所有章节信息
+     */
+    @Override
+    public List<BookChapter> findAllByBookId(Integer bookId) {
+        return bookChapterRepository.findAllByBookId(bookId);
+    }
+
+    /**
+     * 根据bookId查询章节信息
+     * @param bookId 书籍id
+     * @param pageable 分页信息
+     * @return 章节信息
+     */
+    @Override
+    public List<BookChapter> findAllByBookIdPageable(Integer bookId, Pageable pageable) {
+        return bookChapterRepository.findAllByBookId(bookId, pageable);
+    }
 
     /**
      * 根据bookId分页查询章节信息
@@ -93,7 +111,7 @@ public class BookChapterServiceImpl implements BookChapterService {
      */
     @Override
     public Page<BookChapter> listBookChapterByBookName(String bookName, Integer pageNum, Integer pageSize) {
-        List<BookInfo> bookInfoList = bookInfoRepository.findAllByBookName(bookName);
+        List<BookInfo> bookInfoList = bookInfoService.findAllByBookName(bookName);
         if (CollectionUtil.isNotEmpty(bookInfoList)) {
             BookInfo bookInfo = bookInfoList.get(0);
             Sort sort = Sort.by(Sort.Direction.DESC, "id");

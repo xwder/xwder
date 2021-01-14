@@ -51,9 +51,6 @@ public class BookInfoServiceImpl implements BookInfoService {
     private SysConfigAttribute sysConfigAttribute;
 
     @Autowired
-    private BookChapterRepository bookChapterRepository;
-
-    @Autowired
     private BookInfoRepository bookInfoRepository;
 
     @Autowired
@@ -64,6 +61,16 @@ public class BookInfoServiceImpl implements BookInfoService {
                     25, 20L,
                     TimeUnit.SECONDS,
                     new LinkedBlockingQueue<>(4000));
+
+    /**
+     * 根据书籍名称查询所有书记
+     * @param bookName 书籍名称
+     * @return 书籍列表
+     */
+    @Override
+    public List<BookInfo> findAllByBookName(String bookName) {
+        return bookInfoRepository.findAllByBookName(bookName);
+    }
 
     /**
      * 分页查询书籍信息
@@ -228,7 +235,7 @@ public class BookInfoServiceImpl implements BookInfoService {
         File existTxtFile = getExistTxtFile(bookSaveDir);
         // 获取书籍已经获取的章节总数量
         Integer bookId = bookInfo.getId();
-        List<BookChapter> bookChapters = bookChapterRepository.findAllByBookId(bookId);
+        List<BookChapter> bookChapters = bookChapterService.findAllByBookId(bookId);
         if (CollectionUtil.isEmpty(bookChapters)) {
             logger.info("[{}]下载书籍[{}]结束,书籍没有收录章节信息,耗时[{}]", serviceName, bookName,
                     DateUtil.diffTime(startTime, System.currentTimeMillis()));
@@ -288,7 +295,7 @@ public class BookInfoServiceImpl implements BookInfoService {
         int limit = 10000;
         int offset = existPackageChapterCount;
         Pageable pageable = new OffsetBasedPageRequest(offset, limit);
-        List<BookChapter> bookChapters = bookChapterRepository.findAllByBookId(bookInfo.getId(), pageable);
+        List<BookChapter> bookChapters = bookChapterService.findAllByBookIdPageable(bookInfo.getId(), pageable);
 
         if (CollectionUtil.isNotEmpty(bookChapters)) {
             // 没有打包过

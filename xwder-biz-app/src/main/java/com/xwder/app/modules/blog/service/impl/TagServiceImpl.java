@@ -12,6 +12,7 @@ import com.xwder.app.modules.blog.entity.Tag;
 import com.xwder.app.modules.blog.repository.TagRepository;
 import com.xwder.app.modules.blog.service.intf.TagService;
 import com.xwder.app.modules.user.entity.User;
+import com.xwder.app.modules.user.service.intf.UserService;
 import com.xwder.app.sysmodules.blog.dto.TagDto;
 import com.xwder.app.utils.PageUtil;
 import com.xwder.app.utils.SessionUtil;
@@ -39,6 +40,9 @@ public class TagServiceImpl implements TagService {
     @Autowired
     private TagRepository tagRepository;
 
+    @Autowired
+    private UserService userService;
+
     /**
      * 查询tags
      *
@@ -57,8 +61,25 @@ public class TagServiceImpl implements TagService {
      * @return
      */
     @Override
+    @Transactional(readOnly = true)
     public List<Tag> listTagByUserId(Long userId) {
-        return tagRepository.findByUserIdAndAvailable(userId, 1);
+        String querySql = DAOHelper.getSQL(BlogDaoResourceHandler.class, "query_tag_aritcle_count");
+        List params = new ArrayList<>();
+        User sessionUser = (User) SessionUtil.getSessionAttribute(SysConfigConstants.SESSION_USER);
+        sessionUser = sessionUser == null ? userService.listManagerUser().get(0) : sessionUser;
+        params.add(sessionUser.getId());
+        params.add(sessionUser.getId());
+        List<Map> tagMaps = NativeSQL.findByNativeSQL(querySql, params, null);
+        tagMaps.stream().forEach(x->x.put("tagName",x.get("tagName")+(" (")+x.get("articleCount")+")"));
+        List tagList = new ArrayList();
+        tagMaps.stream().forEach(x->{
+            Tag tag = new Tag();
+            tag.setId(Long.parseLong(x.get("id").toString()));
+            tag.setTagName((String) x.get("tagName"));
+            tag.setUserId(Long.parseLong(x.get("userId").toString()));
+            tagList.add(tag);
+        });
+        return tagList;
     }
 
     /**
