@@ -1,6 +1,8 @@
 // 注意：live2d_path 参数应使用绝对路径
 // const live2d_path = "https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget@latest/";
 var domain = window.location.protocol + "//" + window.location.host;
+// 使用cdn
+// domain = 'https://cdn.xwder.com'
 const live2d_path = domain + "/static/lib/live2d-widget/";
 console.log(live2d_path)
 //const live2d_path = "/live2d-widget/";

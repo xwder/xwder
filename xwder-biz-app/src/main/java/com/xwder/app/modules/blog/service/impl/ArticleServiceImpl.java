@@ -341,6 +341,18 @@ public class ArticleServiceImpl implements ArticleService {
         double endTime = System.currentTimeMillis() - startTime;
         double useTime = endTime / 1000;
         model.addAttribute("useTime", useTime);
+
+        // 构建title 栏目标题-第1页-网站标题
+        StringBuilder titleSB = new StringBuilder();
+        if (categoryId != null && category != null) {
+            titleSB.append(category.getCategoryName());
+        } else if (tagId != null && tag != null) {
+            titleSB.append(tag.getTagName());
+        } else {
+            titleSB.append("博客文章");
+        }
+        titleSB.append("-第").append(pageNum).append("页-OneDay");
+        model.addAttribute("title", titleSB.toString());
     }
 
     /**
@@ -351,5 +363,16 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public List<BigInteger> listAllBlogArticleId() {
         return articleRepository.listAllBlogArticleId();
+    }
+
+    /**
+     * 查询所有的文章信息 只包含 id、userid、修改时间
+     *
+     * @param userId
+     * @return
+     */
+    @Override
+    public List<Map> listArticleIdAndArticleUpdateTimeBOrderByUserId(Long userId) {
+        return articleRepository.listArticleIdAndArticleUpdateTimeBOrderByUserId(userId);
     }
 }

@@ -2,12 +2,12 @@ package com.xwder.app.modules.blog.service.intf;
 
 import com.xwder.app.modules.blog.entity.Article;
 import com.xwder.app.sysmodules.blog.dto.ArticleDto;
-import com.xwder.app.sysmodules.blog.dto.CategoryDto;
 import org.springframework.data.domain.Page;
 import org.springframework.ui.Model;
 
 import java.math.BigInteger;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 文章service
@@ -103,7 +103,16 @@ public interface ArticleService {
 
     /**
      * 获取所有博客 id
+     *
      * @return
      */
     List<BigInteger> listAllBlogArticleId();
+
+    /**
+     * 查询所有的文章信息 只包含 id、userid、修改时间
+     *
+     * @param userId
+     * @return
+     */
+    List<Map> listArticleIdAndArticleUpdateTimeBOrderByUserId(Long userId);
 }

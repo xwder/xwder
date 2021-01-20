@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org">
-<title>博客文章列表</title>
+<title th:text="${title}"></title>
 <link rel="stylesheet" th:href="${session.staticResourcePath +'/static/css/blog/article.list.css'}">
 <link th:href="${session.staticResourcePath +'/static/css/book/book.css'}" rel="stylesheet"/>
 <head th:include="include :: head"></head>

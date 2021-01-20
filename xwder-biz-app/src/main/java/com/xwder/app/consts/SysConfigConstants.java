@@ -8,6 +8,11 @@ package com.xwder.app.consts;
 public class SysConfigConstants {
 
     /**
+     * 管理员用户id
+     */
+    public static final Long adminUserId = 1L;
+
+    /**
      * session 中存在登录用户的key
      */
     public static final String SESSION_USER = "sessionUser";

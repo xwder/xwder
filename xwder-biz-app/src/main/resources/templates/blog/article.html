@@ -2,7 +2,8 @@
 <html lang="zh" xmlns:th="http://www.thymeleaf.org">
 <title th:if="${articleMap != null}" th:text="${articleMap['article'].title}">预览</title>
 
-<link rel="stylesheet" th:href="${session.staticResourcePath +'/static/lib/live2d-widget/font-awesome.min.css'}">
+<!--<link rel="stylesheet" th:href="${'/static/lib/live2d-widget/font-awesome.min.css'}">-->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
 
 <link rel="stylesheet" th:href="${session.staticResourcePath + '/static/css/blog/article.css'}">
 <!--评论模块css-->

@@ -114,4 +114,12 @@ public interface ArticleRepository extends BaseJpaRepository<Article, Long> {
      */
     @Query(value = "SELECT id FROM blog_article t where t.status = 1 and t.is_available = 1 ", nativeQuery = true)
     List<BigInteger> listAllBlogArticleId();
+
+    /**
+     * 查询所有的文章信息 只包含 id、userid、修改时间
+     * @param userId
+     * @return
+     */
+    @Query(value = "SELECT id,user_id,gmt_modified from blog_article WHERE user_id = ?1 and is_available = 1",nativeQuery = true)
+    List<Map> listArticleIdAndArticleUpdateTimeBOrderByUserId(Long userId);
 }
