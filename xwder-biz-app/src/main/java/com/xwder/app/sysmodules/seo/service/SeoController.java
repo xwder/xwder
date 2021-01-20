@@ -22,7 +22,7 @@ import java.io.Writer;
  */
 @Slf4j
 @Controller
-public class SiteMapController {
+public class SeoController {
 
     @Autowired
     private SeoService SeoService;
@@ -36,6 +36,20 @@ public class SiteMapController {
         String tempContextUrl = HttpServletRequestUtil.getDomain(request);
         String siteMapXmlContent = SeoService.createSiteMapXmlContent(tempContextUrl);
         writer.append(siteMapXmlContent);
-        log.info("生成网站siteMap.xml耗时：{}", DateUtil.diffTime(startTime,System.currentTimeMillis()));
+        log.info("生成网站siteMap.xml耗时：{}", DateUtil.diffTime(startTime, System.currentTimeMillis()));
+    }
+
+    @GetMapping("/robots.txt")
+    public void createRoBootsXml(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        long startTime = System.currentTimeMillis();
+        String tempContextUrl = HttpServletRequestUtil.getDomain(request);
+        String robots = "# robots.txt generated at http://tool.chinaz.com/robots/ \n" +
+                "User-agent: *\n" +
+                "Disallow: \n" +
+                "Sitemap: " + tempContextUrl + "sitemap.xml\n";
+        response.setCharacterEncoding("UTF-8");
+        Writer writer = response.getWriter();
+        writer.append(robots);
+        log.info("生成网站robots.txt耗时：{}", DateUtil.diffTime(startTime, System.currentTimeMillis()));
     }
 }

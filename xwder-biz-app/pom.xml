@@ -243,7 +243,7 @@
             <version>1.2.62</version>
             <scope>compile</scope>
         </dependency>
-        <!--sitemap-->
+        <!--sitemap.xml-->
         <dependency>
             <groupId>com.github.dfabulich</groupId>
             <artifactId>sitemapgen4j</artifactId>
