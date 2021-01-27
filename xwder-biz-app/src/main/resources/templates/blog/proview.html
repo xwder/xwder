@@ -204,7 +204,8 @@
             var tagName=$(this).get(0).tagName;
             if(tagName.substr(0,1).toUpperCase() === "H"){
                 console.log(tagName);
-                var contentH=$(this).html();//获取内容
+                var contentH = $(this).html();//获取内容
+                contentH = repalceHtml(contentH);
                 var markid="mark-"+tagName+"-"+index.toString();
                 $(this).attr("id",markid);//为当前h标签设置id
                 let spaceNum =  "";
@@ -226,7 +227,12 @@
         });
         console.log("标题导航锚点完成！");
     });
-
+    // 过滤html标签
+    function repalceHtml(str) {
+        var dd = str.replace(/<\/?.+?>/g, "");
+        var dds = dd.replace(/ /g, "");//dds为得到后的内容
+        return dds;
+    }
 </script>
 <!--评论模块js-->
 <script type="text/javascript" th:src="${session.staticResourcePath +'/static/comment/js/jquery.flexText.js'}" src="js/jquery.flexText.js"></script>
