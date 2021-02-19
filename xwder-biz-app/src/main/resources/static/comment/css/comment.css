@@ -69,7 +69,7 @@ body {
     width: 75px;
     height: 36px;
     line-height: 36px;
-    background-color: #339b53;
+    background-color: #206bc4;
     text-align: center;
     display: block;
     float: right;
@@ -81,7 +81,7 @@ body {
 }
 
 .plBtn:hover {
-    background-color: #2f904d
+    background-color: #206bc4
 }
 
 .comment-show {

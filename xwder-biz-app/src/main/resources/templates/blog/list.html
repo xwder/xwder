@@ -57,7 +57,7 @@
                                 </a>
                             </div>
                             <div>
-                                <a class="list-group-item list-group-item-action d-flex align-items-center <!--active-->"
+                                <a th:class="${(categoryId == null)?'list-group-item list-group-item-action d-flex align-items-center active' : 'list-group-item list-group-item-action d-flex align-items-center'}"
                                    href="#"
                                    th:href="${'/blog/article/list.html' + (pageNum == null ? '' : ('?pageNum='+pageNum)) +(pageSize == null ? '': ('&pageSize='+pageSize))}">
                                     <span>所有文章</span>
