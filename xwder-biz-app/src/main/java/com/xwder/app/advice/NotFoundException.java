@@ -17,6 +17,6 @@ public class NotFoundException implements ErrorController {
 
     @RequestMapping(ERROR_PATH)
     public CommonResult error() {
-        return CommonResult.failed(404);
+        return CommonResult.failed(500);
     }
 }

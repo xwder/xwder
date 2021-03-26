@@ -198,7 +198,7 @@ public class LoginRegisterController {
      * @return
      */
     @ResponseBody
-    @RequestMapping("/mail/verifyMail")
+    @RequestMapping(value = "/mail/verifyMail", produces = "application/json")
     public Object verifyEmail(@RequestParam("verifyKey") String verifyKey) {
         AssertUtil.paramIsNotNull(verifyKey, "verifyKey不能为空");
         User user = userService.verifyEmail(verifyKey);

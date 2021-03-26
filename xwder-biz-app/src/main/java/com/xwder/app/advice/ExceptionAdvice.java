@@ -29,7 +29,7 @@ public class ExceptionAdvice {
      */
     @ExceptionHandler(value = Exception.class)
     public CommonResult defaultException(HttpServletRequest request, Exception e) {
-        log.error("{}", e);
+        log.error("",e);
         return CommonResult.failed(e.getMessage());
 
     }
@@ -45,7 +45,7 @@ public class ExceptionAdvice {
     public CommonResult myException(HttpServletRequest request, MyException e) {
         Integer code = e.getCode();
         String message = e.getMessage();
-        log.error("{}", e);
+        log.error("", e);
         return CommonResult.failed(code, message);
     }
 
@@ -57,7 +57,7 @@ public class ExceptionAdvice {
      */
     @ExceptionHandler(BizException.class)
     public CommonResult handleCustomException(BizException bizException) {
-        log.info("{}", bizException.getMessage());
+        log.info("{}", bizException.getMessage(), bizException);
         return CommonResult.failed(bizException.getCode(), bizException.getMessage());
     }
 
@@ -85,6 +85,7 @@ public class ExceptionAdvice {
 
     /**
      * 方法参数校验
+     *
      * @param e
      * @return
      */

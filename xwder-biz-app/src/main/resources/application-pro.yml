@@ -29,7 +29,7 @@ system:
   # 名称
   name: xwder-app
   # 邮箱验证回调地址
-  mailVerifyUrl: http://xwder.com/user/mail/verifyMail.html
+  mailVerifyUrl: http://xwder.com/mail/verifyMail
   # 用户注册是否微信通知管理员
   newUserReigsterWeChatNoticeAdmin: true
   # 管理员微信通知 wxPusher UID
