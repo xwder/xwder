@@ -1,6 +1,6 @@
 package com.xwder.message.mq;
 
-import com.xwder.massge.XwderMessageApplication;
+import com.xwder.message.XwderMessageApplication;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;

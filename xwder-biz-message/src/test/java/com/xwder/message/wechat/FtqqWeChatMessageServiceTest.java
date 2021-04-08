@@ -1,8 +1,8 @@
 package com.xwder.message.wechat;
 
 import com.xwder.cloud.commmon.api.CommonResult;
-import com.xwder.massge.XwderMessageApplication;
-import com.xwder.massge.module.wechat.service.intf.FtqqWeChatMessageService;
+import com.xwder.message.XwderMessageApplication;
+import com.xwder.message.module.wechat.service.intf.FtqqWeChatMessageService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

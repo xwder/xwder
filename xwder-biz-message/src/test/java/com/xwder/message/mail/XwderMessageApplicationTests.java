@@ -1,7 +1,7 @@
 package com.xwder.message.mail;
 
-import com.xwder.massge.XwderMessageApplication;
-import com.xwder.massge.module.mail.service.MailService;
+import com.xwder.message.XwderMessageApplication;
+import com.xwder.message.module.mail.service.MailService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

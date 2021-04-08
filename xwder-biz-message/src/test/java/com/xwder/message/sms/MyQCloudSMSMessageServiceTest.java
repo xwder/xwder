@@ -1,8 +1,8 @@
 package com.xwder.message.sms;
 
 import com.xwder.cloud.commmon.api.CommonResult;
-import com.xwder.massge.XwderMessageApplication;
-import com.xwder.massge.module.sms.service.QCloudSMSService;
+import com.xwder.message.XwderMessageApplication;
+import com.xwder.message.module.sms.service.QCloudSMSService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

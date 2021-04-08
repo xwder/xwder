@@ -1,8 +1,8 @@
 package com.xwder.message.alertover;
 
 import com.xwder.cloud.commmon.api.CommonResult;
-import com.xwder.massge.XwderMessageApplication;
-import com.xwder.massge.module.alertover.service.inft.AlertOverMessageServie;
+import com.xwder.message.XwderMessageApplication;
+import com.xwder.message.module.alertover.service.inft.AlertOverMessageServie;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
