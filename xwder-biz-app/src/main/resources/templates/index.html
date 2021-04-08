@@ -3,6 +3,7 @@
 <title>OneDay</title>
 <link type="text/css" th:href="${session.staticResourcePath +'/static/css/index/fanstyle.css'}" rel="stylesheet" />
 <head th:include="include :: head"></head>
+
 <body class="antialiased">
     <div class="page">
         <header class="navbar navbar-expand-md navbar-light">
@@ -59,4 +60,5 @@
 <!-- Libs JS -->
 <script th:src="${session.staticResourcePath +'/static/dist/libs/bootstrap/dist/js/bootstrap.bundle.min.js'}"></script>
 </body>
+<body th:include="include :: chatContainer"></body>
 </html>
