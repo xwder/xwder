@@ -205,7 +205,7 @@ public class LoginRegisterController {
         if (user == null) {
             return CommonResult.failed("邮箱验证失败");
         }
-        return CommonResult.success(user);
+        return CommonResult.success(String.format("用户:{}邮箱{}激活成功", user.getUserName(), user.getEmail()));
     }
 
     /**
