@@ -11,7 +11,7 @@ import java.util.concurrent.CompletableFuture;
  * @author xwder
  * @date 2021/3/30 15:46
  **/
-//@Component
+@Component
 public class NettyRunner implements CommandLineRunner {
 
     @Autowired

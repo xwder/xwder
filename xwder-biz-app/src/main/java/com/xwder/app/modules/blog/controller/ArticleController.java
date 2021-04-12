@@ -26,6 +26,7 @@ import com.xwder.app.modules.user.entity.User;
 import com.xwder.app.modules.user.service.intf.UserService;
 import com.xwder.app.utils.AssertUtil;
 import com.xwder.app.utils.SessionUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -44,6 +45,7 @@ import java.util.stream.Collectors;
  * @version 1.0
  * @date 2020/07/22
  */
+@Slf4j
 @RequestMapping(value = "/blog")
 @Controller
 public class ArticleController {
@@ -345,6 +347,7 @@ public class ArticleController {
 
         User sessionUser = (User) SessionUtil.getSessionAttribute(SysConfigConstants.SESSION_USER);
         model.addAttribute("sessionUser", sessionUser);
+        log.info("查看博客文章[{}]内容获取成功",articleId);
         return "blog/article";
     }
 

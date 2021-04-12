@@ -250,10 +250,11 @@
             <version>1.1.2</version>
         </dependency>
 
+        <!-- netty 版本和redis中的netty冲突，保持netty版本一致 -->
         <dependency>
             <groupId>io.netty</groupId>
             <artifactId>netty-all</artifactId>
-            <version>4.1.60.Final</version>
+            <version>4.1.38.Final</version>
         </dependency>
     </dependencies>
 
