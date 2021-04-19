@@ -59,7 +59,7 @@ body {
 }
 
 .commentAll {
-    width: 500px;
+    /*width: 500px;*/
     padding: 20px;
     border: 1px solid #ededed;
     margin: 20px auto
