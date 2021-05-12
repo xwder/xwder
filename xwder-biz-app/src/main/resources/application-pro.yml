@@ -177,8 +177,8 @@ eureka:
       enabled: true
 
     # 不启用eureka注册中心
-#    register-with-eureka: false
-#    fetch-registry: false
+    register-with-eureka: false
+    fetch-registry: false
 
 
   instance:

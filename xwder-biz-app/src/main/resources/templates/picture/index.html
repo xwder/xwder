@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<title>二次元少女</title>
+<link type="text/css" th:href="${session.staticResourcePath +'/static/css/index/fanstyle.css'}" rel="stylesheet"/>
+<head th:include="include :: head"></head>
+
+<body class="antialiased">
+<div class="page">
+    <header class="navbar navbar-expand-md navbar-light">
+        <div class="container-xl">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <!--头部左边logo-->
+            <div th:replace="include :: logoImage"></div>
+            <!--头部右边 是否登录还是显示用户头像-->
+            <div th:replace="include :: navigationBar">
+            </div>
+        </div>
+    </header>
+    <!--导航栏-->
+    <div th:include="include :: navigationMenu('picture')" class="navbar-expand-md"></div>
+
+    <div class="content">
+        <div class="container-xl">
+            <div class="row" id="pictureContent">
+                <div class="col-sm-6 col-lg-4" th:if="${picturePage != null && picturePage.numberOfElements >0}"
+                     th:each="picture,pictureStat : ${picturePage.content}">
+                    <div class="card card-sm">
+                        <a href="#" class="d-block"><img th:src="${picture.cdnUrl}"
+                                                         src="https://cdn.xwder.com/picture/2cygirl/0.jpg"
+                                                         class="card-img-top"></a>
+                        <div class="card-body">
+                            <div class="d-flex align-items-center">
+                                <span class="avatar mr-3 rounded"
+                                      style="background-image: url(https://cdn.xwder.com/xwder/static/image/user/user.jpg)"></span>
+                                <div class="lh-sm">
+                                    <div>OneDay</div>
+                                    <div class="text-muted" th:text="${picture.createTimeDesc}">3 days ago</div>
+                                </div>
+                                <div class="ml-auto">
+                                    <a href="#" class="text-muted">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
+                                             viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                             stroke-linecap="round" stroke-linejoin="round">
+                                            <path stroke="none" d="M0 0h24v24H0z"/>
+                                            <circle cx="12" cy="12" r="2"/>
+                                            <path d="M2 12l1.5 2a11 11 0 0 0 17 0l1.5 -2"/>
+                                            <path d="M2 12l1.5 -2a11 11 0 0 1 17 0l1.5 2"/>
+                                        </svg>
+                                        <span th:text="${picture.views}"></span>
+                                    </a>
+                                    <a href="#" class="ml-3 text-muted">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
+                                             viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                             stroke-linecap="round" stroke-linejoin="round">
+                                            <path stroke="none" d="M0 0h24v24H0z"/>
+                                            <path d="M12 20l-7 -7a4 4 0 0 1 6.5 -6a.9 .9 0 0 0 1 0a4 4 0 0 1 6.5 6l-7 7"/>
+                                        </svg>
+                                        <span th:text="${picture.likes}"></span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer th:replace="include :: footer" class="footer footer-transparent"></footer>
+    </div>
+</div>
+<script>
+    var pageno = [[${picturePage.number}]]
+    var limit = [[${picturePage.size}]]
+    var totalPages = [[${picturePage.totalPages}]]
+
+	$(function(){
+		//获取滑轮滚动事件
+	    $(window).scroll(function() {
+	       //滚动的距离
+	       var scrollTop = $(this).scrollTop();
+	       //当前窗口的高度
+	       var windowHeight = $(this).height();
+	       //文档总高度
+	       var scrollHeight = $(document).height();
+	       //当滚动的距离 + 当前窗口的高度  - scrollHeight = 0 说明到页面底部了
+	       var positionValue = (scrollTop + windowHeight) - scrollHeight;
+	       if (positionValue == 0) {
+	    	   //判断当前页数是否小于总页数
+	           if (pageno < totalPages) {
+	               pageno++;
+                   var pictures = getNext(pageno, limit)
+                   var nextHtml = getNextPictureHtml(pictures)
+                   console.log(nextHtml);
+                   $("#pictureContent").append(nextHtml)
+	           } else {
+	               alert('没有更多了');
+	           }
+	       }
+	   })
+	});
+
+    function getNextPictureHtml(pictures) {
+        var html = "";
+        pictures.forEach(picture => {
+            var temp = '<div class="col-sm-6 col-lg-4"><div class="card card-sm">'
+                + ' <a href="#" class="d-block"><img src="' + picture.cdnUrl + '" class="card-img-top"></a>'
+                + '<div class="card-body"> <div class="d-flex align-items-center">'
+                + '<span class="avatar mr-3 rounded" style="background-image: url(https://cdn.xwder.com/xwder/static/image/user/user.jpg)"></span> <div class="lh-sm"><div>OneDay</div>'
+                + '<div class="text-muted">'
+                + picture.createTimeDesc + '</div></div> <div class="ml-auto">'
+                + '<a href="#" class="text-muted"> <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="2" /><path d="M2 12l1.5 2a11 11 0 0 0 17 0l1.5 -2" /><path d="M2 12l1.5 -2a11 11 0 0 1 17 0l1.5 2" /></svg>'
+                + picture.views
+                + '</a> <a href="#" class="ml-3 text-muted"> <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M12 20l-7 -7a4 4 0 0 1 6.5 -6a.9 .9 0 0 0 1 0a4 4 0 0 1 6.5 6l-7 7" /></svg>'
+                + picture.likes
+                + '</a> </div> </div> </div> </div> </div>'
+            ;
+            html = html + temp;
+        });
+        return html;
+    }
+
+    function getNext(page, limit) {
+        var pictures;
+        $.ajax({
+            type: "POST",
+            url: "/picture/list",
+            data: {
+                "page": page,
+                "limit": limit
+            },
+            async:false,
+            success: function (data) {
+                if (data.code === 200) {
+                    console.log("success")
+                    pictures = data.data.content
+                } else {
+                    console.log("查询下一页失败");
+                    return [];
+                }
+            }
+        });
+        return pictures;
+    }
+
+</script>
+</body>
+</html>
