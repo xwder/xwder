@@ -16,13 +16,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * @date 2021/5/12 15:47
  **/
 @Controller
-@RequestMapping("/picture")
 public class PictureController {
 
     @Autowired
     private PictureService pictureService;
 
-    @RequestMapping("/index")
+    @RequestMapping("/girl/index")
     public String index(Model model) {
         PictureDto pictureDto = new PictureDto();
         pictureDto.setLimit(20);
@@ -38,7 +37,7 @@ public class PictureController {
      * @param pictureDto
      * @return
      */
-    @RequestMapping("/list")
+    @RequestMapping("/girl/list")
     @ResponseBody
     public CommonResult list(PictureDto pictureDto) {
         Page<Picture> page = pictureService.listPicture(pictureDto);

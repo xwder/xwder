@@ -3,7 +3,10 @@
 <title>二次元少女</title>
 <link type="text/css" th:href="${session.staticResourcePath +'/static/css/index/fanstyle.css'}" rel="stylesheet"/>
 <head th:include="include :: head"></head>
-
+<!--点击图片放大css-->
+<link rel="stylesheet" th:href="${session.staticResourcePath + '/static/lib/imgenlarge/js/zoomify.min.css'}">
+<!--sweetalert-->
+<link rel="stylesheet" th:href="@{/static/lib/sweetalert/sweetalert.css}" href="/static/lib/sweetalert/sweetalert.css">
 <body class="antialiased">
 <div class="page">
     <header class="navbar navbar-expand-md navbar-light">
@@ -27,9 +30,9 @@
                 <div class="col-sm-6 col-lg-4" th:if="${picturePage != null && picturePage.numberOfElements >0}"
                      th:each="picture,pictureStat : ${picturePage.content}">
                     <div class="card card-sm">
-                        <a href="#" class="d-block"><img th:src="${picture.cdnUrl}"
-                                                         src="https://cdn.xwder.com/picture/2cygirl/0.jpg"
-                                                         class="card-img-top"></a>
+                        <a href="javascript:void(0)" οnclick="" class="d-block">
+                            <img th:src="${picture.cdnUrl}" src="https://cdn.xwder.com/picture/2cygirl/0.jpg"
+                                 class="card-img-top showPicture"></a>
                         <div class="card-body">
                             <div class="d-flex align-items-center">
                                 <span class="avatar mr-3 rounded"
@@ -39,7 +42,7 @@
                                     <div class="text-muted" th:text="${picture.createTimeDesc}">3 days ago</div>
                                 </div>
                                 <div class="ml-auto">
-                                    <a href="#" class="text-muted">
+                                    <a href="javascript:;" class="text-muted">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
                                              viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
                                              stroke-linecap="round" stroke-linejoin="round">
@@ -50,7 +53,7 @@
                                         </svg>
                                         <span th:text="${picture.views}"></span>
                                     </a>
-                                    <a href="#" class="ml-3 text-muted">
+                                    <a href="javascript:;" class="ml-3 text-muted">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
                                              viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
                                              stroke-linecap="round" stroke-linejoin="round">
@@ -69,49 +72,61 @@
         <footer th:replace="include :: footer" class="footer footer-transparent"></footer>
     </div>
 </div>
+<!-- Libs JS -->
+<script th:src="${session.staticResourcePath + '/static/dist/libs/bootstrap/dist/js/bootstrap.bundle.min.js'}"></script>
+<!--点击图片放大-->
+<script th:src="${session.staticResourcePath + '/static/lib/imgenlarge/js/zoomify.min.js'}"></script>
+<!--sweetalert-->
+<script th:src="${session.staticResourcePath + '/static/lib/sweetalert/sweetalert.min.js'}"></script>
 <script>
-    var pageno = [[${picturePage.number}]]
-    var limit = [[${picturePage.size}]]
-    var totalPages = [[${picturePage.totalPages}]]
+    // 点击图片放大
+    $('.showPicture').zoomify();
 
-	$(function(){
-		//获取滑轮滚动事件
-	    $(window).scroll(function() {
-	       //滚动的距离
-	       var scrollTop = $(this).scrollTop();
-	       //当前窗口的高度
-	       var windowHeight = $(this).height();
-	       //文档总高度
-	       var scrollHeight = $(document).height();
-	       //当滚动的距离 + 当前窗口的高度  - scrollHeight = 0 说明到页面底部了
-	       var positionValue = (scrollTop + windowHeight) - scrollHeight;
-	       if (positionValue == 0) {
-	    	   //判断当前页数是否小于总页数
-	           if (pageno < totalPages) {
-	               pageno++;
-                   var pictures = getNext(pageno, limit)
-                   var nextHtml = getNextPictureHtml(pictures)
-                   console.log(nextHtml);
-                   $("#pictureContent").append(nextHtml)
-	           } else {
-	               alert('没有更多了');
-	           }
-	       }
-	   })
-	});
+    let pageno = [[${picturePage.number}]]
+    const limit = [[${picturePage.size}]]
+    const totalPages = [[${picturePage.totalPages}]]
+    let arrive = 1
+    $(function () {
+        //获取滑轮滚动事件
+        $(window).scroll(function () {
+            //滚动的距离
+            const scrollTop = $(this).scrollTop();
+            //当前窗口的高度
+            const windowHeight = $(this).height();
+            //文档总高度
+            const scrollHeight = $(document).height();
+            //当滚动的距离 + 当前窗口的高度  - scrollHeight = 0 说明到页面底部了
+            const positionValue = scrollHeight - (scrollTop + windowHeight);
+            if (positionValue < 40) {
+                //判断当前页数是否小于总页数
+                if (pageno < totalPages) {
+                    pageno++;
+                    const pictures = getNext(pageno, limit);
+                    const nextHtml = getNextPictureHtml(pictures)
+                    $("#pictureContent").append(nextHtml)
+                    $('.showPicture').zoomify();
+                } else {
+                    if (arrive <= 3) {
+                        bottom()
+                        arrive = arrive + 1;
+                    }
+                }
+            }
+        })
+    });
 
     function getNextPictureHtml(pictures) {
-        var html = "";
+        let html = "";
         pictures.forEach(picture => {
             var temp = '<div class="col-sm-6 col-lg-4"><div class="card card-sm">'
-                + ' <a href="#" class="d-block"><img src="' + picture.cdnUrl + '" class="card-img-top"></a>'
+                + ' <a href="javascript:void(0)" class="d-block"><img src="' + picture.cdnUrl + '" class="card-img-top showPicture"></a>'
                 + '<div class="card-body"> <div class="d-flex align-items-center">'
                 + '<span class="avatar mr-3 rounded" style="background-image: url(https://cdn.xwder.com/xwder/static/image/user/user.jpg)"></span> <div class="lh-sm"><div>OneDay</div>'
                 + '<div class="text-muted">'
                 + picture.createTimeDesc + '</div></div> <div class="ml-auto">'
-                + '<a href="#" class="text-muted"> <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="2" /><path d="M2 12l1.5 2a11 11 0 0 0 17 0l1.5 -2" /><path d="M2 12l1.5 -2a11 11 0 0 1 17 0l1.5 2" /></svg>'
+                + '<a href="javascript:void(0)" class="text-muted"> <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="2" /><path d="M2 12l1.5 2a11 11 0 0 0 17 0l1.5 -2" /><path d="M2 12l1.5 -2a11 11 0 0 1 17 0l1.5 2" /></svg>'
                 + picture.views
-                + '</a> <a href="#" class="ml-3 text-muted"> <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M12 20l-7 -7a4 4 0 0 1 6.5 -6a.9 .9 0 0 0 1 0a4 4 0 0 1 6.5 6l-7 7" /></svg>'
+                + '</a> <a href="javascript:void(0)" class="ml-3 text-muted"> <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M12 20l-7 -7a4 4 0 0 1 6.5 -6a.9 .9 0 0 0 1 0a4 4 0 0 1 6.5 6l-7 7" /></svg>'
                 + picture.likes
                 + '</a> </div> </div> </div> </div> </div>'
             ;
@@ -121,15 +136,15 @@
     }
 
     function getNext(page, limit) {
-        var pictures;
+        let pictures;
         $.ajax({
             type: "POST",
-            url: "/picture/list",
+            url: "/girl/list",
             data: {
                 "page": page,
                 "limit": limit
             },
-            async:false,
+            async: false,
             success: function (data) {
                 if (data.code === 200) {
                     console.log("success")
@@ -141,6 +156,17 @@
             }
         });
         return pictures;
+    }
+
+    function bottom() {
+        swal({
+            title: "我也是有底线的人，别滑啦",
+            text: '登录获取打包下载地址哦<a href="/login.html">登录</a>',
+            imageUrl: "http://img.rcbqb.com/article/210/2_y64q2__.jpg",
+            html: true,
+            timer: 3000,
+            showConfirmButton: false
+        });
     }
 
 </script>

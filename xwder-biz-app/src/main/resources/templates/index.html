@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org">
 <title>OneDay</title>
-<link type="text/css" th:href="${session.staticResourcePath +'/static/css/index/fanstyle.css'}" rel="stylesheet" />
 <head th:include="include :: head"></head>
-
+<link type="text/css" th:href="${session.staticResourcePath +'/static/css/index/fanstyle.css'}" rel="stylesheet" />
+<link th:href="${session.staticResourcePath +'/static/chat/css/iconfont.css'}"  rel="stylesheet"/>
+<link th:href="${session.staticResourcePath +'/static/chat/css/chat.css'}"  rel="stylesheet"/>
 <body class="antialiased">
     <div class="page">
         <header class="navbar navbar-expand-md navbar-light">

@@ -4,6 +4,7 @@
 
 <!--<link rel="stylesheet" th:href="${'/static/lib/live2d-widget/font-awesome.min.css'}">-->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+<script type="text/javascript" th:src="${session.staticResourcePath + '/static/lib/live2d-widget/autoload.js'}"></script>
 
 <link rel="stylesheet" th:href="${session.staticResourcePath + '/static/css/blog/article.css'}">
 <!--评论模块css-->
@@ -207,6 +208,7 @@
 
 <!-- Libs JS -->
 <script th:src="${session.staticResourcePath + '/static/dist/libs/bootstrap/dist/js/bootstrap.bundle.min.js'}"></script>
+<!-- 代码高亮 -->
 <script th:src="${session.staticResourcePath + '/static/lib/highlight/js/highlight.min.js'}"></script>
 <!--点击图片放大 博客文章中的的图片-->
 <script th:src="${session.staticResourcePath + '/static/lib/imgenlarge/js/zoomify.min.js'}"></script>
@@ -261,8 +263,6 @@
 <!--评论模块js-->
 <script type="text/javascript" th:src="${session.staticResourcePath + '/static/comment/js/jquery.flexText.js'}" src="js/jquery.flexText.js"></script>
 <script type="text/javascript" th:src="${session.staticResourcePath + '/static/comment/js/comment.js'}" src="js/jquery.flexText.js"></script>
-
-<script src="../autoload.js" th:src="${session.staticResourcePath + '/static/lib/live2d-widget/autoload.js'}"></script>
 </body>
 <style>
     /*显示文章内容页面右方导航列表样式*/
