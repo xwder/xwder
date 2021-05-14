@@ -280,11 +280,12 @@ baidu:
     secret: 8pQZfUBY80ApokLsUnZ11eICv0DmuQX3
 tencent:
   auth:
-    secretId: AKIDLUSAl6fONBk5A7TCi07wWrzsUPyInSFn
-    secretKey: QYXKvLey66wY1RbsUs20sSlnv72fvuc1
+    # 仅限cos操作
+    secretId: AKID4wYtymNhmb8ON5WgbU8UZNuA9sMZVAXe
+    secretKey: rSotiFVUCdoiLhmZ6ML4XjeIejX5NPAe
   cos:
-    bucketName: cdn-1256177279
-    region: ap-chongqing
+    bucketName: xwder-1253481755
+    region: ap-guangzhou
     # 博客文章上传路径 https://cdn.xwder.com/image/blog/xwder/1-20201010094334764.png xwder 为用户名 1- 为用户id
     blogImageDir: /image/blog
   cdn:
