@@ -28,10 +28,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 用户访问实现类
@@ -387,5 +384,24 @@ public class UserServiceImpl implements UserService {
         user.setGmtModified(new Date());
         userRepositry.save(user);
         return user;
+    }
+
+    /**
+     * 获取所有在线用户
+     * @return 所有在线用户
+     */
+    @Override
+    public List<User> listAllOnlineUser() {
+        String key = SysConfigConstants.USER_SESSION_REDIS_KEY+":*";
+        List<Object> list = redisUtil.getList(key);
+        List<User> userList = new ArrayList<>();
+        if (list == null && list.isEmpty()) {
+            return userList;
+        }
+        for (Object obj : list) {
+            User user = (User) obj;
+            userList.add(user);
+        }
+        return userList;
     }
 }

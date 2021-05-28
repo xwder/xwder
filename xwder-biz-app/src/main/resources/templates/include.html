@@ -402,7 +402,7 @@
     <div class="chatBox" ref="chatBox" style="display: none;">
         <div class="chatBox-head">
             <div class="chatBox-head-one">
-                Conversations
+                🤣在线用户🤣
                 <div class="chat-close" style="margin: 10px 10px 0 0;font-size: 14px">关闭</div>
             </div>
             <div class="chatBox-head-two">
@@ -418,34 +418,20 @@
         </div>
         <div class="chatBox-info">
             <div class="chatBox-list" ref="chatBoxlist">
-                <div class="chat-list-people">
+                <div class="chat-list-people" th:if="${session.onLineUserList != null && session.onLineUserList.size() > 0}"
+                     th:each="onlineUser,onlineUserStat : ${session.onLineUserList}">
                     <div><img src="img/icon01.png" alt="头像"
-                              th:src="${session.staticResourcePath +'/static/chat/img/icon01.png'}"/></div>
+                              th:src="${onlineUser.avatar}"/></div>
                     <div class="chat-name">
-                        <p>自酌一杯酒</p>
+                        <p th:text="${onlineUser.nickname}">自酌一杯酒</p>
                     </div>
-                    <div class="message-num">10</div>
-                </div>
-                <div class="chat-list-people">
-                    <div><img src="img/icon02.png" alt="头像"
-                              th:src="${session.staticResourcePath +'/static/chat/img/icon02.png'}"/></div>
-                    <div class="chat-name">
-                        <p>白兰地</p>
-                    </div>
-                    <div class="message-num">8</div>
-                </div>
-                <div class="chat-list-people">
-                    <div><img src="img/icon03.png" alt="头像"
-                              th:src="${session.staticResourcePath +'/static/chat/img/icon03.png'}"/></div>
-                    <div class="chat-name">
-                        <p>威士忌</p>
-                    </div>
-                    <div class="message-num">2</div>
+                    <div class="message-num">0</div>
                 </div>
             </div>
             <div class="chatBox-kuang" ref="chatBoxkuang">
                 <div class="chatBox-content">
                     <div class="chatBox-content-demo" id="chatBox-content-demo">
+                        <!--消息内容体-->
                         <div class="clearfloat">
                             <div class="author-name">
                                 <small class="chat-date">2017-12-02 14:26:58</small>

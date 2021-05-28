@@ -21,6 +21,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -61,6 +62,7 @@ public class GlobalInterceptor implements HandlerInterceptor {
         buildPotalData(request, response, handler);
         refreshRedisSession(request, response, handler);
         initStaticResourcePath(request, response, handler);
+        initOnLineUser(request, response, handler);
         return true;
     }
 
@@ -142,7 +144,7 @@ public class GlobalInterceptor implements HandlerInterceptor {
     }
 
     /**
-     * 异步花心redis session 会话信息
+     * 异步刷新redis session 会话信息
      *
      * @param request
      * @param response
@@ -180,6 +182,7 @@ public class GlobalInterceptor implements HandlerInterceptor {
 
     /**
      * 初始化静态资源访问地址
+     *
      * @param request
      * @param response
      * @param handler
@@ -187,15 +190,31 @@ public class GlobalInterceptor implements HandlerInterceptor {
     public void initStaticResourcePath(HttpServletRequest request, HttpServletResponse response, Object handler) {
         HttpSession session = request.getSession();
         String staticResourcePath = (String) session.getAttribute("staticResourcePath");
-        if (StrUtil.isEmpty(staticResourcePath)) {{
-            if (StrUtil.equals("local", sysConfigAttribute.getStaticResourcePath())) {
-                // 博客归档分类信息
-                session.setAttribute("staticResourcePath", "");
+        if (StrUtil.isEmpty(staticResourcePath)) {
+            {
+                if (StrUtil.equals("local", sysConfigAttribute.getStaticResourcePath())) {
+                    // 博客归档分类信息
+                    session.setAttribute("staticResourcePath", "");
+                }
+                if (StrUtil.equals("cdn", sysConfigAttribute.getStaticResourcePath())) {
+                    // 博客归档分类信息
+                    session.setAttribute("staticResourcePath", sysConfigAttribute.getStaticResourceCdnPath());
+                }
             }
-            if (StrUtil.equals("cdn", sysConfigAttribute.getStaticResourcePath())) {
-                // 博客归档分类信息
-                session.setAttribute("staticResourcePath", sysConfigAttribute.getStaticResourceCdnPath());
-            }
-        }}
+        }
+    }
+
+    /**
+     * 在线用户
+     *
+     * @param request
+     * @param response
+     * @param handler
+     */
+    public void initOnLineUser(HttpServletRequest request, HttpServletResponse response, Object handler) {
+        List<User> userList = userService.listAllOnlineUser();
+        HttpSession session = request.getSession();
+        // 博客归档分类信息
+        session.setAttribute("onLineUserList", userList);
     }
 }

@@ -124,4 +124,10 @@ public interface UserService {
      * @return
      */
     User createUserByUserGithub(UserGithub userGithub);
+
+    /**
+     * 获取所有在线用户
+     * @return 所有在线用户
+     */
+    List<User> listAllOnlineUser();
 }
